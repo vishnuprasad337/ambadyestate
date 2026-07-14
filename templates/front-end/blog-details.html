@@ -1,0 +1,284 @@
+{% extends 'front-end/base.html' %}
+{% load static %}
+
+{% block title %}{{ blog.title }} | Ambady Estate Munnar{% endblock %}
+
+{% block content %}
+
+<div class="blog-page">
+
+<!-- ===== BLOG HERO ===== -->
+<section class="blog-hero-section">
+    <div class="blog-hero-bg" style="background-image: url('{{ blog.image.url }}');"></div>
+    <div class="blog-hero-overlay"></div>
+    <div class="r-container blog-hero-content">
+        <span class="blog-hero-breadcrumb">
+            <a href="{% url 'ambadyestate_app:home' %}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <a href="{% url 'ambadyestate_app:blog_page' %}">Blog</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>{{ blog.title|truncatechars:40 }}</span>
+        </span>
+        <span class="blog-hero-eyebrow"><i></i>Ambady Estate, Munnar</span>
+        <h1 class="blog-hero-title">{{ blog.title }}</h1>
+        <div class="blog-hero-meta">
+            <span><i class="fa-solid fa-calendar"></i> {{ blog.created_at|date:"F j, Y" }}</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ARTICLE BODY: heading, then large image, then description ===== -->
+<div class="section blog-body-section">
+    <div class="r-container">
+        <div class="row justify-content-center">
+            <div class="col col-xl-9">
+                <span class="blog-eyebrow">From the Estate</span>
+                <h3 class="blog-section-title">The <em>full story</em></h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Large image with side spacing -->
+    <div class="blog-content-img-wrap">
+        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" loading="lazy">
+    </div>
+
+    <div class="r-container">
+        <div class="row justify-content-center">
+            <div class="col col-xl-9">
+                <!-- Description -->
+                <div class="blog-article-content">
+    {{ blog.description|safe }}
+</div>
+
+                <div class="blog-back-link-wrap">
+                    <a href="{% url 'ambadyestate_app:blog_page' %}" class="blog-back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to all stories
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== RELATED POSTS ===== -->
+{% if other_blogs %}
+<div class="section blog-related-section">
+    <div class="r-container">
+        <div class="blog-related-heading">
+            <span class="blog-eyebrow">More from the Estate</span>
+            <h3 class="blog-section-title">You might also <em>enjoy</em></h3>
+        </div>
+        <div class="row row-cols-xl-3 row-cols-1 mt-5">
+            {% for other in other_blogs %}
+            <div class="col mb-4">
+                <a href="{% url 'ambadyestate_app:blog_details' other.slug %}" class="blog-card" style="display:block; text-decoration:none;">
+                    <div class="blog-card-img-wrap">
+                        <img src="{{ other.image.url }}" alt="{{ other.title }}">
+                        <div class="blog-overlay"></div>
+                        <div class="blog-tag">{{ other.created_at|date:"M Y" }}</div>
+                        <div class="blog-card-body">
+                            <h4>{{ other.title }}</h4>
+                            <p>{{ other.description|striptags|truncatewords:16 }}</p>
+                            <span class="blog-read-more">
+                                Read More
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ===== CTA STRIP ===== -->
+<div class="section blog-cta-section">
+    <div class="r-container">
+        <div class="blog-cta-strip">
+            <div class="blog-cta-copy">
+                <span class="blog-eyebrow blog-eyebrow-light">Come stay with us</span>
+                <h5>Ready to experience Ambady Estate in person?</h5>
+                <p>Reserve your dates now — our team responds within 24 hours.</p>
+            </div>
+            <a href="{% url 'ambadyestate_app:booking_page' %}" class="btn btn-accent justify-content-center blog-cta-btn">
+                <span>Book Your Stay</span>
+                <span class="blog-icon-box blog-icon-box-static"><i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+</div><!-- /.blog-page -->
+
+<style>
+    .blog-page {
+        --estate-forest: #0b3128;
+        --estate-forest-deep: #071f19;
+        --estate-cream: #faf8f2;
+        --estate-gold: #c8a86a;
+        --estate-ink: #142822;
+        --estate-stone: #5c6b64;
+        --estate-line: rgba(11, 49, 40, 0.12);
+    }
+
+    /* Global safeguard: stop any element from causing horizontal
+       scroll/bleed-through on mobile. */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    .blog-page * {
+        box-sizing: border-box;
+    }
+
+    .blog-eyebrow {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-size: 0.78rem; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
+        color: var(--estate-forest); margin-bottom: 6px;
+    }
+    .blog-eyebrow::before { content: ""; display: block; width: 26px; height: 1.5px; background: var(--estate-gold); }
+    .blog-eyebrow-light { color: rgba(255,255,255,0.85); }
+
+    .blog-section-title { font-weight: 300; font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--estate-ink); letter-spacing: -0.5px; margin: 0 0 24px; }
+    .blog-section-title em { font-style: italic; font-weight: 500; color: var(--estate-forest); }
+
+    /* Hero */
+    .blog-hero-section { position: relative; width: calc(100% - 40px); margin: 20px auto 0; min-height: 65vh; display: flex; align-items: flex-end; overflow: hidden; border-radius: 32px; }
+    .blog-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; width: 100%; height: 100%; border-radius: 32px; transform: scale(1.02); }
+    .blog-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,31,25,0.9) 0%, rgba(7,31,25,0.35) 55%, rgba(7,31,25,0.1) 100%); z-index: 1; border-radius: 32px; }
+    .blog-hero-content { position: relative; z-index: 2; padding-bottom: 60px; display: flex; flex-direction: column; gap: 10px; max-width: 800px; }
+    .blog-hero-breadcrumb { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); font-size: 0.88rem; font-weight: 600; margin-bottom: 10px; flex-wrap: wrap; }
+    .blog-hero-breadcrumb a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s ease; }
+    .blog-hero-breadcrumb a:hover { color: #fff; }
+    .blog-hero-breadcrumb i { font-size: 0.65rem; }
+    .blog-hero-breadcrumb span { color: var(--estate-gold); }
+    .blog-hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    .blog-hero-eyebrow i { display: block; width: 26px; height: 1.5px; background: var(--estate-gold); }
+    .blog-hero-title { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 300; color: #fff; letter-spacing: -1px; margin: 4px 0 10px; line-height: 1.15; }
+    .blog-hero-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .blog-hero-meta span { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 0.92rem; font-weight: 600; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.22); padding: 9px 18px; border-radius: 100px; }
+    .blog-hero-meta i { color: var(--estate-gold); }
+
+    @media (max-width: 767px) {
+        .blog-hero-section { min-height: 50vh; width: calc(100% - 20px); margin: 12px auto 0; border-radius: 22px; }
+        .blog-hero-content { padding-bottom: 32px; padding-left: 20px; padding-right: 20px; }
+        .blog-hero-breadcrumb { font-size: 0.8rem; }
+        .blog-hero-meta span { font-size: 0.85rem; padding: 7px 14px; }
+    }
+
+    @media (max-width: 480px) {
+        .blog-hero-section { border-radius: 16px; min-height: 45vh; }
+        .blog-hero-content { padding-bottom: 24px; padding-left: 16px; padding-right: 16px; }
+        .blog-hero-breadcrumb { font-size: 0.74rem; gap: 6px; }
+    }
+
+    /* Article body */
+    .blog-body-section { padding: 70px 0 90px; background: var(--estate-cream); }
+
+    /* Image with side spacing — matches the hero section's inset treatment */
+    .blog-content-img-wrap {
+        width: calc(100% - 40px);
+        margin: 0 auto 50px;
+        overflow: hidden;
+        border-radius: 32px;
+    }
+    .blog-content-img-wrap img {
+        width: 100%;
+        height: 70vh;
+        max-height: 720px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .blog-content-img-wrap:hover img { transform: scale(1.03); }
+
+    .blog-article-content { font-size: 1.05rem; line-height: 1.9; color: var(--estate-stone); }
+    .blog-article-content p { margin-bottom: 22px; }
+
+    .blog-back-link-wrap { margin-top: 40px; }
+    .blog-back-link { display: inline-flex; align-items: center; gap: 10px; color: var(--estate-forest); font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: gap 0.3s ease, color 0.3s ease; }
+    .blog-back-link:hover { gap: 14px; color: var(--estate-gold); }
+
+    /* Related */
+    .blog-related-section { padding: 90px 0; background: #fff; border-top: 1px solid var(--estate-line); }
+    .blog-related-heading { max-width: 640px; }
+
+    .blog-card { border-radius: 16px; overflow: hidden; cursor: pointer; }
+    .blog-card-img-wrap { position: relative; overflow: hidden; height: 300px; border-radius: 16px; }
+    .blog-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+    .blog-card:hover .blog-card-img-wrap img { transform: scale(1.08); }
+    .blog-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.05) 100%); z-index: 1; transition: background 0.4s ease; }
+    .blog-card:hover .blog-overlay { background: linear-gradient(to top, rgba(26,30,22,0.95) 0%, rgba(44,95,26,0.5) 60%, rgba(0,0,0,0.1) 100%); }
+    .blog-tag { position: absolute; top: 1rem; right: 1rem; background: var(--estate-gold); color: var(--estate-forest-deep); font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 5px 14px; border-radius: 4px; z-index: 2; }
+    .blog-card-body { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; z-index: 2; transform: translateY(10px); transition: transform 0.5s ease; }
+    .blog-card:hover .blog-card-body { transform: translateY(0); }
+    .blog-card-body h4 { color: #fff; font-size: 1.05rem; line-height: 1.4; margin-bottom: 8px; }
+    .blog-card-body p { color: rgba(255,255,255,0.75); font-size: 0.85rem; line-height: 1.6; margin-bottom: 12px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.4s ease; }
+    .blog-card:hover .blog-card-body p { max-height: 80px; opacity: 1; }
+    .blog-read-more { display: inline-flex; align-items: center; gap: 8px; color: white; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .blog-card:hover .blog-read-more { opacity: 1; transform: translateY(0); }
+
+    /* Touch devices have no hover — reveal excerpt, read-more link, and
+       body position by default instead of hiding them permanently. */
+    @media (hover: none) {
+        .blog-card-body { transform: translateY(0); }
+        .blog-card-body p { max-height: 90px; opacity: 1; }
+        .blog-read-more { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CTA */
+    .blog-cta-section { padding: 20px 0 90px; }
+    .blog-cta-strip { position: relative; overflow: hidden; background: var(--estate-forest-deep); border-radius: 28px; padding: 52px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .blog-cta-strip h5 { font-size: 1.6rem; font-weight: 400; color: #fff; margin: 4px 0 8px; }
+    .blog-cta-strip p { margin: 0; color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+    .blog-cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--estate-gold) !important; border: 1px solid var(--estate-gold) !important; color: var(--estate-forest-deep) !important; font-weight: 700; transition: transform 0.3s ease, filter 0.3s ease; }
+    .blog-cta-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .blog-icon-box-static { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 4px; background: rgba(7,31,25,0.12); color: var(--estate-forest-deep); }
+
+    /* ===== MOBILE FIXES ===== */
+    @media (max-width: 991px) {
+        .blog-body-section { padding: 50px 0 60px; }
+        .blog-related-section { padding: 60px 0; }
+    }
+
+    @media (max-width: 767px) {
+        .blog-body-section .r-container,
+        .blog-related-section .r-container,
+        .blog-cta-section .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .blog-content-img-wrap img { height: 45vh; }
+        .blog-content-img-wrap { width: calc(100% - 20px); border-radius: 22px; margin-bottom: 34px; }
+        .blog-article-content { font-size: 1.15rem; line-height: 1.85; }
+        .blog-related-section { padding: 46px 0; }
+        .blog-card-img-wrap { height: 260px; }
+        .blog-cta-section { padding: 10px 0 60px; }
+    }
+
+    @media (max-width: 575px) {
+        .blog-cta-strip { padding: 30px 22px; border-radius: 20px; gap: 20px; }
+        .blog-cta-strip h5 { font-size: 1.25rem; }
+        .blog-cta-strip p { font-size: 0.88rem; }
+        .blog-cta-btn { width: 100%; }
+        .blog-body-section { padding: 40px 0 44px; }
+        .blog-section-title { font-size: 1.5rem; margin-bottom: 16px; }
+        .blog-article-content { font-size: 1.1rem; line-height: 1.8; }
+    }
+
+    @media (max-width: 400px) {
+        .blog-body-section .r-container,
+        .blog-related-section .r-container,
+        .blog-cta-section .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .blog-card-img-wrap { height: 220px; }
+    }
+</style>
+
+{% endblock %}

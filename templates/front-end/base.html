@@ -1,0 +1,602 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+     <link rel="stylesheet" href="{% static 'ambadyestate-main/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>{% block title %}Ambady Estate Munnar | Organic Plantation Stay in Kerala{% endblock %}</title>
+
+    <meta name="description"
+        content="{% block meta_description %}Experience a peaceful plantation stay at Ambady Estate, Munnar. Stay in colonial cottages, enjoy organic farm-to-table dining, nature walks, and scenic mountain views in Kerala.{% endblock %}">
+
+    <meta name="keywords"
+        content="{% block meta_keywords %}Ambady Estate, Munnar stay, plantation stay Kerala, organic resort Munnar, cottages in Munnar, honeymoon stay Munnar, Kerala tourism{% endblock %}">
+
+    <meta name="author" content="Ambady Estate Munnar">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Replace the absolute paths with relative paths -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'ambadyestate-main/favi.png' %}">
+     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'ambadyestate-main/favi.png' %}">
+     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'ambadyestate-main/favi.png' %}">
+    <link rel="manifest" href="{% static 'ambadyestate-main/site.webmanifest' %}">
+
+    <title>Ambady Estate Munnar</title>
+    
+    <style class="fslightbox-styles">
+        /* ===== NAVBAR OVERALL LAYOUT — MOVE LOGO LEFT (SIZE UNCHANGED) ===== */
+        .site-header .r-container {
+            max-width: 100%;
+            padding-left: 32px;
+            padding-right: 0;
+        }
+
+        .site-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 32px;
+        }
+
+        .site-brand {
+            flex-shrink: 0;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .site-navbar .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            gap: clamp(14px, 2vw, 32px);
+            margin: 0 32px;
+            list-style: none;
+        }
+
+        .site-navbar .navbar-nav .nav-item {
+            white-space: nowrap;
+        }
+
+        .site-navbar .navbar-nav .nav-link {
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 8px 0 !important;
+            color: rgba(255, 255, 255, 0.85);
+            position: relative;
+            transition: color 0.25s ease;
+        }
+
+        .site-navbar .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1.5px;
+            width: 0;
+            background-color: #ffffff;
+            transition: width 0.25s ease;
+        }
+
+        .site-navbar .navbar-nav .nav-link:hover,
+        .site-navbar .navbar-nav .nav-link.active {
+            color: #ffffff;
+        }
+
+        .site-navbar .navbar-nav .nav-link:hover::after,
+        .site-navbar .navbar-nav .nav-link.active::after {
+            width: 100%;
+        }
+
+        .btn-accent.nav-cta {
+            background-color: var(--primary) !important;
+            color: var(--accent-color) !important;
+            border-color: var(--primary) !important;
+            white-space: nowrap;
+            padding: 11px 26px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-left: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-accent.nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 1300px) {
+            .site-navbar .navbar-nav .nav-link {
+                font-size: 0.78rem;
+            }
+            .site-navbar .navbar-nav {
+                gap: clamp(10px, 1.5vw, 20px);
+                margin: 0 20px;
+            }
+            .site-navbar {
+                padding: 12px 20px;
+            }
+        }
+        /* ===== END NAVBAR POLISH ===== */
+
+        .fslightbox-absoluted {
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+
+        .fslightbox-fade-in {
+            animation: fslightbox-fade-in .3s cubic-bezier(0, 0, .7, 1)
+        }
+
+        .fslightbox-fade-out {
+            animation: fslightbox-fade-out .3s ease
+        }
+
+        .fslightbox-fade-in-strong {
+            animation: fslightbox-fade-in-strong .3s cubic-bezier(0, 0, .7, 1)
+        }
+
+        .fslightbox-fade-out-strong {
+            animation: fslightbox-fade-out-strong .3s ease
+        }
+
+        @keyframes fslightbox-fade-in {
+            from { opacity: .65 }
+            to { opacity: 1 }
+        }
+
+        @keyframes fslightbox-fade-out {
+            from { opacity: .35 }
+            to { opacity: 0 }
+        }
+
+        @keyframes fslightbox-fade-in-strong {
+            from { opacity: .3 }
+            to { opacity: 1 }
+        }
+
+        @keyframes fslightbox-fade-out-strong {
+            from { opacity: 1 }
+            to { opacity: 0 }
+        }
+
+        .fslightbox-cursor-grabbing { cursor: grabbing }
+        .fslightbox-full-dimension { width: 100%; height: 100% }
+        .fslightbox-open { overflow: hidden; height: 100% }
+        .fslightbox-flex-centered { display: flex; justify-content: center; align-items: center }
+        .fslightbox-opacity-0 { opacity: 0 !important }
+        .fslightbox-opacity-1 { opacity: 1 !important }
+        .fslightbox-scrollbarfix { padding-right: 17px }
+        .fslightbox-transform-transition { transition: transform .3s }
+
+        .fslightbox-container {
+            font-family: Arial, sans-serif;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(30, 30, 30, .9), #000 1810%);
+            touch-action: pinch-zoom;
+            z-index: 1000000000;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .fslightbox-container * { box-sizing: border-box }
+        .fslightbox-svg-path { transition: fill .15s ease; fill: #ddd }
+        .fslightbox-nav { height: 45px; width: 100%; position: absolute; top: 0; left: 0 }
+
+        .fslightbox-slide-number-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            font-size: 15px;
+            color: #d7d7d7;
+            z-index: 0;
+            max-width: 55px;
+            text-align: left
+        }
+
+        .fslightbox-slide-number-container .fslightbox-flex-centered { height: 100% }
+
+        .fslightbox-slash {
+            display: block;
+            margin: 0 5px;
+            width: 1px;
+            height: 12px;
+            transform: rotate(15deg);
+            background: #fff
+        }
+
+        .fslightbox-toolbar {
+            position: absolute;
+            z-index: 3;
+            right: 0;
+            top: 0;
+            height: 100%;
+            display: flex;
+            background: rgba(35, 35, 35, .65)
+        }
+
+        .fslightbox-toolbar-button { height: 100%; width: 45px; cursor: pointer }
+        .fslightbox-toolbar-button:hover .fslightbox-svg-path { fill: #fff }
+
+        .fslightbox-slide-btn-container {
+            display: flex;
+            align-items: center;
+            padding: 12px 12px 12px 6px;
+            position: absolute;
+            top: 50%;
+            cursor: pointer;
+            z-index: 3;
+            transform: translateY(-50%)
+        }
+
+        @media (min-width:476px) { .fslightbox-slide-btn-container { padding: 22px 22px 22px 6px } }
+        @media (min-width:768px) { .fslightbox-slide-btn-container { padding: 30px 30px 30px 6px } }
+
+        .fslightbox-slide-btn-container:hover .fslightbox-svg-path { fill: #f1f1f1 }
+        .fslightbox-slide-btn { padding: 9px; font-size: 26px; background: rgba(35, 35, 35, .65) }
+
+        @media (min-width:768px) { .fslightbox-slide-btn { padding: 10px } }
+        @media (min-width:1600px) { .fslightbox-slide-btn { padding: 11px } }
+
+        .fslightbox-slide-btn-container-previous { left: 0 }
+        @media (max-width:475.99px) { .fslightbox-slide-btn-container-previous { padding-left: 3px } }
+
+        .fslightbox-slide-btn-container-next { right: 0; padding-left: 12px; padding-right: 3px }
+        @media (min-width:476px) { .fslightbox-slide-btn-container-next { padding-left: 22px } }
+        @media (min-width:768px) { .fslightbox-slide-btn-container-next { padding-left: 30px } }
+        @media (min-width:476px) { .fslightbox-slide-btn-container-next { padding-right: 6px } }
+
+        .fslightbox-down-event-detector { position: absolute; z-index: 1 }
+        .fslightbox-slide-swiping-hoverer { z-index: 4 }
+        .fslightbox-invalid-file-wrapper { font-size: 22px; color: #eaebeb; margin: auto }
+        .fslightbox-video { object-fit: cover }
+        .fslightbox-youtube-iframe { border: 0 }
+
+        .fslightboxl {
+            display: block;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 67px;
+            height: 67px
+        }
+
+        .fslightboxl div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 54px;
+            height: 54px;
+            margin: 6px;
+            border: 5px solid;
+            border-color: #999 transparent transparent transparent;
+            border-radius: 50%;
+            animation: fslightboxl 1.2s cubic-bezier(.5, 0, .5, 1) infinite
+        }
+
+        .fslightboxl div:nth-child(1) { animation-delay: -.45s }
+        .fslightboxl div:nth-child(2) { animation-delay: -.3s }
+        .fslightboxl div:nth-child(3) { animation-delay: -.15s }
+
+        @keyframes fslightboxl {
+            0% { transform: rotate(0) }
+            100% { transform: rotate(360deg) }
+        }
+
+        .fslightbox-source { position: relative; z-index: 2; opacity: 0 }
+
+        .btn-accent {
+            background-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            border: none;
+            padding: 12px 28px;
+            font-family: var(--font-3);
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-color-2) !important;
+            color: var(--text-color) !important;
+        }
+
+        .request-loader {
+            width: 56px;
+            height: 56px;
+            border-radius: 20px;
+            background-color: var(--accent-color);
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: background 0.3s;
+        }
+
+        .request-loader::before,
+        .request-loader::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background-color: var(--accent-color);
+            opacity: 0.4;
+            animation: ripple-play 1.8s ease-out infinite;
+            z-index: -1;
+        }
+
+        .request-loader::after { animation-delay: 0.6s; }
+
+        @keyframes ripple-play {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        .request-loader:hover { background-color: var(--accent-color-2); }
+
+        .site-brand img {
+            filter: brightness(0) invert(1);
+        }
+    </style>
+        {% block extra_head %}{% endblock %}
+</head>
+
+<body class="ambady-home">
+    <!-- Header -->
+    <header id="header" class="site-header">
+        <div class="r-container">
+            <nav class="navbar navbar-expand-xl navbar-light site-navbar">
+                <a class="navbar-brand site-brand" href="#home">
+                    <img src="{% static 'ambadyestate-main/ambady.png' %}" alt="Ambady Estate">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav align-items-xl-center">
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'ambadyestate_app:home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:about_page' %}">About  Us</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:rooms_page' %}">Stays</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:packages_page' %}">Packages</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:activities_page' %}">Activities</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:gallery' %}">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:blog_page' %}">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:contact_page' %}">Contact Us</a></li>
+                         <a href="{% url 'ambadyestate_app:booking_page' %}" class="btn btn-accent nav-cta">Book a Visit</a>
+                        
+                        <!-- <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> -->
+                    </ul>
+                </div>
+              
+            </nav>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Main -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="section pb-0 bg-text-color bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/image/bg_footer.png' %}');">
+            <div class="r-container">
+                <div class="border-bottom border-light pb-xl-5 pb-0">
+                    <div class="row row-cols-xl-3 row-cols-1">
+                        <div class="col col-xl-4 mb-3">
+                            <div class="d-flex flex-column gap-3 pe-xl-5">
+                                <img src="{% static 'ambadyestate-main/ambady-green.png' %}" alt="" class="img-fluid" width="250">
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
+                                        <i class="rtmicon rtmicon-classic-phone  fs-4"></i>
+                                        <span>Contact us for bookings and stay enquiries</span>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
+                                        <i class="rtmicon rtmicon-location fs-4"></i>
+                                        <span>Ambady Estate, Munnar, Kerala</span>
+
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
+                                        <i class="rtmicon rtmicon-envelope fs-4"></i>
+                                        <span>Reach out for current availability</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-xl-8 mb-3">
+                            <div class="row row-cols-xl-3 row-cols-1">
+                                <div class="col-xl-3 mb-3">
+                                    <div class="d-flex flex-column gap-3">
+                                        <h5>Explore</h5>
+                                        <ul class="list ps-0 gap-2 accent-color">
+                                            <li>
+                                                <a href="#home" class="link d-flex flex-row gap-3 align-items-center">
+                                                    Home
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#about" class="link d-flex flex-row gap-3 align-items-center">
+                                                    About
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#process"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Stay Options
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#services"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Experiences
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#contact"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Contact
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 mb-3">
+                                    <div class="d-flex flex-column gap-3">
+                                        <h5>Popular Experiences</h5>
+                                        <ul class="list ps-0 gap-2 accent-color">
+                                            <li>
+                                                <a href="#guided-nature-walk"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Guided Nature Walk
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#bird-watching"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Bird Watching
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#soft-trekking"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Soft Trekking
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#cycling"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Cycling
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#swimming-pool"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Swimming Pool
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#cardamom-curing-house"
+                                                    class="link d-flex flex-row gap-3 align-items-center">
+                                                    Cardamom Curing House
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 mb-xl-3 mb-0">
+                                    <div class="d-flex flex-column gap-3">
+                                        <h5>Stay Updated</h5>
+                                        <p>
+                                            Get travel inspiration, stay updates, and seasonal ideas for visiting Ambady
+                                            Estate Munnar.
+                                        </p>
+                                        <div class="d-flex flex-column gap-3">
+                                            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                                <div id="liveToast"
+                                                    class="toast success_msg_subscribe bg-dark-transparent text-white"
+                                                    role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="d-flex">
+                                                        <div class="toast-body">
+                                                            Subscription received successfully.
+                                                        </div>
+                                                        <button type="button" class="btn me-2 m-auto text-white"
+                                                            data-bs-dismiss="toast" aria-label="Close">
+                                                            <i class="fa-solid fa-xmark"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <form
+                                                    class="d-flex flex-column h-100 justify-content-center w-100 needs-validation form"
+                                                    novalidate="">
+                                                    <input type="text" name="action" value="subscribe" hidden="">
+                                                    <div class="mb-3">
+                                                        <input type="email" class="form-control rounded-3 px-5 py-3"
+                                                            placeholder="Email" name="email" required=""
+                                                            fdprocessedid="5jn20s">
+
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid email format (e.g.,
+                                                            user@example.com).
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        class="btn btn-accent px-5 py-3 rounded-3 justify-content-center submit_subscribe"
+                                                        type="submit" fdprocessedid="blelwd">Subscribe</button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4 footer-links py-3 accent-color">
+                    <p class="mb-0">
+                        &copy; <span id="currentYear"></span> <strong>Ambady Estate</strong>. All rights reserved.
+                    </p>
+                    <small>
+                        Designed by <a href="https://vynzora.com/" target="_blank"
+                            style="color: var(--accent-color); text-decoration: none;">Vynzora</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'ambadyestate-main/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/vendor/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/script.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/swiper-script.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/submit-form.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/video_embedded.js' %}"></script>
+    <script src="{% static 'ambadyestate-main/js/vendor/fslightbox.js' %}"></script>
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+    <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,550 @@
+{% extends 'front-end/base.html' %}
+{% load static %}
+
+{% block title %}{{ destination.name }} | Ambady Estate Munnar{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO TITLE SECTION ===== -->
+<section class="about-hero-section">
+    <div class="about-hero-bg" style="background-image: url('{{ destination.image.url }}');"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="r-container about-hero-content">
+        <span class="about-hero-breadcrumb">
+            <a href="{% url 'ambadyestate_app:home' %}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>{{ destination.name }}</span>
+        </span>
+        <h1 class="about-hero-title">{{ destination.name }}</h1>
+        {% if destination.distance %}
+        <p class="about-hero-sub">{{ destination.distance }} km from Ambady Estate{% if destination.location %} &middot; {{ destination.location }}{% endif %}</p>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    .about-hero-section {
+        position: relative;
+        width: calc(100% - 40px);
+        margin: 20px auto 0;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 32px;
+    }
+
+    .about-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+    }
+
+    .about-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.55);
+        z-index: 1;
+        border-radius: 32px;
+    }
+
+    .about-hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .about-hero-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .about-hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .about-hero-breadcrumb a:hover { color: #fff; }
+    .about-hero-breadcrumb i { font-size: 0.7rem; }
+    .about-hero-breadcrumb span { color: var(--accent-color-2, #c8a86a); }
+
+    .about-hero-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: clamp(2.2rem, 5.5vw, 4rem);
+        font-weight: 300;
+        color: #fff;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .about-hero-sub {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 560px;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    @media (max-width: 767px) {
+        .about-hero-section {
+            min-height: 60vh;
+            width: calc(100% - 20px);
+            margin: 12px auto 0;
+            border-radius: 22px;
+        }
+        .about-hero-title { font-size: clamp(1.8rem, 9vw, 2.6rem); }
+    }
+</style>
+
+<!-- ===== DESTINATION DETAILS ===== -->
+<div id="destination-details" class="section">
+    <div class="r-container">
+        <div class="dest-viewer-wrap">
+            <div class="dest-viewer-grid">
+
+                <!-- LEFT: Image viewer -->
+                <div>
+                    <div class="dest-main-image-frame">
+                        <img id="destMainImage" src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                        {% if gallery_images %}
+                        <button type="button" class="dest-nav-arrow prev" id="destPrevBtn">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button type="button" class="dest-nav-arrow next" id="destNextBtn">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        {% endif %}
+                        {% if destination.distance %}
+                        <div class="dest-tag">{{ destination.distance }} km</div>
+                        {% endif %}
+                    </div>
+
+                    {% if gallery_images %}
+                    <div class="dest-dots-row" id="destDotsRow"></div>
+
+                    <div class="dest-thumb-grid" id="destThumbGrid">
+                        <div class="dest-thumb-item active" data-index="0">
+                            <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                        </div>
+                        {% for img in gallery_images %}
+                        <div class="dest-thumb-item" data-index="{{ forloop.counter }}">
+                            <img src="{{ img.image.url }}" alt="{{ img.caption|default:destination.name }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- RIGHT: Details -->
+                <div class="dest-info-col">
+                    <h6 class="accent-color-2">Nearby Destination</h6>
+                    <h3 class="dest-title">{{ destination.name }}</h3>
+
+                    <div class="dest-tag-row">
+                        {% if destination.distance %}
+                        <span class="dest-pill"><i class="fa-solid fa-route"></i> {{ destination.distance }} km</span>
+                        {% endif %}
+                        {% if destination.location %}
+                        <span class="dest-pill"><i class="fa-solid fa-location-dot"></i> {{ destination.location }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="dest-description">
+                        {{ destination.description|safe|linebreaks }}
+                    </div>
+
+                    <a href="{% url 'ambadyestate_app:booking_page' %}" class="btn-primary dest-cta">
+                        Book Your Stay
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if other_destinations %}
+        <div class="dest-more-section">
+            <h5>More to Explore Nearby</h5>
+            <div class="row row-cols-xl-3 row-cols-1 g-4">
+                {% for other in other_destinations %}
+                <div class="col">
+                    <a href="{% url 'ambadyestate_app:nearby_destination_details' other.slug %}" class="dest-more-card">
+                        <div class="dest-more-img-wrap">
+                            <img src="{{ other.image.url }}" alt="{{ other.name }}" loading="lazy">
+                            <div class="dest-more-overlay"></div>
+                            {% if other.distance %}
+                            <div class="dest-more-tag">{{ other.distance }} km</div>
+                            {% endif %}
+                            <div class="dest-more-body">
+                                <h4>{{ other.name }}</h4>
+                                <span class="dest-more-link">
+                                    Read More <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    #destination-details {
+        padding: 60px 0 100px;
+    }
+
+    /* ---------- Viewer wrap ---------- */
+    .dest-viewer-wrap {
+        background: #fff;
+        border-radius: 24px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        padding: 32px;
+    }
+
+    .dest-viewer-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 40px;
+    }
+
+    /* ---------- Left: image viewer ---------- */
+    .dest-main-image-frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #f2f2f2;
+    }
+
+    .dest-main-image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .dest-tag {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: var(--accent-color-2, #c8a86a);
+        color: var(--text-color, #1a1e16);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 6px;
+        z-index: 2;
+    }
+
+    .dest-nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--accent-color, #2c5f1a);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transition: background 0.3s ease, transform 0.3s ease;
+        z-index: 2;
+    }
+
+    .dest-nav-arrow.prev { left: 14px; }
+    .dest-nav-arrow.next { right: 14px; }
+    .dest-nav-arrow:hover {
+        background: var(--accent-color-2, #c8a86a);
+        color: #fff;
+    }
+
+    .dest-dots-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 16px 0;
+    }
+
+    .dest-dots-row .dest-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(200, 168, 106, 0.3);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .dest-dots-row .dest-dot.active {
+        background: var(--accent-color-2, #c8a86a);
+        transform: scale(1.2);
+    }
+
+    .dest-thumb-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+        gap: 10px;
+    }
+
+    .dest-thumb-item {
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s ease;
+    }
+
+    .dest-thumb-item.active {
+        border-color: var(--accent-color-2, #c8a86a);
+    }
+
+    .dest-thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* ---------- Right: details panel ---------- */
+    .dest-info-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dest-title {
+        margin: 6px 0 16px;
+    }
+
+    .dest-tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .dest-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 0.85rem;
+        color: var(--text-color, #1a1e16);
+    }
+
+    .dest-pill i {
+        color: var(--accent-color-2, #c8a86a);
+    }
+
+    .dest-description {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: rgba(26, 30, 22, 0.75);
+        margin-bottom: 24px;
+    }
+
+    .dest-description img {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    .dest-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        align-self: flex-start;
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+        padding: 14px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background 0.3s ease, transform 0.3s ease;
+        margin-top: auto;
+    }
+
+    .dest-cta:hover {
+        background: var(--accent-color-2, #c8a86a);
+        color: var(--text-color, #1a1e16);
+        transform: translateY(-2px);
+    }
+
+    /* ---------- More destinations ---------- */
+    .dest-more-section {
+        margin-top: 70px;
+    }
+
+    .dest-more-section h5 {
+        margin-bottom: 24px;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    .dest-more-card {
+        display: block;
+        text-decoration: none;
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .dest-more-img-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background: #1a1e16;
+    }
+
+    .dest-more-img-wrap img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.75);
+        transition: transform 0.7s ease, filter 0.5s ease;
+    }
+
+    .dest-more-card:hover .dest-more-img-wrap img {
+        transform: scale(1.06);
+        filter: brightness(0.6);
+    }
+
+    .dest-more-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 100%);
+        z-index: 1;
+    }
+
+    .dest-more-tag {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: var(--accent-color-2, #c8a86a);
+        color: var(--text-color, #1a1e16);
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 4px;
+        z-index: 2;
+    }
+
+    .dest-more-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        z-index: 2;
+    }
+
+    .dest-more-body h4 {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .dest-more-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 991px) {
+        .dest-viewer-wrap {
+            padding: 20px;
+        }
+        .dest-viewer-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const mainImage = document.getElementById('destMainImage');
+    const thumbItems = Array.from(document.querySelectorAll('.dest-thumb-item'));
+    const dotsRow = document.getElementById('destDotsRow');
+    const prevBtn = document.getElementById('destPrevBtn');
+    const nextBtn = document.getElementById('destNextBtn');
+
+    if (!mainImage || !thumbItems.length) return;
+
+    const images = thumbItems.map(item => item.querySelector('img').src);
+    let currentIndex = 0;
+
+    images.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dest-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => setActive(i));
+        if (dotsRow) dotsRow.appendChild(dot);
+    });
+
+    function setActive(index) {
+        currentIndex = index;
+        mainImage.src = images[index];
+        thumbItems.forEach((item, i) => item.classList.toggle('active', i === index));
+        if (dotsRow) {
+            Array.from(dotsRow.children).forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+    }
+
+    thumbItems.forEach((item, i) => {
+        item.addEventListener('click', () => setActive(i));
+    });
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            setActive((currentIndex - 1 + images.length) % images.length);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            setActive((currentIndex + 1) % images.length);
+        });
+    }
+});
+</script>
+
+{% endblock %}

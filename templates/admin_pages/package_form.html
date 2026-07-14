@@ -1,0 +1,266 @@
+{% extends "admin_pages/base.html" %}
+{% load static %}
+
+{% block title %}{{ action }} Package | Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<style>
+.form-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+/* REMOVED old select[multiple] min-height rule — Choices.js replaces the native box */
+
+/* Proper dropdown styling for Choices.js */
+.choices {
+    margin-bottom: 0;
+}
+.choices__inner {
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    background: #fff;
+    min-height: 42px;
+    padding: 6px 7.5px 3.75px;
+}
+.choices__inner:focus-within,
+.is-focused .choices__inner {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+.choices__list--multiple .choices__item {
+    background: #0d6efd;
+    border: 1px solid #0d6efd;
+    color: #fff;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}
+.choices__list--multiple .choices__item .choices__button {
+    border-left: 1px solid rgba(255,255,255,0.5);
+}
+.choices__list--dropdown {
+    border-color: #ced4da;
+    border-radius: 0.375rem;
+    z-index: 20;
+}
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background: #0d6efd;
+    color: #fff;
+}
+.choices__input {
+    background: #fff;
+}
+
+/* FIX: CKEditor Toolbar Sticky Position Issues */
+.ck.ck-editor__top.ck-reset_all {
+    position: relative !important;
+    top: auto !important;
+    z-index: 10 !important;
+}
+.ck.ck-sticky-panel .ck-sticky-panel__content {
+    position: relative !important;
+    top: auto !important;
+}
+.ck.ck-toolbar {
+    position: relative !important;
+    top: auto !important;
+}
+.ck-editor {
+    position: relative !important;
+    overflow: visible !important;
+}
+.ck.ck-editor__main {
+    overflow: visible !important;
+}
+.ck-editor__editable_inline {
+    min-height: 180px;
+    height: auto !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+}
+.ck-editor__top {
+    position: static !important;
+}
+.ck-sticky-panel {
+    position: static !important;
+}
+.ck.ck-editor {
+    z-index: 1 !important;
+}
+.ck.ck-balloon-panel {
+    z-index: 1000 !important;
+}
+
+@media (max-width: 576px) {
+    .form-card {
+        padding: 1rem !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard__form__wraper">
+
+    <div class="create__course__title mb-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h4 class="mb-0">{{ action }} Package</h4>
+        <a href="{% url 'ambadyestate_app:package_list' %}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="form-card p-4">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <div class="row">
+                <!-- Name -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Name <span class="text-danger">*</span></label>
+                    {{ form.name }}
+                    {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Duration -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duration</label>
+                    {{ form.duration }}
+                    {% if form.duration.errors %}<div class="text-danger small">{{ form.duration.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Price -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Price</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Status</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}<div class="text-danger small">{{ form.status.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Description (CKEditor) -->
+                <div class="col-12 mb-3">
+                    <label class="form-label">Description <span class="text-danger">*</span></label>
+                    {{ form.description }}
+                    {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Main Image -->
+                <div class="col-12 mb-3">
+                    <label class="form-label">Main Image {% if action == "Create" %}<span class="text-danger">*</span>{% endif %}</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}<div class="text-danger small">{{ form.image.errors }}</div>{% endif %}
+
+                    
+
+                    {% if package and package.image %}
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="image-clear" id="image-clear">
+                        <label class="form-check-label" for="image-clear">Remove current image</label>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Rooms -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Rooms Included</label>
+                    {{ form.rooms }}
+                    {% if form.rooms.errors %}<div class="text-danger small">{{ form.rooms.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Activities -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Activities Included</label>
+                    {{ form.activities }}
+                    {% if form.activities.errors %}<div class="text-danger small">{{ form.activities.errors }}</div>{% endif %}
+                </div>
+
+                
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-success">
+                    {% if action == "Create" %}Create Package{% else %}Save Changes{% endif %}
+                </button>
+                <a href="{% url 'ambadyestate_app:package_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const descriptionField = document.getElementById('{{ form.description.id_for_label }}');
+    if (descriptionField) {
+        ClassicEditor
+            .create(descriptionField, {
+                toolbar: [
+                    'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+                    '|', 'insertTable', 'blockQuote', 'undo', 'redo', 'imageUpload'
+                ]
+            })
+            .then(editor => {
+                editor.plugins.get('FileRepository').createUploadAdapter = loader => {
+                    return {
+                        upload: () => loader.file
+                            .then(file => new Promise((resolve, reject) => {
+                                const reader = new FileReader();
+                                reader.onload = () => resolve({ default: reader.result });
+                                reader.onerror = error => reject(error);
+                                reader.readAsDataURL(file);
+                            })),
+                        abort: () => {}
+                    };
+                };
+                editor.model.document.on('change:data', () => {
+                    editor.updateSourceElement();
+                });
+            })
+            .catch(error => console.error(error));
+    }
+
+    // Proper multi-select dropdowns for Rooms & Activities
+    const roomsEl = document.getElementById('{{ form.rooms.id_for_label }}');
+    const activitiesEl = document.getElementById('{{ form.activities.id_for_label }}');
+
+    if (roomsEl) {
+        new Choices(roomsEl, {
+            removeItemButton: true,
+            searchEnabled: true,
+            placeholderValue: 'Select rooms...',
+            searchPlaceholderValue: 'Search rooms',
+            shouldSort: false,
+        });
+    }
+    if (activitiesEl) {
+        new Choices(activitiesEl, {
+            removeItemButton: true,
+            searchEnabled: true,
+            placeholderValue: 'Select activities...',
+            searchPlaceholderValue: 'Search activities',
+            shouldSort: false,
+        });
+    }
+});
+</script>
+{% endblock %}

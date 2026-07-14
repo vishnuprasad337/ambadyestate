@@ -1,0 +1,1707 @@
+{% extends 'front-end/base.html' %}
+{% load static %}
+
+{% block title %}{{ package.name }} | Ambady Estate Munnar{% endblock %}
+
+{% block content %}
+
+<!-- ===== PACKAGE HERO (now centered, same treatment as the Packages listing hero) ===== -->
+<section class="pkg-hero-section">
+    <div class="pkg-hero-bg" style="background-image: url('{% if package.image %}{{ package.image.url }}{% else %}{% static 'ambadyestate-main/image/pack.png' %}{% endif %}');"></div>
+    <div class="pkg-hero-overlay-full"></div>
+    <div class="r-container pkg-hero-content">
+        <span class="pkg-hero-breadcrumb">
+            <a href="{% url 'ambadyestate_app:home' %}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <a href="{% url 'ambadyestate_app:packages_page' %}">Packages</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>{{ package.name }}</span>
+        </span>
+        <span class="pkg-hero-eyebrow"><i></i>Ambady Estate, Munnar</span>
+        <h1 class="pkg-hero-title">{{ package.name }}</h1>
+        <div class="pkg-hero-meta">
+            {% if package.price %}
+            <span><i class="fa-solid fa-tag"></i> &#8377;{{ package.price|floatformat:0 }} / person</span>
+            {% endif %}
+            {% if package.duration %}
+            <span><i class="fa-solid fa-clock"></i> {{ package.duration }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="pkg-hero-scrollcue" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+</section>
+
+<div class="package-details-section section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+    <div class="r-container">
+
+        <div class="pkg-layout">
+
+            <!-- ===== LEFT SIDEBAR (fully fixed in place; only the right
+                 content column scrolls. Explore Packages + Pricing are
+                 both enlarged and stretch to fill the sidebar height so
+                 there is no vacant space below them.) ===== -->
+            <div class="pkg-sidebar">
+
+                <!-- Explore Packages -->
+                <div class="pkg-explore-card">
+                    <div class="pkg-explore-header">
+                        <h5>Explore Packages</h5>
+                    </div>
+                    <div class="pkg-explore-list">
+                        <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="pkg-explore-item active">
+                            <span>{{ package.name }}</span>
+                            <i class="fa-solid fa-arrow-up-right"></i>
+                        </a>
+                        {% for other in other_packages %}
+                        <a href="{% url 'ambadyestate_app:package_details' other.slug %}" class="pkg-explore-item">
+                            <span>{{ other.name }}</span>
+                            <i class="fa-solid fa-arrow-up-right"></i>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Pricing Plan -->
+                {% if package.price %}
+                <div class="pkg-pricing-card">
+                    <div class="pkg-pricing-header">
+                        <div class="pkg-pricing-icon">
+                            <i class="fa-solid fa-tag"></i>
+                        </div>
+                        <h5>Pricing Plan</h5>
+                        <span class="pkg-pricing-dot"></span>
+                    </div>
+                    <div class="pkg-pricing-body">
+                        <div class="pkg-price-row">
+                            <span class="pkg-price-label">Per Person</span>
+                            <div class="pkg-price-value">
+                                &#8377;{{ package.price|floatformat:0 }}<small>/person</small>
+                            </div>
+                        </div>
+                        {% if package.duration %}
+                        <div class="pkg-duration-row">
+                            <i class="fa-solid fa-clock"></i>
+                            <span>{{ package.duration }}</span>
+                        </div>
+                        {% endif %}
+                        <a href="{% url 'ambadyestate_app:booking_page' %}?package={{ package.slug }}" class="pkg-book-btn">
+                            <span>Book This Package</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- ===== RIGHT: CONTENT (independently scrollable column so
+                 the sidebar on the left stays fixed in the viewport) ===== -->
+            <div class="pkg-content-scroll">
+            <div class="pkg-description-block">
+                <h6 class="accent-color-2">About This Package</h6>
+                <h3>{{ package.name }}</h3>
+
+                <!-- Content-section image (reduced size) -->
+                <div class="pkg-content-img-wrap">
+                    <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
+                </div>
+
+                <p class="pkg-magnetic-text" data-magnetic>{{ package.description }}</p>
+
+                {% with room_count=package.rooms.all.count activity_count=package.activities.all.count %}
+                {% if room_count == 1 and activity_count == 1 %}
+                <!-- Combined single-row layout: one room + one activity shown side by side,
+                     each with its own subheading so they read as distinct inclusions. -->
+                <div class="pkg-includes-block">
+                    <h5 class="pkg-combined-heading">Included in This Package</h5>
+                    <div class="pkg-combined-row">
+                        {% with room=package.rooms.first %}
+                        <div class="pkg-combined-item">
+                            <div class="pkg-combined-subheading">
+                                <span class="pkg-combined-subheading-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 18V6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h10a3 3 0 0 1 3 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3 14h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 9v0a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v2H7V9Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3 18v2M20 18v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span>Room Included</span>
+                            </div>
+                            <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="pkg-item-card">
+                                <div class="pkg-item-img-wrap">
+                                    <div class="pkg-item-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');"></div>
+                                    <div class="pkg-item-overlay"></div>
+                                    <span class="pkg-item-icon"><i class="fa-solid fa-bed"></i></span>
+                                    <div class="pkg-item-body">
+                                        <h6>{{ room.room_category|default:"Room" }}</h6>
+                                        {% if room.price_per_night %}
+                                        <span class="pkg-item-meta">&#8377;{{ room.price_per_night|floatformat:0 }} / night</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endwith %}
+
+                        {% with activity=package.activities.first %}
+                        <div class="pkg-combined-item">
+                            <div class="pkg-combined-subheading">
+                                <span class="pkg-combined-subheading-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.5 19 9 8.5l3 5.5 2-3 5.5 8H3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="17" cy="6" r="1.6" stroke="currentColor" stroke-width="1.8"/>
+                                    </svg>
+                                </span>
+                                <span>Activity Included</span>
+                            </div>
+                            <div class="pkg-activity-card" data-tilt>
+                                <div class="pkg-activity-tilt-inner">
+                                    <div class="pkg-activity-bg" style="background-image: url('{% if activity.image %}{{ activity.image.url }}{% else %}{% static 'ambadyestate-main/image/new/nature.webp' %}{% endif %}');"></div>
+                                    <div class="pkg-activity-shine"></div>
+                                    <div class="pkg-activity-overlay"></div>
+
+                                    <div class="pkg-activity-top">
+                                        <span class="pkg-activity-badge">
+                                            <i class="fa-solid fa-mountain-sun"></i>
+                                        </span>
+                                        {% if activity.duration %}
+                                        <span class="pkg-activity-duration">
+                                            <i class="fa-regular fa-clock"></i> {{ activity.duration }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="pkg-activity-body">
+                                        <h6>{{ activity.name }}</h6>
+                                        <div class="pkg-activity-desc-wrap">
+                                            <p class="pkg-activity-desc">{{ activity.description|default:"An unforgettable experience awaits, curated just for this package." }}</p>
+                                        </div>
+                                        <span class="pkg-activity-cta">
+                                            Discover more <i class="fa-solid fa-arrow-right"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endwith %}
+                    </div>
+                </div>
+                {% else %}
+
+                {% if package.rooms.all %}
+                <div class="pkg-includes-block">
+                    <div class="pkg-includes-heading">
+                        <span class="pkg-includes-eyebrow">Stay Options</span>
+                        <div class="pkg-includes-heading-row">
+                            <h5>Rooms Included</h5>
+                            <span class="pkg-includes-count">{{ package.rooms.all.count }} room{{ package.rooms.all.count|pluralize }}</span>
+                        </div>
+                    </div>
+                    <div class="pkg-card-grid" data-paginate data-per-page="3">
+                        {% for room in package.rooms.all %}
+                        <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="pkg-item-card">
+                            <div class="pkg-item-img-wrap">
+                                <div class="pkg-item-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');"></div>
+                                <div class="pkg-item-overlay"></div>
+                                <span class="pkg-item-icon"><i class="fa-solid fa-bed"></i></span>
+                                <div class="pkg-item-body">
+                                    <h6>{{ room.room_category|default:"Room" }}</h6>
+                                    {% if room.price_per_night %}
+                                    <span class="pkg-item-meta">&#8377;{{ room.price_per_night|floatformat:0 }} / night</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <div class="pkg-pagination" data-pagination-for="rooms"></div>
+                </div>
+                {% endif %}
+
+                {% if package.activities.all %}
+                <div class="pkg-includes-block">
+                    <div class="pkg-includes-heading">
+                        <span class="pkg-includes-eyebrow">Things To Do</span>
+                        <div class="pkg-includes-heading-row">
+                            <h5>Activities Included</h5>
+                            <span class="pkg-includes-count">{{ package.activities.all.count }} activit{{ package.activities.all.count|pluralize:"y,ies" }}</span>
+                        </div>
+                    </div>
+                    <div class="pkg-activity-grid" data-paginate data-per-page="3">
+                        {% for activity in package.activities.all %}
+                        <div class="pkg-activity-card" data-tilt>
+                            <div class="pkg-activity-tilt-inner">
+                                <div class="pkg-activity-bg" style="background-image: url('{% if activity.image %}{{ activity.image.url }}{% else %}{% static 'ambadyestate-main/image/new/nature.webp' %}{% endif %}');"></div>
+                                <div class="pkg-activity-shine"></div>
+                                <div class="pkg-activity-overlay"></div>
+
+                                <div class="pkg-activity-top">
+                                    <span class="pkg-activity-badge">
+                                        <i class="fa-solid fa-mountain-sun"></i>
+                                    </span>
+                                    {% if activity.duration %}
+                                    <span class="pkg-activity-duration">
+                                        <i class="fa-regular fa-clock"></i> {{ activity.duration }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="pkg-activity-body">
+                                    <h6>{{ activity.name }}</h6>
+                                    <div class="pkg-activity-desc-wrap">
+                                        <p class="pkg-activity-desc">{{ activity.description|default:"An unforgettable experience awaits, curated just for this package." }}</p>
+                                    </div>
+                                    <span class="pkg-activity-cta">
+                                        Discover more <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pkg-pagination" data-pagination-for="activities"></div>
+                </div>
+                {% endif %}
+
+                {% endif %}
+                {% endwith %}
+
+                <div class="w-max-content mt-4">
+                    <a href="{% url 'ambadyestate_app:booking_page' %}?package={{ package.slug }}" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3">
+                        <span>Book This Package</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            </div><!-- /.pkg-content-scroll -->
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Global safeguard: stop any element from causing horizontal
+       scroll/bleed-through on mobile (matches Packages/Activities pages). */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    /* ===== HERO — now centered, flat overlay, taller, matching the
+       Packages listing page hero (.about-hero-section) instead of the
+       old bottom-aligned gradient version. Still uses package.image. ===== */
+    .pkg-hero-section {
+        position: relative;
+        width: calc(100% - 40px);
+        margin: 20px auto 0;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 32px;
+    }
+
+    .pkg-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+        transform: scale(1.02);
+    }
+
+    /* Flat overlay (same tone/opacity as the Packages listing hero) */
+    .pkg-hero-overlay-full {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.55);
+        z-index: 1;
+        border-radius: 32px;
+    }
+
+    .pkg-hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .pkg-hero-breadcrumb {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    .pkg-hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .pkg-hero-breadcrumb a:hover { color: #fff; }
+    .pkg-hero-breadcrumb i { font-size: 0.65rem; }
+    .pkg-hero-breadcrumb span { color: var(--accent-color-2, #c8a86a); }
+
+    .pkg-hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .pkg-hero-eyebrow i {
+        display: block;
+        width: 26px;
+        height: 1.5px;
+        background: var(--accent-color-2, #c8a86a);
+    }
+
+    .pkg-hero-title {
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+        font-weight: 300;
+        color: #fff;
+        letter-spacing: -1px;
+        text-transform: capitalize;
+        margin: 4px 0 0;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .pkg-hero-meta {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .pkg-hero-meta span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 600;
+        background: rgba(10, 18, 10, 0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 9px 18px;
+        border-radius: 100px;
+    }
+
+    .pkg-hero-meta i { color: var(--accent-color-2, #c8a86a); }
+
+    .pkg-hero-scrollcue {
+        position: absolute;
+        z-index: 2;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        animation: pkgHeroCueBob 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pkgHeroCueBob {
+        0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+        50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
+    }
+
+    @media (max-width: 767px) {
+        .pkg-hero-section {
+            min-height: 60vh;
+            width: calc(100% - 20px);
+            margin: 12px auto 0;
+            border-radius: 22px;
+        }
+        .pkg-hero-scrollcue { display: none; }
+    }
+
+    @media (max-width: 480px) {
+        .pkg-hero-section { border-radius: 16px; }
+        .pkg-hero-content { padding: 0 18px; }
+        .pkg-hero-breadcrumb { font-size: 0.78rem; }
+        .pkg-hero-eyebrow { font-size: 0.7rem; letter-spacing: 2px; }
+        .pkg-hero-meta span { font-size: 0.84rem; padding: 8px 14px; }
+    }
+
+    /* ===== BELOW HERO ===== */
+    .package-details-section {
+        padding: 60px 0 100px;
+        overflow: visible; /* a hidden/auto overflow on any ancestor breaks position:sticky below */
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+    }
+
+    .package-details-section .r-container {
+        overflow: visible;
+    }
+
+    .pkg-layout {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 40px;
+        align-items: start;
+        overflow: visible;
+    }
+
+    /* ===== SIDEBAR — now truly fixed in the viewport (not just
+       scroll-sticky). It stays in place while only the right content
+       column scrolls. Explore Packages + Pricing are stretched via
+       flex so the card fills the full sidebar height and there is no
+       empty gap beneath the Pricing card. ===== */
+    .pkg-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        position: sticky;
+        top: 90px;
+        align-self: start;
+        height: calc(100vh - 110px);
+        min-height: 560px;
+    }
+
+    .pkg-explore-card {
+        border-radius: 22px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;   /* grow to fill sidebar height so no vacant space remains */
+        min-height: 0;
+    }
+
+    .pkg-explore-header {
+        background: var(--accent-color);
+        padding: 26px 30px;
+        flex: 0 0 auto;
+    }
+
+    .pkg-explore-header h5 {
+        color: #fff;
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    /* Explore Packages list now fills all remaining space inside the
+       card (flex:1) and scrolls internally only if content overflows,
+       instead of stopping at a fixed max-height that left a visible
+       gap above the Pricing card. */
+    .pkg-explore-list {
+        padding: 8px 30px;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color, #2c5f1a) transparent;
+    }
+
+    .pkg-explore-list::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .pkg-explore-list::-webkit-scrollbar-thumb {
+        background: var(--accent-color, #2c5f1a);
+        border-radius: 10px;
+    }
+
+    .pkg-explore-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 1.08rem;
+        font-weight: 600;
+        transition: color 0.3s ease, padding-left 0.3s ease;
+    }
+
+    .pkg-explore-item:last-child {
+        border-bottom: none;
+    }
+
+    .pkg-explore-item i {
+        font-size: 0.9rem;
+        color: var(--text-color-2);
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .pkg-explore-item:hover,
+    .pkg-explore-item.active {
+        color: var(--accent-color);
+        padding-left: 6px;
+    }
+
+    .pkg-explore-item:hover i,
+    .pkg-explore-item.active i {
+        color: var(--accent-color);
+        transform: translate(2px, -2px);
+    }
+
+    /* Pricing card — enlarged and pinned to the bottom of the sidebar
+       flex column so the two cards together fill the full height. */
+    .pkg-pricing-card {
+        border-radius: 22px;
+        background: var(--accent-color-3, #f2f7ee);
+        padding: 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        flex: 0 0 auto;
+    }
+
+    .pkg-pricing-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .pkg-pricing-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--accent-color);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .pkg-pricing-header h5 {
+        margin: 0;
+        font-size: 1.22rem;
+        font-weight: 700;
+        color: var(--text-color);
+    }
+
+    .pkg-pricing-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        margin-left: auto;
+    }
+
+    .pkg-pricing-body {
+        background: #fff;
+        border-radius: 16px;
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .pkg-price-row {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .pkg-price-label {
+        font-size: 0.9rem;
+        color: var(--text-color-2);
+        font-weight: 600;
+    }
+
+    .pkg-price-value {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--accent-color);
+    }
+
+    .pkg-price-value small {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-color-2);
+        margin-left: 4px;
+    }
+
+    .pkg-duration-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        color: var(--text-color-2);
+        font-weight: 600;
+        padding-top: 8px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .pkg-duration-row i {
+        color: var(--accent-color);
+    }
+
+    .pkg-book-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--accent-color);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.98rem;
+        padding: 16px 22px;
+        border-radius: 14px;
+        text-decoration: none;
+        margin-top: 8px;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .pkg-book-btn:hover {
+        background: var(--accent-color-2, #c8a86a);
+        color: var(--text-color);
+        transform: translateY(-2px);
+    }
+
+    .pkg-book-btn i {
+        transition: transform 0.3s ease;
+    }
+
+    .pkg-book-btn:hover i {
+        transform: translateX(4px);
+    }
+
+    /* ===== RIGHT SIDE — scrolls independently of the fixed sidebar.
+       Matches the sidebar's height so both columns start/end level,
+       and the page itself no longer needs to scroll to see the whole
+       right column. ===== */
+    .pkg-content-scroll {
+        height: calc(100vh - 110px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color, #2c5f1a) transparent;
+        padding-right: 6px;
+    }
+
+    .pkg-content-scroll::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .pkg-content-scroll::-webkit-scrollbar-thumb {
+        background: var(--accent-color, #2c5f1a);
+        border-radius: 10px;
+    }
+
+    .pkg-description-block {
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        padding: 36px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .pkg-description-block h3 {
+        margin-bottom: 4px;
+    }
+
+    /* ===== CONTENT-SECTION IMAGE — reduced size, no longer full width ===== */
+    .pkg-content-img-wrap {
+        width: 100%;
+        max-width: 460px;
+        aspect-ratio: 4 / 3;
+        border-radius: 18px;
+        overflow: hidden;
+        margin: 22px auto 28px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .pkg-content-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pkg-content-img-wrap:hover img {
+        transform: scale(1.04);
+    }
+
+    /* Magnetic word-reveal text */
+    .pkg-magnetic-text {
+        color: var(--text-color-2);
+        font-size: 1.04rem;
+        line-height: 2;
+        margin: 0;
+    }
+
+    .pkg-magnetic-text .word {
+        display: inline-block;
+        transition: color 0.25s ease, transform 0.25s ease, font-weight 0.25s ease;
+        will-change: transform, color;
+    }
+
+    /* ===== ROOM / ACTIVITY CARDS ===== */
+    .pkg-includes-block {
+        margin-top: 36px;
+    }
+
+    /* Proper section heading: small eyebrow label, title + item count
+       on one row, underlined with an accent bar. */
+    .pkg-includes-heading {
+        margin-bottom: 18px;
+    }
+
+    .pkg-includes-eyebrow {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #c8a86a);
+        margin-bottom: 6px;
+    }
+
+    .pkg-includes-heading-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--accent-color, #2c5f1a);
+    }
+
+    .pkg-includes-block h5 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .pkg-includes-count {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-color-2);
+        white-space: nowrap;
+    }
+
+    /* Subheadings used inside the combined single room + single
+       activity layout, so each item is clearly labelled. */
+    .pkg-combined-subheading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.86rem;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: var(--text-color);
+        margin: 0 0 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .pkg-combined-subheading-icon {
+        flex: 0 0 auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pkg-combined-subheading-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .pkg-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    /* ===== PAGINATION (rooms + activities) ===== */
+    .pkg-pagination {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .pkg-pagination.is-active {
+        display: flex;
+    }
+
+    .pkg-page-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: #fff;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .pkg-page-btn:hover:not(:disabled) {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: #fff;
+    }
+
+    .pkg-page-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    .pkg-page-dots {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .pkg-page-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.15);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    .pkg-page-dot.is-current {
+        background: var(--accent-color);
+        transform: scale(1.25);
+    }
+
+    .pkg-item-card {
+        display: block;
+        text-decoration: none;
+        border-radius: 18px;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(24px);
+        animation: pkgCardRise 0.7s ease forwards;
+        animation-play-state: paused;
+    }
+
+    .pkg-item-card:nth-child(1) { animation-delay: 0s; }
+    .pkg-item-card:nth-child(2) { animation-delay: 0.1s; }
+    .pkg-item-card:nth-child(3) { animation-delay: 0.2s; }
+    .pkg-item-card:nth-child(4) { animation-delay: 0.3s; }
+    .pkg-item-card:nth-child(5) { animation-delay: 0.4s; }
+    .pkg-item-card:nth-child(6) { animation-delay: 0.5s; }
+
+    @keyframes pkgCardRise {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pkg-item-img-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        aspect-ratio: 4 / 5;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .pkg-item-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pkg-item-card:hover .pkg-item-bg {
+        transform: scale(1.1);
+    }
+
+    .pkg-item-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0.05) 100%);
+        z-index: 1;
+        transition: background 0.4s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-overlay {
+        background: linear-gradient(to top, rgba(10, 20, 10, 0.9) 0%, rgba(44, 95, 26, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%);
+    }
+
+    .pkg-item-icon {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 2;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-icon {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .pkg-item-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 16px;
+        z-index: 2;
+    }
+
+    .pkg-item-body h6 {
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0 0 4px;
+        text-transform: capitalize;
+    }
+
+    .pkg-item-meta {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    /* ===== ACTIVITY CARDS — distinct tilt/reveal treatment.
+       Now a wrapping grid (3 per page) instead of horizontal scroll,
+       since pagination controls handle overflow. ===== */
+    .pkg-activity-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .pkg-activity-card {
+        perspective: 1000px;
+        border-radius: 24px;
+        opacity: 0;
+        transform: translateY(24px);
+        animation: pkgCardRise 0.7s ease forwards;
+        animation-play-state: paused;
+    }
+
+    .pkg-activity-card:nth-child(1) { animation-delay: 0s; }
+    .pkg-activity-card:nth-child(2) { animation-delay: 0.12s; }
+    .pkg-activity-card:nth-child(3) { animation-delay: 0.24s; }
+    .pkg-activity-card:nth-child(4) { animation-delay: 0.36s; }
+    .pkg-activity-card:nth-child(5) { animation-delay: 0.48s; }
+    .pkg-activity-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .pkg-activity-tilt-inner {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        aspect-ratio: 4 / 5;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+        transform-style: preserve-3d;
+        transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+        will-change: transform;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-tilt-inner {
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.26);
+    }
+
+    .pkg-activity-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transform: scale(1.08) translateZ(0);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pkg-activity-card:hover .pkg-activity-bg {
+        transform: scale(1.16);
+    }
+
+    .pkg-activity-shine {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.35) 42%, transparent 60%);
+        transform: translateX(-120%);
+        pointer-events: none;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-shine {
+        animation: pkgShineSweep 1.1s ease forwards;
+    }
+
+    @keyframes pkgShineSweep {
+        to { transform: translateX(120%); }
+    }
+
+    .pkg-activity-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(to top, rgba(6, 20, 12, 0.92) 0%, rgba(6, 20, 12, 0.35) 48%, rgba(6, 20, 12, 0.05) 100%);
+        transition: background 0.4s ease;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-overlay {
+        background: linear-gradient(to top, rgba(6, 20, 12, 0.96) 0%, rgba(44, 95, 26, 0.45) 55%, rgba(6, 20, 12, 0.1) 100%);
+    }
+
+    .pkg-activity-top {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        z-index: 3;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .pkg-activity-badge {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        position: relative;
+    }
+
+    .pkg-activity-badge::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        animation: pkgBadgePulse 2.4s ease-out infinite;
+    }
+
+    @keyframes pkgBadgePulse {
+        0% { transform: scale(0.85); opacity: 0.7; }
+        70% { transform: scale(1.35); opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .pkg-activity-duration {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        background: rgba(10, 18, 10, 0.45);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        padding: 8px 14px;
+        border-radius: 100px;
+    }
+
+    .pkg-activity-duration i {
+        color: var(--accent-color-2, #c8a86a);
+    }
+
+    .pkg-activity-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        padding: 26px;
+        transform: translateZ(20px);
+    }
+
+    .pkg-activity-body h6 {
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0;
+        text-transform: capitalize;
+        transition: transform 0.35s ease;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-body h6 {
+        transform: translateY(-2px);
+    }
+
+    .pkg-activity-desc-wrap {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, opacity 0.35s ease, margin 0.4s ease;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-desc-wrap {
+        max-height: 100px;
+        opacity: 1;
+        margin-top: 10px;
+    }
+
+    .pkg-activity-desc {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .pkg-activity-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-top: 12px;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-cta {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .pkg-activity-cta i {
+        transition: transform 0.3s ease;
+    }
+
+    .pkg-activity-card:hover .pkg-activity-cta i {
+        transform: translateX(4px);
+    }
+
+    @media (max-width: 767px) {
+        .pkg-activity-grid {
+            grid-template-columns: 1fr;
+        }
+        .pkg-activity-tilt-inner {
+            aspect-ratio: 4 / 5;
+        }
+    }
+
+    /* On touch devices there's no hover, so the activity description
+       and CTA would stay permanently hidden — reveal them by default. */
+    @media (hover: none) {
+        .pkg-activity-desc-wrap {
+            max-height: 100px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+        .pkg-activity-cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .pkg-item-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ===== COMBINED ROW — used only when exactly one room + one
+       activity exist ===== */
+    .pkg-combined-heading {
+        margin: 0 0 24px;
+    }
+
+    .pkg-combined-row {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+
+    .pkg-combined-item {
+        flex: 1 1 340px;
+        max-width: 460px;
+    }
+
+    .pkg-combined-item .pkg-item-card .pkg-item-img-wrap {
+        aspect-ratio: 4 / 5;
+    }
+
+    .pkg-combined-item .pkg-activity-card {
+        width: 100%;
+    }
+
+    .pkg-combined-item .pkg-activity-card .pkg-activity-tilt-inner {
+        aspect-ratio: 4 / 5;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1199px) {
+        .pkg-layout {
+            grid-template-columns: 360px 1fr;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .pkg-layout {
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+
+        .pkg-sidebar {
+            position: static;
+            height: auto;
+            min-height: 0;
+        }
+
+        .pkg-explore-list {
+            max-height: 320px;
+        }
+
+        .pkg-content-scroll {
+            height: auto;
+            overflow: visible;
+            padding-right: 0;
+        }
+
+        .pkg-description-block {
+            padding: 24px;
+        }
+
+        .pkg-card-grid,
+        .pkg-activity-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Force reliable stacking for combined room+activity row */
+        .pkg-combined-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .pkg-combined-item {
+            flex: 1 1 auto;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .pkg-combined-item .pkg-item-card .pkg-item-img-wrap,
+        .pkg-combined-item .pkg-activity-card .pkg-activity-tilt-inner {
+            aspect-ratio: 4 / 5;
+            max-height: 420px;
+        }
+
+        .pkg-combined-item + .pkg-combined-item {
+            margin-top: 32px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .package-details-section {
+            padding: 50px 0 70px;
+        }
+        .package-details-section .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .pkg-explore-header {
+            padding: 20px 24px;
+        }
+        .pkg-explore-header h5 {
+            font-size: 1.15rem;
+        }
+        .pkg-explore-list {
+            padding: 6px 24px;
+            max-height: 260px;
+        }
+        .pkg-explore-item {
+            padding: 18px 0;
+            font-size: 1rem;
+        }
+
+        .pkg-pricing-card {
+            padding: 22px;
+        }
+        .pkg-pricing-body {
+            padding: 20px;
+        }
+        .pkg-price-value {
+            font-size: 2rem;
+        }
+
+        .pkg-includes-block {
+            margin-top: 28px;
+        }
+        .pkg-includes-block h5 {
+            font-size: 1.1rem;
+        }
+
+        .pkg-activity-body {
+            padding: 20px;
+        }
+        .pkg-activity-body h6 {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .package-details-section {
+            padding: 40px 0 60px;
+        }
+
+        .pkg-explore-header,
+        .pkg-explore-list {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .pkg-description-block {
+            padding: 18px;
+            border-radius: 18px;
+        }
+
+        .pkg-content-img-wrap {
+            max-width: 100%;
+        }
+
+        .pkg-card-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .pkg-item-body {
+            padding: 12px;
+        }
+        .pkg-item-body h6 {
+            font-size: 0.85rem;
+        }
+        .pkg-item-meta {
+            font-size: 0.72rem;
+        }
+
+        .pkg-activity-grid {
+            gap: 16px;
+        }
+        .pkg-activity-top {
+            top: 14px;
+            left: 14px;
+            right: 14px;
+        }
+        .pkg-activity-badge {
+            width: 38px;
+            height: 38px;
+            font-size: 1rem;
+        }
+        .pkg-activity-duration {
+            font-size: 0.74rem;
+            padding: 6px 10px;
+        }
+
+        .pkg-magnetic-text {
+            font-size: 0.95rem;
+            line-height: 1.85;
+        }
+
+        .pkg-combined-item .pkg-item-card .pkg-item-img-wrap,
+        .pkg-combined-item .pkg-activity-card .pkg-activity-tilt-inner {
+            max-height: 340px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .package-details-section .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .pkg-description-block {
+            padding: 14px;
+        }
+        .pkg-card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 767px) {
+    .pkg-activity-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pkg-activity-card {
+        width: 100%;
+    }
+
+    .pkg-activity-tilt-inner {
+        aspect-ratio: 4 / 5;
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .pkg-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pkg-item-card {
+        width: 100%;
+    }
+
+    .pkg-item-img-wrap {
+        aspect-ratio: 4 / 5;
+        width: 100%;
+    }
+
+    .pkg-activity-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pkg-activity-card {
+        width: 100%;
+    }
+
+    .pkg-activity-tilt-inner {
+        aspect-ratio: 4 / 5;
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* ===== Magnetic word-reveal description text ===== */
+    const magneticEl = document.querySelector('.pkg-magnetic-text');
+    if (magneticEl) {
+        const originalText = magneticEl.textContent.trim();
+        const words = originalText.split(/\s+/);
+        magneticEl.innerHTML = words
+            .map(w => `<span class="word">${w}</span>`)
+            .join(' ');
+
+        const wordEls = Array.from(magneticEl.querySelectorAll('.word'));
+        const RADIUS = 90; // px — proximity range for the effect
+
+        function updateWords(mouseX, mouseY) {
+            wordEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dist = Math.hypot(mouseX - cx, mouseY - cy);
+
+                if (dist < RADIUS) {
+                    const strength = 1 - dist / RADIUS; // 0..1
+                    const scale = 1 + strength * 0.22;
+                    el.style.transform = `translateY(${-strength * 4}px) scale(${scale})`;
+                    el.style.color = 'var(--accent-color)';
+                    el.style.fontWeight = strength > 0.5 ? '700' : '600';
+                } else {
+                    el.style.transform = '';
+                    el.style.color = '';
+                    el.style.fontWeight = '';
+                }
+            });
+        }
+
+        magneticEl.addEventListener('mousemove', (e) => {
+            updateWords(e.clientX, e.clientY);
+        });
+
+        magneticEl.addEventListener('mouseleave', () => {
+            wordEls.forEach(el => {
+                el.style.transform = '';
+                el.style.color = '';
+                el.style.fontWeight = '';
+            });
+        });
+    }
+
+    /* Scroll-reveal for included room/activity cards */
+    const revealCards = document.querySelectorAll('.pkg-item-card, .pkg-activity-card');
+    if (revealCards.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, root: document.querySelector('.pkg-content-scroll') || null });
+
+        revealCards.forEach(el => observer.observe(el));
+    }
+
+    /* ===== Pagination for Rooms / Activities grids =====
+       Any grid marked [data-paginate] gets split into pages of
+       [data-per-page] items, with prev/next buttons + page dots
+       injected into the matching .pkg-pagination container. */
+    function setupPagination(grid, paginationEl) {
+        const items = Array.from(grid.children);
+        const perPage = parseInt(grid.dataset.perPage, 10) || 3;
+        const pageCount = Math.ceil(items.length / perPage);
+
+        if (pageCount <= 1) return; // nothing to paginate
+
+        let currentPage = 0;
+
+        function renderPage() {
+            items.forEach((item, i) => {
+                const page = Math.floor(i / perPage);
+                item.style.display = page === currentPage ? '' : 'none';
+            });
+
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === pageCount - 1;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('is-current', i === currentPage);
+            });
+        }
+
+        paginationEl.innerHTML = '';
+
+        const prevBtn = document.createElement('button');
+        prevBtn.type = 'button';
+        prevBtn.className = 'pkg-page-btn';
+        prevBtn.setAttribute('aria-label', 'Previous page');
+        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage -= 1;
+                renderPage();
+            }
+        });
+
+        const dotsWrap = document.createElement('div');
+        dotsWrap.className = 'pkg-page-dots';
+        const dots = [];
+        for (let i = 0; i < pageCount; i += 1) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'pkg-page-dot';
+            dot.setAttribute('aria-label', `Go to page ${i + 1}`);
+            dot.addEventListener('click', () => {
+                currentPage = i;
+                renderPage();
+            });
+            dots.push(dot);
+            dotsWrap.appendChild(dot);
+        }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button';
+        nextBtn.className = 'pkg-page-btn';
+        nextBtn.setAttribute('aria-label', 'Next page');
+        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < pageCount - 1) {
+                currentPage += 1;
+                renderPage();
+            }
+        });
+
+        paginationEl.appendChild(prevBtn);
+        paginationEl.appendChild(dotsWrap);
+        paginationEl.appendChild(nextBtn);
+        paginationEl.classList.add('is-active');
+
+        renderPage();
+    }
+
+    const roomsGrid = document.querySelector('.pkg-card-grid[data-paginate]');
+    const roomsPagination = document.querySelector('[data-pagination-for="rooms"]');
+    if (roomsGrid && roomsPagination) {
+        setupPagination(roomsGrid, roomsPagination);
+    }
+
+    const activitiesGrid = document.querySelector('.pkg-activity-grid[data-paginate]');
+    const activitiesPagination = document.querySelector('[data-pagination-for="activities"]');
+    if (activitiesGrid && activitiesPagination) {
+        setupPagination(activitiesGrid, activitiesPagination);
+    }
+
+    /* 3D tilt effect for activity cards */
+    const tiltCards = document.querySelectorAll('[data-tilt]');
+    const MAX_TILT = 10; // degrees
+
+    tiltCards.forEach(card => {
+        const inner = card.querySelector('.pkg-activity-tilt-inner');
+        if (!inner) return;
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const percentX = (x / rect.width) - 0.5;
+            const percentY = (y / rect.height) - 0.5;
+
+            const rotateY = percentX * MAX_TILT * 2;
+            const rotateX = -percentY * MAX_TILT * 2;
+
+            inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+    });
+});
+</script>
+
+{% endblock %}

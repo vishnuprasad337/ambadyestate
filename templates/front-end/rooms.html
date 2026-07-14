@@ -1,0 +1,1244 @@
+{% extends 'front-end/base.html' %}
+{% load static %}
+
+{% block title %}Our Stays | Ambady Estate Munnar{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO TITLE SECTION (same as About) ===== -->
+<section class="about-hero-section">
+    <div class="about-hero-bg" style="background-image: url('{% static 'ambadyestate-main/image/new/hero3.webp' %}');"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="r-container about-hero-content">
+        <span class="about-hero-breadcrumb">
+            <a href="{% url 'ambadyestate_app:home' %}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>Our Rooms</span>
+        </span>
+        <h1 class="about-hero-title">Our Stays</h1>
+        <p class="about-hero-sub">Colonial cottages, plantation villas, and quiet spaces designed around Munnar's mountain views.</p>
+    </div>
+</section>
+
+<style>
+    .about-hero-section {
+        position: relative;
+        width: calc(100% - 40px);
+        margin: 20px auto 0;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 32px;
+    }
+
+    .about-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+    }
+
+    .about-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.55);
+        z-index: 1;
+        border-radius: 32px;
+    }
+
+    .about-hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .about-hero-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .about-hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .about-hero-breadcrumb a:hover { color: #fff; }
+    .about-hero-breadcrumb i { font-size: 0.7rem; }
+    .about-hero-breadcrumb span { color: var(--accent-color-2, #c8a86a); }
+
+    .about-hero-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+        font-weight: 300;
+        color: #fff;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .about-hero-sub {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 560px;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    @media (max-width: 767px) {
+        .about-hero-section {
+            min-height: 60vh;
+            width: calc(100% - 20px);
+            margin: 12px auto 0;
+            border-radius: 22px;
+        }
+        .about-hero-title { font-size: clamp(2rem, 10vw, 3rem); }
+    }
+
+    @media (max-width: 480px) {
+        .about-hero-section { border-radius: 16px; }
+        .about-hero-content { padding: 0 18px; }
+        .about-hero-sub { font-size: 0.95rem; max-width: 100%; }
+        .about-hero-breadcrumb { font-size: 0.8rem; }
+    }
+
+    /* Global safeguard: stop any element from causing horizontal
+       scroll/bleed-through on mobile. */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    * {
+        box-sizing: border-box;
+    }
+</style>
+
+<!-- ===== ROOMS (accordion style, 3 cards per set, auto-rotating) ===== -->
+<div id="rooms" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_feature.png' %}');">
+    <div class="r-container d-flex flex-column gap-3">
+        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
+            style="max-width: 700px;">
+            <h6 class="accent-color-2">Our Accommodations</h6>
+            <h3>Colonial Cottages &amp; Private Villa</h3>
+            <p>Each chalet is placed with care overlooking the majestic landscape of Munnar — some face the
+                valleys and mountains, others nestle within the woods.</p>
+        </div>
+
+        <div class="accordion-viewport">
+            {% for room in rooms %}
+                {% if forloop.counter0|divisibleby:3 %}
+                    {% if not forloop.first %}</div>{% endif %}
+                    <div class="accordion-container{% if forloop.first %} active{% endif %}">
+                {% endif %}
+                <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative"
+                    style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');">
+                    <div class="bg-overlay"></div>
+                    <div class="d-flex flex-column justify-content-between align-items-end text-white position-relative h-100"
+                        style="z-index: 2; padding: 40px;">
+                        <span class="icon-box link">
+                            <i class="fa-solid fa-arrow-right" style="font-size: 20px;"></i>
+                        </span>
+                        <div class="d-flex flex-column gap-2 w-100">
+                            <h4>{{ room.room_category|default:"Room" }}</h4>
+                            <p class="text-white" style="max-width: 400px;">
+                                {{ room.description|striptags|truncatewords:28 }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                {% if forloop.last %}</div>{% endif %}
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p>No rooms available right now. Please check back soon.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if rooms|length > 3 %}
+        <div class="accordion-dots"></div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* ===== ACCOMMODATIONS SECTION ===== */
+    #rooms {
+        padding: 100px 0;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+    }
+
+    .accordion-viewport {
+        position: relative;
+    }
+
+    .accordion-container {
+        display: none;
+        gap: 16px;
+        height: 460px;
+    }
+
+    .accordion-container.active {
+        display: flex;
+        animation: fadeInSlide 0.6s ease;
+    }
+
+    @keyframes fadeInSlide {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .accordion-item {
+        position: relative;
+        display: block;
+        text-decoration: none;
+        border-radius: 20px;
+        overflow: hidden;
+        background-size: 105%;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        flex: 1;
+        transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            background-size 1.2s ease;
+        will-change: flex;
+    }
+
+    .accordion-item .bg-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top,
+                rgba(10, 20, 10, 0.92) 0%,
+                rgba(10, 20, 10, 0.45) 45%,
+                rgba(10, 20, 10, 0.1) 100%);
+        z-index: 1;
+        transition: background 0.8s ease;
+    }
+
+    .accordion-item:hover .bg-overlay {
+        background: linear-gradient(to top,
+                rgba(10, 20, 10, 0.88) 0%,
+                rgba(20, 50, 20, 0.4) 55%,
+                rgba(10, 20, 10, 0.05) 100%);
+    }
+
+    /* Expand ratios */
+    .accordion-container:has(.accordion-item:hover) .accordion-item {
+        flex: 0.75;
+        transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
+        flex: 2.0;
+        transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background-size: 112%;
+    }
+
+    /* Inner layout */
+    .accordion-item > div[style*="z-index: 2"] {
+        padding: 32px !important;
+    }
+
+    /* Icon box */
+    .accordion-item .icon-box.link {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(-8px);
+        flex-shrink: 0;
+        align-self: flex-end;
+        transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s, background 0.3s ease;
+    }
+
+    .accordion-item:hover .icon-box.link {
+        opacity: 1;
+        transform: translateY(0);
+        background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Heading */
+    .accordion-item h4 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 10px;
+        line-height: 1.2;
+        text-transform: capitalize;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
+        will-change: transform;
+    }
+
+    /* Description */
+    .accordion-item p.text-white {
+        font-size: 0.88rem;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.78) !important;
+        max-width: 360px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
+        margin: 0;
+        will-change: opacity, transform;
+    }
+
+    .accordion-item:hover p.text-white {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Decorative underline */
+    .accordion-item::after {
+        content: '';
+        position: absolute;
+        bottom: 32px;
+        left: 32px;
+        width: 36px;
+        height: 3px;
+        background: var(--accent-color-2, #c8a86a);
+        border-radius: 2px;
+        z-index: 3;
+        transition: width 0.5s ease;
+    }
+
+    .accordion-item:hover::after {
+        width: 56px;
+    }
+
+    /* Bottom content block — prevent reflow jank */
+    .accordion-item > div[style*="z-index: 2"] > div:last-child {
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    /* Dots navigation */
+    .accordion-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 24px;
+    }
+
+    .accordion-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(200, 168, 106, 0.3);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .accordion-dot.active {
+        background: var(--accent-color-2, #c8a86a);
+        transform: scale(1.2);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991px) {
+        #rooms {
+            padding: 70px 0;
+        }
+
+        .accordion-container.active {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .accordion-item,
+        .accordion-container:has(.accordion-item:hover) .accordion-item,
+        .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
+            flex: none !important;
+            min-height: 280px;
+            background-size: 105% !important;
+        }
+
+        .accordion-item p.text-white {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .accordion-item .icon-box.link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .accordion-item::after {
+            width: 36px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #rooms {
+            padding: 50px 0;
+        }
+        #rooms .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .accordion-item > div[style*="z-index: 2"] {
+            padding: 24px !important;
+        }
+
+        .accordion-item h4 {
+            font-size: 1.2rem;
+        }
+
+        .accordion-item p.text-white {
+            font-size: 0.85rem;
+            max-width: 100%;
+        }
+
+        .accordion-item::after {
+            bottom: 24px;
+            left: 24px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #rooms {
+            padding: 40px 0;
+        }
+
+        .accordion-item {
+            min-height: 240px;
+        }
+
+        .accordion-item > div[style*="z-index: 2"] {
+            padding: 20px !important;
+        }
+
+        .accordion-item h4 {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #rooms .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const viewport = document.querySelector('.accordion-viewport');
+    if (!viewport) return;
+
+    const slides = Array.from(viewport.querySelectorAll('.accordion-container'));
+    if (slides.length <= 1) return; // 3 or fewer rooms — nothing to rotate
+
+    const dotsWrap = document.querySelector('.accordion-dots');
+    let current = 0;
+    let intervalId;
+    const AUTO_DELAY = 5000; // 5 seconds per set
+
+    // Build dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'accordion-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => {
+            goToSlide(i);
+            resetTimer();
+        });
+        dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function goToSlide(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = index;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+    }
+
+    function nextSlide() {
+        goToSlide((current + 1) % slides.length);
+    }
+
+    function resetTimer() {
+        clearInterval(intervalId);
+        intervalId = setInterval(nextSlide, AUTO_DELAY);
+    }
+
+    resetTimer();
+
+    // Pause auto-rotate while hovering over the cards
+    viewport.addEventListener('mouseenter', () => clearInterval(intervalId));
+    viewport.addEventListener('mouseleave', resetTimer);
+});
+</script>
+<!-- Section Amenities -->
+<div id="projects" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_service.png' %}');">
+    <div class="r-container d-flex flex-column gap-5 align-items-center">
+
+        <!-- Heading -->
+        <div class="d-flex flex-column gap-3 justify-content-center align-items-center mx-auto text-center"
+            style="max-width: 667px;">
+            <h3>Everything you need for a Stay</h3>
+            <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of everything so you
+                can simply enjoy the mountains.</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="row row-cols-xl-3 row-cols-1 w-100 g-4 amenity-auto-cycle">
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h5>24/7 Estate Assistance</h5>
+                    <p>Our team is always available — from check-in queries to local guidance throughout your
+                        stay.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <h5>Kerala Breakfast</h5>
+                    <p>Start each morning with a freshly prepared traditional Kerala breakfast — warm and local.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h5>Organic Plantation</h5>
+                    <p>Stay inside Kerala's only certified organic cardamom estate — a living plantation all
+                        around you.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h5>Safe &amp; Secure</h5>
+                    <p>A calm, well-managed property with thoughtful safety arrangements so guests relax with
+                        confidence.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-car"></i>
+                    </div>
+                    <h5>Easy Parking</h5>
+                    <p>Ample and secure parking available for families, groups, and road travellers at the
+                        estate.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="amenity-card">
+                    <div class="amenity-icon-wrap">
+                        <i class="fa-solid fa-person-swimming"></i>
+                    </div>
+                    <h5>Swimming Pool</h5>
+                    <p>Relax in the pool set against a breathtaking backdrop of plantation greens and misty
+                        mountains.</p>
+                    <div class="amenity-deco"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== SECTION ===== */
+    #projects {
+        padding: 100px 0;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+    }
+
+    .amenity-card {
+        position: relative;
+        overflow: hidden;
+        padding: 40px 32px;
+        min-height: 240px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border-radius: 22px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background: var(--accent-color);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: background-color 0.5s ease, transform 0.4s ease, box-shadow 0.4s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .amenity-card h5 {
+        color: #fff;
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        transition: color 0.4s ease;
+    }
+
+    .amenity-card p {
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+    }
+
+    .amenity-icon-wrap {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transition: background-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .amenity-icon-wrap i {
+        font-size: 26px;
+        transition: transform 0.4s ease;
+    }
+
+    .amenity-deco {
+        position: absolute;
+        bottom: -60px;
+        right: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        transition: transform 0.5s ease, opacity 0.5s ease, background-color 0.5s ease;
+        opacity: 0.6;
+    }
+
+    /* ===== ACTIVE / HOVER / TOUCH STATE ===== */
+    .amenity-card:hover,
+    .amenity-card.active {
+        background-color: var(--accent-color-2, #c8a86a);
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .amenity-card:hover h5,
+    .amenity-card.active h5 {
+        color: var(--text-color, #1a1e16);
+    }
+
+    .amenity-card:hover p,
+    .amenity-card.active p {
+        color: rgba(26, 30, 22, 0.75);
+    }
+
+    .amenity-card:hover .amenity-icon-wrap,
+    .amenity-card.active .amenity-icon-wrap {
+        background: rgba(255, 255, 255, 0.35);
+    }
+
+    .amenity-card:hover .amenity-icon-wrap i,
+    .amenity-card.active .amenity-icon-wrap i {
+        transform: scale(1.12) rotate(-6deg);
+    }
+
+    .amenity-card:hover .amenity-deco,
+    .amenity-card.active .amenity-deco {
+        transform: scale(1.3);
+        opacity: 0.9;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Touch tap pulse feedback (mobile) */
+    .amenity-card.touch-pulse::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.35);
+        opacity: 0;
+        animation: amenityPulse 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes amenityPulse {
+        0% {
+            opacity: 0.6;
+            transform: scale(0.96);
+        }
+
+        100% {
+            opacity: 0;
+            transform: scale(1.04);
+        }
+    }
+
+    .row-cols-xl-3 > .col {
+        display: flex;
+    }
+
+    @media (max-width: 991px) {
+        #projects {
+            padding: 70px 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #projects {
+            padding: 50px 0;
+        }
+        #projects .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .amenity-card {
+            padding: 28px 22px;
+            min-height: auto;
+        }
+
+        .amenity-icon-wrap {
+            width: 50px;
+            height: 50px;
+        }
+        .amenity-icon-wrap i {
+            font-size: 22px;
+        }
+
+        .amenity-card h5 {
+            font-size: 1.1rem;
+        }
+        .amenity-card p {
+            font-size: 0.86rem;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #projects {
+            padding: 40px 0;
+        }
+        .amenity-card {
+            padding: 22px 18px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #projects .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const cycleWrap = document.querySelector('.amenity-auto-cycle');
+    if (!cycleWrap) return;
+
+    const cards = Array.from(cycleWrap.querySelectorAll('.amenity-card'));
+    if (!cards.length) return;
+
+    let current = 0;
+    let autoTimer = null;
+    let resumeTimer = null;
+
+    function activate(index) {
+        cards.forEach(card => card.classList.remove('active'));
+        cards[index].classList.add('active');
+    }
+
+    function stopCycle() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    function startCycle() {
+        stopCycle();
+        autoTimer = setInterval(() => {
+            current = (current + 1) % cards.length;
+            activate(current);
+        }, 2200);
+    }
+
+    function pulse(card) {
+        card.classList.remove('touch-pulse');
+        void card.offsetWidth; // force reflow so animation retriggers
+        card.classList.add('touch-pulse');
+        setTimeout(() => card.classList.remove('touch-pulse'), 600);
+    }
+
+    cards.forEach((card, index) => {
+        // Desktop hover
+        card.addEventListener('mouseenter', () => {
+            stopCycle();
+            current = index;
+            activate(index);
+        });
+        card.addEventListener('mouseleave', () => {
+            startCycle();
+        });
+
+        // Mobile / touch tap
+        card.addEventListener('touchstart', () => {
+            stopCycle();
+            clearTimeout(resumeTimer);
+            current = index;
+            activate(index);
+            pulse(card);
+            resumeTimer = setTimeout(startCycle, 2500);
+        }, { passive: true });
+    });
+
+    activate(current);
+    startCycle();
+});
+</script>
+<!-- Section Nearby Destinations -->
+<div id="nearby" class="section" style="background-image: url('{% static 'ambadyestate-main/image/NBD.png' %}');">
+    <div class="r-container d-flex flex-column gap-4">
+        <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+            <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
+                <h6 class="accent-color-2">Explore Around</h6>
+                <h3>Nearby Destinations worth exploring</h3>
+                <p>
+                    Just minutes from Ambady Estate — viewpoints, waterfalls, and scenic spots that make your
+                    Munnar stay even more memorable.
+                </p>
+            </div>
+            <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
+                <div class="w-max-content">
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="nearby-viewport">
+            {% for destination in nearby_destinations %}
+                {% if forloop.counter0|divisibleby:3 %}
+                    {% if not forloop.first %}</div>{% endif %}
+                    <div class="nearby-page{% if forloop.first %} active{% endif %}">
+                {% endif %}
+                <a href="{% url 'ambadyestate_app:nearby_destination_details' destination.slug %}" class="nearby-card">
+                    <div class="nearby-card-img-wrap">
+                        <img src="{{ destination.image.url }}" alt="{{ destination.name }}" loading="lazy">
+                        <div class="nearby-overlay"></div>
+                        {% if destination.distance %}
+                        <div class="nearby-tag">{{ destination.distance }}</div>
+                        {% endif %}
+                        <div class="nearby-card-body">
+                            <h4>{{ destination.name }}</h4>
+                            <p>{{ destination.description|striptags|truncatewords:16 }}</p>
+                            <span class="nearby-read-more">
+                                Read More
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                {% if forloop.last %}</div>{% endif %}
+            {% empty %}
+                <div class="nearby-page active">
+                    <div class="col-12 text-center">
+                        <p>No nearby destinations added yet. Please check back soon.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if nearby_destinations|length > 3 %}
+        <div class="nearby-controls">
+            <button type="button" class="nearby-nav-btn nearby-prev" aria-label="Previous destinations">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="nearby-dots"></div>
+            <button type="button" class="nearby-nav-btn nearby-next" aria-label="Next destinations">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* ===== NEARBY DESTINATIONS ===== */
+    #nearby {
+        padding: 100px 0;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+    }
+
+    .nearby-viewport {
+        position: relative;
+    }
+
+    .nearby-page {
+        display: none;
+        gap: 24px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .nearby-page.active {
+        display: grid;
+        animation: nearbyFadeIn 0.6s ease;
+    }
+
+    @keyframes nearbyFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nearby-card {
+        display: block;
+        text-decoration: none;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        height: 100%;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.16);
+    }
+
+    .nearby-card-img-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        background: #1a1e16;
+    }
+
+    .nearby-card-img-wrap img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        filter: brightness(0.72);
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
+    }
+
+    .nearby-card:hover .nearby-card-img-wrap img {
+        transform: scale(1.06);
+        filter: brightness(0.6);
+    }
+
+    .nearby-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.4) 40%,
+                rgba(0, 0, 0, 0.08) 70%,
+                rgba(0, 0, 0, 0.2) 100%);
+        z-index: 1;
+        transition: background 0.4s ease;
+    }
+
+    .nearby-card:hover .nearby-overlay {
+        background: linear-gradient(to top,
+                rgba(10, 20, 10, 0.9) 0%,
+                rgba(44, 95, 26, 0.4) 45%,
+                rgba(0, 0, 0, 0.08) 75%,
+                rgba(0, 0, 0, 0.2) 100%);
+    }
+
+    .nearby-tag {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--accent-color-2);
+        color: var(--text-color);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 5px 14px;
+        border-radius: 4px;
+        z-index: 2;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .nearby-card:hover .nearby-tag {
+        background: var(--accent-color);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    .nearby-card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 26px;
+        z-index: 2;
+    }
+
+    .nearby-card-body h4 {
+        color: #fff;
+        font-size: 1.25rem;
+        line-height: 1.3;
+        margin-bottom: 0;
+        font-weight: 700;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+        transition: margin-bottom 0.4s ease;
+    }
+
+    .nearby-card-body p {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.88rem;
+        line-height: 1.65;
+        margin: 10px 0 0;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+    }
+
+    .nearby-read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-top: 12px;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+    }
+
+    .nearby-card:hover h4 {
+        margin-bottom: 4px;
+    }
+
+    .nearby-card:hover p {
+        max-height: 100px;
+        opacity: 1;
+    }
+
+    .nearby-card:hover .nearby-read-more {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .nearby-read-more i {
+        transition: transform 0.3s ease;
+        font-size: 0.75rem;
+    }
+
+    .nearby-read-more:hover i {
+        transform: translateX(4px);
+    }
+
+    /* ===== CONTROLS ===== */
+    .nearby-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 8px;
+    }
+
+    .nearby-nav-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 30, 22, 0.15);
+        background: #fff;
+        color: var(--accent-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .nearby-nav-btn:hover {
+        background: var(--accent-color);
+        color: #fff;
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+    }
+
+    .nearby-dots {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nearby-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(200, 168, 106, 0.3);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .nearby-dot.active {
+        background: var(--accent-color-2, #c8a86a);
+        transform: scale(1.2);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991px) {
+        #nearby {
+            padding: 70px 0;
+        }
+
+        .nearby-page {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .nearby-card-body p,
+        .nearby-read-more {
+            opacity: 1;
+            max-height: 100px;
+            transform: translateY(0);
+        }
+
+        .nearby-card h4 {
+            margin-bottom: 4px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #nearby {
+            padding: 50px 0;
+        }
+        #nearby .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .nearby-controls {
+            gap: 14px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #nearby {
+            padding: 40px 0;
+        }
+
+        .nearby-page {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .nearby-card-img-wrap {
+            aspect-ratio: 4 / 3;
+        }
+
+        .nearby-card-body {
+            padding: 22px;
+        }
+
+        .nearby-card-body h4 {
+            font-size: 1.1rem;
+        }
+
+        .nearby-nav-btn {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #nearby .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .nearby-card-body {
+            padding: 18px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const viewport = document.querySelector('.nearby-viewport');
+    if (!viewport) return;
+
+    const pages = Array.from(viewport.querySelectorAll('.nearby-page'));
+    if (pages.length <= 1) return; // 3 or fewer destinations — nothing to paginate
+
+    const dotsWrap = document.querySelector('.nearby-dots');
+    const prevBtn = document.querySelector('.nearby-prev');
+    const nextBtn = document.querySelector('.nearby-next');
+
+    let current = 0;
+
+    // Build dots
+    pages.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'nearby-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToPage(i));
+        dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function goToPage(index) {
+        pages[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (index + pages.length) % pages.length;
+        pages[current].classList.add('active');
+        dots[current].classList.add('active');
+    }
+
+    prevBtn.addEventListener('click', () => goToPage(current - 1));
+    nextBtn.addEventListener('click', () => goToPage(current + 1));
+});
+</script>
+{% endblock %}

@@ -1,0 +1,889 @@
+{% extends 'front-end/base.html' %}
+{% load static %}
+
+{% block title %}Our Packages | Ambady Estate Munnar{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO TITLE SECTION (same as Stays) ===== -->
+<section class="about-hero-section">
+    <div class="about-hero-bg" style="background-image: url('{% static 'ambadyestate-main/image/new/hero3.webp' %}');"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="r-container about-hero-content">
+        <span class="about-hero-breadcrumb">
+            <a href="{% url 'ambadyestate_app:home' %}">Home</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>Our Packages</span>
+        </span>
+        <h1 class="about-hero-title">Our Packages</h1>
+        <p class="about-hero-sub">Curated stays and experiences designed around Munnar's mountains, plantations, and quiet moments.</p>
+    </div>
+</section>
+
+<style>
+    .about-hero-section {
+        position: relative;
+        width: calc(100% - 40px);
+        margin: 20px auto 0;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 32px;
+    }
+
+    .about-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+    }
+
+    .about-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.55);
+        z-index: 1;
+        border-radius: 32px;
+    }
+
+    .about-hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .about-hero-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .about-hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .about-hero-breadcrumb a:hover { color: #fff; }
+    .about-hero-breadcrumb i { font-size: 0.7rem; }
+    .about-hero-breadcrumb span { color: var(--accent-color-2, #c8a86a); }
+
+    .about-hero-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+        font-weight: 300;
+        color: #fff;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .about-hero-sub {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 560px;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    @media (max-width: 767px) {
+        .about-hero-section {
+            min-height: 60vh;
+            width: calc(100% - 20px);
+            margin: 12px auto 0;
+            border-radius: 22px;
+        }
+        .about-hero-title { font-size: clamp(2rem, 10vw, 3rem); }
+    }
+
+    @media (max-width: 480px) {
+        .about-hero-section { border-radius: 16px; }
+        .about-hero-content { padding: 0 18px; }
+        .about-hero-sub { font-size: 0.95rem; max-width: 100%; }
+        .about-hero-breadcrumb { font-size: 0.8rem; }
+    }
+
+    /* Global safeguard: stop any element from causing horizontal
+       scroll/bleed-through on mobile. */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    * {
+        box-sizing: border-box;
+    }
+</style>
+
+<!-- ===== PACKAGES GRID ===== -->
+<div id="packages" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+    <div class="r-container d-flex flex-column gap-4">
+        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
+            style="max-width: 700px;">
+            <h6 class="accent-color-2">Curated Stays &amp; Experiences</h6>
+            <h3>Choose a Package Made for You</h3>
+            <p>From cozy weekend escapes to full plantation experiences — pick the package that fits your
+                Munnar getaway.</p>
+        </div>
+
+        <div class="row row-cols-xl-3 row-cols-sm-2 row-cols-1 g-4">
+            {% for package in packages %}
+            <div class="col">
+                <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="package-card">
+                    <div class="package-card-img-wrap">
+                        <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
+                        <div class="package-view-badge">
+                            <span>View</span>
+                            <i class="fa-solid fa-arrow-up-right"></i>
+                        </div>
+                        {% if package.duration %}
+                        <div class="package-tag">{{ package.duration }}</div>
+                        {% endif %}
+                        <div class="package-card-body">
+                            <h4>{{ package.name }}</h4>
+                            <p>{{ package.description|striptags|truncatewords:18 }}</p>
+                            {% if package.price %}
+                            <span class="package-price">&#8377;{{ package.price|floatformat:0 }}<small>/person</small></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No packages available right now. Please check back soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== PACKAGES SECTION ===== */
+    #packages {
+        padding: 100px 0;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+    }
+
+    .package-card {
+        display: block;
+        text-decoration: none;
+        border-radius: 24px;
+        overflow: hidden;
+        cursor: pointer;
+        height: 100%;
+    }
+
+    .package-card-img-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        background: #1a1e16;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .package-card-img-wrap img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .package-card:hover .package-card-img-wrap img {
+        transform: scale(1.08);
+    }
+
+    .package-card-img-wrap::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top,
+                rgba(0, 0, 0, 0.92) 0%,
+                rgba(0, 0, 0, 0.5) 38%,
+                rgba(0, 0, 0, 0.1) 68%,
+                rgba(0, 0, 0, 0.22) 100%);
+        z-index: 1;
+        transition: background 0.4s ease;
+    }
+
+    .package-card:hover .package-card-img-wrap::after {
+        background: linear-gradient(to top,
+                rgba(10, 20, 10, 0.94) 0%,
+                rgba(44, 95, 26, 0.45) 42%,
+                rgba(0, 0, 0, 0.15) 72%,
+                rgba(0, 0, 0, 0.3) 100%);
+    }
+
+    .package-view-badge {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        opacity: 0;
+        transform: translateY(-6px);
+        z-index: 2;
+        transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
+    }
+
+    .package-view-badge i {
+        font-size: 0.7rem;
+        transition: transform 0.3s ease;
+    }
+
+    .package-card:hover .package-view-badge {
+        opacity: 1;
+        transform: translateY(0);
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    .package-card:hover .package-view-badge i {
+        transform: translate(2px, -2px);
+    }
+
+    .package-tag {
+        position: absolute;
+        top: 1.2rem;
+        left: 1.2rem;
+        background: var(--accent-color-2);
+        color: var(--text-color);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 6px 16px;
+        border-radius: 100px;
+        z-index: 2;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .package-card:hover .package-tag {
+        background: var(--accent-color);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    .package-card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 32px;
+        z-index: 2;
+    }
+
+    .package-card-body h4 {
+        color: #fff;
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 10px;
+        font-weight: 700;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .package-card-body p {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin: 0 0 16px;
+    }
+
+    .package-price {
+        display: inline-block;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 1.4rem;
+        font-weight: 800;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .package-price small {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-left: 4px;
+    }
+
+    @media (max-width: 991px) {
+        .package-view-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #packages {
+            padding: 70px 0;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #packages {
+            padding: 50px 0;
+        }
+        #packages .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #packages {
+            padding: 40px 0;
+        }
+
+        .package-card-body {
+            padding: 22px;
+        }
+
+        .package-card-body h4 {
+            font-size: 1.1rem;
+        }
+
+        .package-card-body p {
+            font-size: 0.85rem;
+        }
+
+        .package-price {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #packages .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .package-card-body { padding: 18px; }
+    }
+</style>
+
+<!-- ===== ACTIVITIES SECTION (dynamic — same style as homepage) ===== -->
+<div id="activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+    <div class="r-container d-flex flex-column gap-4">
+        <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+            <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
+                <h6 class="accent-color-2">Estate Experiences</h6>
+                <h3>Activities &amp; Experiences at Ambady Estate</h3>
+                <p>Spend your time exploring the landscape, enjoying quiet walks, and taking in the best of
+                    Munnar's cool climate and plantation atmosphere.</p>
+            </div>
+            <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
+                <div class="w-max-content">
+                    <a href="#booking" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3">
+                        <span>Plan Your Stay</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if activities %}
+        <div class="swiper activities-slider scrollanimation animated scroll-fadeInUp">
+            <div class="swiper-wrapper">
+                {% for activity in activities %}
+                <div class="swiper-slide">
+                    <div class="activity-slide" id="{{ activity.slug }}">
+                        <div class="activity-media">
+                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" loading="lazy">
+                        </div>
+                        <div class="activity-content">
+                            <h5 class="accent-color">{{ activity.name }}</h5>
+                            <p>{{ activity.description|striptags|truncatewords:45 }}</p>
+                            {% if activity.duration or activity.location %}
+                            <div class="activity-meta">
+                                {% if activity.duration %}
+                                <span class="activity-meta-pill">
+                                    <i class="fa-regular fa-clock"></i> {{ activity.duration }}
+                                </span>
+                                {% endif %}
+                                {% if activity.location %}
+                                <span class="activity-meta-pill">
+                                    <i class="fa-solid fa-location-dot"></i> {{ activity.location }}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="activities-slider-controls">
+                <button type="button" class="activities-slider-prev" aria-label="Previous activity">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="activities-slider-pagination"></div>
+                <button type="button" class="activities-slider-next" aria-label="Next activity">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No activities available right now. Please check back soon.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* ===== ACTIVITIES SECTION (matches homepage) ===== */
+    #activities {
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        overflow-x: hidden;
+    }
+
+    .activities-slider {
+        width: 100%;
+        border-radius: 24px;
+        overflow: hidden;
+    }
+
+    .activity-slide {
+        display: grid;
+        grid-template-columns: 620px 1fr;
+        min-height: 350px;
+        background: #fff;
+        border-radius: 24px;
+        overflow: hidden;
+    }
+
+    .activity-media {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .activity-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, transparent 60%);
+    }
+
+    .activity-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .swiper-slide-active .activity-media img {
+        transform: scale(1.04);
+    }
+
+    .activity-content {
+        padding: 48px 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 18px;
+        position: relative;
+    }
+
+    .activity-content h5 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.85rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        line-height: 1.2;
+    }
+
+    .activity-content p {
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: var(--text-color-2);
+        margin: 0;
+        max-width: 480px;
+    }
+
+    .activity-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .activity-meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-color-3, #f2f7ee);
+        color: var(--accent-color);
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 8px 16px;
+        border-radius: 100px;
+    }
+
+    /* Controls */
+    .activities-slider-controls {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .activities-slider-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+    }
+
+    .activities-slider-pagination .swiper-pagination-bullet {
+        width: 28px;
+        height: 3px;
+        border-radius: 2px;
+        margin: 0 !important;
+        background: rgba(26, 30, 22, 0.2);
+        opacity: 1;
+        transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .activities-slider-pagination .swiper-pagination-bullet-active {
+        background: var(--accent-color);
+        width: 48px;
+    }
+
+    .activities-slider-prev,
+    .activities-slider-next {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 30, 22, 0.15);
+        background: #fff;
+        color: var(--accent-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .activities-slider-prev:hover,
+    .activities-slider-next:hover {
+        background: var(--accent-color);
+        color: #fff;
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+    }
+
+    @media (max-width: 1199px) {
+        .activity-slide {
+            grid-template-columns: 400px 1fr;
+        }
+
+        .activity-content {
+            padding: 40px 36px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #activities {
+            padding: 70px 0;
+        }
+        .activity-slide {
+            grid-template-columns: 1fr;
+            min-height: unset;
+        }
+
+        .activity-media {
+            height: 320px;
+        }
+
+        .activity-content {
+            padding: 32px 28px;
+        }
+
+        .activities-slider-controls {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #activities {
+            padding: 50px 0;
+        }
+        #activities .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .activity-content h5 {
+            font-size: 1.4rem;
+        }
+        .activity-content p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #activities { padding: 40px 0; }
+        .activity-media { height: 240px; }
+        .activity-content { padding: 24px 20px; }
+    }
+
+    @media (max-width: 400px) {
+        #activities .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>
+
+<!-- ===== EVERYTHING YOU NEED FOR A STAY (Koodaram-style reference layout) ===== -->
+<div id="stay-essentials" class="section amenities-koodaram" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+    <div class="amenities-overlay"></div>
+    <div class="r-container position-relative" style="z-index: 2;">
+        <div class="row row-cols-xl-2 row-cols-1 g-5 align-items-start">
+
+            <!-- Left: Intro -->
+            <div class="col scrollanimation animated scroll-fadeInLeft">
+                <div class="amenities-intro">
+                    <h6 class="accent-color-2">Explore Ambady Estate Experiences</h6>
+                    <h3>Everything you need for a Stay</h3>
+                    <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of
+                        everything so you can simply enjoy the mountains.</p>
+                    <div class="w-max-content mt-3">
+                        <a href="#booking" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3">
+                            <span>Contact Us</span>
+                            <i class="fa-solid fa-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Feature grid -->
+            <div class="col scrollanimation animated scroll-fadeInRight">
+                <div class="amenities-grid">
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-headset"></i></div>
+                        <h5>24/7 Estate Assistance</h5>
+                        <p>Our team is always available — from check-in queries to local guidance
+                            throughout your stay.</p>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                        <h5>Kerala Breakfast</h5>
+                        <p>Start each morning with a freshly prepared traditional Kerala breakfast —
+                            warm and local.</p>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-leaf"></i></div>
+                        <h5>Organic Plantation</h5>
+                        <p>Stay inside Kerala's only certified organic cardamom estate — a living
+                            plantation all around you.</p>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h5>Safe &amp; Secure</h5>
+                        <p>A calm, well-managed property with thoughtful safety arrangements so guests
+                            relax with confidence.</p>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-car"></i></div>
+                        <h5>Easy Parking</h5>
+                        <p>Ample and secure parking available for families, groups, and road
+                            travellers at the estate.</p>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon"><i class="fa-solid fa-person-swimming"></i></div>
+                        <h5>Swimming Pool</h5>
+                        <p>Relax in the pool set against a breathtaking backdrop of plantation greens
+                            and misty mountains.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== KOODARAM-STYLE AMENITIES SECTION ===== */
+    .amenities-koodaram {
+        position: relative;
+        padding: 110px 0;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+    }
+
+    .amenities-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.72);
+        z-index: 1;
+    }
+
+    /* Left intro */
+    .amenities-intro {
+        max-width: 420px;
+    }
+
+    .amenities-intro h6 {
+        margin-bottom: 14px;
+        color: var(--accent-color-2, #c8a86a);
+    }
+
+    .amenities-intro h3 {
+        font-size: clamp(2rem, 3.5vw, 2.6rem);
+        line-height: 1.2;
+        margin-bottom: 18px;
+        color: #fff;
+    }
+
+    .amenities-intro p {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    /* Right grid */
+    .amenities-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 36px;
+    }
+
+    .amenity-item {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .amenity-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        transition: transform 0.35s ease, background 0.35s ease;
+    }
+
+    .amenity-item:hover .amenity-icon {
+        transform: scale(1.1) rotate(-6deg);
+        background: var(--accent-color-2, #c8a86a);
+        color: #1a1e16;
+    }
+
+    .amenity-item h5 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+    }
+
+    .amenity-item p {
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+    }
+
+    @media (max-width: 991px) {
+        .amenities-koodaram {
+            padding: 70px 0;
+        }
+
+        .amenities-grid {
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+
+        .amenities-intro {
+            max-width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .amenities-intro .w-max-content {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    /* ===== MOBILE FIXES: amenities section ===== */
+    @media (max-width: 767px) {
+        .amenities-koodaram {
+            padding: 50px 0;
+        }
+        .amenities-koodaram .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .amenities-intro h3 {
+            font-size: clamp(1.6rem, 6vw, 2rem);
+        }
+        .amenities-intro p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+        .amenity-icon {
+            width: 46px;
+            height: 46px;
+            font-size: 1.1rem;
+        }
+        .amenity-item h5 {
+            font-size: 1.02rem;
+        }
+        .amenity-item p {
+            font-size: 0.86rem;
+        }
+        .amenities-grid {
+            gap: 22px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .amenities-koodaram .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>
+
+{% endblock %}
