@@ -153,11 +153,11 @@
                             <i class="fa-solid fa-arrow-right" style="font-size: 20px;"></i>
                         </span>
                         <div class="d-flex flex-column gap-2 w-100">
-                            <h4>{{ room.room_category|default:"Room" }}</h4>
-                            <p class="text-white" style="max-width: 400px;">
-                                {{ room.description|striptags|truncatewords:28 }}
-                            </p>
-                        </div>
+    <h4>{{ room.room_category|default:"Room" }}</h4>
+    <p class="text-white">
+        {{ room.description|striptags|truncatewords:28 }}
+    </p>
+</div>
                     </div>
                 </a>
                 {% if forloop.last %}</div>{% endif %}
@@ -295,22 +295,30 @@
     }
 
     /* Description */
-    .accordion-item p.text-white {
-        font-size: 0.88rem;
-        line-height: 1.75;
-        color: rgba(255, 255, 255, 0.78) !important;
-        max-width: 360px;
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
-        margin: 0;
-        will-change: opacity, transform;
-    }
+    /* Description — full width, clean line-clamp (no mid-word cutoff) */
+.accordion-item p.text-white {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78) !important;
+    width: 100%;
+    max-width: none !important;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(10px);
 
-    .accordion-item:hover p.text-white {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    will-change: opacity, transform;
+    transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
+}
+
+.accordion-item:hover p.text-white {
+    opacity: 1;
+    transform: translateY(0);
+}
 
     /* Decorative underline */
     .accordion-item::after {
@@ -1204,6 +1212,83 @@ document.addEventListener('DOMContentLoaded', function () {
             padding: 18px;
         }
     }
+  /* ============================================================
+   UNIFIED CARD TYPOGRAPHY — exact match to "GARDEN DESIGN" card
+   Title: 1.7rem / 800 weight / uppercase / -0.5px tracking
+   Desc:  1.05rem / 400 weight / 1.65 line-height
+   ============================================================ */
+
+.feature-card h3,
+.process-card h3,
+.service-body h3,
+.project-card h3,
+.about-feature-text h5,
+.accordion-item h4,
+.why-feature-text h5,
+.activity-content h5,
+.amenity-card h5,
+.blog-card-body h4,
+.nearby-card-body h4,
+.testimonial-quote strong {
+    font-family: var(--font-1) !important;
+    font-size: 1.7rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.5px !important;
+    text-transform: uppercase !important;
+}
+
+.feature-card p,
+.process-card p,
+.service-body p,
+.project-card p,
+.about-feature-text p,
+.accordion-item p.text-white,
+.why-feature-text p,
+.activity-content p,
+.amenity-card p,
+.blog-card-body p,
+.nearby-card-body p {
+    font-family: var(--font-3) !important;
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+/* Mobile scale-down, keeping the same ratio between title/desc */
+@media (max-width: 767px) {
+    .feature-card h3,
+    .process-card h3,
+    .service-body h3,
+    .project-card h3,
+    .about-feature-text h5,
+    .accordion-item h4,
+    .why-feature-text h5,
+    .activity-content h5,
+    .amenity-card h5,
+    .blog-card-body h4,
+    .nearby-card-body h4,
+    .testimonial-quote strong {
+        font-size: 1.4rem !important;
+    }
+
+    .feature-card p,
+    .process-card p,
+    .service-body p,
+    .project-card p,
+    .about-feature-text p,
+    .accordion-item p.text-white,
+    .why-feature-text p,
+    .activity-content p,
+    .amenity-card p,
+    .blog-card-body p,
+    .nearby-card-body p {
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+    }
+}
 </style>
 
 <script>

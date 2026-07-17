@@ -371,16 +371,149 @@
         .site-brand img {
             filter: brightness(0) invert(1);
         }
+/* ===== PRELOADER ===== */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 33, 15, 0.35); /* transparent, page bleeds through */
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#preloader.preloader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Soft ambient glow behind the logo, pulses once it settles */
+.preloader-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%);
+    animation: preloader-glow-pulse 6s ease-in-out infinite;
+}
+
+@keyframes preloader-glow-pulse {
+    0%, 30% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(6);
+        opacity: 1;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(7);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+}
+.footer-logo-img {
+    margin-top: -40px;
+    margin-bottom: -35px; /* increased negative value from -5px to close remaining gap */
+}
+.preloader-logo {
+    width: 56px;
+    height: auto;
+    filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+    transform-origin: center center;
+    animation: preloader-logo-settle 6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* Starts zoomed in + rotated, spins while scaling down to exact size, holds, fades */
+@keyframes preloader-logo-settle {
+    0% {
+        transform: scale(3.2) rotate(0deg);
+        opacity: 0;
+    }
+    35% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+    80% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.7) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.preloader-text {
+    font-family: var(--font-3, 'Plus Jakarta Sans', sans-serif);
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    transform: translateY(8px) scale(0.85);
+    opacity: 0;
+    animation: preloader-text-reveal 6s ease-in-out infinite;
+}
+
+/* Waits for logo to fully settle (35%), then reveals with slight rise + scale */
+@keyframes preloader-text-reveal {
+    0%, 35% {
+        transform: translateY(8px) scale(0.85);
+        opacity: 0;
+        font-size: 0.65rem;
+    }
+    50% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        font-size: 0.9rem;
+    }
+    80% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        font-size: 0.9rem;
+    }
+    100% {
+        transform: translateY(-6px) scale(0.85);
+        opacity: 0;
+        font-size: 0.9rem;
+    }
+}
+/* ===== END PRELOADER ===== */
     </style>
         {% block extra_head %}{% endblock %}
 </head>
 
 <body class="ambady-home">
+     <div id="preloader">
+        <div class="preloader-inner">
+            <img src="{% static 'ambadyestate-main/favi.png' %}" alt="Ambady Estate" class="preloader-logo">
+            <span class="preloader-text">Ambady Estate</span>
+        </div>
+    </div>
     <!-- Header -->
     <header id="header" class="site-header">
         <div class="r-container">
             <nav class="navbar navbar-expand-xl navbar-light site-navbar">
-                <a class="navbar-brand site-brand" href="#home">
+                <a class="navbar-brand site-brand" href="{% url 'ambadyestate_app:home' %}">
                     <img src="{% static 'ambadyestate-main/ambady.png' %}" alt="Ambady Estate">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -397,7 +530,6 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:gallery' %}">Gallery</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:blog_page' %}">Blog</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'ambadyestate_app:contact_page' %}">Contact Us</a></li>
-                         <a href="{% url 'ambadyestate_app:booking_page' %}" class="btn btn-accent nav-cta">Book a Visit</a>
                         
                         <!-- <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> -->
                     </ul>
@@ -417,156 +549,88 @@
         <div class="section pb-0 bg-text-color bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/image/bg_footer.png' %}');">
             <div class="r-container">
                 <div class="border-bottom border-light pb-xl-5 pb-0">
-                    <div class="row row-cols-xl-3 row-cols-1">
-                        <div class="col col-xl-4 mb-3">
-                            <div class="d-flex flex-column gap-3 pe-xl-5">
-                                <img src="{% static 'ambadyestate-main/ambady-green.png' %}" alt="" class="img-fluid" width="250">
-                                <div class="d-flex flex-column gap-3">
-                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
-                                        <i class="rtmicon rtmicon-classic-phone  fs-4"></i>
-                                        <span>Contact us for bookings and stay enquiries</span>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
-                                        <i class="rtmicon rtmicon-location fs-4"></i>
-                                        <span>Ambady Estate, Munnar, Kerala</span>
+                    <div class="row row-cols-xl-3 row-cols-1 align-items-start">
 
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center font-2 gap-3">
-                                        <i class="rtmicon rtmicon-envelope fs-4"></i>
-                                        <span>Reach out for current availability</span>
-                                    </div>
-                                </div>
+                       <!-- Logo + contact info -->
+<div class="col col-xl-4 mb-3">
+    <div class="d-flex flex-column gap-2 pe-xl-5">
+        <img src="{% static 'ambadyestate-main/ambady-g.png' %}" alt="" class="img-fluid footer-logo-img" width="320">
+        <div class="d-flex flex-column gap-3 fs-6">
+            <div class="d-flex flex-row align-items-center font-2 gap-3">
+                <i class="rtmicon rtmicon-classic-phone  fs-4"></i>
+                <span>Contact us for bookings and stay enquiries</span>
+            </div>
+            <div class="d-flex flex-row align-items-center font-2 gap-3">
+                <i class="rtmicon rtmicon-location fs-4"></i>
+                <span>Ambady Estate, Munnar, Kerala</span>
+            </div>
+            <div class="d-flex flex-row align-items-center font-2 gap-3">
+                <i class="rtmicon rtmicon-envelope fs-4"></i>
+                <span>Reach out for current availability</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        <!-- Explore -->
+                        <div class="col col-xl-3 mb-3">
+                            <div class="d-flex flex-column gap-3">
+                                <h5 class="fs-4">Explore</h5>
+                                <ul class="list ps-0 gap-3 accent-color fs-6">
+                                    <li>
+                                        <a href="#home" class="link d-flex flex-row gap-3 align-items-center">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#about" class="link d-flex flex-row gap-3 align-items-center">
+                                            About
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#process" class="link d-flex flex-row gap-3 align-items-center">
+                                            Stay Options
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="link d-flex flex-row gap-3 align-items-center">
+                                            Experiences
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#contact" class="link d-flex flex-row gap-3 align-items-center">
+                                            Contact
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="col col-xl-8 mb-3">
-                            <div class="row row-cols-xl-3 row-cols-1">
-                                <div class="col-xl-3 mb-3">
-                                    <div class="d-flex flex-column gap-3">
-                                        <h5>Explore</h5>
-                                        <ul class="list ps-0 gap-2 accent-color">
-                                            <li>
-                                                <a href="#home" class="link d-flex flex-row gap-3 align-items-center">
-                                                    Home
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#about" class="link d-flex flex-row gap-3 align-items-center">
-                                                    About
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#process"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Stay Options
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#services"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Experiences
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#contact"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Contact
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 mb-3">
-                                    <div class="d-flex flex-column gap-3">
-                                        <h5>Popular Experiences</h5>
-                                        <ul class="list ps-0 gap-2 accent-color">
-                                            <li>
-                                                <a href="#guided-nature-walk"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Guided Nature Walk
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#bird-watching"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Bird Watching
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#soft-trekking"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Soft Trekking
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#cycling"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Cycling
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#swimming-pool"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Swimming Pool
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#cardamom-curing-house"
-                                                    class="link d-flex flex-row gap-3 align-items-center">
-                                                    Cardamom Curing House
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-5 mb-xl-3 mb-0">
-                                    <div class="d-flex flex-column gap-3">
-                                        <h5>Stay Updated</h5>
-                                        <p>
-                                            Get travel inspiration, stay updates, and seasonal ideas for visiting Ambady
-                                            Estate Munnar.
-                                        </p>
-                                        <div class="d-flex flex-column gap-3">
-                                            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                                <div id="liveToast"
-                                                    class="toast success_msg_subscribe bg-dark-transparent text-white"
-                                                    role="alert" aria-live="assertive" aria-atomic="true">
-                                                    <div class="d-flex">
-                                                        <div class="toast-body">
-                                                            Subscription received successfully.
-                                                        </div>
-                                                        <button type="button" class="btn me-2 m-auto text-white"
-                                                            data-bs-dismiss="toast" aria-label="Close">
-                                                            <i class="fa-solid fa-xmark"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <form
-                                                    class="d-flex flex-column h-100 justify-content-center w-100 needs-validation form"
-                                                    novalidate="">
-                                                    <input type="text" name="action" value="subscribe" hidden="">
-                                                    <div class="mb-3">
-                                                        <input type="email" class="form-control rounded-3 px-5 py-3"
-                                                            placeholder="Email" name="email" required=""
-                                                            fdprocessedid="5jn20s">
 
-                                                        <div class="invalid-feedback">
-                                                            Please provide a valid email format (e.g.,
-                                                            user@example.com).
-                                                        </div>
-                                                    </div>
-                                                    <button
-                                                        class="btn btn-accent px-5 py-3 rounded-3 justify-content-center submit_subscribe"
-                                                        type="submit" fdprocessedid="blelwd">Subscribe</button>
-
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Popular Experiences: now wired to the backend Activity model
+                             using the `activities` queryset already passed in by the view
+                             (e.g. home, activities_page) instead of hardcoded #anchor links. -->
+                        <div class="col col-xl-5 mb-3">
+                            <div class="d-flex flex-column gap-3">
+                                <h5 class="fs-4">Popular Experiences</h5>
+                                <ul class="list ps-0 gap-3 accent-color fs-6">
+                                    {% for activity in activities|slice:":6" %}
+                                    <li>
+                                        <a href="{% url 'ambadyestate_app:activity_details' activity.slug %}"
+                                            class="link d-flex flex-row gap-3 align-items-center">
+                                            {{ activity.name }}
+                                        </a>
+                                    </li>
+                                    {% empty %}
+                                    <li>
+                                        <a href="#services" class="link d-flex flex-row gap-3 align-items-center">
+                                            More experiences coming soon
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="text-center mt-4 footer-links py-3 accent-color">
@@ -598,5 +662,14 @@
     <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
     {% block extra_scripts %}{% endblock %}
 </body>
-
+<script>
+    window.addEventListener("load", function () {
+        var preloader = document.getElementById("preloader");
+        if (preloader) {
+            setTimeout(function () {
+                preloader.classList.add("preloader-hidden");
+            }, 300);
+        }
+    });
+</script>
 </html>

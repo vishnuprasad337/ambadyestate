@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<!-- ===== PACKAGE HERO (now centered, same treatment as the Packages listing hero) ===== -->
+<!-- ===== PACKAGE HERO ===== -->
 <section class="pkg-hero-section">
     <div class="pkg-hero-bg" style="background-image: url('{% if package.image %}{{ package.image.url }}{% else %}{% static 'ambadyestate-main/image/pack.png' %}{% endif %}');"></div>
     <div class="pkg-hero-overlay-full"></div>
@@ -19,14 +19,6 @@
         </span>
         <span class="pkg-hero-eyebrow"><i></i>Ambady Estate, Munnar</span>
         <h1 class="pkg-hero-title">{{ package.name }}</h1>
-        <div class="pkg-hero-meta">
-            {% if package.price %}
-            <span><i class="fa-solid fa-tag"></i> &#8377;{{ package.price|floatformat:0 }} / person</span>
-            {% endif %}
-            {% if package.duration %}
-            <span><i class="fa-solid fa-clock"></i> {{ package.duration }}</span>
-            {% endif %}
-        </div>
     </div>
     <div class="pkg-hero-scrollcue" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
 </section>
@@ -36,32 +28,25 @@
 
         <div class="pkg-layout">
 
-            <!-- ===== LEFT SIDEBAR (fully fixed in place; only the right
-                 content column scrolls. Explore Packages + Pricing are
-                 both enlarged and stretch to fill the sidebar height so
-                 there is no vacant space below them.) ===== -->
+            <!-- ===== LEFT SIDEBAR ===== -->
             <div class="pkg-sidebar">
 
-                <!-- Explore Packages -->
-                <div class="pkg-explore-card">
-                    <div class="pkg-explore-header">
-                        <h5>Explore Packages</h5>
-                    </div>
-                    <div class="pkg-explore-list">
-                        <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="pkg-explore-item active">
-                            <span>{{ package.name }}</span>
-                            <i class="fa-solid fa-arrow-up-right"></i>
-                        </a>
-                        {% for other in other_packages %}
-                        <a href="{% url 'ambadyestate_app:package_details' other.slug %}" class="pkg-explore-item">
-                            <span>{{ other.name }}</span>
-                            <i class="fa-solid fa-arrow-up-right"></i>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% if other_packages %}
+<div class="pkg-explore-card">
+    <div class="pkg-explore-header">
+        <h5>Explore Packages</h5>
+    </div>
+    <div class="pkg-explore-list">
+        {% for other in other_packages %}
+        <a href="{% url 'ambadyestate_app:package_details' other.slug %}" class="pkg-explore-item">
+            <span>{{ other.name }}</span>
+            <i class="fa-solid fa-arrow-up-right"></i>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
-                <!-- Pricing Plan -->
                 {% if package.price %}
                 <div class="pkg-pricing-card">
                     <div class="pkg-pricing-header">
@@ -84,7 +69,7 @@
                             <span>{{ package.duration }}</span>
                         </div>
                         {% endif %}
-                        <a href="{% url 'ambadyestate_app:booking_page' %}?package={{ package.slug }}" class="pkg-book-btn">
+                        <a href="javascript:void(0)" class="pkg-book-btn js-open-booking-modal" data-package-id="{{ package.id }}">
                             <span>Book This Package</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -93,14 +78,12 @@
                 {% endif %}
             </div>
 
-            <!-- ===== RIGHT: CONTENT (independently scrollable column so
-                 the sidebar on the left stays fixed in the viewport) ===== -->
+            <!-- ===== RIGHT: CONTENT ===== -->
             <div class="pkg-content-scroll">
             <div class="pkg-description-block">
                 <h6 class="accent-color-2">About This Package</h6>
                 <h3>{{ package.name }}</h3>
 
-                <!-- Content-section image (reduced size) -->
                 <div class="pkg-content-img-wrap">
                     <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
                 </div>
@@ -108,85 +91,81 @@
                 <p class="pkg-magnetic-text" data-magnetic>{{ package.description }}</p>
 
                 {% with room_count=package.rooms.all.count activity_count=package.activities.all.count %}
-                {% if room_count == 1 and activity_count == 1 %}
-                <!-- Combined single-row layout: one room + one activity shown side by side,
-                     each with its own subheading so they read as distinct inclusions. -->
-                <div class="pkg-includes-block">
-                    <h5 class="pkg-combined-heading">Included in This Package</h5>
-                    <div class="pkg-combined-row">
-                        {% with room=package.rooms.first %}
-                        <div class="pkg-combined-item">
-                            <div class="pkg-combined-subheading">
-                                <span class="pkg-combined-subheading-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3 18V6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h10a3 3 0 0 1 3 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M3 14h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M7 9v0a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v2H7V9Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M3 18v2M20 18v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </span>
-                                <span>Room Included</span>
-                            </div>
-                            <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="pkg-item-card">
-                                <div class="pkg-item-img-wrap">
-                                    <div class="pkg-item-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');"></div>
-                                    <div class="pkg-item-overlay"></div>
-                                    <span class="pkg-item-icon"><i class="fa-solid fa-bed"></i></span>
-                                    <div class="pkg-item-body">
-                                        <h6>{{ room.room_category|default:"Room" }}</h6>
-                                        {% if room.price_per_night %}
-                                        <span class="pkg-item-meta">&#8377;{{ room.price_per_night|floatformat:0 }} / night</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </a>
+             {% if room_count == 1 and activity_count == 1 %}
+<div class="pkg-includes-block">
+    <h5 class="pkg-combined-heading">Included in This Package</h5>
+
+    <div class="pkg-combined-row">
+
+        {% with room=package.rooms.first %}
+        <div class="pkg-panel pkg-panel-light">
+            <div class="pkg-panel-header">
+                <span class="pkg-panel-icon">
+                    <i class="fa-solid fa-bed"></i>
+                </span>
+                <h4>Room Included</h4>
+            </div>
+            <div class="pkg-panel-divider"></div>
+
+            <a href="{% url 'ambadyestate_app:room_details' room.slug %}#description" class="pkg-item-card">
+                <div class="pkg-item-img-wrap">
+                    <div class="pkg-item-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');"></div>
+                    <div class="pkg-item-shine"></div>
+                    <div class="pkg-item-overlay"></div>
+                    <span class="pkg-item-icon"><i class="fa-solid fa-bed"></i></span>
+                    <div class="pkg-item-body">
+                        <h6>{{ room.room_category|default:"Room" }}</h6>
+                        {% if room.price_per_night %}
+                        <span class="pkg-item-meta">&#8377;{{ room.price_per_night|floatformat:0 }} / night</span>
+                        {% endif %}
+                        <div class="pkg-item-desc-wrap">
+                            <p class="pkg-item-desc">{{ room.description|default:"A comfortable stay awaits, thoughtfully prepared for your visit." }}</p>
                         </div>
-                        {% endwith %}
-
-                        {% with activity=package.activities.first %}
-                        <div class="pkg-combined-item">
-                            <div class="pkg-combined-subheading">
-                                <span class="pkg-combined-subheading-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3.5 19 9 8.5l3 5.5 2-3 5.5 8H3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="17" cy="6" r="1.6" stroke="currentColor" stroke-width="1.8"/>
-                                    </svg>
-                                </span>
-                                <span>Activity Included</span>
-                            </div>
-                            <div class="pkg-activity-card" data-tilt>
-                                <div class="pkg-activity-tilt-inner">
-                                    <div class="pkg-activity-bg" style="background-image: url('{% if activity.image %}{{ activity.image.url }}{% else %}{% static 'ambadyestate-main/image/new/nature.webp' %}{% endif %}');"></div>
-                                    <div class="pkg-activity-shine"></div>
-                                    <div class="pkg-activity-overlay"></div>
-
-                                    <div class="pkg-activity-top">
-                                        <span class="pkg-activity-badge">
-                                            <i class="fa-solid fa-mountain-sun"></i>
-                                        </span>
-                                        {% if activity.duration %}
-                                        <span class="pkg-activity-duration">
-                                            <i class="fa-regular fa-clock"></i> {{ activity.duration }}
-                                        </span>
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="pkg-activity-body">
-                                        <h6>{{ activity.name }}</h6>
-                                        <div class="pkg-activity-desc-wrap">
-                                            <p class="pkg-activity-desc">{{ activity.description|default:"An unforgettable experience awaits, curated just for this package." }}</p>
-                                        </div>
-                                        <span class="pkg-activity-cta">
-                                            Discover more <i class="fa-solid fa-arrow-right"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endwith %}
+                        <span class="pkg-item-cta">Discover more <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
                 </div>
-                {% else %}
+            </a>
+        </div>
+        {% endwith %}
+
+        {% with activity=package.activities.first %}
+        <div class="pkg-panel pkg-panel-dark">
+            <div class="pkg-panel-header">
+                <span class="pkg-panel-icon pkg-panel-icon-dark">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <h4>Activity included</h4>
+            </div>
+            <div class="pkg-panel-divider pkg-panel-divider-dark"></div>
+
+            <a href="{% url 'ambadyestate_app:activity_details' activity.slug %}#description" class="pkg-activity-card" data-tilt>
+                <div class="pkg-activity-tilt-inner">
+                    <div class="pkg-activity-bg" style="background-image: url('{% if activity.image %}{{ activity.image.url }}{% else %}{% static 'ambadyestate-main/image/new/nature.webp' %}{% endif %}');"></div>
+                    <div class="pkg-activity-shine"></div>
+                    <div class="pkg-activity-overlay"></div>
+
+                    <div class="pkg-activity-top">
+                        <span class="pkg-activity-badge"><i class="fa-solid fa-mountain-sun"></i></span>
+                        {% if activity.duration %}
+                        <span class="pkg-activity-duration"><i class="fa-regular fa-clock"></i> {{ activity.duration }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="pkg-activity-body">
+                        <h6>{{ activity.name }}</h6>
+                        <div class="pkg-activity-desc-wrap">
+                            <p class="pkg-activity-desc">{{ activity.description|default:"An unforgettable experience awaits, curated just for this package." }}</p>
+                        </div>
+                        <span class="pkg-activity-cta">Discover more <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endwith %}
+
+    </div>
+</div>
+{% else %}
 
                 {% if package.rooms.all %}
                 <div class="pkg-includes-block">
@@ -202,6 +181,7 @@
                         <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="pkg-item-card">
                             <div class="pkg-item-img-wrap">
                                 <div class="pkg-item-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');"></div>
+                                <div class="pkg-item-shine"></div>
                                 <div class="pkg-item-overlay"></div>
                                 <span class="pkg-item-icon"><i class="fa-solid fa-bed"></i></span>
                                 <div class="pkg-item-body">
@@ -209,6 +189,10 @@
                                     {% if room.price_per_night %}
                                     <span class="pkg-item-meta">&#8377;{{ room.price_per_night|floatformat:0 }} / night</span>
                                     {% endif %}
+                                    <div class="pkg-item-desc-wrap">
+                                        <p class="pkg-item-desc">{{ room.description|default:"A comfortable stay awaits, thoughtfully prepared for your visit." }}</p>
+                                    </div>
+                                    <span class="pkg-item-cta">Discover more <i class="fa-solid fa-arrow-right"></i></span>
                                 </div>
                             </div>
                         </a>
@@ -228,9 +212,9 @@
                         </div>
                     </div>
                     <div class="pkg-activity-grid" data-paginate data-per-page="3">
-                        {% for activity in package.activities.all %}
-                        <div class="pkg-activity-card" data-tilt>
-                            <div class="pkg-activity-tilt-inner">
+                       {% for activity in package.activities.all %}
+<a href="{% url 'ambadyestate_app:activity_details' activity.slug %}" class="pkg-activity-card" data-tilt>
+    <div class="pkg-activity-tilt-inner">
                                 <div class="pkg-activity-bg" style="background-image: url('{% if activity.image %}{{ activity.image.url }}{% else %}{% static 'ambadyestate-main/image/new/nature.webp' %}{% endif %}');"></div>
                                 <div class="pkg-activity-shine"></div>
                                 <div class="pkg-activity-overlay"></div>
@@ -256,7 +240,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                         {% endfor %}
                     </div>
                     <div class="pkg-pagination" data-pagination-for="activities"></div>
@@ -267,7 +251,7 @@
                 {% endwith %}
 
                 <div class="w-max-content mt-4">
-                    <a href="{% url 'ambadyestate_app:booking_page' %}?package={{ package.slug }}" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3">
+                    <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal" data-package-id="{{ package.id }}">
                         <span>Book This Package</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -279,7 +263,6 @@
 
     </div>
 </div>
-
 <style>
     /* Global safeguard: stop any element from causing horizontal
        scroll/bleed-through on mobile (matches Packages/Activities pages). */
@@ -291,9 +274,7 @@
         box-sizing: border-box;
     }
 
-    /* ===== HERO — now centered, flat overlay, taller, matching the
-       Packages listing page hero (.about-hero-section) instead of the
-       old bottom-aligned gradient version. Still uses package.image. ===== */
+    /* ===== HERO ===== */
     .pkg-hero-section {
         position: relative;
         width: calc(100% - 40px);
@@ -317,7 +298,6 @@
         transform: scale(1.02);
     }
 
-    /* Flat overlay (same tone/opacity as the Packages listing hero) */
     .pkg-hero-overlay-full {
         position: absolute;
         inset: 0;
@@ -458,7 +438,7 @@
     /* ===== BELOW HERO ===== */
     .package-details-section {
         padding: 60px 0 100px;
-        overflow: visible; /* a hidden/auto overflow on any ancestor breaks position:sticky below */
+        overflow: visible;
         background-size: cover;
         background-position: center top;
         background-repeat: no-repeat;
@@ -470,17 +450,13 @@
 
     .pkg-layout {
         display: grid;
-        grid-template-columns: 400px 1fr;
+        grid-template-columns: 360px 1fr;
         gap: 40px;
         align-items: start;
         overflow: visible;
     }
 
-    /* ===== SIDEBAR — now truly fixed in the viewport (not just
-       scroll-sticky). It stays in place while only the right content
-       column scrolls. Explore Packages + Pricing are stretched via
-       flex so the card fills the full sidebar height and there is no
-       empty gap beneath the Pricing card. ===== */
+    /* ===== SIDEBAR ===== */
     .pkg-sidebar {
         display: flex;
         flex-direction: column;
@@ -499,7 +475,7 @@
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         display: flex;
         flex-direction: column;
-        flex: 1 1 auto;   /* grow to fill sidebar height so no vacant space remains */
+        flex: 1 1 auto;
         min-height: 0;
     }
 
@@ -516,10 +492,6 @@
         font-weight: 700;
     }
 
-    /* Explore Packages list now fills all remaining space inside the
-       card (flex:1) and scrolls internally only if content overflows,
-       instead of stopping at a fixed max-height that left a visible
-       gap above the Pricing card. */
     .pkg-explore-list {
         padding: 8px 30px;
         flex: 1 1 auto;
@@ -573,15 +545,12 @@
         transform: translate(2px, -2px);
     }
 
-    /* Pricing card — enlarged and pinned to the bottom of the sidebar
-       flex column so the two cards together fill the full height. */
-    .pkg-pricing-card {
-        border-radius: 22px;
-        background: var(--accent-color-3, #f2f7ee);
-        padding: 30px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-        flex: 0 0 auto;
-    }
+   .pkg-pricing-card {
+    border-radius: 22px;
+    background: transparent;
+    padding: 30px;
+    flex: 0 0 auto;
+}
 
     .pkg-pricing-header {
         display: flex;
@@ -681,6 +650,7 @@
         text-decoration: none;
         margin-top: 8px;
         transition: background 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
     }
 
     .pkg-book-btn:hover {
@@ -697,10 +667,7 @@
         transform: translateX(4px);
     }
 
-    /* ===== RIGHT SIDE — scrolls independently of the fixed sidebar.
-       Matches the sidebar's height so both columns start/end level,
-       and the page itself no longer needs to scroll to see the whole
-       right column. ===== */
+    /* ===== RIGHT SIDE ===== */
     .pkg-content-scroll {
         height: calc(100vh - 110px);
         overflow-y: auto;
@@ -720,7 +687,7 @@
     }
 
     .pkg-description-block {
-        background: #fff;
+        background: transparent;
         border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: 24px;
         padding: 36px;
@@ -731,11 +698,11 @@
         margin-bottom: 4px;
     }
 
-    /* ===== CONTENT-SECTION IMAGE — reduced size, no longer full width ===== */
+    /* ===== CONTENT-SECTION IMAGE ===== */
     .pkg-content-img-wrap {
         width: 100%;
-        max-width: 460px;
-        aspect-ratio: 4 / 3;
+        max-width: 90%;
+        aspect-ratio: 16 / 10;
         border-radius: 18px;
         overflow: hidden;
         margin: 22px auto 28px;
@@ -773,8 +740,6 @@
         margin-top: 36px;
     }
 
-    /* Proper section heading: small eyebrow label, title + item count
-       on one row, underlined with an accent bar. */
     .pkg-includes-heading {
         margin-bottom: 18px;
     }
@@ -811,8 +776,6 @@
         white-space: nowrap;
     }
 
-    /* Subheadings used inside the combined single room + single
-       activity layout, so each item is clearly labelled. */
     .pkg-combined-subheading {
         display: flex;
         align-items: center;
@@ -911,15 +874,17 @@
         transform: scale(1.25);
     }
 
+    /* ===== ROOM CARD ===== */
     .pkg-item-card {
         display: block;
         text-decoration: none;
         border-radius: 18px;
-        overflow: hidden;
+        overflow: visible;
         opacity: 0;
         transform: translateY(24px);
         animation: pkgCardRise 0.7s ease forwards;
         animation-play-state: paused;
+        perspective: 1000px;
     }
 
     .pkg-item-card:nth-child(1) { animation-delay: 0s; }
@@ -937,8 +902,16 @@
         position: relative;
         overflow: hidden;
         border-radius: 18px;
-        aspect-ratio: 4 / 5;
+        aspect-ratio: 4 / 3;
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+        transform-style: preserve-3d;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-img-wrap,
+    .pkg-item-card:active .pkg-item-img-wrap {
+        transform: translateY(-10px) scale(1.035) rotateX(4deg);
+        box-shadow: 0 26px 46px rgba(0, 0, 0, 0.24);
     }
 
     .pkg-item-bg {
@@ -947,30 +920,52 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        transform: scale(1.08) translateZ(0);
         transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .pkg-item-card:hover .pkg-item-bg {
-        transform: scale(1.1);
+    .pkg-item-card:hover .pkg-item-bg,
+    .pkg-item-card:active .pkg-item-bg {
+        transform: scale(1.16);
+    }
+
+    .pkg-item-shine {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.35) 42%, transparent 60%);
+        transform: translateX(-120%);
+        pointer-events: none;
+    }
+
+    .pkg-item-card:hover .pkg-item-shine,
+    .pkg-item-card:active .pkg-item-shine {
+        animation: pkgShineSweep 1.1s ease forwards;
+    }
+
+    @keyframes pkgShineSweep {
+        to { transform: translateX(120%); }
     }
 
     .pkg-item-overlay {
+        display: block;
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0.05) 100%);
         z-index: 1;
+        background: linear-gradient(to top, rgba(6, 20, 12, 0.92) 0%, rgba(6, 20, 12, 0.35) 48%, rgba(6, 20, 12, 0.05) 100%);
         transition: background 0.4s ease;
     }
 
-    .pkg-item-card:hover .pkg-item-overlay {
-        background: linear-gradient(to top, rgba(10, 20, 10, 0.9) 0%, rgba(44, 95, 26, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%);
+    .pkg-item-card:hover .pkg-item-overlay,
+    .pkg-item-card:active .pkg-item-overlay {
+        background: linear-gradient(to top, rgba(6, 20, 12, 0.96) 0%, rgba(44, 95, 26, 0.45) 55%, rgba(6, 20, 12, 0.1) 100%);
     }
 
     .pkg-item-icon {
         position: absolute;
         top: 12px;
         right: 12px;
-        z-index: 2;
+        z-index: 3;
         width: 34px;
         height: 34px;
         border-radius: 50%;
@@ -988,7 +983,8 @@
         transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    .pkg-item-card:hover .pkg-item-icon {
+    .pkg-item-card:hover .pkg-item-icon,
+    .pkg-item-card:active .pkg-item-icon {
         opacity: 1;
         transform: translateY(0);
     }
@@ -998,27 +994,98 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 16px;
-        z-index: 2;
+        z-index: 3;
+        padding: 20px;
+        transform: translateZ(20px);
     }
 
     .pkg-item-body h6 {
         color: #fff;
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         font-weight: 700;
-        margin: 0 0 4px;
+        margin: 0;
         text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: transform 0.35s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-body h6,
+    .pkg-item-card:active .pkg-item-body h6 {
+        transform: translateY(-2px);
+    }
+
+    .pkg-item-body h6::before {
+        content: "\f3c5";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.9rem;
     }
 
     .pkg-item-meta {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.78rem;
+        display: block;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.85rem;
         font-weight: 600;
+        margin-top: 4px;
     }
 
-    /* ===== ACTIVITY CARDS — distinct tilt/reveal treatment.
-       Now a wrapping grid (3 per page) instead of horizontal scroll,
-       since pagination controls handle overflow. ===== */
+    .pkg-item-desc-wrap {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, opacity 0.35s ease, margin 0.4s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-desc-wrap,
+    .pkg-item-card:active .pkg-item-desc-wrap {
+        max-height: 100px;
+        opacity: 1;
+        margin-top: 10px;
+    }
+
+    .pkg-item-desc {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .pkg-item-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-top: 12px;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+    }
+
+    .pkg-item-card:hover .pkg-item-cta,
+    .pkg-item-card:active .pkg-item-cta {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .pkg-item-cta i {
+        transition: transform 0.3s ease;
+    }
+
+    .pkg-item-card:hover .pkg-item-cta i,
+    .pkg-item-card:active .pkg-item-cta i {
+        transform: translateX(4px);
+    }
+
+    /* ===== ACTIVITY CARDS ===== */
     .pkg-activity-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -1052,8 +1119,13 @@
         will-change: transform;
     }
 
-    .pkg-activity-card:hover .pkg-activity-tilt-inner {
-        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.26);
+    .pkg-activity-card:hover .pkg-activity-tilt-inner,
+    .pkg-activity-card:active .pkg-activity-tilt-inner {
+        box-shadow: 0 26px 52px rgba(0, 0, 0, 0.28);
+    }
+
+    .pkg-activity-card:active .pkg-activity-tilt-inner {
+        transform: translateY(-8px) scale(1.03) rotateX(4deg);
     }
 
     .pkg-activity-bg {
@@ -1066,7 +1138,8 @@
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .pkg-activity-card:hover .pkg-activity-bg {
+    .pkg-activity-card:hover .pkg-activity-bg,
+    .pkg-activity-card:active .pkg-activity-bg {
         transform: scale(1.16);
     }
 
@@ -1079,12 +1152,9 @@
         pointer-events: none;
     }
 
-    .pkg-activity-card:hover .pkg-activity-shine {
+    .pkg-activity-card:hover .pkg-activity-shine,
+    .pkg-activity-card:active .pkg-activity-shine {
         animation: pkgShineSweep 1.1s ease forwards;
-    }
-
-    @keyframes pkgShineSweep {
-        to { transform: translateX(120%); }
     }
 
     .pkg-activity-overlay {
@@ -1095,7 +1165,8 @@
         transition: background 0.4s ease;
     }
 
-    .pkg-activity-card:hover .pkg-activity-overlay {
+    .pkg-activity-card:hover .pkg-activity-overlay,
+    .pkg-activity-card:active .pkg-activity-overlay {
         background: linear-gradient(to top, rgba(6, 20, 12, 0.96) 0%, rgba(44, 95, 26, 0.45) 55%, rgba(6, 20, 12, 0.1) 100%);
     }
 
@@ -1180,7 +1251,8 @@
         transition: transform 0.35s ease;
     }
 
-    .pkg-activity-card:hover .pkg-activity-body h6 {
+    .pkg-activity-card:hover .pkg-activity-body h6,
+    .pkg-activity-card:active .pkg-activity-body h6 {
         transform: translateY(-2px);
     }
 
@@ -1191,7 +1263,8 @@
         transition: max-height 0.4s ease, opacity 0.35s ease, margin 0.4s ease;
     }
 
-    .pkg-activity-card:hover .pkg-activity-desc-wrap {
+    .pkg-activity-card:hover .pkg-activity-desc-wrap,
+    .pkg-activity-card:active .pkg-activity-desc-wrap {
         max-height: 100px;
         opacity: 1;
         margin-top: 10px;
@@ -1221,7 +1294,8 @@
         transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
     }
 
-    .pkg-activity-card:hover .pkg-activity-cta {
+    .pkg-activity-card:hover .pkg-activity-cta,
+    .pkg-activity-card:active .pkg-activity-cta {
         opacity: 1;
         transform: translateY(0);
     }
@@ -1230,28 +1304,26 @@
         transition: transform 0.3s ease;
     }
 
-    .pkg-activity-card:hover .pkg-activity-cta i {
+    .pkg-activity-card:hover .pkg-activity-cta i,
+    .pkg-activity-card:active .pkg-activity-cta i {
         transform: translateX(4px);
     }
 
     @media (max-width: 767px) {
-        .pkg-activity-grid {
-            grid-template-columns: 1fr;
-        }
         .pkg-activity-tilt-inner {
             aspect-ratio: 4 / 5;
         }
     }
 
-    /* On touch devices there's no hover, so the activity description
-       and CTA would stay permanently hidden — reveal them by default. */
     @media (hover: none) {
-        .pkg-activity-desc-wrap {
+        .pkg-activity-desc-wrap,
+        .pkg-item-desc-wrap {
             max-height: 100px;
             opacity: 1;
             margin-top: 10px;
         }
-        .pkg-activity-cta {
+        .pkg-activity-cta,
+        .pkg-item-cta {
             opacity: 1;
             transform: translateY(0);
         }
@@ -1261,16 +1333,95 @@
         }
     }
 
-    /* ===== COMBINED ROW — used only when exactly one room + one
-       activity exist ===== */
+    /* ===== COMBINED ROOM + ACTIVITY PANELS ===== */
     .pkg-combined-heading {
         margin: 0 0 24px;
     }
 
     .pkg-combined-row {
         display: flex;
-        gap: 32px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    .pkg-panel {
+        flex: 1 1 0;
+        min-width: 0;
+        border-radius: 28px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pkg-panel-light {
+        background: transparent;
+        border: 1.5px solid rgba(44, 95, 26, 0.35);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .pkg-panel-dark {
+        background: transparent;
+        border: 1.5px solid rgba(13, 40, 24, 0.35);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .pkg-panel-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .pkg-panel-header h4 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin: 0;
+        color: var(--text-color);
+    }
+
+    .pkg-panel-dark .pkg-panel-header h4 {
+        color: var(--text-color);
+    }
+
+    .pkg-panel-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex: 0 0 auto;
+    }
+
+    .pkg-panel-icon-dark {
+        background: var(--accent-color, #2c5f1a);
+        border: none;
+        color: #fff;
+    }
+
+    .pkg-panel-divider {
+        height: 1px;
+        background: rgba(44, 95, 26, 0.3);
+        margin: 20px 0 24px;
+    }
+
+    .pkg-panel-divider-dark {
+        background: rgba(44, 95, 26, 0.3);
+    }
+
+    .pkg-panel .pkg-item-card,
+    .pkg-panel .pkg-activity-card {
+        width: 100%;
+        flex: 1;
+    }
+
+    .pkg-panel .pkg-item-img-wrap,
+    .pkg-panel .pkg-activity-tilt-inner {
+        aspect-ratio: 3 / 4;
+        min-height: 260px;
     }
 
     .pkg-combined-item {
@@ -1328,29 +1479,12 @@
             grid-template-columns: repeat(2, 1fr);
         }
 
-        /* Force reliable stacking for combined room+activity row */
         .pkg-combined-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
+            gap: 18px;
         }
 
-        .pkg-combined-item {
-            flex: 1 1 auto;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        .pkg-combined-item .pkg-item-card .pkg-item-img-wrap,
-        .pkg-combined-item .pkg-activity-card .pkg-activity-tilt-inner {
-            aspect-ratio: 4 / 5;
-            max-height: 420px;
-        }
-
-        .pkg-combined-item + .pkg-combined-item {
-            margin-top: 32px;
-            padding-top: 28px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        .pkg-panel {
+            padding: 20px;
         }
     }
 
@@ -1395,11 +1529,50 @@
             font-size: 1.1rem;
         }
 
+        .pkg-item-body,
         .pkg-activity-body {
-            padding: 20px;
+            padding: 16px;
         }
+        .pkg-item-body h6,
         .pkg-activity-body h6 {
-            font-size: 1.1rem;
+            font-size: 1rem;
+        }
+
+        .pkg-activity-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pkg-card-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pkg-combined-row {
+            gap: 12px;
+        }
+
+        .pkg-panel {
+            padding: 14px;
+            border-radius: 20px;
+        }
+
+        .pkg-panel-header h4 {
+            font-size: 1.05rem;
+        }
+
+        .pkg-panel-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 0.95rem;
+        }
+
+        .pkg-panel .pkg-item-img-wrap,
+        .pkg-panel .pkg-activity-tilt-inner {
+            min-height: 180px;
+        }
+
+        .pkg-item-body h6,
+        .pkg-activity-body h6 {
+            font-size: 0.85rem;
         }
     }
 
@@ -1432,28 +1605,28 @@
             padding: 12px;
         }
         .pkg-item-body h6 {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         .pkg-item-meta {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
         }
 
         .pkg-activity-grid {
             gap: 16px;
         }
         .pkg-activity-top {
-            top: 14px;
-            left: 14px;
-            right: 14px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
         }
         .pkg-activity-badge {
-            width: 38px;
-            height: 38px;
-            font-size: 1rem;
+            width: 32px;
+            height: 32px;
+            font-size: 0.85rem;
         }
         .pkg-activity-duration {
-            font-size: 0.74rem;
-            padding: 6px 10px;
+            font-size: 0.65rem;
+            padding: 5px 8px;
         }
 
         .pkg-magnetic-text {
@@ -1461,9 +1634,58 @@
             line-height: 1.85;
         }
 
-        .pkg-combined-item .pkg-item-card .pkg-item-img-wrap,
-        .pkg-combined-item .pkg-activity-card .pkg-activity-tilt-inner {
-            max-height: 340px;
+        /* ---- Combined Room + Activity panels: stack full width on mobile ---- */
+        .pkg-combined-row {
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pkg-panel {
+            padding: 12px;
+            width: 100%;
+        }
+
+        .pkg-panel .pkg-item-img-wrap,
+        .pkg-panel .pkg-activity-tilt-inner {
+            aspect-ratio: 16 / 10;
+            min-height: 180px;
+        }
+
+        .pkg-panel-header h4 {
+            font-size: 1.05rem;
+        }
+
+        .pkg-activity-top {
+            top: 12px;
+            left: 12px;
+            right: 12px;
+        }
+
+        .pkg-activity-badge {
+            width: 32px;
+            height: 32px;
+            font-size: 0.85rem;
+        }
+
+        .pkg-activity-duration {
+            font-size: 0.65rem;
+            padding: 5px 10px;
+        }
+
+        .pkg-activity-body,
+        .pkg-item-body {
+            padding: 14px;
+        }
+
+        .pkg-activity-body h6,
+        .pkg-item-body h6 {
+            font-size: 0.95rem;
+        }
+
+        .pkg-activity-desc,
+        .pkg-item-desc {
+            -webkit-line-clamp: 2;
+            font-size: 0.8rem;
         }
     }
 
@@ -1479,49 +1701,352 @@
             grid-template-columns: 1fr;
         }
     }
-    @media (max-width: 767px) {
-    .pkg-activity-grid {
-        grid-template-columns: 1fr;
+
+    /* ===== BOOKING MODAL ===== */
+    .booking-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(10, 18, 10, 0.65);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .pkg-activity-card {
+    .booking-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .booking-modal-box {
+        position: relative;
+        background: #fff;
         width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 24px;
+        padding: 44px 40px 36px;
+        transform: translateY(24px) scale(0.98);
+        transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
     }
 
-    .pkg-activity-tilt-inner {
-        aspect-ratio: 4 / 5;
+    .booking-modal-overlay.active .booking-modal-box {
+        transform: translateY(0) scale(1);
+    }
+
+    .booking-modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: var(--accent-color-3, #eaf4e2);
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        z-index: 2;
+    }
+
+    .booking-modal-close:hover {
+        background: var(--accent-color);
+        color: #fff;
+        transform: rotate(90deg);
+    }
+
+    .booking-modal-header {
+        margin-bottom: 28px;
+        padding-right: 30px;
+    }
+
+    .booking-modal-eyebrow {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #c8a86a);
+        margin-bottom: 8px;
+    }
+
+    .booking-modal-title {
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 3vw, 1.9rem);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 800;
+        color: var(--text-color);
+    }
+
+    .booking-modal-sub {
+        color: var(--text-color-2);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .booking-modal-section-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--accent-color);
+        margin: 4px 0 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .booking-modal-section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.08);
+    }
+
+    .booking-modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .booking-modal-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .booking-modal-field label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 7px;
+    }
+
+    .booking-modal-field label i {
+        color: var(--accent-color);
+        font-size: 0.85rem;
+        width: 14px;
+        text-align: center;
+    }
+
+    .booking-modal-optional-tag {
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--text-color-2);
+        text-transform: none;
+        letter-spacing: 0;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-left: auto;
+    }
+
+    .booking-modal-field input,
+    .booking-modal-field select,
+    .booking-modal-field textarea {
         width: 100%;
-    }
-}
-@media (max-width: 767px) {
-    .pkg-card-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .pkg-item-card {
-        width: 100%;
-    }
-
-    .pkg-item-img-wrap {
-        aspect-ratio: 4 / 5;
-        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 16px;
+        border: 1.5px solid rgba(44, 95, 26, 0.14);
+        border-radius: 12px;
+        font-size: max(16px, 0.92rem);
+        font-family: var(--font-3, 'DM Sans', sans-serif);
+        color: var(--text-color);
+        background: var(--accent-color-3, #eaf4e2);
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        appearance: none;
+        -webkit-appearance: none;
     }
 
-    .pkg-activity-grid {
-        grid-template-columns: 1fr;
+    .booking-modal-field select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232c5f1a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 36px;
+        cursor: pointer;
     }
 
-    .pkg-activity-card {
-        width: 100%;
+    .booking-modal-field textarea {
+        min-height: 90px;
+        resize: vertical;
+        line-height: 1.6;
     }
 
-    .pkg-activity-tilt-inner {
-        aspect-ratio: 4 / 5;
-        width: 100%;
+    .booking-modal-field input:focus,
+    .booking-modal-field select:focus,
+    .booking-modal-field textarea:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 4px rgba(44, 95, 26, 0.1);
+        background: #fff;
     }
-}
+
+    .booking-modal-error {
+        display: block;
+        font-size: 0.76rem;
+        color: #d64545;
+        margin-top: 5px;
+        min-height: 15px;
+    }
+
+    .booking-modal-submit {
+        margin-top: 8px;
+        padding: 16px 26px;
+        background: var(--accent-color);
+        color: #fff;
+        border: none;
+        border-radius: 100px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease, gap 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 10px 24px rgba(44, 95, 26, 0.18);
+    }
+
+    .booking-modal-submit:hover:not(:disabled) {
+        background: #25D366;
+        gap: 16px;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    .booking-modal-submit:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .booking-modal-msg {
+        margin-top: 4px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        min-height: 18px;
+        text-align: center;
+    }
+
+    .booking-modal-msg.success { color: #2c5f1a; }
+    .booking-modal-msg.error { color: #d64545; }
+
+    body.booking-modal-open {
+        overflow: hidden;
+    }
+
+    /* ---- Booking modal: single consolidated mobile block (bottom-sheet style) ---- */
+    @media (max-width: 575px) {
+        .booking-modal-overlay {
+            padding: 0;
+            align-items: flex-end;
+        }
+
+        .booking-modal-box {
+            width: 100%;
+            max-width: 100%;
+            max-height: 88vh;
+            border-radius: 20px 20px 0 0;
+            padding: 20px 18px 16px;
+            transform: translateY(100%);
+        }
+
+        .booking-modal-overlay.active .booking-modal-box {
+            transform: translateY(0);
+        }
+
+        .booking-modal-close {
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+        }
+
+        .booking-modal-header {
+            margin-bottom: 16px;
+            padding-right: 36px;
+        }
+
+        .booking-modal-eyebrow {
+            font-size: 0.66rem;
+            margin-bottom: 4px;
+        }
+
+        .booking-modal-title {
+            font-size: 1.3rem;
+            margin: 0 0 4px;
+        }
+
+        .booking-modal-sub {
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .booking-modal-form {
+            gap: 12px;
+        }
+
+        .booking-modal-section-label {
+            font-size: 0.66rem;
+            margin: 2px 0 0;
+        }
+
+        .booking-modal-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .booking-modal-field label {
+            font-size: 0.76rem;
+            margin-bottom: 5px;
+        }
+
+        .booking-modal-field input,
+        .booking-modal-field select,
+        .booking-modal-field textarea {
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        .booking-modal-field textarea {
+            min-height: 60px;
+        }
+
+        .booking-modal-error {
+            font-size: 0.7rem;
+            min-height: 12px;
+            margin-top: 3px;
+        }
+
+        .booking-modal-submit {
+            padding: 13px 22px;
+            font-size: 0.88rem;
+            margin-top: 2px;
+        }
+
+        .booking-modal-msg {
+            font-size: 0.8rem;
+            min-height: 14px;
+        }
+    }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -1535,7 +2060,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .join(' ');
 
         const wordEls = Array.from(magneticEl.querySelectorAll('.word'));
-        const RADIUS = 90; // px — proximity range for the effect
+        const RADIUS = 90;
 
         function updateWords(mouseX, mouseY) {
             wordEls.forEach(el => {
@@ -1545,7 +2070,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const dist = Math.hypot(mouseX - cx, mouseY - cy);
 
                 if (dist < RADIUS) {
-                    const strength = 1 - dist / RADIUS; // 0..1
+                    const strength = 1 - dist / RADIUS;
                     const scale = 1 + strength * 0.22;
                     el.style.transform = `translateY(${-strength * 4}px) scale(${scale})`;
                     el.style.color = 'var(--accent-color)';
@@ -1586,16 +2111,13 @@ document.addEventListener('DOMContentLoaded', function () {
         revealCards.forEach(el => observer.observe(el));
     }
 
-    /* ===== Pagination for Rooms / Activities grids =====
-       Any grid marked [data-paginate] gets split into pages of
-       [data-per-page] items, with prev/next buttons + page dots
-       injected into the matching .pkg-pagination container. */
+    /* ===== Pagination for Rooms / Activities grids ===== */
     function setupPagination(grid, paginationEl) {
         const items = Array.from(grid.children);
         const perPage = parseInt(grid.dataset.perPage, 10) || 3;
         const pageCount = Math.ceil(items.length / perPage);
 
-        if (pageCount <= 1) return; // nothing to paginate
+        if (pageCount <= 1) return;
 
         let currentPage = 0;
 
@@ -1677,7 +2199,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* 3D tilt effect for activity cards */
     const tiltCards = document.querySelectorAll('[data-tilt]');
-    const MAX_TILT = 10; // degrees
+    const MAX_TILT = 10;
 
     tiltCards.forEach(card => {
         const inner = card.querySelector('.pkg-activity-tilt-inner');
@@ -1701,7 +2223,212 @@ document.addEventListener('DOMContentLoaded', function () {
             inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
         });
     });
+
+    /* ===== BOOKING MODAL LOGIC ===== */
+    var BOOKING_WHATSAPP_NUMBER = '919633870962';
+
+    var overlay = document.getElementById('bookingModalOverlay');
+    var closeBtn = document.getElementById('bookingModalClose');
+    var form = document.getElementById('bookingModalForm');
+    var msgBox = document.getElementById('bookingModalMsg');
+    var packageSelect = document.getElementById('bm_package');
+    var submitBtn = form ? form.querySelector('.booking-modal-submit') : null;
+    var btnLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
+
+    if (overlay && form) {
+
+        function openModal(preselectPackageId) {
+            if (preselectPackageId && packageSelect) {
+                var optionExists = Array.from(packageSelect.options).some(function (opt) {
+                    return opt.value === String(preselectPackageId);
+                });
+                if (optionExists) {
+                    packageSelect.value = preselectPackageId;
+                }
+            }
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('booking-modal-open');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('booking-modal-open');
+        }
+
+        document.querySelectorAll('.js-open-booking-modal').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                openModal(trigger.getAttribute('data-package-id'));
+            });
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            form.querySelectorAll('[data-field-error]').forEach(function (el) {
+                el.textContent = '';
+            });
+            msgBox.textContent = '';
+            msgBox.classList.remove('success', 'error');
+
+            var hasError = false;
+            var lines = ['New Booking Request — Ambady Estate'];
+
+            function humanize(name) {
+                if (!name) return 'Field';
+                return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+            }
+
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                var labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
+
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    hasError = true;
+                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
+                    if (errEl) errEl.textContent = 'This field is required.';
+                    return;
+                }
+
+                var displayValue = '';
+                if (field.tagName === 'SELECT') {
+                    var selectedOption = field.options[field.selectedIndex];
+                    displayValue = (selectedOption && field.value) ? selectedOption.textContent.trim() : '';
+                } else {
+                    displayValue = field.value ? field.value.trim() : '';
+                }
+
+                if (displayValue) {
+                    lines.push(labelText + ': ' + displayValue);
+                }
+            });
+
+            if (hasError) {
+                msgBox.textContent = 'Please fill in the required fields.';
+                msgBox.classList.add('error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            var originalLabel = btnLabel.textContent;
+            btnLabel.textContent = 'Opening WhatsApp…';
+
+            var message = encodeURIComponent(lines.join('\n'));
+            var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
+
+            msgBox.textContent = 'Redirecting you to WhatsApp…';
+            msgBox.classList.add('success');
+
+            setTimeout(function () {
+                window.location.href = waUrl;
+                submitBtn.disabled = false;
+                btnLabel.textContent = originalLabel;
+            }, 400);
+        });
+    }
 });
 </script>
+
+<!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
+<div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
+    <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+        <button type="button" class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="booking-modal-header">
+            <span class="booking-modal-eyebrow">Ambady Estate</span>
+            <h3 id="bookingModalTitle" class="booking-modal-title">Book Your Stay</h3>
+            <p class="booking-modal-sub">Share a few details and we'll confirm availability on WhatsApp instantly.</p>
+        </div>
+
+        <form class="booking-modal-form" id="bookingModalForm" novalidate>
+
+            <div class="booking-modal-section-label">Guest Details</div>
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_name"><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="bm_name" name="guest_name" placeholder="Your name" required>
+                    <span class="booking-modal-error" data-field-error="guest_name"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="bm_phone" name="guest_phone" placeholder="+91 9876543210" required>
+                    <span class="booking-modal-error" data-field-error="guest_phone"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-field">
+                <label for="bm_email"><i class="fa-solid fa-envelope"></i> Email</label>
+                <input type="email" id="bm_email" name="guest_email" placeholder="you@example.com" required>
+                <span class="booking-modal-error" data-field-error="guest_email"></span>
+            </div>
+
+            <div class="booking-modal-section-label">Stay Details</div>
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_checkin"><i class="fa-solid fa-calendar-check"></i> Check-in</label>
+                    <input type="date" id="bm_checkin" name="check_in" required>
+                    <span class="booking-modal-error" data-field-error="check_in"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_checkout"><i class="fa-solid fa-calendar-xmark"></i> Check-out</label>
+                    <input type="date" id="bm_checkout" name="check_out" required>
+                    <span class="booking-modal-error" data-field-error="check_out"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_guests"><i class="fa-solid fa-users"></i> Guests</label>
+                    <input type="number" id="bm_guests" name="num_guests" min="1" placeholder="e.g. 2" required>
+                    <span class="booking-modal-error" data-field-error="num_guests"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_package">
+                        <i class="fa-solid fa-gift"></i> Package
+                        <span class="booking-modal-optional-tag">optional</span>
+                    </label>
+                    <select id="bm_package" name="package">
+                        <option value="">No package preference</option>
+                        {% for p in packages %}
+                        <option value="{{ p.id }}" {% if p.id == package.id %}selected{% endif %}>{{ p.name }}</option>
+                        {% empty %}
+                        <option value="{{ package.id }}" selected>{{ package.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="booking-modal-error" data-field-error="package"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-field">
+                <label for="bm_message">
+                    <i class="fa-solid fa-comment-dots"></i> Special Requests
+                    <span class="booking-modal-optional-tag">optional</span>
+                </label>
+                <textarea id="bm_message" name="special_requests" placeholder="Preferred cottage, occasion, dietary needs..."></textarea>
+            </div>
+
+            <button type="submit" class="booking-modal-submit">
+                <span class="btn-label">Send via WhatsApp</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+            <div id="bookingModalMsg" class="booking-modal-msg" role="status" aria-live="polite"></div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

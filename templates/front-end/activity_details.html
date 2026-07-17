@@ -18,13 +18,7 @@
             <span>{{ activity.name }}</span>
         </span>
         <h1 class="about-hero-title">{{ activity.name }}</h1>
-        {% if activity.duration or activity.location %}
-        <p class="about-hero-sub">
-            {% if activity.duration %}{{ activity.duration }}{% endif %}
-            {% if activity.duration and activity.location %} &middot; {% endif %}
-            {% if activity.location %}{{ activity.location }}{% endif %}
-        </p>
-        {% endif %}
+        
     </div>
 </section>
 
@@ -144,7 +138,7 @@
 
             <!-- MAIN CONTENT: label above image, then image, then description -->
             <div class="activity-main">
-                <h6 class="accent-color-2 activity-section-label">Estate Experience</h6>
+                
                 <div class="row row-cols-1 g-5">
                     <div class="col">
                         <div class="activity-detail-img-wrap">
@@ -179,7 +173,7 @@
                         </div>
 
                         <div>
-                            <a href="{}" class="btn btn-accent px-5 py-3">
+                            <a href="{% url 'ambadyestate_app:contact_page' %}" class="btn btn-accent px-5 py-3">
                                 Contact Us
                             </a>
                         </div>

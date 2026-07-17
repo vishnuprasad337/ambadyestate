@@ -7,101 +7,59 @@
 
 <div class="room-page">
 
-<!-- ===== ROOM HERO (main_image as cover) ===== -->
+<!-- ===== ROOM HERO (parallax + cinematic title reveal) ===== -->
 <section class="room-hero-section">
-    <div class="room-hero-bg" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/hero3.webp' %}{% endif %}');"></div>
+    <div class="room-hero-bg" data-parallax="0.25" style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/hero3.webp' %}{% endif %}');"></div>
     <div class="room-hero-overlay"></div>
+    <div class="room-hero-grain"></div>
     <div class="r-container room-hero-content">
-        <span class="room-hero-breadcrumb">
+        <span class="room-hero-breadcrumb reveal-fade">
             <a href="{% url 'ambadyestate_app:home' %}">Home</a>
             <i class="fa-solid fa-chevron-right"></i>
             <a href="{% url 'ambadyestate_app:rooms_page' %}">Rooms</a>
             <i class="fa-solid fa-chevron-right"></i>
             <span>{{ room.room_category|default:"Room" }}</span>
         </span>
-        <span class="room-hero-eyebrow"><i></i>Ambady Estate, Munnar</span>
-        <h1 class="room-hero-title">{{ room.room_category|default:"Room" }}</h1>
-        <div class="room-hero-meta">
-            {% if room.rating_average %}
-            <span><i class="fa-solid fa-star"></i> {{ room.rating_average }} Rating</span>
-            {% endif %}
-            {% if room.price_per_night %}
-            <span><i class="fa-solid fa-tag"></i> &#8377;{{ room.price_per_night }} / night</span>
-            {% endif %}
-            {% if room.bedroom_beds %}
-            <span><i class="fa-solid fa-bed"></i> {{ room.bedroom_beds }}</span>
-            {% endif %}
-        </div>
+        <span class="room-hero-eyebrow reveal-fade" style="--d:1"><i></i>Ambady Estate, Munnar</span>
+        <h1 class="room-hero-title">
+            <span class="room-hero-title-line" style="--d:2">{{ room.room_category|default:"Room" }}</span>
+        </h1>
     </div>
-    <div class="room-hero-scrollcue" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
+    <div class="room-hero-scrollcue" aria-hidden="true">
+        <span>Scroll</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
 </section>
 
-<!-- ===== ABOUT THIS ROOM (description + slider) ===== -->
-<div class="section room-about-section bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
+<!-- ===== ABOUT THIS ROOM — sticky image, scroll-reveal copy ===== -->
+<div id="description" class="section room-about-section bg-attach-cover"
+    style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
+
     <div class="r-container">
-        <div class="row row-cols-xl-2 row-cols-1 g-5 align-items-center">
+        <div class="room-about-grid">
 
-            <!-- Left: Copy + quick facts -->
-            <div class="col col-xl-6 scrollanimation animated scroll-fadeInLeft">
-                <span class="room-eyebrow">{{ room.room_category|default:"Room" }}</span>
-                <h3 class="room-section-title">About this <em>room</em></h3>
-                <p class="room-detail-desc">{{ room.description }}</p>
-
-                <div class="room-quickfacts">
-                    {% if room.bedroom_beds %}
-                    <div class="room-quickfact reveal-item" style="--delay: 0">
-                        <div class="room-quickfact-icon"><i class="fa-solid fa-door-open"></i></div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Bedroom</span>
-                            <span class="room-quickfact-text">{{ room.bedroom_beds }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if room.living_room_beds %}
-                    <div class="room-quickfact reveal-item" style="--delay: 1">
-                        <div class="room-quickfact-icon"><i class="fa-solid fa-bed"></i></div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Living Space</span>
-                            <span class="room-quickfact-text">{{ room.living_room_beds }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if room.rating_average %}
-                    <div class="room-quickfact reveal-item" style="--delay: 2">
-                        <div class="room-quickfact-icon"><i class="fa-solid fa-star"></i></div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Guest Rating</span>
-                            <span class="room-quickfact-text">{{ room.rating_average }} / 5</span>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <div class="room-quickfact room-quickfact-cta reveal-item" style="--delay: 3">
-                        <div class="room-quickfact-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Book Now</span>
-                            <a href="#" class="room-quickfact-link" data-bs-toggle="modal" data-bs-target="#enquiryModal">Enquiry about stay <i class="fa-solid fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Image slider with price badge -->
-            <div class="col col-xl-6 scrollanimation animated scroll-fadeInRight">
+            <!-- Left: sticky slider -->
+            <div class="room-about-sticky-col">
                 <div class="room-slider">
+
                     <div class="room-slider-track">
+
                         {% if room.main_image %}
                         <div class="room-slide active">
-                            <img src="{{ room.main_image.url }}" alt="{{ room.room_category|default:'Room' }}">
+                            <img src="{{ room.main_image.url }}"
+                                 alt="{{ room.room_category|default:'Room' }}"
+                                 data-parallax="0.06">
                         </div>
                         {% endif %}
+
                         {% for img in room.images.all %}
                         <div class="room-slide{% if not room.main_image and forloop.first %} active{% endif %}">
-                            <img src="{{ img.image.url }}" alt="{{ img.caption|default:room.room_category }}">
+                            <img src="{{ img.image.url }}"
+                                 alt="{{ img.caption|default:room.room_category }}"
+                                 data-parallax="0.06">
                         </div>
                         {% endfor %}
+
                     </div>
 
                     {% if room.price_per_night %}
@@ -115,38 +73,113 @@
                     <button type="button" class="room-slider-nav prev" aria-label="Previous image">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
+
                     <button type="button" class="room-slider-nav next" aria-label="Next image">
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
 
                     <div class="room-slider-dots"></div>
+
                 </div>
+            </div>
+
+            <!-- Right: scrolling copy + facts -->
+            <div class="room-about-copy-col">
+
+                <span class="room-eyebrow reveal-fade">
+                    {{ room.room_category|default:"Room" }}
+                </span>
+
+                <h3 class="room-section-title reveal-fade" style="--d:1">
+                    About this <em>room</em>
+                </h3>
+
+                <p class="room-detail-desc reveal-fade" style="--d:2">
+                    {{ room.description }}
+                </p>
+
+                <div class="room-quickfacts">
+
+                    {% if room.bedroom_beds %}
+                    <div class="room-quickfact reveal-left" style="--d:0">
+                        <div class="room-quickfact-icon">
+                            <i class="fa-solid fa-door-open"></i>
+                        </div>
+                        <div class="room-quickfact-body">
+                            <span class="room-quickfact-title">Bedroom</span>
+                            <span class="room-quickfact-text">{{ room.bedroom_beds }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if room.living_room_beds %}
+                    <div class="room-quickfact reveal-left" style="--d:1">
+                        <div class="room-quickfact-icon">
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <div class="room-quickfact-body">
+                            <span class="room-quickfact-title">Living Space</span>
+                            <span class="room-quickfact-text">{{ room.living_room_beds }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if room.rating_average %}
+                    <div class="room-quickfact reveal-left" style="--d:2">
+                        <div class="room-quickfact-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="room-quickfact-body">
+                            <span class="room-quickfact-title">Guest Rating</span>
+                            <span class="room-quickfact-text">{{ room.rating_average }} / 5</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="room-quickfact room-quickfact-cta reveal-left" style="--d:3">
+                        <div class="room-quickfact-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="room-quickfact-body">
+                            <span class="room-quickfact-title">Book Now</span>
+                            <a href="#"
+                               class="room-quickfact-link"
+                               data-bs-toggle="modal"
+                               data-bs-target="#enquiryModal">
+                                Enquiry about stay
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
     </div>
-</div>
 
-<!-- ===== ROOM GALLERY (image grid) ===== -->
+</div>
+<!-- ===== ROOM GALLERY — cinematic bento mosaic ===== -->
 <div class="section room-gallery-section">
     <div class="r-container">
         <div class="room-gallery-heading">
-            <span class="room-eyebrow">Gallery</span>
-            <h3 class="room-section-title">Explore this <em>space</em></h3>
-            <p class="room-gallery-sub">Every corner, captured exactly as you'll find it on arrival — no filters, no surprises.</p>
+            <span class="room-eyebrow reveal-fade">Gallery</span>
+            <h3 class="room-section-title reveal-fade" style="--d:1">Explore this <em>space</em></h3>
+            <p class="room-gallery-sub reveal-fade" style="--d:2">Every corner, captured exactly as you'll find it on arrival — no filters, no surprises.</p>
         </div>
 
         <div class="room-gallery-grid mt-5" id="roomGalleryGrid">
             {% if room.main_image %}
-            <a href="{{ room.main_image.url }}" class="room-gallery-item reveal-card" style="--delay: 0" data-index="01" data-lightbox="room-gallery">
-                <img src="{{ room.main_image.url }}" alt="{{ room.room_category|default:'Room' }}">
+            <a href="{{ room.main_image.url }}" class="room-gallery-item reveal-scale featured" style="--d:0" data-index="01" data-lightbox="room-gallery">
+                <img src="{{ room.main_image.url }}" alt="{{ room.room_category|default:'Room' }}" data-parallax="0.04">
                 <span class="room-gallery-zoom"></span>
                 <span class="room-icon-box"><i class="fa-solid fa-expand"></i></span>
             </a>
             {% endif %}
             {% for img in room.images.all %}
-            <a href="{{ img.image.url }}" class="room-gallery-item reveal-card" style="--delay: {{ forloop.counter }}" data-index="{{ forloop.counter0|add:2|stringformat:'02d' }}" data-lightbox="room-gallery">
-                <img src="{{ img.image.url }}" alt="{{ img.caption|default:room.room_category }}">
+            <a href="{{ img.image.url }}" class="room-gallery-item reveal-scale" style="--d:{{ forloop.counter }}" data-index="{{ forloop.counter0|add:2|stringformat:'02d' }}" data-lightbox="room-gallery">
+                <img src="{{ img.image.url }}" alt="{{ img.caption|default:room.room_category }}" data-parallax="0.04">
                 <span class="room-gallery-zoom"></span>
                 <span class="room-icon-box"><i class="fa-solid fa-expand"></i></span>
             </a>
@@ -167,10 +200,12 @@
     <img src="" alt="" id="roomLightboxImg">
 </div>
 
-<!-- ===== BOOKING STRIP ===== -->
+<!-- ===== BOOKING STRIP — reveal + drifting orbs ===== -->
 <div class="section room-booking-section">
     <div class="r-container">
-        <div class="room-booking-strip">
+        <div class="room-booking-strip reveal-scale">
+            <span class="room-booking-orb orb-a" aria-hidden="true"></span>
+            <span class="room-booking-orb orb-b" aria-hidden="true"></span>
             <div class="room-booking-copy">
                 <span class="room-eyebrow room-eyebrow-light">Reserve your stay</span>
                 <h5>Ready to stay at {{ room.room_category|default:"this room" }}?</h5>
@@ -184,7 +219,7 @@
     </div>
 </div>
 
-<!-- ===== ENQUIRY MODAL (posts to contact_view + notifies admin on WhatsApp) ===== -->
+<!-- ===== ENQUIRY MODAL ===== -->
 <div class="modal fade room-enquiry-modal" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -228,18 +263,12 @@
     </div>
 </div>
 
-
 </div><!-- /.room-page -->
 
 <style>
     /* ===========================================================
-       Design tokens — Ambady Estate room page
-       Palette drawn from the estate itself: tea-plantation forest
-       green, misty sage, brass signage gold, terracotta roof tile.
-       Typography intentionally has NO font-family declarations —
-       every heading and body element below inherits whatever
-       type stack base.html already defines site-wide, so this
-       page always matches the rest of Ambady Estate exactly.
+       Ambady Estate — Room page, cinematic scroll edition
+       Same tokens as before. New: parallax layers + scroll reveals.
        =========================================================== */
     .room-page {
         --estate-forest: #0b3128;
@@ -256,6 +285,25 @@
     .room-page :focus-visible {
         outline: 2px solid var(--estate-gold);
         outline-offset: 3px;
+    }
+
+    .room-page { overflow-x: hidden; max-width: 100%; }
+
+    /* ===== Scroll reveal system ===== */
+    .reveal-fade, .reveal-left, .reveal-scale {
+        opacity: 0;
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--d, 0) * 0.12s);
+    }
+    .reveal-fade  { transform: translateY(26px); }
+    .reveal-left  { transform: translateX(-30px); }
+    .reveal-scale { transform: scale(0.94); }
+
+    .reveal-fade.in-view,
+    .reveal-left.in-view,
+    .reveal-scale.in-view {
+        opacity: 1;
+        transform: none;
     }
 
     .room-eyebrow {
@@ -295,12 +343,12 @@
         color: var(--estate-forest);
     }
 
-    /* ===== Hero ===== */
+    /* ===== Hero — parallax + grain + line reveal ===== */
     .room-hero-section {
         position: relative;
         width: calc(100% - 40px);
         margin: 20px auto 0;
-        min-height: 75vh;
+        min-height: 82vh;
         display: flex;
         align-items: flex-end;
         overflow: hidden;
@@ -309,27 +357,38 @@
 
     .room-hero-bg {
         position: absolute;
-        inset: 0;
+        inset: -8% 0 -8% 0;
         background-size: cover;
         background-position: center;
         width: 100%;
-        height: 100%;
+        height: 116%;
         border-radius: 32px;
-        transform: scale(1.02);
+        will-change: transform;
     }
 
     .room-hero-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(7, 31, 25, 0.88) 0%, rgba(7, 31, 25, 0.32) 55%, rgba(7, 31, 25, 0.08) 100%);
+        background: linear-gradient(to top, rgba(7, 31, 25, 0.9) 0%, rgba(7, 31, 25, 0.35) 55%, rgba(7, 31, 25, 0.1) 100%);
         z-index: 1;
+        border-radius: 32px;
+    }
+
+    .room-hero-grain {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.05;
+        pointer-events: none;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px);
+        background-size: 3px 3px;
         border-radius: 32px;
     }
 
     .room-hero-content {
         position: relative;
         z-index: 2;
-        padding-bottom: 60px;
+        padding-bottom: 64px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -346,12 +405,7 @@
         margin-bottom: 10px;
     }
 
-    .room-hero-breadcrumb a {
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
+    .room-hero-breadcrumb a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: color 0.3s ease; }
     .room-hero-breadcrumb a:hover { color: #fff; }
     .room-hero-breadcrumb i { font-size: 0.65rem; }
     .room-hero-breadcrumb span { color: var(--estate-gold); }
@@ -375,52 +429,53 @@
     }
 
     .room-hero-title {
-        font-size: clamp(2.4rem, 6vw, 4.4rem);
+        font-size: clamp(2.6rem, 7vw, 5rem);
         font-weight: 300;
         color: #fff;
         letter-spacing: -1px;
         text-transform: capitalize;
         margin: 4px 0 10px;
+        overflow: hidden;
     }
 
-    .room-hero-meta {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+    .room-hero-title-line {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(60%);
+        animation: heroLineIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: calc(var(--d, 0) * 0.15s + 0.15s);
     }
 
-    .room-hero-meta span {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #fff;
-        font-size: 0.92rem;
-        font-weight: 600;
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        padding: 9px 18px;
-        border-radius: 100px;
+    @keyframes heroLineIn {
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    .room-hero-meta i { color: var(--estate-gold); }
+    .room-hero-breadcrumb.reveal-fade,
+    .room-hero-eyebrow.reveal-fade {
+        animation: heroFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: calc(var(--d, 0) * 0.15s);
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    @keyframes heroFadeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
 
     .room-hero-scrollcue {
         position: absolute;
         z-index: 2;
-        bottom: 22px;
+        bottom: 26px;
         left: 50%;
         transform: translateX(-50%);
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        color: rgba(255, 255, 255, 0.85);
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
+        gap: 6px;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
         animation: heroCueBob 2.2s ease-in-out infinite;
     }
 
@@ -430,38 +485,35 @@
     }
 
     @media (max-width: 767px) {
-        .room-hero-section {
-            min-height: 55vh;
-            width: calc(100% - 20px);
-            margin: 12px auto 0;
-            border-radius: 22px;
-        }
+        .room-hero-section { min-height: 62vh; width: calc(100% - 20px); margin: 12px auto 0; border-radius: 22px; }
         .room-hero-content { padding-bottom: 32px; padding-left: 20px; padding-right: 20px; }
         .room-hero-scrollcue { display: none; }
         .room-hero-breadcrumb { font-size: 0.78rem; flex-wrap: wrap; row-gap: 4px; }
-        .room-hero-meta { gap: 8px; }
-        .room-hero-meta span { font-size: 0.8rem; padding: 7px 14px; }
     }
 
     @media (max-width: 480px) {
-        .room-hero-section { border-radius: 16px; min-height: 50vh; }
+        .room-hero-section { border-radius: 16px; min-height: 55vh; }
         .room-hero-content { padding-left: 16px; padding-right: 16px; padding-bottom: 24px; }
         .room-hero-eyebrow { font-size: 0.7rem; letter-spacing: 1.8px; }
-        .room-hero-meta span { font-size: 0.75rem; padding: 6px 12px; }
     }
 
-    /* Global safeguard: stop any element from causing horizontal
-       scroll/bleed-through on mobile. */
-    .room-page {
-        overflow-x: hidden;
-        max-width: 100%;
-    }
-
-    /* ===== About section ===== */
+    /* ===== About section — sticky slider + scrolling copy ===== */
     .room-about-section {
-        padding: 100px 0;
+        padding: 110px 0;
         background-color: var(--estate-cream);
         background-blend-mode: overlay;
+    }
+
+    .room-about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .room-about-sticky-col {
+        position: sticky;
+        top: 100px;
     }
 
     .room-detail-desc {
@@ -475,19 +527,14 @@
 
     @media (max-width: 991px) {
         .room-about-section { padding: 70px 0; }
+        .room-about-grid { grid-template-columns: 1fr; gap: 40px; }
+        .room-about-sticky-col { position: static; }
     }
 
     @media (max-width: 767px) {
         .room-about-section { padding: 50px 0; }
-        .room-about-section .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .room-detail-desc {
-            font-size: 0.95rem;
-            max-width: 100%;
-            margin-bottom: 24px;
-        }
+        .room-about-section .r-container { padding-left: 20px; padding-right: 20px; }
+        .room-detail-desc { font-size: 0.95rem; max-width: 100%; margin-bottom: 24px; }
     }
 
     @media (max-width: 575px) {
@@ -499,16 +546,10 @@
     }
 
     @media (max-width: 400px) {
-        .room-about-section .r-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
+        .room-about-section .r-container { padding-left: 16px; padding-right: 16px; }
     }
 
-    .room-quickfacts {
-        display: flex;
-        flex-direction: column;
-    }
+    .room-quickfacts { display: flex; flex-direction: column; }
 
     .room-quickfact {
         display: flex;
@@ -520,7 +561,6 @@
     }
 
     .room-quickfact:last-child { border-bottom: 1px solid var(--estate-line); }
-
     .room-quickfact:hover { padding-left: 10px; }
 
     .room-quickfact-icon {
@@ -545,24 +585,9 @@
         color: #fff;
     }
 
-    .room-quickfact-body {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .room-quickfact-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: var(--estate-ink);
-    }
-
-    .room-quickfact-text {
-        font-size: 0.9rem;
-        color: var(--estate-stone);
-    }
-
+    .room-quickfact-body { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .room-quickfact-title { font-size: 0.95rem; font-weight: 700; color: var(--estate-ink); }
+    .room-quickfact-text { font-size: 0.9rem; color: var(--estate-stone); }
     .room-quickfact-cta { align-items: center; }
 
     .room-quickfact-link {
@@ -579,20 +604,16 @@
     .room-quickfact-link i { font-size: 0.75rem; transition: transform 0.3s ease; }
     .room-quickfact-link:hover { color: var(--estate-clay); gap: 12px; }
 
-    /* ===== Slider ===== */
+    /* ===== Slider (with subtle image parallax on scroll) ===== */
     .room-slider {
         position: relative;
         border-radius: 24px;
         overflow: hidden;
-        height: 480px;
+        height: 560px;
         box-shadow: 0 24px 55px rgba(11, 49, 40, 0.18);
     }
 
-    .room-slider-track {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
+    .room-slider-track { position: relative; width: 100%; height: 100%; }
 
     .room-slide {
         position: absolute;
@@ -600,18 +621,17 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.6s ease;
+        overflow: hidden;
     }
 
-    .room-slide.active {
-        opacity: 1;
-        visibility: visible;
-    }
+    .room-slide.active { opacity: 1; visibility: visible; }
 
     .room-slide img {
         width: 100%;
-        height: 100%;
+        height: 112%;
         object-fit: cover;
         display: block;
+        will-change: transform;
     }
 
     .room-price-badge {
@@ -634,24 +654,9 @@
         transform: rotate(-8deg);
     }
 
-    .room-price-label {
-        font-size: 0.6rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        opacity: 0.75;
-    }
-
-    .room-price-value {
-        font-size: 1.3rem;
-        font-weight: 500;
-        letter-spacing: 0.2px;
-    }
-
-    .room-price-suffix {
-        font-size: 0.62rem;
-        opacity: 0.75;
-    }
+    .room-price-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.75; }
+    .room-price-value { font-size: 1.3rem; font-weight: 500; letter-spacing: 0.2px; }
+    .room-price-suffix { font-size: 0.62rem; opacity: 0.75; }
 
     .room-slider-nav {
         position: absolute;
@@ -672,39 +677,20 @@
         transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
 
-    .room-slider-nav:hover {
-        background: var(--estate-gold);
-        border-color: var(--estate-gold);
-        transform: translateY(-50%) scale(1.06);
-    }
-
+    .room-slider-nav:hover { background: var(--estate-gold); border-color: var(--estate-gold); transform: translateY(-50%) scale(1.06); }
     .room-slider-nav.prev { left: 20px; }
     .room-slider-nav.next { right: 20px; }
 
-    .room-slider-dots {
-        position: absolute;
-        bottom: 20px;
-        left: 0;
-        right: 0;
-        z-index: 3;
-        display: flex;
-        justify-content: center;
-        gap: 7px;
-    }
+    .room-slider-dots { position: absolute; bottom: 20px; left: 0; right: 0; z-index: 3; display: flex; justify-content: center; gap: 7px; }
 
     .room-slider-dot {
-        width: 18px;
-        height: 4px;
-        border-radius: 4px;
+        width: 18px; height: 4px; border-radius: 4px;
         background: rgba(255, 255, 255, 0.45);
         cursor: pointer;
         transition: background 0.3s ease, width 0.3s ease;
     }
 
-    .room-slider-dot.active {
-        background: var(--estate-gold);
-        width: 28px;
-    }
+    .room-slider-dot.active { background: var(--estate-gold); width: 28px; }
 
     @media (max-width: 767px) {
         .room-slider { height: 340px; }
@@ -724,58 +710,46 @@
         .room-slider-dots { bottom: 12px; }
     }
 
-    /* ===== Gallery ===== */
+    /* ===== Gallery — bento mosaic ===== */
     .room-gallery-section {
-        padding: 100px 0;
+        padding: 110px 0;
         background: #fff;
         border-top: 1px solid var(--estate-line);
     }
 
-    .room-gallery-heading {
-        max-width: 640px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    .room-gallery-sub {
-        color: var(--estate-stone);
-        margin-top: 4px;
-    }
+    .room-gallery-heading { max-width: 640px; margin: 0 auto; text-align: center; }
+    .room-gallery-sub { color: var(--estate-stone); margin-top: 4px; }
 
     .room-gallery-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 190px;
+        gap: 18px;
+    }
+
+    .room-gallery-item.featured {
+        grid-column: span 2;
+        grid-row: span 2;
     }
 
     .room-gallery-item {
         position: relative;
         display: block;
-        aspect-ratio: 4 / 3;
         border-radius: 18px;
         overflow: hidden;
         box-shadow: 0 10px 26px rgba(11, 49, 40, 0.1);
-
-        opacity: 0;
-        transform: translateY(24px);
-        animation: galleryRise 0.7s ease forwards;
-        animation-delay: calc(var(--delay, 0) * 0.1s);
-        animation-play-state: paused;
-    }
-
-    @keyframes galleryRise {
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .room-gallery-item img {
         width: 100%;
-        height: 100%;
+        height: 118%;
         object-fit: cover;
         display: block;
+        will-change: transform;
         transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .room-gallery-item:hover img { transform: scale(1.06); }
+    .room-gallery-item:hover img { transform: scale(1.07) !important; }
 
     .room-gallery-item::before {
         content: attr(data-index);
@@ -792,10 +766,7 @@
         transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    .room-gallery-item:hover::before {
-        opacity: 0.9;
-        transform: translateY(0);
-    }
+    .room-gallery-item:hover::before { opacity: 0.9; transform: translateY(0); }
 
     .room-gallery-zoom {
         position: absolute;
@@ -807,7 +778,6 @@
 
     .room-gallery-item:hover .room-gallery-zoom { opacity: 1; }
 
-    /* ===== Gallery pagination ===== */
     .room-gallery-pagination {
         display: flex;
         justify-content: center;
@@ -817,106 +787,61 @@
     }
 
     .room-gallery-page-btn {
-        min-width: 40px;
-        height: 40px;
-        padding: 0 4px;
+        min-width: 40px; height: 40px; padding: 0 4px;
         border-radius: 50%;
         border: 1px solid var(--estate-line);
         background: #fff;
         color: var(--estate-ink);
         font-size: 0.9rem;
         font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
         cursor: pointer;
         transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
 
-    .room-gallery-page-btn:hover:not(:disabled) {
-        border-color: var(--estate-forest);
-        transform: translateY(-2px);
-    }
+    .room-gallery-page-btn:hover:not(:disabled) { border-color: var(--estate-forest); transform: translateY(-2px); }
+    .room-gallery-page-btn.active { background: var(--estate-forest); border-color: var(--estate-forest); color: #fff; }
+    .room-gallery-page-btn.nav-btn { border-radius: 50%; color: var(--estate-forest); }
+    .room-gallery-page-btn.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
-    .room-gallery-page-btn.active {
-        background: var(--estate-forest);
-        border-color: var(--estate-forest);
-        color: #fff;
-    }
-
-    .room-gallery-page-btn.nav-btn {
-        border-radius: 50%;
-        color: var(--estate-forest);
-    }
-
-    .room-gallery-page-btn.nav-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    /* ===== Icon box — same glass badge used on the Rooms list accordion,
-       reused here for consistency across the two templates. ===== */
     .room-icon-box {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
+        width: 44px; height: 44px; border-radius: 50%;
         background: rgba(255, 255, 255, 0.12);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.25);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
         color: #fff;
         flex-shrink: 0;
         transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
     }
 
-    /* Positioned + hidden-until-hover variant, for gallery tiles */
     .room-gallery-item .room-icon-box {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        z-index: 2;
-        opacity: 0;
-        transform: translateY(-8px);
+        position: absolute; top: 16px; right: 16px; z-index: 2;
+        opacity: 0; transform: translateY(-8px);
     }
 
-    .room-gallery-item:hover .room-icon-box {
-        opacity: 1;
-        transform: translateY(0);
-        background: rgba(255, 255, 255, 0.22);
-    }
+    .room-gallery-item:hover .room-icon-box { opacity: 1; transform: translateY(0); background: rgba(255, 255, 255, 0.22); }
 
-    /* Always-visible, inline variant, for buttons */
     .room-icon-box-static {
-        width: 34px;
-        height: 34px;
-        opacity: 1;
-        transform: none;
-        margin-left: 4px;
+        width: 34px; height: 34px; opacity: 1; transform: none; margin-left: 4px;
         background: rgba(7, 31, 25, 0.12);
         border-color: rgba(7, 31, 25, 0.2);
         color: var(--estate-forest-deep);
     }
 
-    .room-booking-btn:hover .room-icon-box-static {
-        background: rgba(7, 31, 25, 0.2);
-    }
+    .room-booking-btn:hover .room-icon-box-static { background: rgba(7, 31, 25, 0.2); }
 
     @media (max-width: 991px) {
         .room-gallery-section { padding: 70px 0; }
-        .room-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        .room-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+        .room-gallery-item.featured { grid-column: span 2; grid-row: span 1; }
     }
 
     @media (max-width: 767px) {
         .room-gallery-section { padding: 50px 0; }
-        .room-gallery-section .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .room-gallery-grid { gap: 14px; }
+        .room-gallery-section .r-container { padding-left: 20px; padding-right: 20px; }
+        .room-gallery-grid { gap: 14px; grid-auto-rows: 180px; }
         .room-gallery-sub { font-size: 0.9rem; }
         .room-gallery-pagination { margin-top: 30px; gap: 8px; }
         .room-gallery-page-btn { min-width: 36px; height: 36px; font-size: 0.85rem; }
@@ -925,60 +850,44 @@
     @media (max-width: 575px) {
         .room-gallery-section { padding: 40px 0; }
         .room-gallery-grid { grid-template-columns: 1fr; gap: 16px; }
+        .room-gallery-item.featured { grid-column: span 1; }
     }
 
     @media (max-width: 400px) {
-        .room-gallery-section .r-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
+        .room-gallery-section .r-container { padding-left: 16px; padding-right: 16px; }
     }
 
     /* Lightbox */
     .room-lightbox {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
+        position: fixed; inset: 0; z-index: 9999;
         background: rgba(7, 31, 25, 0.94);
-        display: none;
-        align-items: center;
-        justify-content: center;
+        display: none; align-items: center; justify-content: center;
         padding: 40px;
     }
 
     .room-lightbox.active { display: flex; }
 
     .room-lightbox img {
-        max-width: 100%;
-        max-height: 100%;
+        max-width: 100%; max-height: 100%;
         border-radius: 10px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     }
 
     .room-lightbox-close {
-        position: absolute;
-        top: 28px;
-        right: 32px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
+        position: absolute; top: 28px; right: 32px;
+        width: 44px; height: 44px; border-radius: 50%;
         border: 1px solid rgba(255, 255, 255, 0.25);
         background: rgba(255, 255, 255, 0.08);
-        color: #fff;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        color: #fff; font-size: 1.1rem;
+        display: flex; align-items: center; justify-content: center;
         cursor: pointer;
         transition: background 0.3s ease;
     }
 
     .room-lightbox-close:hover { background: var(--estate-gold); border-color: var(--estate-gold); }
 
-    /* ===== Booking strip ===== */
-    .room-booking-section {
-        padding: 20px 0 90px;
-    }
+    /* ===== Booking strip — drifting orbs ===== */
+    .room-booking-section { padding: 20px 0 90px; }
 
     .room-booking-strip {
         position: relative;
@@ -993,38 +902,29 @@
         flex-wrap: wrap;
     }
 
-    .room-booking-strip::before {
-        content: "";
+    .room-booking-orb {
         position: absolute;
-        inset: 0;
-        background-image:
-            repeating-radial-gradient(circle at 88% 30%, transparent 0, transparent 22px, rgba(255,255,255,0.035) 23px, rgba(255,255,255,0.035) 24px),
-            repeating-radial-gradient(circle at 10% 110%, transparent 0, transparent 30px, rgba(255,255,255,0.03) 31px, rgba(255,255,255,0.03) 32px);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(200,168,106,0.18) 0%, transparent 70%);
         pointer-events: none;
+    }
+
+    .orb-a { width: 320px; height: 320px; top: -140px; right: -80px; animation: orbDrift 9s ease-in-out infinite; }
+    .orb-b { width: 220px; height: 220px; bottom: -120px; left: -60px; animation: orbDrift 11s ease-in-out infinite reverse; }
+
+    @keyframes orbDrift {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(20px, 24px); }
     }
 
     .room-booking-copy { position: relative; z-index: 1; }
 
-    .room-booking-strip h5 {
-        font-size: 1.6rem;
-        font-weight: 400;
-        color: #fff;
-        margin: 4px 0 8px;
-        text-transform: capitalize;
-    }
-
-    .room-booking-strip p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.95rem;
-    }
+    .room-booking-strip h5 { font-size: 1.6rem; font-weight: 400; color: #fff; margin: 4px 0 8px; text-transform: capitalize; }
+    .room-booking-strip p { margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; }
 
     .room-booking-btn {
-        position: relative;
-        z-index: 1;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
+        position: relative; z-index: 1;
+        display: inline-flex; align-items: center; gap: 10px;
         background: var(--estate-gold) !important;
         border: 1px solid var(--estate-gold) !important;
         color: var(--estate-forest-deep) !important;
@@ -1033,23 +933,12 @@
         transition: transform 0.3s ease, filter 0.3s ease;
     }
 
-    .room-booking-btn:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.06);
-    }
+    .room-booking-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
 
     @media (max-width: 767px) {
         .room-booking-section { padding: 12px 0 60px; }
-        .room-booking-section .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .room-booking-strip {
-            flex-direction: column;
-            align-items: stretch;
-            text-align: center;
-            padding: 40px 28px;
-        }
+        .room-booking-section .r-container { padding-left: 20px; padding-right: 20px; }
+        .room-booking-strip { flex-direction: column; align-items: stretch; text-align: center; padding: 40px 28px; }
         .room-booking-copy { text-align: center; }
         .room-booking-strip h5 { font-size: 1.3rem; }
         .room-booking-btn { width: 100%; justify-content: center; }
@@ -1060,29 +949,17 @@
     }
 
     @media (max-width: 400px) {
-        .room-booking-section .r-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
+        .room-booking-section .r-container { padding-left: 16px; padding-right: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .room-page * {
-            animation: none !important;
-            transition: none !important;
-        }
-        .room-gallery-item, .reveal-item, .reveal-card {
-            opacity: 1 !important;
-            transform: none !important;
-        }
+        .room-page * { animation: none !important; transition: none !important; }
+        .reveal-fade, .reveal-left, .reveal-scale, .room-hero-title-line { opacity: 1 !important; transform: none !important; }
+        [data-parallax] { transform: none !important; }
     }
 
     /* ===== Enquiry modal ===== */
-    .room-enquiry-modal .modal-content {
-        border: none;
-        border-radius: 22px;
-        overflow: hidden;
-    }
+    .room-enquiry-modal .modal-content { border: none; border-radius: 22px; overflow: hidden; }
 
     .room-enquiry-modal .modal-header {
         align-items: flex-start;
@@ -1093,28 +970,11 @@
 
     .room-enquiry-modal .modal-header .room-eyebrow { color: rgba(255, 255, 255, 0.85); }
     .room-enquiry-modal .modal-header .room-eyebrow::before { background: var(--estate-gold); }
+    .room-enquiry-modal .modal-title { color: #fff; font-weight: 500; margin-top: 4px; }
+    .room-enquiry-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); opacity: 0.8; }
 
-    .room-enquiry-modal .modal-title {
-        color: #fff;
-        font-weight: 500;
-        margin-top: 4px;
-    }
-
-    .room-enquiry-modal .btn-close {
-        filter: invert(1) grayscale(1) brightness(2);
-        opacity: 0.8;
-    }
-
-    .room-enquiry-modal .modal-body {
-        padding: 28px 32px;
-        background: var(--estate-cream);
-    }
-
-    .room-enquiry-note {
-        color: var(--estate-stone);
-        font-size: 0.9rem;
-        margin-bottom: 18px;
-    }
+    .room-enquiry-modal .modal-body { padding: 28px 32px; background: var(--estate-cream); }
+    .room-enquiry-note { color: var(--estate-stone); font-size: 0.9rem; margin-bottom: 18px; }
 
     .room-enquiry-modal .form-control {
         border: 1px solid var(--estate-line);
@@ -1129,16 +989,8 @@
         box-shadow: 0 0 0 3px rgba(200, 168, 106, 0.25);
     }
 
-    .room-enquiry-modal .modal-footer {
-        background: var(--estate-cream);
-        border: none;
-        padding: 0 32px 32px;
-    }
-
-    .room-enquiry-modal .room-booking-btn {
-        width: 100%;
-        justify-content: center;
-    }
+    .room-enquiry-modal .modal-footer { background: var(--estate-cream); border: none; padding: 0 32px 32px; }
+    .room-enquiry-modal .room-booking-btn { width: 100%; justify-content: center; }
 
     @media (max-width: 575px) {
         .room-enquiry-modal .modal-header { padding: 22px 20px 16px; }
@@ -1150,6 +1002,46 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+    /* ===== Parallax engine — anything with data-parallax="factor" ===== */
+    const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
+    let ticking = false;
+
+    function updateParallax() {
+        const viewportH = window.innerHeight;
+        parallaxEls.forEach(el => {
+            const factor = parseFloat(el.getAttribute('data-parallax')) || 0.2;
+            const rect = el.closest('.room-hero-section, .room-slide, .room-gallery-item')?.getBoundingClientRect() || el.getBoundingClientRect();
+            const centerOffset = (rect.top + rect.height / 2) - viewportH / 2;
+            el.style.transform = `translateY(${centerOffset * factor * -0.15}px)`;
+        });
+        ticking = false;
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateParallax();
+
+    /* ===== Scroll reveal (fade / left / scale) ===== */
+    const revealEls = document.querySelectorAll('.reveal-fade, .reveal-left, .reveal-scale');
+    if (revealEls.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => observer.observe(el));
+    }
 
     /* Image slider */
     const slider = document.querySelector('.room-slider');
@@ -1182,13 +1074,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     dots[current].classList.add('active');
                 }
 
-                prevBtn.addEventListener('click', () => {
-                    goToSlide((current - 1 + slides.length) % slides.length);
-                });
-
-                nextBtn.addEventListener('click', () => {
-                    goToSlide((current + 1) % slides.length);
-                });
+                prevBtn.addEventListener('click', () => goToSlide((current - 1 + slides.length) % slides.length));
+                nextBtn.addEventListener('click', () => goToSlide((current + 1) % slides.length));
 
                 let intervalId = setInterval(() => goToSlide((current + 1) % slides.length), 6000);
                 slider.addEventListener('mouseenter', () => clearInterval(intervalId));
@@ -1228,7 +1115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'Escape') closeLightbox();
     });
 
-    /* Gallery pagination — kicks in once there are more than 6 images */
+    /* Gallery pagination */
     const galleryGrid = document.getElementById('roomGalleryGrid');
     const galleryPagination = document.getElementById('roomGalleryPagination');
 
@@ -1285,29 +1172,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* Scroll-reveal for quick facts + gallery cards */
-    const revealEls = document.querySelectorAll('.reveal-item, .reveal-card');
-    if (revealEls.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-
-        revealEls.forEach(el => observer.observe(el));
-    }
-
-    /* ===== WhatsApp enquiry notification =====
-       Fires alongside the normal POST to contact_view. Opens a new tab
-       with a pre-filled WhatsApp message to the estate admin so they
-       get an instant ping in addition to the enquiry saved via the form. */
+    /* WhatsApp enquiry notification */
     const enquiryForm = document.getElementById('enquiryForm');
     if (enquiryForm) {
-        // TODO: replace with the real admin WhatsApp number
-        // Format: country code + number, digits only, no + no spaces (e.g. India: 91XXXXXXXXXX)
         const ADMIN_WHATSAPP_NUMBER = '919633870962';
 
         enquiryForm.addEventListener('submit', function () {
@@ -1327,9 +1194,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Message: ' + message;
 
             const waUrl = 'https://wa.me/' + ADMIN_WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
-
-            // Open WhatsApp in a new tab. The form itself continues its
-            // normal submit and POSTs to contact_view as before.
             window.open(waUrl, '_blank');
         });
     }

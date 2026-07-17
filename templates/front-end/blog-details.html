@@ -32,8 +32,8 @@
     <div class="r-container">
         <div class="row justify-content-center">
             <div class="col col-xl-9">
-                <span class="blog-eyebrow">From the Estate</span>
-                <h3 class="blog-section-title">The <em>full story</em></h3>
+                <span class="blog-eyebrow">{{ blog.created_at|date:"F j, Y" }}</span>
+                <h3 class="blog-section-title">{{ blog.title }}</h3>
             </div>
         </div>
     </div>
@@ -221,7 +221,20 @@
     .blog-card:hover .blog-card-body p { max-height: 80px; opacity: 1; }
     .blog-read-more { display: inline-flex; align-items: center; gap: 8px; color: white; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease; }
     .blog-card:hover .blog-read-more { opacity: 1; transform: translateY(0); }
+    .blog-post-title {
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
 
+/* More breathing room between hero and the section below it */
+.blog-body-section {
+    padding-top: 90px;
+}
+
+/* Push the content image further from the title */
+.blog-content-img-wrap {
+    margin-top: 20px;
+}
     /* Touch devices have no hover — reveal excerpt, read-more link, and
        body position by default instead of hiding them permanently. */
     @media (hover: none) {

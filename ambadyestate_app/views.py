@@ -768,6 +768,7 @@ def enquiry_delete(request, pk):
 
 # --------- FRONTEND ---------
 from django.urls import reverse
+
 def home(request):
     packages = Package.objects.filter(status="active").order_by('-created_at')
     rooms = Room.objects.filter(status="active").order_by('-created_at')[:6]
@@ -780,28 +781,30 @@ def home(request):
     return render(request, 'front-end/index.html', {
         'packages': packages,
         'rooms': rooms,
-        'activities': activities,
+        'activities': activities,   # already present ✅
         'testimonials': testimonials,
         'blogs': blogs,
         'form': form,
     })
 
+
 def about_page(request):
-    
     packages = Package.objects.all().order_by('-created_at') if hasattr(Package, 'created_at') else Package.objects.all()
     testimonials = Testimonial.objects.all().order_by('-created_at')[:6] if hasattr(Testimonial, 'created_at') else Testimonial.objects.all()[:6]
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     return render(request, 'front-end/about.html', {
         'packages': packages,
         'testimonials': testimonials,
+        'activities': activities,   # 👈 added
     })
-# --------- Booking Page (public) ---------
+
 
 def booking_page(request):
-    
     packages = Package.objects.all().order_by('-created_at') if hasattr(Package, 'created_at') else Package.objects.all()
     selected_slug = request.GET.get('package')
     selected_package = Package.objects.filter(slug=selected_slug).first() if selected_slug else None
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     if request.method == "POST":
         form = ReservationForm(request.POST)
@@ -821,43 +824,56 @@ def booking_page(request):
         'packages': packages,
         'form': form,
         'selected_package': selected_package,
+        'activities': activities,   # 👈 added
     })
+
 
 def rooms_page(request):
     rooms = Room.objects.filter(status="active").order_by('-created_at')
     nearby_destinations = NearbyDestination.objects.filter(status="active").order_by('-created_at')
- 
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
+
     return render(request, 'front-end/rooms.html', {
         'rooms': rooms,
         'nearby_destinations': nearby_destinations,
+        'activities': activities,   # 👈 added
     })
- 
+
 
 def room_details(request, slug):
     room = get_object_or_404(Room, slug=slug)
-    return render(request, "front-end/room-details.html", {"room": room})
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
+    return render(request, "front-end/room-details.html", {
+        "room": room,
+        "activities": activities,   # 👈 added
+    })
+
 
 def packages_page(request):
     packages = Package.objects.filter(status="active").order_by('-created_at')
-    activities=Activity.objects.filter(status="active").order_by('created_at')
+    activities = Activity.objects.filter(status="active").order_by('created_at')
     return render(request, 'front-end/packages.html', {
         'packages': packages,
-        'activities':activities
+        'activities': activities,   # already present ✅
     })
+
 
 def package_details(request, slug):
     package = get_object_or_404(Package, slug=slug, status="active")
     other_packages = Package.objects.filter(status="active").exclude(slug=slug).order_by('-created_at')
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     return render(request, 'front-end/package-details.html', {
         'package': package,
         'other_packages': other_packages,
+        'activities': activities,   # 👈 added
     })
+
 
 def activities_page(request):
     activities = Activity.objects.filter(status="active").order_by("-created_at")
     context = {
-        "activities": activities,
+        "activities": activities,   # already present ✅
     }
     return render(request, "front-end/activities.html", context)
 
@@ -878,42 +894,47 @@ def activity_details(request, slug):
         "other_activities": other_activities,
         "gallery_images": gallery_images,
         "related_activities": related_activities,
+        "activities": other_activities,   # 👈 added (for footer)
     }
     return render(request, "front-end/activity_details.html", context)
 
 
 def blog_page(request):
     blogs = Blog.objects.all().order_by('-created_at')
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
     return render(request, 'front-end/blog.html', {
         'blogs': blogs,
+        'activities': activities,   # 👈 added
     })
+
 
 def blog_details(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     other_blogs = Blog.objects.exclude(slug=slug).order_by('-created_at')[:3]
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     return render(request, 'front-end/blog-details.html', {
         'blog': blog,
         'other_blogs': other_blogs,
+        'activities': activities,   # 👈 added
     })
 
 from django.http import JsonResponse
-
 def contact_page(request):
     """Public-facing Contact Us page — info cards, enquiry form, and map."""
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
             enquiry = form.save()
 
-            # Notify admin of the new enquiry
             admin_message = (
-                f"New enquiry received .\n\n"
-                f"Name: {getattr(enquiry, 'name', '')}\n"
+                f"New enquiry received.\n\n"
+                f"Name: {getattr(enquiry, 'first_name', '')} {getattr(enquiry, 'last_name', '')}\n"
                 f"Email: {getattr(enquiry, 'email', '')}\n"
-                f"Phone: {getattr(enquiry, 'phone', '')}\n"
+                f"Phone: {getattr(enquiry, 'phone_number', '')}\n"
                 f"Message: {getattr(enquiry, 'message', '')}\n"
             )
             try:
@@ -925,7 +946,7 @@ def contact_page(request):
                     fail_silently=True,
                 )
             except Exception:
-                pass  # don't block the visitor's response if email fails
+                pass
 
             if is_ajax:
                 return JsonResponse({
@@ -947,6 +968,7 @@ def contact_page(request):
 
     return render(request, "front-end/contact.html", {
         "form": form,
+        "activities": activities,   # 👈 added
     })
 
 
@@ -958,11 +980,13 @@ def nearby_destination_details(request, slug):
         .exclude(pk=destination.pk)
         .order_by("-created_at")[:3]
     )
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
 
     context = {
         "destination": destination,
         "gallery_images": gallery_images,
         "other_destinations": other_destinations,
+        "activities": activities,   # 👈 added
     }
     return render(request, "front-end/nearby_destination_details.html", context)
 
@@ -970,9 +994,11 @@ def nearby_destination_details(request, slug):
 def gallery(request):
     categories = Category.objects.all().order_by("name")
     images = GalleryImage.objects.select_related("category").order_by("-uploaded_at")
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   
 
     context = {
         "categories": categories,
         "images": images,
+        "activities": activities,   
     }
     return render(request, "front-end/gallery.html", context)

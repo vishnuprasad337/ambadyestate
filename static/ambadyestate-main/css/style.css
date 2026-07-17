@@ -2533,3 +2533,31 @@ a {
 
 
 }
+
+
+/* ===== UNIFIED CARD TYPOGRAPHY (applies to every card, every page) ===== */
+.feature-card h3,
+.process-card h3,
+.service-body h3,
+.project-card h3,
+.project-info strong,
+.testimonial-quote strong {
+    font-family: var(--font-1);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.feature-card p,
+.process-card p,
+.service-body p,
+.project-card p,
+.project-info p,
+.testimonial-quote p {
+    font-family: var(--font-3);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
+}
