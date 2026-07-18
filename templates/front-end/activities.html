@@ -199,7 +199,6 @@
         </div>
     </div>
 </div>
-
 <style>
     #activities-list {
         padding: 100px 0;
@@ -337,12 +336,12 @@
     .activity-read-more:hover i { transform: translateX(4px); }
 
     /* ===== MOBILE FIXES: on touch devices there's no hover, so the
-       description/read-more text would stay permanently hidden unless
-       we reveal it by default. ===== */
+       description/read-more text is revealed by default instead. ===== */
     @media (hover: none) {
         .activity-card-body p {
-            max-height: 100px;
+            max-height: none;
             opacity: 1;
+            overflow: visible;
         }
         .activity-read-more {
             opacity: 1;
@@ -364,23 +363,56 @@
         #activities-list .r-container {
             padding-left: 20px;
             padding-right: 20px;
+            max-width: 100%;
+        }
+        /* card no longer stretches to fill a tall aspect box on tablets/
+           large phones — capped so it doesn't dominate the screen */
+        .activity-card-img-wrap {
+            aspect-ratio: 4 / 3;
+            max-height: 340px;
         }
     }
 
     @media (max-width: 575px) {
-        #activities-list { padding: 40px 0; }
-        .activity-card-img-wrap { aspect-ratio: 4 / 3; }
-        .activity-card-body { padding: 22px; }
-        .activity-card-body h4 { font-size: 1.1rem; }
-        .activity-card-body p { font-size: 0.85rem; }
-    }
-
-    @media (max-width: 400px) {
+        #activities-list { padding: 32px 0; }
         #activities-list .r-container {
             padding-left: 16px;
             padding-right: 16px;
         }
-        .activity-card-body { padding: 18px; }
+        /* shorter, contained card so it doesn't tower over the screen
+           like a nearly-full-height block */
+        .activity-card-img-wrap {
+            aspect-ratio: 5 / 4;
+            max-height: 260px;
+        }
+        .activity-card {
+            border-radius: 16px;
+        }
+        .activity-card-img-wrap {
+            border-radius: 16px;
+        }
+        .activity-card-body {
+            padding: 18px;
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, 0.92) 0%,
+                    rgba(0, 0, 0, 0.6) 55%,
+                    rgba(0, 0, 0, 0.15) 100%);
+            border-radius: 0 0 16px 16px;
+        }
+        .activity-card-body h4 { font-size: 1.05rem; }
+        .activity-card-body p {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin-top: 6px;
+        }
+        .activity-read-more { font-size: 0.72rem; margin-top: 8px; }
+    }
+
+    @media (max-width: 400px) {
+        .activity-card-img-wrap { max-height: 230px; }
+        .activity-card-body { padding: 14px; }
+        .activity-card-body h4 { font-size: 1rem; }
+        .activity-card-body p { font-size: 0.78rem; }
     }
 </style>
 <!-- ===== EVERYTHING YOU NEED FOR A STAY (Koodaram-style reference layout) ===== -->
@@ -391,19 +423,23 @@
 
             <!-- Left: Intro -->
             <div class="col scrollanimation animated scroll-fadeInLeft">
-                <div class="amenities-intro">
-                    <h6 class="accent-color-2">Explore Ambady Estate Experiences</h6>
-                    <h3>Everything you need for a Stay</h3>
-                    <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of
-                        everything so you can simply enjoy the mountains.</p>
-                    <div class="w-max-content mt-3">
-                        <a href="#booking" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3">
-                            <span>Contact Us</span>
-                            <i class="fa-solid fa-arrow-up-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <div class="amenities-intro">
+        <h6 class="accent-color-2">Explore Ambady Estate Experiences</h6>
+        <h3>Everything you need for a Stay</h3>
+        <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of
+            everything so you can simply enjoy the mountains.</p>
+        <div class="w-max-content mt-3">
+           <button type="button" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3 js-open-booking-modal">
+                <span>Enquiry Now</span>
+            </button>
+        </div>
+
+        <!-- ===== NEW: illustration filling the vacant space below the button ===== -->
+        <div class="amenities-intro-image">
+            <img src="{% static 'ambadyestate-main/pvr5.png' %}" alt="Enquiry at Ambady Estate" loading="lazy">
+        </div>
+    </div>
+</div>
 
             <!-- Right: Feature grid -->
             <div class="col scrollanimation animated scroll-fadeInRight">
@@ -457,131 +493,78 @@
         </div>
     </div>
 </div>
-
 <style>
-    /* ===== KOODARAM-STYLE AMENITIES SECTION ===== */
-    .amenities-koodaram {
-        position: relative;
-        padding: 110px 0;
-        background-size: cover;
-        background-position: center;
-        overflow: hidden;
+  .amenities-intro-image {
+    margin-top: 32px;
+    width: 148%;
+    max-width: none;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .amenities-intro-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0;
+
+    /* fades the hard rectangle edge into whatever's behind it */
+    -webkit-mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+                         linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 991px) {
+    .amenities-intro-image {
+      width: 112%;
+      margin: 24px auto 0;
     }
-
-    .amenities-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(221, 230, 219, 0.55); /* lowered from 0.88 to let image show through */
-    z-index: 1;
-}
-
-    /* Left intro */
-    .amenities-intro {
-        max-width: 420px;
-    }
-
-    .amenities-intro h6 {
-        margin-bottom: 14px;
-        color: var(--accent-color-2, #7c9473);
-    }
-
-    .amenities-intro h3 {
-        font-size: clamp(2rem, 3.5vw, 2.6rem);
-        line-height: 1.2;
-        margin-bottom: 18px;
-        color: #24301f;
-    }
-
-    .amenities-intro p {
-        color: rgba(36, 48, 31, 0.78);
-        font-size: 1rem;
-        line-height: 1.8;
-    }
-
-    /* Right grid */
-    .amenities-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px 36px;
-    }
-
-    .amenity-item {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-    }
-
-    .amenity-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: var(--accent-color, #6f8a63);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-        transition: transform 0.35s ease, background 0.35s ease;
-    }
-
-    .amenity-item:hover .amenity-icon {
-        transform: scale(1.1) rotate(-6deg);
-        background: var(--accent-color-2, #c8a86a);
-        color: #1a1e16;
-    }
-
-    .amenity-item h5 {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #24301f;
-        margin: 0;
-    }
-
-    .amenity-item p {
-        font-size: 0.9rem;
-        line-height: 1.65;
-        color: rgba(36, 48, 31, 0.7);
-        margin: 0;
-    }
-
-    @media (max-width: 991px) {
-        .amenities-koodaram {
-            padding: 70px 0;
-        }
-
-        .amenities-grid {
-            grid-template-columns: 1fr;
-            gap: 28px;
-        }
-
-        .amenities-intro {
-            max-width: 100%;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .amenities-intro .w-max-content {
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
+  }
 
     /* ===== MOBILE FIXES: amenities section ===== */
     @media (max-width: 767px) {
         .amenities-koodaram {
-            padding: 50px 0;
+            padding: 40px 0;
         }
         .amenities-koodaram .r-container {
             padding-left: 20px;
             padding-right: 20px;
         }
+        .amenities-intro h6 {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
         .amenities-intro h3 {
-            font-size: clamp(1.6rem, 6vw, 2rem);
+            font-size: clamp(1.4rem, 6vw, 1.7rem);
+            margin-bottom: 10px;
         }
         .amenities-intro p {
-            font-size: 0.92rem;
-            line-height: 1.7;
+            font-size: 0.88rem;
+            line-height: 1.6;
         }
+
+        /* ── Button: force it to shrink to content width, not stretch
+           full-width like a block element ── */
+        .amenities-intro .w-max-content {
+            margin-top: 16px;
+            width: max-content !important;
+            max-width: 90%;
+            display: inline-block !important;
+        }
+        .amenities-intro .btn-accent {
+            display: inline-flex !important;
+            width: auto !important;
+            flex: none !important;
+            padding: 9px 22px !important;
+            font-size: 0.82rem !important;
+        }
+
         .amenity-icon {
             width: 46px;
             height: 46px;
@@ -594,7 +577,7 @@
             font-size: 0.86rem;
         }
         .amenities-grid {
-            gap: 22px;
+            gap: 18px;
         }
     }
 
@@ -602,6 +585,10 @@
         .amenities-koodaram .r-container {
             padding-left: 16px;
             padding-right: 16px;
+        }
+        .amenities-intro .btn-accent {
+            padding: 8px 18px !important;
+            font-size: 0.78rem !important;
         }
     }
 </style>

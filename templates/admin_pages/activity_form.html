@@ -157,8 +157,8 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
 }
 
 .current-image-preview {
-    width: 90px;
-    height: 90px;
+    width: 100%;
+    height: 110px;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid #d1d5db;
@@ -171,23 +171,25 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
     margin-bottom: 1rem;
 }
 
-.gallery-form-row {
+.gallery-existing-item {
     border: 1px solid #e5e7eb;
     border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.75rem;
     background: #f9fafb;
-}
-
-.gallery-form-row .row > div {
-    margin-bottom: 0.75rem;
 }
 
 .gallery-delete-check {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.gallery-upload-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1rem;
+    background: #f9fafb;
 }
 
 @media (max-width: 1200px) {
@@ -288,12 +290,12 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
                                     {{ form.price.errors }}
                                 </div>
 
-                                <!-- Cover Image -->
+                                <!-- Cover Image (single, main thumbnail for the activity) -->
                                 <div class="col-12 mb-4">
                                     <label for="{{ form.image.id_for_label }}" class="form-label">Cover Image</label>
                                     {% if is_edit and activity.image %}
                                         <div>
-                                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="current-image-preview">
+                                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="current-image-preview" style="width:90px;">
                                         </div>
                                     {% endif %}
                                     {{ form.image }}
@@ -308,46 +310,47 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
                                 </div>
                             </div>
 
-                            <!-- Gallery Images Formset -->
+                            <!-- Gallery Images: one multi-file input + existing image list -->
                             <div class="gallery-section mt-2 mb-4">
                                 <h5 class="gallery-section-title">Gallery Images</h5>
 
-                                {{ formset.management_form }}
-                                {% if formset.non_form_errors %}
-                                    <div class="alert alert-danger">{{ formset.non_form_errors }}</div>
+                                {% if gallery_form.non_field_errors %}
+                                    <div class="alert alert-danger">{{ gallery_form.non_field_errors }}</div>
                                 {% endif %}
 
-                                <div id="gallery-formset-container">
-                                    {% for subform in formset %}
-                                    <div class="gallery-form-row" data-form-index="{{ forloop.counter0 }}">
-                                        {{ subform.id }}
-                                        {{ subform.order.as_hidden }}
-                                        <div class="row">
-                                            <div class="col-12 col-md-8">
-                                                {% if subform.instance.pk and subform.instance.image %}
-                                                    <div>
-                                                        <img src="{{ subform.instance.image.url }}" alt="Gallery image" class="current-image-preview">
-                                                    </div>
-                                                {% endif %}
-                                                <label class="form-label">Image</label>
-                                                {{ subform.image }}
-                                                {{ subform.image.errors }}
+                                {% if is_edit and activity.images.all %}
+                                <div class="row mb-3">
+                                    {% for gallery_image in activity.images.all %}
+                                    <div class="col-6 col-md-3 mb-3">
+                                        <div class="gallery-existing-item">
+                                            <img src="{{ gallery_image.image.url }}" alt="Gallery image" class="current-image-preview">
+                                            <div class="gallery-delete-check">
+                                                <input type="checkbox" name="delete_image_{{ gallery_image.id }}" id="delete_image_{{ gallery_image.id }}">
+                                                <label for="delete_image_{{ gallery_image.id }}">Remove</label>
                                             </div>
-                                            {% if subform.instance.pk %}
-                                            <div class="col-12 col-md-4 d-flex align-items-end">
-                                                <div class="gallery-delete-check">
-                                                    {{ subform.DELETE }}
-                                                    <label>Remove</label>
-                                                </div>
-                                            </div>
-                                            {% endif %}
                                         </div>
                                     </div>
                                     {% endfor %}
                                 </div>
+                                {% endif %}
 
-                                <button type="button" id="add-gallery-row" class="btn btn-outline-primary btn-sm">+ Add another image</button>
-                            </div>
+                                <div class="gallery-upload-box">
+    <label for="{{ gallery_form.gallery_images.id_for_label }}" class="form-label">
+        Add Gallery Images
+    </label>
+    <input
+        type="file"
+        name="gallery_images"
+        id="{{ gallery_form.gallery_images.id_for_label }}"
+        class="form-control"
+        accept="image/*"
+        multiple>
+    <small class="text-muted d-block mt-1">
+        Hold <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac) while clicking, or drag-select,
+        to choose more than one image at once.
+    </small>
+    {{ gallery_form.gallery_images.errors }}
+</div>
 
                             <!-- Submit Button -->
                             <div class="dashboard__form__button">
@@ -404,59 +407,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error(error));
     }
-});
-</script>
-
-<script>
-// Dynamically add more gallery image rows to the inline formset
-document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.getElementById('add-gallery-row');
-    const container = document.getElementById('gallery-formset-container');
-    const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
-
-    if (!addButton || !container || !totalFormsInput) return;
-
-    addButton.addEventListener('click', function () {
-        const rows = container.querySelectorAll('.gallery-form-row');
-        const lastRow = rows[rows.length - 1];
-        const formCount = parseInt(totalFormsInput.value, 10);
-
-        // Clone the last row as a template for the new one
-        const newRow = lastRow.cloneNode(true);
-
-        // Update all name/id/for attributes to use the new form index
-        newRow.querySelectorAll('input, select, textarea, label').forEach(el => {
-            ['name', 'id', 'for'].forEach(attr => {
-                if (el.hasAttribute(attr)) {
-                    const val = el.getAttribute(attr);
-                    const updated = val.replace(/-(\d+)-/, `-${formCount}-`);
-                    el.setAttribute(attr, updated);
-                }
-            });
-
-            // Clear values in the cloned row (don't duplicate existing data)
-            if (el.tagName === 'INPUT') {
-                if (el.type === 'checkbox') {
-                    el.checked = false;
-                } else if (el.type === 'file') {
-                    el.value = '';
-                }
-            }
-        });
-
-        // Remove any existing image preview from the cloned row
-        const preview = newRow.querySelector('.current-image-preview');
-        if (preview) preview.remove();
-
-        // Remove delete checkbox block since this is a brand-new row, not an existing image
-        const deleteBlock = newRow.querySelector('.gallery-delete-check');
-        if (deleteBlock) deleteBlock.closest('.col-12, .col-md-4').remove();
-
-        newRow.setAttribute('data-form-index', formCount);
-        container.appendChild(newRow);
-
-        totalFormsInput.value = formCount + 1;
-    });
 });
 </script>
 {% endblock %}

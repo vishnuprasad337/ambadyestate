@@ -420,614 +420,1069 @@
                 justify-content: flex-start !important;
             }
         </style>
-
-      <!-- Section About Us -->
+<!-- Section About Us -->
 <div id="about" class="section bg-attach-cover about-creative" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
     <div class="r-container">
-        <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+
+        <!-- Top: Text + Hero Image -->
+        <div class="row row-cols-xl-2 row-cols-1 align-items-center about-top-row">
 
             <!-- Left: Content -->
             <div class="col col-xl-5 mb-4 mb-xl-0 scrollanimation animated scroll-fadeInLeft">
-                <div class="d-flex flex-column gap-3 text-xl-start text-center">
-                    <h6 class="accent-color-2">About Ambady Estate</h6>
-                    <h3>A scenic estate retreat in the heart of Munnar</h3>
-                    <p>
-                        Ambady Estate brings together the freshness of Munnar's hills, comfortable rooms, and a
-                        laid-back estate atmosphere. It is a place to slow down, enjoy the landscape, and stay
-                        close to the natural beauty that makes this region special.
+                <div class="d-flex flex-column gap-3 about-text-col">
+                    <div class="about-eyebrow">
+                        <span>About Us</span>
+                        <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <h3 class="about-heading">Welcome to<br>Ambady Estate</h3>
+
+                    <p class="about-desc">
+                        A serene luxury boutique resort set on the periphery of a 70-acre cardamom
+                        plantation. Designed for travellers seeking peace, privacy and authentic
+                        Munnar experiences.
                     </p>
 
-                    <!-- Interactive feature list -->
-<div class="about-feature-list mt-2">
-    <div class="about-feature-item">
-        <div class="about-feature-num">01</div>
-        <div class="about-feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 19V10a8 8 0 0 1 16 0v9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 19h20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                <circle cx="12" cy="6" r="1.3" fill="currentColor"/>
-            </svg>
+                    <p class="about-tagline">
+                        Nature. Comfort. Heritage.<br>
+                        All in perfect harmony.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Hero Image (image only, no video) -->
+            <div class="col col-xl-7 mb-xl-0 mb-4 scrollanimation animated scroll-fadeInRight">
+                <div class="about-hero-media">
+                    <img src="{% static 'ambadyestate-main/pvr7.png' %}" class="about-hero-img" alt="Ambady Estate">
+
+                    <!-- Decorative "Experience Ambady" pointer (static, no video trigger) -->
+                    <div class="about-experience-tag">
+
+
+                        <path d="M21 6l7 2-2 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="about-feature-text">
-            <h5>Estate Hospitality</h5>
-            <p>Friendly on-site support for a smooth and restful stay.</p>
-        </div>
-    </div>
-    <div class="about-feature-item">
-        <div class="about-feature-num">02</div>
-        <div class="about-feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 3v7a3 3 0 0 0 3 3v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9 3v6M6 3v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                <path d="M17 3c-1.7 0-3 2-3 5s1 5 3 5v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        <div class="about-feature-text">
-            <h5>Fresh Local Food</h5>
-            <p>Simple, comforting meals inspired by local flavours.</p>
-        </div>
-    </div>
-    <div class="about-feature-item">
-        <div class="about-feature-num">03</div>
-        <div class="about-feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21s-7-5.1-7-11a7 7 0 0 1 14 0c0 5.9-7 11-7 11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-                <circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.7"/>
-            </svg>
-        </div>
-        <div class="about-feature-text">
-            <h5>Easy Access</h5>
-            <p>Convenient facilities that make longer stays comfortable.</p>
-        </div>
-    </div>
-</div>
-                    <div class="w-max-content mt-2">
-                        <a href="{% url 'ambadyestate_app:packages_page' %}" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3">
-                            <span>Explore the Estate</span>
-                        </a>
+
+        <!-- Feature Cards: vertical expanding accordion (stacked top to bottom) + image panel on the right -->
+        <div class="about-cards-wrapper scrollanimation animated scroll-fadeInUp">
+            <div class="about-card-row">
+
+            <div class="about-feature-card active" data-image="{% static 'ambadyestate-main/image/new/about-card-1.webp' %}">
+                <div class="about-card-head">
+                    <div class="about-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21s-5-4-5-9a5 5 0 0 1 10 0c0 5-5 9-5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                            <path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h5>Rooted in Nature</h5>
+                </div>
+                <div class="about-card-body">
+                    <span class="about-card-divider"></span>
+                    <p>Surrounded by lush cardamom plantations, misty hills and serene landscapes that rejuvenate your soul.</p>
+                    <div class="about-card-mobile-img">
+                        <img src="{% static 'ambadyestate-main/image/new/hero3.webp' %}" alt="Rooted in Nature">
                     </div>
                 </div>
             </div>
 
-            <!-- Right: Image with layered pattern + floating elements (no video) -->
-            <div class="col col-xl-7 mb-xl-0 mb-4 scrollanimation animated scroll-fadeInRight">
-                <div class="about-media-wrap">
-
-                    <!-- Decorative pattern layer -->
-                    <div class="about-pattern-layer" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');"></div>
-
-                    <img src="{% static 'ambadyestate-main/image/new/about2.webp' %}" class="about-main-img" alt="Ambady Estate">
-
-                    <!-- Rotating badge -->
-                    
-
-                    <!-- Corner accent frame (replaces play button) -->
-                    <div class="about-corner-frame about-corner-tl"></div>
-                    <div class="about-corner-frame about-corner-br"></div>
-
-                    <!-- Estate tagline chip -->
-                   
-
-                    <!-- Floating stat -->
-                    
+            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/about-card-2.webp' %}">
+                <div class="about-card-head">
+                    <div class="about-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 21V9l8-6 8 6v12" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                            <path d="M9 21v-6h6v6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h5>Boutique Luxury</h5>
+                </div>
+                <div class="about-card-body">
+                    <span class="about-card-divider"></span>
+                    <p>Thoughtfully designed cottages and villas that blend colonial charm with modern comforts.</p>
+                    <div class="about-card-mobile-img">
+                        <img src="{% static 'ambadyestate-main/image/new/hero2.webp' %}" alt="Boutique Luxury">
+                    </div>
                 </div>
             </div>
 
+            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/about-card-3.webp' %}">
+                <div class="about-card-head">
+                    <div class="about-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3v18M6 8c0 4 3 5 6 5s6-1 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h5>Plantation Living</h5>
+                </div>
+                <div class="about-card-body">
+                    <span class="about-card-divider"></span>
+                    <p>Walk through our organic farm, breathe in the fresh mountain air and reconnect with nature.</p>
+                    <div class="about-card-mobile-img">
+                        <img src="{% static 'ambadyestate-main/image/new/plantation.webp' %}" alt="Plantation Living">
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/about-card-4.webp' %}">
+                <div class="about-card-head">
+                    <div class="about-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21s-7-5.1-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.9-11 11-11 11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h5>Kerala Hospitality</h5>
+                </div>
+                <div class="about-card-body">
+                    <span class="about-card-divider"></span>
+                    <p>Warm smiles, heartfelt care and personalised experiences that make every stay unforgettable.</p>
+                    <div class="about-card-mobile-img">
+                        <img src="{% static 'ambadyestate-main/image/new/people.webp' %}" alt="Kerala Hospitality">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only) -->
+            <div class="about-cards-image-panel">
+                <div class="about-cards-image-item active">
+                    <img src="{% static 'ambadyestate-main/image/new/hero3.webp' %}" alt="Rooted in Nature">
+                </div>
+                <div class="about-cards-image-item">
+                    <img src="{% static 'ambadyestate-main/image/new/hero2.webp' %}" alt="Boutique Luxury">
+                </div>
+                <div class="about-cards-image-item">
+                    <img src="{% static 'ambadyestate-main/image/new/plantation.webp' %}" alt="Plantation Living">
+                </div>
+                <div class="about-cards-image-item">
+                    <img src="{% static 'ambadyestate-main/image/new/people.webp' %}" alt="Kerala Hospitality">
+                </div>
+            </div>
         </div>
+
+
+        <!-- Bottom: Full width quote banner -->
+        <div class="about-quote-banner scrollanimation animated scroll-fadeInUp">
+            <img src="{% static 'ambadyestate-main/image/new/about.png' %}" class="about-quote-bg" alt="Ambady Estate view">
+            <div class="about-quote-content">
+                <svg class="about-quote-mark" width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 26V15.6C0 6.9 4.7 1.6 12.4 0l1.6 4.1C9.1 5.4 6.6 8.4 6.6 12.4h6.8V26H0Zm20.6 0V15.6C20.6 6.9 25.3 1.6 33 0l1.6 4.1c-4.9 1.3-7.4 4.3-7.4 8.3H34V26H20.6Z" fill="currentColor"/>
+                </svg>
+                <p>Ambady Estate is not just a stay, it's an experience that stays with you, long after you leave.</p>
+                <a href="{% url 'ambadyestate_app:about_page' %}" class="about-quote-btn">
+                    <span>Explore Now</span>
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 7h15M10 1l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
+
 <style>
     /* ===== ABOUT SECTION ===== */
     .about-creative {
-        padding: 100px 0;
+        padding: 110px 0 90px;
     }
 
-    /* Feature list */
-    .about-feature-list {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    .about-top-row {
+        margin-bottom: 60px;
     }
 
-    .about-feature-item {
+    /* --- Text column --- */
+    .about-text-col {
+        max-width: 460px;
+    }
+
+    .about-eyebrow {
         display: flex;
         align-items: center;
-        gap: 18px;
-        padding: 18px 6px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        cursor: pointer;
-        transition: padding-left 0.35s ease, background 0.35s ease;
+        gap: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #9c8a4f);
+    }
+
+    .about-heading {
+        font-size: 3.2rem;
+        line-height: 1.18;
+        font-weight: 700;
+        color: var(--text-color);
+        margin: 0;
+    }
+
+    .about-desc {
+        font-size: 1.2rem;
+        line-height: 1.75;
+        color: var(--text-color-2);
+        margin: 0;
+    }
+
+    .about-tagline {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-size: 1.4rem;
+        line-height: 1.5;
+        color: var(--accent-color);
+        margin: 6px 0 0;
+    }
+
+    /* --- Hero media --- */
+    .about-hero-media {
         position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        min-height: 600px;
     }
 
-    .about-feature-item:hover {
-        padding-left: 14px;
-        background: var(--accent-color-3, #f2f7ee);
+    .about-hero-img {
+        width: 100%;
+        height: 100%;
+        min-height: 600px;
+        object-fit: cover;
+        display: block;
+        border-radius: 24px;
+        transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .about-feature-num {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: rgba(0, 0, 0, 0.08);
-        transition: color 0.35s ease;
-        min-width: 40px;
+    .about-hero-media:hover .about-hero-img {
+        transform: scale(1.04);
     }
 
-    .about-feature-item:hover .about-feature-num {
-        color: var(--accent-color-2, #c8a86a);
+    .about-experience-tag {
+        position: absolute;
+        top: 42%;
+        left: 46%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 2;
+        pointer-events: none;
     }
 
-    .about-feature-icon {
+    .about-experience-text {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-size: 1.3rem;
+        color: #fff;
+        white-space: nowrap;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    .about-experience-arrow {
+        color: #fff;
+        transform: rotate(8deg);
+    }
+
+    /* --- Feature cards: VERTICAL expanding accordion (stacked top to bottom) --- */
+    .about-cards-wrapper {
+        display: flex;
+        align-items: stretch;
+        gap: 20px;
+        margin-bottom: 60px;
+    }
+
+    .about-card-row {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 48%;
+    }
+
+    .about-cards-image-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 50%;
+    }
+
+    .about-cards-image-item {
+        border-radius: 20px;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .about-cards-image-item.active {
+        max-height: 480px;
+        opacity: 1;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-cards-image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .about-feature-card {
+        position: relative;
+        width: 100%;
+        background: #fff;
+        border-radius: 20px;
+        padding: 20px 26px 20px 76px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, padding 0.4s ease;
+        max-height: 84px;
+    }
+
+    .about-feature-card.active {
+        max-height: 160px;
+        padding: 24px 30px;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading: pinned near the left edge while collapsed, inline once expanded */
+    .about-card-head {
+        position: absolute;
+        left: 26px;
+        top: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .about-feature-card.active .about-card-head {
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+    .about-card-icon {
         width: 46px;
         height: 46px;
         min-width: 46px;
         border-radius: 50%;
-        background: var(--accent-color-3, #f2f7ee);
+        background: var(--accent-color-3, #eef2e6);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
         color: var(--accent-color);
-        transition: transform 0.4s ease, background 0.4s ease, color 0.4s ease;
+        transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
     }
 
-    .about-feature-item:hover .about-feature-icon {
+    .about-feature-card.active .about-card-icon {
         background: var(--accent-color);
         color: #fff;
-        transform: rotate(-10deg) scale(1.08);
+        transform: rotate(-8deg) scale(1.06);
     }
 
-    .about-feature-text h5 {
-        font-size: 1.05rem;
+    .about-card-head h5 {
+        font-size: 1.3rem;
         font-weight: 700;
-        margin-bottom: 3px;
         color: var(--text-color);
-    }
-
-    .about-feature-text p {
-        font-size: 0.85rem;
-        color: var(--text-color-2);
         margin: 0;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease, opacity 0.4s ease;
+        white-space: nowrap;
     }
 
-    .about-feature-item:hover .about-feature-text p {
-        max-height: 60px;
-        opacity: 1;
-    }
-
-    /* Media wrap */
-    .about-media-wrap {
-        position: relative;
-        border-radius: 28px;
-        overflow: hidden;
-        min-height: 480px;
-    }
-
-    /* Decorative pattern layer sits behind image, peeks at edges */
-    .about-pattern-layer {
-        position: absolute;
-        inset: -18px;
-        background-repeat: repeat;
-        background-size: 90px;
-        opacity: 0.5;
-        z-index: 0;
-        border-radius: 32px;
-        animation: about-pattern-drift 30s linear infinite;
-    }
-
-    @keyframes about-pattern-drift {
-        from { background-position: 0 0; }
-        to { background-position: 200px 200px; }
-    }
-
-    .about-main-img {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        min-height: 480px;
-        object-fit: cover;
-        display: block;
-        border-radius: 28px;
-        transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .about-media-wrap:hover .about-main-img {
-        transform: scale(1.06);
-    }
-
-    /* Rotating text badge */
-    .about-rotating-badge {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 96px;
-        height: 96px;
-        z-index: 3;
-    }
-
-    .about-badge-circle {
-        width: 100%;
-        height: 100%;
-        animation: about-spin 14s linear infinite;
-    }
-
-    .about-badge-circle text {
-        font-size: 8px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        fill: #fff;
-        text-transform: uppercase;
-    }
-
-    @keyframes about-spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .about-badge-center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(6px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 1.1rem;
-    }
-
-    /* Corner accent frames — decorative, replaces the play button */
-    .about-corner-frame {
-        position: absolute;
-        width: 46px;
-        height: 46px;
-        z-index: 3;
-        border-color: rgba(255, 255, 255, 0.85);
-        transition: width 0.4s ease, height 0.4s ease;
-    }
-
-    .about-corner-tl {
-        top: 24px;
-        left: 24px;
-        border-top: 2px solid;
-        border-left: 2px solid;
-        border-radius: 8px 0 0 0;
-    }
-
-    .about-corner-br {
-        bottom: 24px;
-        right: 24px;
-        border-bottom: 2px solid;
-        border-right: 2px solid;
-        border-radius: 0 0 8px 0;
-    }
-
-    .about-media-wrap:hover .about-corner-frame {
-        width: 60px;
-        height: 60px;
-    }
-
-    /* Tagline chip */
-    .about-tag-chip {
-        position: absolute;
-        bottom: 28px;
-        left: 28px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255, 255, 255, 0.14);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 100px;
-        padding: 10px 18px;
-        color: #fff;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        z-index: 3;
-        transition: transform 0.35s ease, background 0.35s ease;
-    }
-
-    .about-tag-chip i {
-        color: var(--accent-color-2, #c8a86a);
-        font-size: 0.95rem;
-    }
-
-    .about-tag-chip:hover {
-        transform: translateY(-4px);
-        background: rgba(255, 255, 255, 0.22);
-    }
-
-    /* Floating stat */
-    .about-float-stat {
-        position: absolute;
-        bottom: 28px;
-        right: 28px;
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        border-radius: 16px;
-        padding: 14px 20px;
+    /* Body: description only, revealed on expand */
+    .about-card-body {
         display: flex;
         flex-direction: column;
+        min-height: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease 0.1s;
+    }
+
+    .about-feature-card.active .about-card-body {
+        opacity: 1;
+        pointer-events: auto;
+        margin-top: 14px;
+    }
+
+    .about-card-divider {
+        display: none;
+    }
+
+    .about-feature-card p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-color-2);
+        margin: 0;
+    }
+
+    /* Mobile-only image inside each card body, hidden on desktop */
+    .about-card-mobile-img {
+        display: none;
+    }
+
+    /* --- Quote banner --- */
+    .about-quote-banner {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        min-height: 300px;
+        display: flex;
         align-items: center;
-        z-index: 3;
+        border: 1px solid var(--bg-color, #faf8f4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .about-quote-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    .about-quote-banner::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(10, 12, 8, 0.25) 0%, rgba(10, 12, 8, 0.7) 55%, rgba(10, 12, 8, 0.8) 100%);
+        z-index: 1;
+    }
+
+    .about-quote-content {
+        position: relative;
+        z-index: 2;
+        max-width: 480px;
+        margin-left: auto;
+        padding: 50px 60px;
+        color: #f4efe2;
+    }
+
+    .about-quote-mark {
+        color: var(--accent-color-2, #c8a86a);
+        margin-bottom: 14px;
+    }
+
+    .about-quote-content p {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.6rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .about-quote-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 26px;
+        padding: 13px 28px;
+        border-radius: 50px;
+        background: var(--accent-color, #9c8a4f);
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: background 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-quote-btn svg {
         transition: transform 0.35s ease;
     }
 
-    .about-float-stat:hover {
-        transform: translateY(-4px);
-    }
-
-    .about-float-number {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1.6rem;
-        font-weight: 800;
+    .about-quote-btn:hover {
+        background: var(--accent-color-2, #c8a86a);
         color: #fff;
-        line-height: 1;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
     }
 
-    .about-float-label {
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.8);
-        margin-top: 4px;
-        text-align: center;
+    .about-quote-btn:hover svg {
+        transform: translateX(4px);
     }
 
-    /* Responsive */
-/* ===== MOBILE REDESIGN ===== */
-@media (max-width: 991px) {
-    .about-creative {
-        padding: 50px 0;
-    }
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991px) {
+        .about-creative {
+            padding: 60px 0;
+        }
 
-    /* Give the whole section consistent side padding so text never touches screen edge */
-    #about .r-container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+        #about .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
 
-    .about-media-wrap {
-        min-height: 260px;
-        margin-left: 0;
-        margin-right: 0;
-        border-radius: 20px;
-    }
+        .about-top-row {
+            margin-bottom: 32px;
+        }
 
-    .about-main-img {
-        min-height: 260px;
-        border-radius: 20px;
-    }
+        .about-text-col {
+            max-width: 100%;
+            text-align: left;
+        }
 
-    .about-rotating-badge {
-        width: 64px;
-        height: 64px;
-        top: 14px;
-        right: 14px;
-    }
+        .about-heading {
+            font-size: 2.3rem;
+        }
 
-    .about-tag-chip {
-        bottom: 14px;
-        left: 14px;
-        padding: 8px 14px;
-        font-size: 0.75rem;
-    }
+        .about-hero-media,
+        .about-hero-img {
+            min-height: 260px;
+            border-radius: 18px;
+        }
 
-    .about-float-stat {
-        bottom: 14px;
-        right: 14px;
-        padding: 10px 14px;
-    }
+        .about-experience-text {
+            font-size: 1rem;
+        }
 
-    .about-corner-tl,
-    .about-corner-br {
-        display: none;
-    }
+        .about-cards-wrapper {
+            margin-bottom: 32px;
+        }
 
-    /* --- Text block --- */
-    #about .col-xl-5 {
-        margin-top: 32px;
-    }
+        .about-card-row {
+            gap: 14px;
+            width: 100%;
+        }
 
-    #about .col-xl-5 .d-flex.flex-column {
-        text-align: left !important;
-        align-items: flex-start !important;
-        gap: 14px !important;
-    }
+        /* Hide the desktop side image panel on mobile (hover-based swap doesn't work on touch) */
+        .about-cards-image-panel {
+            display: none;
+        }
 
-    #about h6.accent-color-2 {
-        text-align: left;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-        margin-bottom: 0;
-    }
+        .about-feature-card {
+            max-height: 84px;
+            padding: 20px !important;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        }
 
-    #about h3 {
-        text-align: left;
-        font-size: 1.6rem;
-        line-height: 1.3;
-        margin-bottom: 0;
-    }
+        .about-feature-card.active {
+            max-height: 400px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+        }
 
-    #about .col-xl-5 > .d-flex > p {
-        text-align: left;
-        font-size: 0.92rem;
-        line-height: 1.6;
-        margin-bottom: 0;
-    }
+        .about-card-head {
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+        }
 
-    /* --- Feature list redesigned as separated cards --- */
-    .about-feature-list {
-        border-top: none;
-        gap: 10px;
-        margin-top: 8px;
-    }
+        .about-card-body {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease 0.1s;
+        }
 
-    .about-feature-item {
-        align-items: center;
-        gap: 14px;
-        padding: 14px 16px;
-        border-bottom: none;
-        border-radius: 14px;
-        background: #f7f9f5;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    }
+        .about-feature-card.active .about-card-body {
+            opacity: 1;
+            pointer-events: auto;
+            margin-top: 16px;
+        }
 
-    .about-feature-item:hover,
-    .about-feature-item.active {
-        padding-left: 16px;
-        background: var(--accent-color-3, #f2f7ee);
-    }
+        /* Show each card's own image on mobile instead */
+        .about-card-mobile-img {
+            display: block;
+            margin-top: 16px;
+            border-radius: 14px;
+            overflow: hidden;
+        }
 
-    .about-feature-num {
-        display: none;
-    }
+        .about-card-mobile-img img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
 
-    .about-feature-icon {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        font-size: 1.05rem;
-        background: #fff;
-    }
+        .about-quote-content {
+            margin-left: 0;
+            padding: 34px 26px;
+            max-width: 100%;
+        }
 
-    .about-feature-item.active .about-feature-icon,
-    .about-feature-item:hover .about-feature-icon {
-        background: var(--accent-color);
-    }
+        .about-quote-content p {
+            font-size: 1.25rem;
+        }
 
-    .about-feature-text h5 {
-        font-size: 0.98rem;
-        margin-bottom: 2px;
+        .about-quote-btn {
+            margin-top: 20px;
+            padding: 11px 22px;
+            font-size: 0.85rem;
+        }
     }
-
-    .about-feature-text p {
-        font-size: 0.8rem;
-        line-height: 1.4;
-    }
-
-    /* --- Full width CTA --- */
-    .w-max-content.mt-2 {
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    .w-max-content.mt-2 .btn {
-        width: 100%;
-        justify-content: center;
-        border-radius: 12px;
-        padding: 14px !important;
-    }
-}
-
-@media (max-width: 575px) {
-    .about-media-wrap {
-        min-height: 220px;
-    }
-
-    .about-main-img {
-        min-height: 220px;
-    }
-}
 
     /* Mobile order: image first, then description */
     @media (max-width: 1199.98px) {
-        #about .row.row-cols-xl-2 {
+        #about .about-top-row {
             display: flex;
             flex-wrap: wrap;
         }
 
-        #about .col-xl-5 {
+        #about .about-top-row .col-xl-5 {
             order: 2;
+            margin-top: 24px;
         }
 
-        #about .col-xl-7 {
+        #about .about-top-row .col-xl-7 {
             order: 1;
         }
     }
-
-    /* Auto-cycle active state (mirrors :hover, triggered by JS) */
-    .about-feature-item.active {
-        padding-left: 14px;
-        background: var(--accent-color-3, #f2f7ee);
-    }
-
-    .about-feature-item.active .about-feature-num {
-        color: var(--accent-color-2, #c8a86a);
-    }
-
-    .about-feature-item.active .about-feature-icon {
-        background: var(--accent-color);
-        color: #fff;
-        transform: rotate(-10deg) scale(1.08);
-    }
-
-    .about-feature-item.active .about-feature-text p {
-        max-height: 60px;
-        opacity: 1;
-    }
 </style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const items = document.querySelectorAll('.about-feature-list .about-feature-item');
-        if (!items.length) return;
+        const row = document.querySelector('.about-card-row');
+        const cards = document.querySelectorAll('.about-card-row .about-feature-card');
+        const imageItems = document.querySelectorAll('.about-cards-image-panel .about-cards-image-item');
+        if (!cards.length) return;
 
-        let current = 0;
-        let autoTimer = null;
+        const defaultCard = cards[0];
 
-        function activate(index) {
-            items.forEach(item => item.classList.remove('active'));
-            items[index].classList.add('active');
+        function activate(target) {
+            const index = Array.from(cards).indexOf(target);
+            cards.forEach(card => card.classList.toggle('active', card === target));
+            imageItems.forEach((item, i) => item.classList.toggle('active', i === index));
         }
 
-        function stopCycle() {
-            if (autoTimer) {
-                clearInterval(autoTimer);
-                autoTimer = null;
+        const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+
+        if (isDesktop) {
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => activate(card));
+            });
+
+            // Reset back to the default card once the pointer leaves the whole row,
+            // otherwise the last-hovered card stays expanded ("stuck").
+            row.addEventListener('mouseleave', () => activate(defaultCard));
+        } else {
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const alreadyOpen = card.classList.contains('active');
+                    cards.forEach(c => c.classList.remove('active'));
+                    if (!alreadyOpen) card.classList.add('active');
+                });
+            });
+        }
+    });
+
+</script>
+<!-- Section: Meet the Visionary -->
+<div id="visionary" class="section bg-attach-cover visionary-creative" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
+    <div class="r-container">
+
+        <div class="row row-cols-xl-2 row-cols-1 align-items-center visionary-row">
+
+            <!-- Mobile-only heading: shown above the image on small screens -->
+            <div class="visionary-mobile-heading">
+                <div class="visionary-eyebrow">Meet the</div>
+                <h2 class="visionary-heading">Visionary</h2>
+                <div class="visionary-divider">
+                    <span></span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 0L9.6 6.4L16 8L9.6 9.6L8 16L6.4 9.6L0 8L6.4 6.4L8 0Z" fill="currentColor"/>
+                    </svg>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Left: Arched founder photo with decorative leaves -->
+            <div class="col col-xl-7 mb-5 mb-xl-0 scrollanimation animated scroll-fadeInLeft">
+                <div class="visionary-image-wrap">
+                    <img src="{% static 'ambadyestate-main/pvr8.png' %}" class="visionary-img" alt="Founder & Owner">
+
+                    <!-- decorative leaf sprigs -->
+                    <svg class="visionary-leaf visionary-leaf-tr" width="90" height="120" viewBox="0 0 90 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M45 118C45 118 40 70 55 40C65 20 85 10 85 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M55 40C55 40 35 35 25 15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        <ellipse cx="72" cy="18" rx="10" ry="16" transform="rotate(35 72 18)" fill="currentColor" opacity="0.55"/>
+                        <ellipse cx="30" cy="20" rx="8" ry="13" transform="rotate(-20 30 20)" fill="currentColor" opacity="0.4"/>
+                        <ellipse cx="58" cy="50" rx="9" ry="14" transform="rotate(60 58 50)" fill="currentColor" opacity="0.45"/>
+                    </svg>
+
+                    <svg class="visionary-leaf visionary-leaf-bl" width="110" height="140" viewBox="0 0 110 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 5C5 5 15 60 40 90C58 112 100 128 100 128" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M40 90C40 90 62 95 78 118" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        <ellipse cx="20" cy="30" rx="9" ry="15" transform="rotate(20 20 30)" fill="currentColor" opacity="0.5"/>
+                        <ellipse cx="55" cy="80" rx="10" ry="16" transform="rotate(-30 55 80)" fill="currentColor" opacity="0.4"/>
+                        <ellipse cx="88" cy="112" rx="9" ry="14" transform="rotate(45 88 112)" fill="currentColor" opacity="0.5"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Right: Content -->
+            <div class="col col-xl-5 scrollanimation animated scroll-fadeInRight">
+                <div class="visionary-content-col">
+
+                    <div class="visionary-desktop-heading">
+                        <div class="visionary-eyebrow">Meet the</div>
+                        <h2 class="visionary-heading">Visionary</h2>
+
+                        <div class="visionary-divider">
+                            <span></span>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 0L9.6 6.4L16 8L9.6 9.6L8 16L6.4 9.6L0 8L6.4 6.4L8 0Z" fill="currentColor"/>
+                            </svg>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <p class="visionary-desc">
+                        Every great space begins with a vision. Our founder believes that true luxury
+                        lies in creating spaces that blend nature, comfort, and timeless design —
+                        where memories are made and relationships grow.
+                    </p>
+
+                    <p class="visionary-desc">
+                        With a passion for craftsmanship and an eye for detail, he has built more than
+                        just beautiful properties; he has built trust, relationships, and a legacy of
+                        excellence.
+                    </p>
+
+                    <div class="visionary-features">
+
+                        <div class="visionary-feature">
+                            <div class="visionary-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9l-4.9 2.1 1.1-5.5-4.1-3.8 5.6-.6L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="visionary-feature-text">
+                                <h5><span class="visionary-counter" data-target="15">0</span>+ Years Experience</h5>
+                                <p>Over a decade of expertise in creating exceptional spaces.</p>
+                            </div>
+                        </div>
+
+                        <div class="visionary-feature">
+                            <div class="visionary-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="8" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="16" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M12 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="visionary-feature-text">
+                                <h5><span class="visionary-counter" data-target="250">0</span>+ Happy Clients</h5>
+                                <p>Trusted by hundreds of families and investors.</p>
+                            </div>
+                        </div>
+
+                        <div class="visionary-feature">
+                            <div class="visionary-feature-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5l8-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                    <path d="M8.5 12l2.3 2.3L15.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="visionary-feature-text">
+                                <h5>Trusted Service</h5>
+                                <p>Commitment to quality, transparency &amp; timely delivery.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="visionary-signature">
+                        <span class="visionary-signature-name">Amaze Broker</span>
+                        <span class="visionary-signature-title">Founder &amp; Owner</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative house line-art, bottom right -->
+    <svg class="visionary-house-decor" width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 170c30-10 60-4 90-14s60-8 90 2" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+        <path d="M70 120V70l45-32 45 32v50" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+        <path d="M70 120h90v40H70z" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+        <path d="M100 160v-30h30v30" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+        <path d="M140 90h20v20h-20z" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+        <path d="M30 150c10-30 20-45 20-45" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+        <path d="M230 150c-8-25-16-35-16-35" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+    </svg>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+    /* ===== VISIONARY SECTION ===== */
+    .visionary-creative {
+        position: relative;
+        padding: 110px 0;
+        overflow: hidden;
+    }
+
+    .visionary-row {
+        gap: 0;
+    }
+
+    /* --- Left: image --- */
+    .visionary-image-wrap {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .visionary-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .visionary-leaf {
+        position: absolute;
+        color: var(--accent-color-2, #9c8a4f);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .visionary-leaf-tr {
+        top: -30px;
+        right: -20px;
+    }
+
+    .visionary-leaf-bl {
+        bottom: -30px;
+        left: -20px;
+    }
+
+    /* --- Right: content --- */
+    .visionary-content-col {
+        max-width: 560px;
+        padding-left: 40px;
+    }
+
+    .visionary-eyebrow {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #9c8a4f);
+        margin-bottom: 6px;
+    }
+
+    .visionary-heading {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 3.6rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--text-color);
+        margin: 0 0 14px;
+    }
+
+    .visionary-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--accent-color-2, #c8a86a);
+        margin-bottom: 26px;
+    }
+
+    .visionary-divider span {
+        display: block;
+        width: 46px;
+        height: 1px;
+        background: var(--accent-color-2, #c8a86a);
+    }
+
+    .visionary-desc {
+        font-size: 1.1rem;
+        line-height: 1.75;
+        color: var(--text-color-2);
+        margin: 0 0 18px;
+    }
+
+    .visionary-features {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .visionary-feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .visionary-feature:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .visionary-feature-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 50%;
+        background: var(--accent-color, #2e3d26);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .visionary-feature-text h5 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin: 0 0 4px;
+    }
+
+    .visionary-feature-text p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: var(--text-color-2);
+        margin: 0;
+    }
+
+    .visionary-signature {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .visionary-signature-name {
+        font-family: 'Dancing Script', 'Playfair Display', cursive;
+        font-size: 2.2rem;
+        color: var(--accent-color-2, #c8a86a);
+        line-height: 1;
+    }
+
+    .visionary-signature-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-color-2);
+        margin-top: 6px;
+    }
+
+    /* --- Decorative house line art --- */
+    .visionary-house-decor {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: var(--accent-color-2, #c8a86a);
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991px) {
+        .visionary-creative {
+            padding: 60px 0;
+        }
+
+        #visionary .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .visionary-content-col {
+            max-width: 100%;
+            padding-left: 0;
+            margin-top: 32px;
+        }
+
+        .visionary-heading {
+            font-size: 2.4rem;
+        }
+
+        .visionary-img {
+            height: auto;
+        }
+
+        .visionary-house-decor {
+            width: 160px;
+            height: 110px;
+            opacity: 0.3;
+        }
+    }
+
+    /* Mobile-only heading: hidden on desktop, shown above the image on mobile */
+    .visionary-mobile-heading {
+        display: none;
+        width: 100%;
+    }
+
+    /* Mobile order: mobile-heading -> image -> rest of content */
+    @media (max-width: 1199.98px) {
+        #visionary .visionary-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .visionary-mobile-heading {
+            display: block;
+            order: 1;
+            margin-bottom: 24px;
+        }
+
+        .visionary-desktop-heading {
+            display: none;
+        }
+
+        #visionary .visionary-row .col-xl-7 {
+            order: 2;
+        }
+
+        #visionary .visionary-row .col-xl-5 {
+            order: 3;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const counters = document.querySelectorAll('.visionary-counter');
+        if (!counters.length) return;
+
+        function runCount(el) {
+            const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+            const duration = 1400;
+            const startTime = performance.now();
+
+            function tick(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                // ease-out for a natural "settling" finish
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(eased * target);
+                if (progress < 1) {
+                    requestAnimationFrame(tick);
+                } else {
+                    el.textContent = target;
+                }
             }
+            requestAnimationFrame(tick);
         }
 
-        function startCycle() {
-            stopCycle(); // always clear first, prevents duplicate intervals
-            autoTimer = setInterval(() => {
-                current = (current + 1) % items.length;
-                activate(current);
-            }, 2800);
-        }
-
-        items.forEach((item, index) => {
-            item.addEventListener('mouseenter', () => {
-                stopCycle();
-                current = index;
-                activate(index);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCount(entry.target);
+                    observer.unobserve(entry.target);
+                }
             });
-            item.addEventListener('mouseleave', () => {
-                startCycle();
-            });
-        });
+        }, { threshold: 0.5 });
 
-        // Kick things off
-        activate(current);
-        startCycle();
+        counters.forEach(counter => observer.observe(counter));
     });
 </script>
+</style>
         <!-- Cottages -->
         <div id="process" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_feature.png' %}');">
             <div class="r-container d-flex flex-column gap-3">

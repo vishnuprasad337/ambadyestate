@@ -399,7 +399,7 @@ def room_delete(request, slug):
 
 
 from .models import Activity
-from .forms import ActivityForm, ActivityImageFormSet
+from .forms import ActivityForm
 
 @login_required
 def activity_list(request):
@@ -418,60 +418,68 @@ def activity_detail(request, slug):
     activity = get_object_or_404(Activity, slug=slug)
     return render(request, "admin_pages/activity_detail.html", {"activity": activity})
 
-
+from .forms import ActivityForm, ActivityGalleryUploadForm
+from .models import ActivityImage
 @login_required
 def activity_create(request):
     if request.method == "POST":
         form = ActivityForm(request.POST, request.FILES)
-        if form.is_valid():
+        gallery_form = ActivityGalleryUploadForm(request.POST, request.FILES)
+
+        if form.is_valid() and gallery_form.is_valid():
             activity = form.save()
-            formset = ActivityImageFormSet(
-                request.POST, request.FILES, instance=activity
-            )
-            if formset.is_valid():
-                formset.save()
-                messages.success(request, "Activity created successfully.")
-                return redirect("ambadyestate_app:activity_list")
-            else:
-                # activity was saved, but gallery formset failed validation
-                messages.warning(request, "Activity saved, but check gallery images below.")
+
+            new_files = gallery_form.cleaned_data.get("gallery_images") or []
+            for f in new_files:
+                ActivityImage.objects.create(activity=activity, image=f)
+
+            messages.success(request, "Activity created successfully.")
+            return redirect("ambadyestate_app:activity_list")
         else:
-            formset = ActivityImageFormSet(request.POST, request.FILES)
+            messages.error(request, "Please fix the errors below.")
     else:
         form = ActivityForm()
-        formset = ActivityImageFormSet()
+        gallery_form = ActivityGalleryUploadForm()
 
     return render(
         request,
         "admin_pages/activity_form.html",
-        {"form": form, "formset": formset, "is_edit": False},
+        {"form": form, "gallery_form": gallery_form, "is_edit": False},
     )
-
-
 @login_required
 def activity_update(request, slug):
     activity = get_object_or_404(Activity, slug=slug)
 
     if request.method == "POST":
         form = ActivityForm(request.POST, request.FILES, instance=activity)
-        formset = ActivityImageFormSet(
-            request.POST, request.FILES, instance=activity
-        )
-        if form.is_valid() and formset.is_valid():
+        gallery_form = ActivityGalleryUploadForm(request.POST, request.FILES)
+
+        if form.is_valid() and gallery_form.is_valid():
             form.save()
-            formset.save()
+
+            # Remove any existing gallery images the admin checked "Remove" on
+            for img in activity.images.all():
+                if request.POST.get(f"delete_image_{img.id}"):
+                    img.delete()
+
+            # Add any newly uploaded gallery images
+            new_files = gallery_form.cleaned_data.get("gallery_images") or []
+            for f in new_files:
+                ActivityImage.objects.create(activity=activity, image=f)
+
             messages.success(request, "Activity updated successfully.")
             return redirect("ambadyestate_app:activity_list")
+        else:
+            messages.error(request, "Please fix the errors below.")
     else:
         form = ActivityForm(instance=activity)
-        formset = ActivityImageFormSet(instance=activity)
+        gallery_form = ActivityGalleryUploadForm()
 
     return render(
         request,
         "admin_pages/activity_form.html",
-        {"form": form, "formset": formset, "is_edit": True, "activity": activity},
+        {"form": form, "gallery_form": gallery_form, "is_edit": True, "activity": activity},
     )
-
 @login_required
 def activity_delete(request, slug):
     activity = get_object_or_404(Activity, slug=slug)
@@ -484,7 +492,8 @@ def activity_delete(request, slug):
 # --------- Nearest destinamtion ---------
 
 from .models import NearbyDestination
-from .forms import NearbyDestinationForm, NearbyDestinationImageFormSet
+from .models import NearbyDestination, NearbyDestinationImage
+from .forms import NearbyDestinationForm, NearbyDestinationGalleryUploadForm
 
 @login_required
 def nearby_destination_list(request):
@@ -511,37 +520,58 @@ def nearby_destination_detail(request, slug):
 def nearby_destination_create(request):
     if request.method == "POST":
         form = NearbyDestinationForm(request.POST, request.FILES)
-        formset = NearbyDestinationImageFormSet(request.POST, request.FILES, prefix="images")
-        if form.is_valid() and formset.is_valid():
+        gallery_form = NearbyDestinationGalleryUploadForm(request.POST, request.FILES)
+
+        if form.is_valid() and gallery_form.is_valid():
             destination = form.save()
-            formset.instance = destination
-            formset.save()
+
+            new_files = gallery_form.cleaned_data.get("gallery_images") or []
+            for f in new_files:
+                NearbyDestinationImage.objects.create(destination=destination, image=f)
+
+            messages.success(request, "Nearby destination created successfully.")
             return redirect("ambadyestate_app:nearby_destination_list")
+        else:
+            messages.error(request, "Please fix the errors below.")
     else:
         form = NearbyDestinationForm()
-        formset = NearbyDestinationImageFormSet(prefix="images")
-    return render(request, "admin_pages/nearby_destination_form.html", {
-        "form": form, "image_formset": formset, "action": "Add",
-    })
+        gallery_form = NearbyDestinationGalleryUploadForm()
 
+    return render(request, "admin_pages/nearby_destination_form.html", {
+        "form": form, "gallery_form": gallery_form, "action": "Add",
+    })
 @login_required
 def nearby_destination_update(request, slug):
     destination = get_object_or_404(NearbyDestination, slug=slug)
+
     if request.method == "POST":
         form = NearbyDestinationForm(request.POST, request.FILES, instance=destination)
-        formset = NearbyDestinationImageFormSet(request.POST, request.FILES, instance=destination, prefix="images")
-        if form.is_valid() and formset.is_valid():
+        gallery_form = NearbyDestinationGalleryUploadForm(request.POST, request.FILES)
+
+        if form.is_valid() and gallery_form.is_valid():
             form.save()
-            formset.save()
+
+            # Remove any existing gallery images the admin checked "Remove" on
+            for img in destination.images.all():
+                if request.POST.get(f"delete_image_{img.id}"):
+                    img.delete()
+
+            # Add any newly uploaded gallery images
+            new_files = gallery_form.cleaned_data.get("gallery_images") or []
+            for f in new_files:
+                NearbyDestinationImage.objects.create(destination=destination, image=f)
+
+            messages.success(request, "Nearby destination updated successfully.")
             return redirect("ambadyestate_app:nearby_destination_list")
+        else:
+            messages.error(request, "Please fix the errors below.")
     else:
         form = NearbyDestinationForm(instance=destination)
-        formset = NearbyDestinationImageFormSet(instance=destination, prefix="images")
+        gallery_form = NearbyDestinationGalleryUploadForm()
+
     return render(request, "admin_pages/nearby_destination_form.html", {
-        "form": form, "image_formset": formset, "action": "Edit", "destination": destination,
+        "form": form, "gallery_form": gallery_form, "action": "Edit", "destination": destination,
     })
-
-
 @login_required
 def nearby_destination_delete(request, slug):
     destination = get_object_or_404(NearbyDestination, slug=slug)
@@ -789,14 +819,14 @@ def home(request):
 
 
 def about_page(request):
-    packages = Package.objects.all().order_by('-created_at') if hasattr(Package, 'created_at') else Package.objects.all()
+    packages = Package.objects.filter(status="active").order_by('-created_at')
     testimonials = Testimonial.objects.all().order_by('-created_at')[:6] if hasattr(Testimonial, 'created_at') else Testimonial.objects.all()[:6]
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
+    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]  
 
     return render(request, 'front-end/about.html', {
         'packages': packages,
         'testimonials': testimonials,
-        'activities': activities,   # 👈 added
+        'activities': activities,   
     })
 
 

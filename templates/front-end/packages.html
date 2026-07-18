@@ -170,9 +170,13 @@
 }
 </style>
 
-<!-- ===== PACKAGES GRID ===== -->
-<div id="packages" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
-    <div class="r-container d-flex flex-column gap-4">
+<!-- ===== PACKAGES GRID (now a 2-up slideshow, mascot pinned to the section border) ===== -->
+<div id="packages" class="section position-relative" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+
+    <!-- Mascot: always visible, pinned to the bottom-right border of the section -->
+    <img class="packages-mascot" src="{% static 'ambadyestate-main/pvr1.png' %}" alt="" loading="lazy">
+
+    <div class="r-container d-flex flex-column gap-4 position-relative" style="z-index: 2;">
         <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
             style="max-width: 700px;">
             <h6 class="accent-color-2">Curated Stays &amp; Experiences</h6>
@@ -181,69 +185,164 @@
                 Munnar getaway.</p>
         </div>
 
-        <div class="row row-cols-xl-3 row-cols-sm-2 row-cols-1 g-4">
-            {% for package in packages %}
-            <div class="col">
-                <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="package-card">
-                    <div class="package-card-img-wrap">
-                        <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
-                        <div class="package-view-badge">
-                            <span>View</span>
-                            <i class="fa-solid fa-arrow-up-right"></i>
+        {% if packages %}
+        <div class="swiper packages-slider scrollanimation animated scroll-fadeInUp">
+            <div class="swiper-wrapper">
+                {% for package in packages %}
+                <div class="swiper-slide">
+                    <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="package-card">
+                        <div class="package-card-media">
+                            <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
                         </div>
-                        {% if package.duration %}
-                        <div class="package-tag">{{ package.duration }}</div>
-                        {% endif %}
-                        <div class="package-card-body">
+                        <div class="package-card-overlay"></div>
+
+                        <div class="package-card-info">
                             <h4>{{ package.name }}</h4>
-                            <p>{{ package.description|striptags|truncatewords:18 }}</p>
-                            {% if package.price %}
-                            <span class="package-price">&#8377;{{ package.price|floatformat:0 }}<small>/person</small></span>
-                            {% endif %}
+                            <p>{{ package.description|striptags|truncatewords:35 }}</p>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <div class="col-12 text-center">
-                <p>No packages available right now. Please check back soon.</p>
+
+            <div class="packages-slider-controls">
+                <button type="button" class="packages-slider-prev" aria-label="Previous package">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="packages-slider-pagination"></div>
+                <button type="button" class="packages-slider-next" aria-label="Next package">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
-            {% endfor %}
         </div>
+        {% else %}
+        <div class="text-center">
+            <p>No packages available right now. Please check back soon.</p>
+        </div>
+        {% endif %}
     </div>
 </div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    if (window.Swiper && document.querySelector('.packages-slider')) {
+        new Swiper('.packages-slider', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: false,
+            watchOverflow: true,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+                stopOnLastSlide: true,
+            },
+            speed: 700,
+            pagination: {
+                el: '.packages-slider-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.packages-slider-next',
+                prevEl: '.packages-slider-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 26,
+                }
+            }
+        });
+    }
+});
+</script>
 
 <style>
     /* ===== PACKAGES SECTION ===== */
     #packages {
+        position: relative;
         padding: 100px 0;
         background-size: cover;
         background-position: center;
-        overflow-x: hidden;
+        overflow: hidden;
     }
 
+    /* Mascot pinned to the border of the section, always visible — original size */
+    .packages-mascot {
+        position: absolute;
+        bottom: 0;
+        right: -1%;
+        height: 340px;
+        width: auto;
+        z-index: 5;
+        transform: scaleX(-1);
+        filter: drop-shadow(0 18px 20px rgba(26, 30, 22, 0.24));
+        pointer-events: none;
+    }
+
+    @media (max-width: 1199px) {
+        .packages-mascot {
+            height: 260px;
+            right: -0.5%;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .packages-mascot {
+            height: 140px;
+            right: 4px;
+            bottom: auto;
+            top: -18px;
+            z-index: 4;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .packages-mascot {
+            height: 110px;
+            right: 0;
+            top: -10px;
+        }
+    }
+
+    /* Slider */
+    .packages-slider {
+        width: 100%;
+        position: relative;
+        z-index: 2;
+        padding-bottom: 4px;
+    }
+
+    .packages-slider .swiper-wrapper {
+        align-items: stretch;
+    }
+
+    /* Card size/layout — matches the screenshot: roomy padding, full description, bigger title */
     .package-card {
+        position: relative;
         display: block;
+        width: 100%;
+        height: 100%;
         text-decoration: none;
-        border-radius: 24px;
+        border-radius: 28px;
         overflow: hidden;
         cursor: pointer;
-        height: 100%;
+        aspect-ratio: 16 / 10;
+        box-shadow: 0 18px 50px rgba(26, 30, 22, 0.16);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
     }
 
-    .package-card-img-wrap {
-        position: relative;
-        overflow: hidden;
-        border-radius: 24px;
-        width: 100%;
-        aspect-ratio: 4 / 5;
-        background: #1a1e16;
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    .package-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 48px rgba(26, 30, 22, 0.22);
     }
 
-    .package-card-img-wrap img {
+    .package-card-media {
         position: absolute;
         inset: 0;
+    }
+
+    .package-card-media img {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -252,139 +351,169 @@
         transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .package-card:hover .package-card-img-wrap img {
-        transform: scale(1.08);
+    .package-card:hover .package-card-media img {
+        transform: scale(1.06);
     }
 
-    .package-card-img-wrap::after {
-        content: '';
+    .package-card-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(to top,
-                rgba(0, 0, 0, 0.92) 0%,
-                rgba(0, 0, 0, 0.5) 38%,
-                rgba(0, 0, 0, 0.1) 68%,
-                rgba(0, 0, 0, 0.22) 100%);
-        z-index: 1;
+                rgba(10, 16, 8, 0.92) 0%,
+                rgba(10, 16, 8, 0.6) 32%,
+                rgba(10, 16, 8, 0.05) 62%,
+                rgba(10, 16, 8, 0) 100%);
         transition: background 0.4s ease;
     }
 
-    .package-card:hover .package-card-img-wrap::after {
+    .package-card:hover .package-card-overlay {
         background: linear-gradient(to top,
                 rgba(10, 20, 10, 0.94) 0%,
-                rgba(44, 95, 26, 0.45) 42%,
-                rgba(0, 0, 0, 0.15) 72%,
-                rgba(0, 0, 0, 0.3) 100%);
+                rgba(44, 95, 26, 0.52) 34%,
+                rgba(10, 16, 8, 0.05) 64%,
+                rgba(10, 16, 8, 0) 100%);
     }
 
-    .package-view-badge {
+    .package-card-info {
         position: absolute;
-        top: 1.2rem;
-        right: 1.2rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 40px 44px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .package-card-info h4 {
+        color: #fff;
+        font-size: 1.9rem;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        margin: 0;
+        letter-spacing: -0.5px;
+        text-transform: none !important;
+    }
+
+    .package-card-info p {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.98rem !important;
+        line-height: 1.6 !important;
+        margin: 0 !important;
+        max-width: 460px;
+    }
+
+    .package-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 4px 0 6px;
+    }
+
+    .package-pill {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 20px;
-        border-radius: 100px;
-        background: rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.16);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.28);
         color: #fff;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        opacity: 0;
-        transform: translateY(-6px);
-        z-index: 2;
-        transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
-    }
-
-    .package-view-badge i {
-        font-size: 0.7rem;
-        transition: transform 0.3s ease;
-    }
-
-    .package-card:hover .package-view-badge {
-        opacity: 1;
-        transform: translateY(0);
-        background: var(--accent-color);
-        border-color: var(--accent-color);
-    }
-
-    .package-card:hover .package-view-badge i {
-        transform: translate(2px, -2px);
-    }
-
-    .package-tag {
-        position: absolute;
-        top: 1.2rem;
-        left: 1.2rem;
-        background: var(--accent-color-2);
-        color: var(--text-color);
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 6px 16px;
-        border-radius: 100px;
-        z-index: 2;
-        transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .package-card:hover .package-tag {
-        background: var(--accent-color);
-        color: #fff;
-        transform: translateY(-2px);
-    }
-
-    .package-card-body {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 32px;
-        z-index: 2;
-    }
-
-    .package-card-body h4 {
-        color: #fff;
-        font-size: 1.5rem;
-        line-height: 1.3;
-        margin-bottom: 10px;
-        font-weight: 700;
-        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .package-card-body p {
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 0.92rem;
-        line-height: 1.7;
-        margin: 0 0 16px;
-    }
-
-    .package-price {
-        display: inline-block;
-        color: var(--accent-color-2, #c8a86a);
-        font-size: 1.4rem;
-        font-weight: 800;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .package-price small {
-        color: rgba(255, 255, 255, 0.7);
         font-size: 0.8rem;
-        font-weight: 500;
-        margin-left: 4px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 100px;
+    }
+
+    .package-pill i {
+        color: var(--accent-color-2, #c8a86a);
+        font-size: 0.75rem;
+    }
+
+    .package-reserve-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #fff;
+        color: var(--text-color, #1a1e16);
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 15px 24px;
+        border-radius: 100px;
+        margin-top: 6px;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .package-card:hover .package-reserve-btn {
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+    }
+
+    /* Slider controls (match activities section styling) */
+    .packages-slider-controls {
+        margin-top: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .packages-slider-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .packages-slider-pagination .swiper-pagination-bullet {
+        width: 24px;
+        height: 3px;
+        border-radius: 2px;
+        margin: 0 !important;
+        background: rgba(26, 30, 22, 0.2);
+        opacity: 1;
+        transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .packages-slider-pagination .swiper-pagination-bullet-active {
+        background: var(--accent-color);
+        width: 40px;
+    }
+
+    .packages-slider-prev,
+    .packages-slider-next {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 30, 22, 0.15);
+        background: #fff;
+        color: var(--accent-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .packages-slider-prev:hover,
+    .packages-slider-next:hover {
+        background: var(--accent-color);
+        color: #fff;
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
     }
 
     @media (max-width: 991px) {
-        .package-view-badge {
-            opacity: 1;
-            transform: translateY(0);
-        }
         #packages {
             padding: 70px 0;
+        }
+        .package-card {
+            aspect-ratio: 4 / 5;
+        }
+        .package-card-info {
+            padding: 32px 30px;
         }
     }
 
@@ -396,27 +525,52 @@
             padding-left: 20px;
             padding-right: 20px;
         }
+        .packages-slider-controls {
+            margin-top: 18px;
+        }
+        .package-card {
+            aspect-ratio: 4 / 3.4;
+            border-radius: 20px;
+        }
+        .package-card-info {
+            padding: 22px 20px;
+            gap: 8px;
+        }
     }
 
     @media (max-width: 575px) {
         #packages {
             padding: 40px 0;
         }
-
-        .package-card-body {
-            padding: 22px;
+        .package-card {
+            aspect-ratio: 1 / 1;
+            border-radius: 18px;
+        }
+        .package-card-info {
+            padding: 18px 16px;
+            gap: 6px;
+        }
+        .package-card-info h4 {
+            font-size: 1.2rem !important;
+            line-height: 1.15 !important;
+        }
+        .package-card-info p {
+            font-size: 0.82rem !important;
+            line-height: 1.5 !important;
+            -webkit-line-clamp: 3;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .package-card-body h4 {
-            font-size: 1.1rem;
+        .package-pill {
+            font-size: 0.72rem;
+            padding: 6px 14px;
         }
 
-        .package-card-body p {
+        .package-reserve-btn {
             font-size: 0.85rem;
-        }
-
-        .package-price {
-            font-size: 1.2rem;
+            padding: 13px 20px;
         }
     }
 
@@ -425,7 +579,44 @@
             padding-left: 16px;
             padding-right: 16px;
         }
-        .package-card-body { padding: 18px; }
+        .package-card-info {
+            padding: 16px 14px;
+        }
+    }
+    @media (max-width: 767px) {
+        .packages-mascot {
+            height: 280px;
+            right: -10px;
+            bottom: -14px;
+            top: auto;
+            z-index: 4;
+            filter: drop-shadow(0 14px 16px rgba(26, 30, 22, 0.28));
+        }
+    }
+
+    @media (max-width: 480px) {
+        .packages-mascot {
+            height: 220px;
+            right: -8px;
+            bottom: -10px;
+        }
+    }
+    @media (max-width: 767px) {
+        .package-card {
+            aspect-ratio: 4 / 2.6;
+            border-radius: 20px;
+        }
+        .package-card-info {
+            padding: 20px 18px;
+            gap: 6px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .package-card {
+            aspect-ratio: 4 / 3;
+            border-radius: 18px;
+        }
     }
 </style>
 
@@ -712,18 +903,23 @@
 
             <!-- Left: Intro -->
             <div class="col scrollanimation animated scroll-fadeInLeft">
-                <div class="amenities-intro">
-                    <h6 class="accent-color-2">Explore Ambady Estate Experiences</h6>
-                    <h3>Everything you need for a Stay</h3>
-                    <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of
-                        everything so you can simply enjoy the mountains.</p>
-                    <div class="w-max-content mt-3">
-                       <button type="button" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3 js-open-booking-modal">
-                            <span>Enquiry Now</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <div class="amenities-intro">
+        <h6 class="accent-color-2">Explore Ambady Estate Experiences</h6>
+        <h3>Everything you need for a Stay</h3>
+        <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of
+            everything so you can simply enjoy the mountains.</p>
+        <div class="w-max-content mt-3">
+           <button type="button" class="btn btn-accent d-flex flex-row gap-2 px-4 py-3 js-open-booking-modal">
+                <span>Enquiry Now</span>
+            </button>
+        </div>
+
+        <!-- ===== NEW: illustration filling the vacant space below the button ===== -->
+        <div class="amenities-intro-image">
+            <img src="{% static 'ambadyestate-main/pvr5.png' %}" alt="Enquiry at Ambady Estate" loading="lazy">
+        </div>
+    </div>
+</div>
 
             <!-- Right: Feature grid -->
             <div class="col scrollanimation animated scroll-fadeInRight">
@@ -777,6 +973,42 @@
         </div>
     </div>
 </div>
+<style>
+  .amenities-intro-image {
+    margin-top: 32px;
+    width: 148%;
+    max-width: none;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .amenities-intro-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0;
+
+    /* fades the hard rectangle edge into whatever's behind it */
+    -webkit-mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+                         linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 991px) {
+    .amenities-intro-image {
+      width: 112%;
+      margin: 24px auto 0;
+    }
+  }
+</style>
+
+
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
     <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">

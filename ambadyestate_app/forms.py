@@ -95,6 +95,9 @@ from django.forms import inlineformset_factory
 from .models import Activity, ActivityImage
 
 
+from .models import Activity, ActivityImage
+
+
 class ActivityForm(forms.ModelForm):
     class Meta:
         model = Activity
@@ -118,20 +121,19 @@ class ActivityForm(forms.ModelForm):
         }
 
 
-# Inline formset so you can add/edit multiple gallery images
-# on the same page as the Activity form.
-ActivityImageFormSet = inlineformset_factory(
-    Activity,
-    ActivityImage,
-    fields=["image", "caption", "order"],
-    extra=3,          # empty extra rows for adding new images
-    can_delete=True,  # allows deleting existing gallery images
-    widgets={
-        "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
-        "caption": forms.TextInput(attrs={"class": "form-control"}),
-        "order": forms.NumberInput(attrs={"class": "form-control", "style": "width:80px"}),
-    },
-)
+class ActivityGalleryUploadForm(forms.Form):
+    """One field, multiple files — used to add new gallery images in one go."""
+    gallery_images = MultipleFileField(required=False)
+
+    def clean_gallery_images(self):
+        files = self.cleaned_data.get("gallery_images")
+        if files:
+            for f in files:
+                if not f.content_type.startswith("image/"):
+                    raise forms.ValidationError(f"'{f.name}' is not a valid image file.")
+                if f.size > 5 * 1024 * 1024:  # 5MB limit
+                    raise forms.ValidationError(f"'{f.name}' exceeds the 5MB size limit.")
+        return files
 
 from .models import NearbyDestination, NearbyDestinationImage
 
@@ -157,20 +159,19 @@ class NearbyDestinationForm(forms.ModelForm):
         }
 
 
-# Inline formset so you can add/edit multiple gallery images
-# on the same page as the NearbyDestination form.
-NearbyDestinationImageFormSet = inlineformset_factory(
-    NearbyDestination,
-    NearbyDestinationImage,
-    fields=["image", "caption", "order"],
-    extra=3,          # empty extra rows for adding new images
-    can_delete=True,  # allows deleting existing gallery images
-    widgets={
-        "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
-        "caption": forms.TextInput(attrs={"class": "form-control"}),
-        "order": forms.NumberInput(attrs={"class": "form-control", "style": "width:80px"}),
-    },
-)
+class NearbyDestinationGalleryUploadForm(forms.Form):
+    """One field, multiple files — used to add new gallery images in one go."""
+    gallery_images = MultipleFileField(required=False)
+
+    def clean_gallery_images(self):
+        files = self.cleaned_data.get("gallery_images")
+        if files:
+            for f in files:
+                if not f.content_type.startswith("image/"):
+                    raise forms.ValidationError(f"'{f.name}' is not a valid image file.")
+                if f.size > 5 * 1024 * 1024:  # 5MB limit
+                    raise forms.ValidationError(f"'{f.name}' exceeds the 5MB size limit.")
+        return files
 import re
 
 from django import forms

@@ -260,7 +260,10 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
     cursor: pointer;
 }
 
-.gallery-form-row {
+.gallery-upload-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1rem;
     background: #fafafa;
 }
 
@@ -504,6 +507,17 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                     <div class="form-text">Recommended size: 1200x600 pixels. Max size: 5MB.</div>
                                 </div>
 
+                                <!-- Gallery Images -->
+                                <div class="col-12 mb-3 mt-2">
+                                    <h6 class="text-muted text-uppercase fw-bold small border-bottom pb-2">Gallery Images</h6>
+                                </div>
+
+                                {% if gallery_form.non_field_errors %}
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-danger">{{ gallery_form.non_field_errors }}</div>
+                                </div>
+                                {% endif %}
+
                                 {% if action == 'Edit' and destination.images.all %}
                                 <div class="col-12 mb-4">
                                     <label class="form-label">Current Gallery Images</label>
@@ -511,76 +525,40 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                         {% for img in destination.images.all %}
                                         <div class="gallery-thumb existing-image-thumb">
                                             <img src="{{ img.image.url }}" alt="{{ destination.name }}">
+                                            <label class="existing-image-delete" for="delete_image_{{ img.id }}">
+                                                <input type="checkbox" name="delete_image_{{ img.id }}" id="delete_image_{{ img.id }}">
+                                                Remove
+                                            </label>
                                         </div>
                                         {% endfor %}
                                     </div>
+                                    <div class="form-text mt-2">Check "Remove" under any image above to delete it when you save.</div>
                                 </div>
                                 {% endif %}
 
-                                <div class="col-12 mb-3 mt-2">
-                                    <h6 class="text-muted text-uppercase fw-bold small border-bottom pb-2">Gallery Images</h6>
-                                </div>
-
                                 <div class="col-12 mb-4">
-                                    {{ image_formset.management_form }}
-                                    <div id="gallery-formset-container">
-                                        {% for img_form in image_formset.forms %}
-                                        <div class="gallery-form-row border rounded p-3 mb-3">
-                                            {% for hidden in img_form.hidden_fields %}{{ hidden }}{% endfor %}
-
-                                            {% if img_form.instance.pk and img_form.instance.image %}
-                                            <div class="gallery-thumb existing-image-thumb mb-2">
-                                                <img src="{{ img_form.instance.image.url }}" alt="Gallery image">
-                                            </div>
-                                            {% endif %}
-
-                                            <div class="row g-2">
-                                                <div class="col-md-12">
-                                                    <label class="form-label small">Image{% if img_form.instance.pk %} (replace){% endif %}</label>
-                                                    {{ img_form.image }}
-                                                    {% if img_form.image.errors %}<div class="text-danger small mt-1">{{ img_form.image.errors|first }}</div>{% endif %}
-                                                </div>
-                                                <div class="d-none">
-                                                    {{ img_form.caption }}
-                                                    {{ img_form.order }}
-                                                </div>
-                                            </div>
-
-                                            {% if img_form.instance.pk %}
-                                            <div class="form-check mt-2">
-                                                {{ img_form.DELETE }}
-                                                <label class="form-check-label small text-danger" for="{{ img_form.DELETE.id_for_label }}">
-                                                    Delete this image
-                                                </label>
-                                            </div>
-                                            {% endif %}
+                                    <div class="gallery-upload-box">
+                                        <label for="{{ gallery_form.gallery_images.id_for_label }}" class="form-label">
+                                            Add Gallery Images
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="gallery_images"
+                                            id="{{ gallery_form.gallery_images.id_for_label }}"
+                                            class="form-control modern-input"
+                                            accept="image/*"
+                                            multiple>
+                                        {% if gallery_form.gallery_images.errors %}
+                                        <div class="text-danger small mt-1">{{ gallery_form.gallery_images.errors|first }}</div>
+                                        {% endif %}
+                                        <div class="form-text mb-2">
+                                            Hold <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac) while clicking,
+                                            or drag-select, to choose more than one image at once.
+                                            Recommended size: 1200x600 pixels. Max size: 5MB each.
                                         </div>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="mt-2 mb-2">
-                                        <button type="button" id="add-gallery-row-btn" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-plus"></i> Add Another Image
-                                        </button>
-                                    </div>
-                                    <div class="form-text">Leave the image field blank on empty rows you don't want to use. Recommended size: 1200x600 pixels. Max size: 5MB each.</div>
 
-                                    <!-- Hidden template used by JS to add new gallery rows. Django's empty_form uses
-                                         "__prefix__" as a placeholder index that we swap for the real form count. -->
-                                    <template id="gallery-empty-form-template">
-                                        <div class="gallery-form-row border rounded p-3 mb-3">
-                                            {% for hidden in image_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
-                                            <div class="row g-2">
-                                                <div class="col-md-12">
-                                                    <label class="form-label small">Image</label>
-                                                    {{ image_formset.empty_form.image }}
-                                                </div>
-                                                <div class="d-none">
-                                                    {{ image_formset.empty_form.caption }}
-                                                    {{ image_formset.empty_form.order }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
+                                        <div class="gallery-image-preview mt-2" id="newGalleryPreview"></div>
+                                    </div>
                                 </div>
 
                                 <!-- Description -->
@@ -670,46 +648,61 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<!-- Dynamically add more gallery image rows beyond the initial 3 -->
+<!-- Multi-file Gallery Preview + per-file removal (keeps the input's FileList in sync) -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const addBtn = document.getElementById('add-gallery-row-btn');
-    const container = document.getElementById('gallery-formset-container');
-    const template = document.getElementById('gallery-empty-form-template');
-    const totalFormsInput = document.querySelector('input[name="images-TOTAL_FORMS"]');
+(function () {
+    const input = document.getElementById('{{ gallery_form.gallery_images.id_for_label }}');
+    const previewContainer = document.getElementById('newGalleryPreview');
 
-    if (!addBtn || !container || !template || !totalFormsInput) return;
+    if (!input || !previewContainer) return;
 
-    addBtn.addEventListener('click', function () {
-        const formCount = parseInt(totalFormsInput.value, 10);
+    let selectedFiles = [];
 
-        // Clone the empty_form template and swap Django's "__prefix__" placeholder
-        // for the real, next available form index.
-        const newRowHtml = template.innerHTML.replace(/__prefix__/g, formCount);
+    function syncInputFiles() {
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => dataTransfer.items.add(file));
+        input.files = dataTransfer.files;
+    }
 
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = newRowHtml.trim();
-        const newRow = wrapper.firstElementChild;
+    function renderPreviews() {
+        previewContainer.innerHTML = '';
+        selectedFiles.forEach((file, index) => {
+            const thumb = document.createElement('div');
+            thumb.className = 'gallery-thumb';
 
-        newRow.querySelectorAll('input[type="text"], input[type="number"], input[type="file"]').forEach(function (el) {
-            el.classList.add('modern-input');
+            const img = document.createElement('img');
+            const reader = new FileReader();
+            reader.onload = e => { img.src = e.target.result; };
+            reader.readAsDataURL(file);
+
+            const nameTag = document.createElement('div');
+            nameTag.className = 'file-name';
+            nameTag.textContent = file.name;
+
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'gallery-thumb-remove';
+            removeBtn.innerHTML = '&times;';
+            removeBtn.addEventListener('click', function () {
+                selectedFiles.splice(index, 1);
+                syncInputFiles();
+                renderPreviews();
+            });
+
+            thumb.appendChild(img);
+            thumb.appendChild(nameTag);
+            thumb.appendChild(removeBtn);
+            previewContainer.appendChild(thumb);
         });
+    }
 
-        container.appendChild(newRow);
-
-        // Tell Django there's one more form in the formset.
-        totalFormsInput.value = formCount + 1;
+    input.addEventListener('change', function () {
+        // Append newly chosen files to whatever was already selected,
+        // so picking files in multiple passes doesn't wipe earlier ones.
+        selectedFiles = selectedFiles.concat(Array.from(input.files));
+        syncInputFiles();
+        renderPreviews();
     });
-});
-</script>
-
-<!-- Apply modern-input styling to formset-rendered widgets -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('#gallery-formset-container input[type="text"], #gallery-formset-container input[type="number"], #gallery-formset-container input[type="file"]').forEach(function (el) {
-        el.classList.add('modern-input');
-    });
-});
+})();
 </script>
 
 <!-- Status Toggle Logic -->
