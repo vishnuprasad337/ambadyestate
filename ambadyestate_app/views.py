@@ -796,8 +796,7 @@ def enquiry_delete(request, pk):
     return redirect("ambadyestate_app:enquiry_list")
 
 
-def page_404(request, exception):
-    return render(request, "404.html", status=404)
+
 
 # --------- FRONTEND ---------
 from django.urls import reverse
@@ -1055,3 +1054,7 @@ def gallery(request):
         "packages": packages,  
     }
     return render(request, "front-end/gallery.html", context)
+from django.shortcuts import render
+
+def page_404(request, exception=None):
+    return render(request, 'front-end/404.html', status=404)
