@@ -94,13 +94,18 @@ class Testimonial(OptimizedImageModel):
 
     def __str__(self):
         return f"{self.name} ({self.rating}⭐)"
+
     def save(self, *args, **kwargs):
+        # review is plain text (not CKEditor) in the current admin form,
+        # so stripping tags here is intentional. If review is ever switched
+        # to a rich-text editor, remove the strip_tags call on it, same as
+        # was done for description fields below.
         if self.review:
             self.review = strip_tags(self.review).strip()
         if self.name:
             self.name = strip_tags(self.name).strip()
         super().save(*args, **kwargs)
-    
+
 
 
 class Category(models.Model):
@@ -125,7 +130,6 @@ class GalleryImage(OptimizedImageModel):
 
     def __str__(self):
         return self.title if self.title else f"Image {self.id}"
-    
 
 
 
@@ -174,8 +178,9 @@ class Room(models.Model):
     def save(self, *args, **kwargs):
         if self.room_category:
             self.room_category = strip_tags(self.room_category).strip()
-        if self.description:
-            self.description = strip_tags(self.description).strip()
+        # description holds CKEditor's rich HTML (headings, paragraphs,
+        # bold, lists, etc.) — do NOT strip_tags it, or all formatting
+        # collapses into plain text on every save.
         if not self.slug:
             base_slug = slugify(self.room_category or "room")
             slug = base_slug
@@ -185,7 +190,7 @@ class Room(models.Model):
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
-    
+
 class RoomImage(OptimizedImageModel):
     room = models.ForeignKey(
         Room, on_delete=models.CASCADE, related_name="images"
@@ -203,7 +208,7 @@ class RoomImage(OptimizedImageModel):
 
     def __str__(self):
         return f"Image for {self.room.room_category or 'Room'} ({self.id})"
-    
+
 
 class Activity(OptimizedImageModel):
     STATUS_CHOICES = [
@@ -242,8 +247,8 @@ class Activity(OptimizedImageModel):
     def save(self, *args, **kwargs):
         if self.name:
             self.name = strip_tags(self.name).strip()
-        if self.description:
-            self.description = strip_tags(self.description).strip()
+        # description holds CKEditor's rich HTML — do NOT strip_tags it,
+        # or headings/formatting collapse into plain text on every save.
         if self.location:
             self.location = strip_tags(self.location).strip()
         if not self.slug:
@@ -273,7 +278,7 @@ class ActivityImage(OptimizedImageModel):
 
     def __str__(self):
         return f"Image for {self.activity.name} ({self.id})"
-    
+
 
 class NearbyDestination(OptimizedImageModel):
     STATUS_CHOICES = [
@@ -311,7 +316,9 @@ class NearbyDestination(OptimizedImageModel):
         return self.name
 
     def save(self, *args, **kwargs):
-
+        # name/description are left as-is here (consistent with the
+        # original file — description is CKEditor rich HTML and must
+        # never be run through strip_tags).
         if not self.slug:
             base_slug = slugify(self.name)
             slug = base_slug
@@ -343,7 +350,7 @@ class NearbyDestinationImage(OptimizedImageModel):
 
     def __str__(self):
         return f"Image for {self.destination.name} ({self.id})"
-    
+
 class Package(OptimizedImageModel):
     STATUS_CHOICES = [
         ("active", "Active"),
@@ -389,11 +396,12 @@ class Package(OptimizedImageModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        # Strip any accidental HTML tags from text fields
+        # Strip HTML only from plain-text fields. description holds
+        # CKEditor's rich HTML (headings, paragraphs, bold, lists, etc.)
+        # and must NOT be run through strip_tags(), or all formatting
+        # collapses into plain text on every save.
         if self.name:
             self.name = strip_tags(self.name).strip()
-        if self.description:
-            self.description = strip_tags(self.description).strip()
 
         if not self.slug:
             base_slug = slugify(self.name)
@@ -442,7 +450,6 @@ class Reservation(OptimizedImageModel):
     def clean(self):
         if self.check_out <= self.check_in:
             raise ValidationError("Check-out date must be after check-in date.")
-        
 
 
 

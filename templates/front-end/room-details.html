@@ -94,9 +94,9 @@
                     About this <em>room</em>
                 </h3>
 
-                <p class="room-detail-desc reveal-fade" style="--d:2">
-                    {{ room.description }}
-                </p>
+                <div class="room-detail-desc reveal-fade" style="--d:2">
+    {{ room.description|safe }}
+</div>
 
                 <div class="room-quickfacts">
 
@@ -524,6 +524,56 @@
         margin-bottom: 32px;
         max-width: 46ch;
     }
+    .room-detail-desc p {
+    margin: 0 0 18px;
+}
+
+.room-detail-desc p:last-child {
+    margin-bottom: 0;
+}
+
+.room-detail-desc ul,
+.room-detail-desc ol {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: none;
+}
+
+.room-detail-desc li {
+    position: relative;
+    padding-left: 34px;
+    line-height: 1.7;
+    color: var(--estate-stone);
+}
+
+.room-detail-desc li::before {
+    content: "\f00c"; /* fa-check icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--estate-gold);
+    color: var(--estate-forest-deep);
+    font-size: 0.58rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+    .room-detail-desc li {
+        font-size: 0.95rem;
+    }
+}
 
     @media (max-width: 991px) {
         .room-about-section { padding: 70px 0; }

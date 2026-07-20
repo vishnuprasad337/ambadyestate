@@ -115,3 +115,5 @@ path(
 path("gallery/", views.gallery, name="gallery"),
 
 ]
+
+handler404 = "ambadyestate_app.views.page_404"

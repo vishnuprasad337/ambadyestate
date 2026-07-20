@@ -1125,234 +1125,455 @@
         startCycle();
     });
 </script>
+<!-- ===== WHY CHOOSE US SECTION (subtle bg pattern, boy image left, 3-col cards right) ===== -->
+<div id="why-choose-us" class="section why-pattern-section">
 
-<!-- ===== WHY CHOOSE US SECTION (image-left, ghost heading layout) ===== -->
-<div id="why-choose-us" class="section why-split-section">
-    <div class="r-container">
-        <div class="row row-cols-xl-2 row-cols-1 align-items-stretch g-5">
+    <div class="why-pattern-bg" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');"></div>
 
-            <!-- Left: Image -->
-            <div class="col scrollanimation animated scroll-fadeInRight">
-                <div class="why-split-img-wrap">
-                    <img src="{% static 'ambadyestate-main/image/new/why.webp' %}" alt="Ambady Estate Munnar">
-                </div>
+    <div class="r-container why-pattern-content">
+
+        <!-- Header: kicker + heading + intro text -->
+        <div class="why-split-header scrollanimation animated scroll-fadeInUp">
+            <span class="why-split-ghost">Why Us?</span>
+
+            <div class="why-split-kicker">
+                <span class="why-split-kicker-icon"><i class="fa-solid fa-leaf"></i></span>
+                <span>Why Choose Us</span>
             </div>
 
-            <!-- Right: Content -->
-            <div class="col scrollanimation animated scroll-fadeInLeft">
-                <div class="why-split-content">
-                    <span class="why-split-ghost">Why Us?</span>
+            <h3 class="why-split-heading">
+                <span class="accent-color-2">Why choose us</span> for your Munnar estate stay?
+            </h3>
 
-                    <div class="why-split-kicker">
-                        <span class="why-split-kicker-icon"><i class="fa-solid fa-leaf"></i></span>
-                        <span>Why Choose Us</span>
-                    </div>
-
-                    <h3 class="why-split-heading">
-                        <span class="accent-color-2">Why choose us</span> for your Munnar estate stay?
-                    </h3>
-
-                    <p class="why-split-text">
-                        At Ambady Estate the hospitality guests trust, we combine colonial charm, genuine
-                        care, and a working plantation to deliver an exceptional stay in the heart of Kerala.
-                    </p>
-
-                    <div class="why-split-features">
-                        <div class="why-split-feature">
-                            <div class="why-split-feature-icon">
-                                <i class="fa-solid fa-award"></i>
-                            </div>
-                            <h5>High Quality Hospitality</h5>
-                            <p>Flexible, attentive service designed to meet every guest's requirement within their stay.</p>
-                        </div>
-
-                        <div class="why-split-feature">
-                            <div class="why-split-feature-icon">
-                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                            </div>
-                            <h5>Transparent Pricing</h5>
-                            <p>Competitive, transparent pricing for every package — from short stays to full estate retreats.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <p class="why-split-text">
+                At Ambady Estate the hospitality guests trust, we combine colonial charm, genuine
+                care, and a working plantation to deliver an exceptional stay in the heart of Kerala.
+            </p>
         </div>
+
+        <div class="why-lr-grid">
+
+            <!-- Left: image panel -->
+            <div class="why-lr-imgcol scrollanimation animated scroll-fadeInLeft">
+                <img class="why-thinking-char-lg" src="{% static 'ambadyestate-main/pvr9.png' %}" alt="Why Ambady Estate?">
+            </div>
+
+            <!-- Right: 3-per-row card grid -->
+            <div class="why-lr-cards">
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 21H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M5 21V11H19V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M5 11C5 7 8 4 12 4C16 4 19 7 19 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M9 21V16H15V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Cardamom Curing House</h4>
+                    <p class="why-card-text">Our age-old traditional curing house, where cardamom is dried and processed by hand.</p>
+                </div>
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3L19 6.5V11C19 15.5 16 18.5 12 20C8 18.5 5 15.5 5 11V6.5L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M9 11.5L11.2 13.7L15.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Certified Organic Plantation</h4>
+                    <p class="why-card-text">EU, NOP &amp; NPOP certified — cultivating natural spices for over 20 years.</p>
+                </div>
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21C12 21 5 14.6 5 9.5C5 5.9 8.13401 3 12 3C15.866 3 19 5.9 19 9.5C19 14.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Nestled in Nature</h4>
+                    <p class="why-card-text">Located inside a private space, secluded within the lap of nature.</p>
+                </div>
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 21V13L12 6L20 13V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M9 21V15H15V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                            <path d="M12 6V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8.5 9.5C9 8 10.3 7.2 12 7.2C13.7 7.2 15 8 15.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Eco-Friendly Architecture</h4>
+                    <p class="why-card-text">Thoughtfully built with natural materials that blend into the landscape.</p>
+                </div>
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 3V10.5C6 11.6 6.9 12.5 8 12.5V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 3V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8 3V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8 3V12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M17 3C17 3 15 5.2 15 8.5C15 10.5 16.2 11.7 17 12V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Locavore Cuisine</h4>
+                    <p class="why-card-text">Fresh, seasonal dishes made with ingredients grown right on the estate.</p>
+                </div>
+
+                <div class="why-card scrollanimation animated scroll-fadeInUp">
+                    <span class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9C4 8 5 10 6 9C7 8 8 10 9 9C10 8 11 10 12 9C13 8 14 10 15 9C16 8 17 10 18 9C19 8 20 10 21 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 13.5C4 12.5 5 14.5 6 13.5C7 12.5 8 14.5 9 13.5C10 12.5 11 14.5 12 13.5C13 12.5 14 14.5 15 13.5C16 12.5 17 14.5 18 13.5C19 12.5 20 14.5 21 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 18C4 17 5 19 6 18C7 17 8 19 9 18C10 17 11 19 12 18C13 17 14 19 15 18C16 17 17 19 18 18C19 17 20 19 21 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <h4 class="why-card-title">Valley-View Pool</h4>
+                    <p class="why-card-text">A stand-out open pool with sweeping, uninterrupted views of the valley.</p>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </div>
-
 <style>
-    .why-split-section { padding: 100px 0; overflow: hidden; }
+/* ---- Section shell + subtle background pattern ---- */
+.why-pattern-section {
+    position: relative;
+    padding: 40px 0 44px;
+    overflow: visible;
+    background-color: var(--bg-color, #f7f7f2);
+}
 
-    .why-split-img-wrap {
-        border-radius: 20px;
-        overflow: hidden;
-        height: 100%;
-        min-height: 360px;
-        position: relative;
+.why-pattern-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    opacity: 2;   /* was 0.14 — bumped up */
+    z-index: 0;
+    pointer-events: none;
+}
+
+.why-pattern-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+/* ---- Header (text only) — left-aligned, tightened spacing ---- */
+.why-split-header {
+    position: relative;
+    max-width: 620px;
+    margin: 0 0 12px;
+    text-align: left;
+    padding-left: 0;
+    overflow: visible;
+}
+
+.why-split-ghost {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    transform: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.035);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.why-split-kicker {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.why-split-kicker-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}
+
+.why-split-kicker span:last-child {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.why-split-heading {
+    position: relative;
+    z-index: 1;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.why-split-text {
+    position: relative;
+    z-index: 1;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--text-color-2);
+    max-width: 560px;
+    margin: 0;
+}
+
+/* ---- Left 3-col card grid / right image panel ---- */
+.why-lr-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 32px;
+    align-items: start;
+    position: relative;
+    overflow: visible;
+    margin-top: 8px;
+}
+
+.why-lr-imgcol {
+    position: relative;
+    border-radius: 20px;
+    overflow: visible;
+    height: 560px;
+    margin: 0;
+    width: 130%;
+    display: block;
+    left: -40px;
+    z-index: 2;
+}
+
+.why-thinking-char-lg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left top;
+    display: block;
+    transform: none;
+}
+
+.why-lr-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---- Cards: one-by-one auto color cycle, text stays readable ---- */
+.why-card {
+    position: relative;
+    background: var(--card-bg, #fff);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: why-card-color-cycle 12s ease-in-out infinite;
+}
+
+.why-lr-cards .why-card:nth-child(1) { animation-delay: 0s;  }
+.why-lr-cards .why-card:nth-child(2) { animation-delay: 2s;  }
+.why-lr-cards .why-card:nth-child(3) { animation-delay: 4s;  }
+.why-lr-cards .why-card:nth-child(4) { animation-delay: 6s;  }
+.why-lr-cards .why-card:nth-child(5) { animation-delay: 8s;  }
+.why-lr-cards .why-card:nth-child(6) { animation-delay: 10s; }
+
+@keyframes why-card-color-cycle {
+    0%   { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
+    8%   { background: color-mix(in srgb, var(--accent-color) 78%, black 22%); border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%); }
+    16%  { background: color-mix(in srgb, var(--accent-color) 78%, black 22%); border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%); }
+    24%  { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
+    100% { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
+}
+
+.why-card-title {
+    animation: why-card-text-cycle 12s ease-in-out infinite;
+}
+
+.why-lr-cards .why-card:nth-child(1) .why-card-title,
+.why-lr-cards .why-card:nth-child(1) .why-card-text,
+.why-lr-cards .why-card:nth-child(1) .why-card-icon { animation-delay: 0s;  }
+.why-lr-cards .why-card:nth-child(2) .why-card-title,
+.why-lr-cards .why-card:nth-child(2) .why-card-text,
+.why-lr-cards .why-card:nth-child(2) .why-card-icon { animation-delay: 2s;  }
+.why-lr-cards .why-card:nth-child(3) .why-card-title,
+.why-lr-cards .why-card:nth-child(3) .why-card-text,
+.why-lr-cards .why-card:nth-child(3) .why-card-icon { animation-delay: 4s;  }
+.why-lr-cards .why-card:nth-child(4) .why-card-title,
+.why-lr-cards .why-card:nth-child(4) .why-card-text,
+.why-lr-cards .why-card:nth-child(4) .why-card-icon { animation-delay: 6s;  }
+.why-lr-cards .why-card:nth-child(5) .why-card-title,
+.why-lr-cards .why-card:nth-child(5) .why-card-text,
+.why-lr-cards .why-card:nth-child(5) .why-card-icon { animation-delay: 8s;  }
+.why-lr-cards .why-card:nth-child(6) .why-card-title,
+.why-lr-cards .why-card:nth-child(6) .why-card-text,
+.why-lr-cards .why-card:nth-child(6) .why-card-icon { animation-delay: 10s; }
+
+@keyframes why-card-text-cycle {
+    0%   { color: var(--text-color); }
+    8%   { color: #ffffff; }
+    16%  { color: #ffffff; }
+    24%  { color: var(--text-color); }
+    100% { color: var(--text-color); }
+}
+
+@keyframes why-card-text-muted-cycle {
+    0%   { color: var(--text-color-2); }
+    8%   { color: rgba(255, 255, 255, 0.85); }
+    16%  { color: rgba(255, 255, 255, 0.85); }
+    24%  { color: var(--text-color-2); }
+    100% { color: var(--text-color-2); }
+}
+
+@keyframes why-card-icon-cycle {
+    0%   { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
+    8%   { color: #ffffff; background: rgba(255, 255, 255, 0.16); }
+    16%  { color: #ffffff; background: rgba(255, 255, 255, 0.16); }
+    24%  { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
+    100% { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
+}
+
+.why-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin-bottom: 4px;
+    animation: why-card-icon-cycle 12s ease-in-out infinite;
+}
+
+.why-card-icon svg { width: 26px; height: 26px; display: block; }
+
+.why-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.why-card-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--text-color-2);
+    animation: why-card-text-muted-cycle 12s ease-in-out infinite;
+}
+
+.why-card:hover,
+.why-card:focus-within,
+.why-card:active {
+    animation-play-state: paused;
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+    background: color-mix(in srgb, var(--accent-color) 78%, black 22%) !important;
+    border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%);
+}
+
+.why-card:hover .why-card-icon,
+.why-card:focus-within .why-card-icon,
+.why-card:active .why-card-icon {
+    animation-play-state: paused;
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #fff !important;
+}
+
+.why-card:hover .why-card-title,
+.why-card:focus-within .why-card-title,
+.why-card:active .why-card-title {
+    animation-play-state: paused;
+    color: #fff !important;
+}
+
+.why-card:hover .why-card-text,
+.why-card:focus-within .why-card-text,
+.why-card:active .why-card-text {
+    animation-play-state: paused;
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+@media (max-width: 1199px) {
+    .why-split-ghost { font-size: 2.4rem; top: -4px; }
+    .why-split-heading { font-size: 2rem; }
+    .why-lr-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Mobile/tablet: tightened spacing, smaller image box ---- */
+@media (max-width: 991px) {
+    .why-pattern-section { padding: 24px 0; }
+    .why-lr-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 0;
     }
-
-    .why-split-img-wrap img {
-        width: 100%;
-        height: 100%;
-        min-height: 360px;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .why-split-img-wrap:hover img { transform: scale(1.05); }
-
-    .why-split-content {
-        position: relative;
-        padding-left: 8px;
-    }
-
-    .why-split-ghost {
-        position: absolute;
-        top: -38px;
+    .why-lr-imgcol {
+        order: -1;
+        height: 260px;
+        min-height: unset;
         left: 0;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 5.5rem;
-        font-weight: 800;
-        color: rgba(0, 0, 0, 0.04);
-        white-space: nowrap;
-        z-index: 0;
-        pointer-events: none;
-        line-height: 1;
-    }
-
-    .why-split-kicker {
-        position: relative;
+        width: 100%;
         z-index: 1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 18px;
+        margin-bottom: 4px;
     }
+    .why-lr-cards { grid-template-columns: repeat(2, 1fr); }
+    .why-split-header { margin-bottom: 12px; }
+}
 
-    .why-split-kicker-icon {
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        border: 1px solid var(--accent-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent-color);
-        font-size: 0.9rem;
+@media (max-width: 767px) {
+    .why-pattern-section { padding: 20px 0; }
+    .why-pattern-section .r-container {
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
     }
+    .why-split-ghost { display: none; }
+    .why-split-heading { font-size: 1.6rem; margin-bottom: 8px; }
+    .why-split-text { font-size: 0.95rem; margin-bottom: 0; }
+    .why-split-header { margin-bottom: 10px; }
+    .why-lr-grid { gap: 10px; }
+    .why-lr-cards { grid-template-columns: 1fr; gap: 14px; }
+    .why-card { padding: 18px 16px; }
+    .why-lr-imgcol { height: 220px; margin-bottom: 2px; }
+}
 
-    .why-split-kicker span:last-child {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: var(--text-color);
+@media (max-width: 480px) {
+    .why-pattern-section { padding: 16px 0; }
+    .why-pattern-section .r-container {
+        padding-left: 16px;
+        padding-right: 16px;
     }
-
-    .why-split-heading {
-        position: relative;
-        z-index: 1;
-        font-size: 2.4rem;
-        line-height: 1.25;
-        font-weight: 700;
-        color: var(--text-color);
-        margin-bottom: 20px;
-    }
-
-    .why-split-text {
-        position: relative;
-        z-index: 1;
-        font-size: 1.02rem;
-        line-height: 1.8;
-        color: var(--text-color-2);
-        max-width: 560px;
-        margin-bottom: 36px;
-    }
-
-    .why-split-features {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 32px;
-    }
-
-    .why-split-feature-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        background: var(--accent-color-3, #eaf4e2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-        color: var(--accent-color);
-        margin-bottom: 16px;
-        transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
-    }
-
-    .why-split-feature:hover .why-split-feature-icon {
-        background: var(--accent-color);
-        color: #fff;
-        transform: translateY(-4px);
-    }
-
-    .why-split-feature h5 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-color);
-        margin-bottom: 8px;
-    }
-
-    .why-split-feature p {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--text-color-2);
-        margin: 0;
-    }
-
-    @media (max-width: 1199px) {
-        .why-split-ghost { font-size: 4rem; top: -30px; }
-        .why-split-heading { font-size: 2rem; }
-    }
-
-    @media (max-width: 991px) {
-        .why-split-section { padding: 70px 0; }
-        .why-split-section .row { align-items: center !important; }
-        .why-split-img-wrap { height: auto; min-height: 320px; }
-        .why-split-img-wrap img { min-height: 320px; }
-    }
-
-    @media (max-width: 767px) {
-        .why-split-section { padding: 56px 0; }
-        .why-split-section .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-            box-sizing: border-box;
-        }
-        .why-split-img-wrap { min-height: 260px; border-radius: 16px; }
-        .why-split-img-wrap img { min-height: 260px; }
-        .why-split-content { text-align: center; padding-left: 0; }
-        .why-split-ghost { display: none; }
-        .why-split-kicker { justify-content: center; }
-        .why-split-heading { font-size: 1.6rem; margin-bottom: 14px; }
-        .why-split-text { margin-left: auto; margin-right: auto; margin-bottom: 26px; font-size: 0.95rem; }
-        .why-split-features { grid-template-columns: 1fr; gap: 22px; text-align: center; }
-        .why-split-feature-icon { margin-left: auto; margin-right: auto; width: 46px; height: 46px; font-size: 1.1rem; }
-    }
-
-    @media (max-width: 480px) {
-        .why-split-section { padding: 44px 0; }
-        .why-split-section .r-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-        .why-split-img-wrap { min-height: 200px; }
-        .why-split-img-wrap img { min-height: 200px; }
-        .why-split-heading { font-size: 1.4rem; }
-    }
+    .why-lr-imgcol { height: 190px; }
+}
 </style>
-
 <!-- ===== PACKAGES SECTION (v3 — full-bleed image, gradient overlay, GARDEN DESIGN style) ===== -->
 <div id="packages" class="section pkg-section-v2" style="background-image: url('{% static 'ambadyestate-main/image/bg_feature.png' %}');">
     <div class="r-container d-flex flex-column gap-3">

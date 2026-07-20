@@ -127,7 +127,6 @@
     }
 </style>
 
-<!-- ===== ROOMS (accordion style, 3 cards per set, auto-rotating) ===== -->
 <div id="rooms" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_feature.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
         <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
@@ -144,8 +143,8 @@
                     {% if not forloop.first %}</div>{% endif %}
                     <div class="accordion-container{% if forloop.first %} active{% endif %}">
                 {% endif %}
-                <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative"
-                    style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');">
+                <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative">
+                    <img class="accordion-img" src="{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}" alt="{{ room.room_category|default:'Room' }}">
                     <div class="bg-overlay"></div>
                     <div class="d-flex flex-column justify-content-between align-items-end text-white position-relative h-100"
                         style="z-index: 2; padding: 40px;">
@@ -209,14 +208,41 @@
         text-decoration: none;
         border-radius: 20px;
         overflow: hidden;
-        background-size: 105%;
-        background-position: center;
-        background-repeat: no-repeat;
         cursor: pointer;
         flex: 1;
-        transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-            background-size 1.2s ease;
+        transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         will-change: flex;
+    }
+
+    /* Real <img> instead of a CSS background — object-fit: cover physically
+       cannot leave a gap around the frame, no matter how the box resizes.
+       The previous background-image: inherit approach on a ::before
+       pseudo-element wasn't reliably picking up the image in every case,
+       which is what was still exposing the frame/border around the card. */
+    .accordion-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        /* resting scale (all cards equal width, nothing hovered) — matches the
+           original design's tighter, zoomed-in crop */
+        transform: scale(1.06);
+        transition: transform 1.2s ease;
+    }
+
+    /* Once a sibling is hovered and this card shrinks to flex: 0.85, drop the
+       zoom back to scale(1) so it sits plainly contained in its small frame
+       instead of looking over-cropped. object-fit: cover already guarantees
+       full coverage on its own regardless of scale. */
+    .accordion-container:has(.accordion-item:hover) .accordion-item:not(:hover) .accordion-img {
+        transform: scale(1);
+    }
+
+    .accordion-item:hover .accordion-img {
+        transform: scale(1.16);
     }
 
     .accordion-item .bg-overlay {
@@ -237,16 +263,19 @@
                 rgba(10, 20, 10, 0.05) 100%);
     }
 
-    /* Expand ratios */
+    /* Expand ratios — kept less extreme than a tighter collapse would allow:
+       the more a card narrows, the harder object-fit: cover has to crop its
+       image to fill that shape without gaps. 0.85/1.7 keeps the small card
+       wide enough that its photo doesn't look overly zoomed/cropped, while
+       still giving the hovered card a clear size difference. */
     .accordion-container:has(.accordion-item:hover) .accordion-item {
-        flex: 0.75;
+        flex: 0.85;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
-        flex: 2.0;
+        flex: 1.7;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        background-size: 112%;
     }
 
     /* Inner layout */
@@ -382,7 +411,10 @@
         .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
             flex: none !important;
             min-height: 280px;
-            background-size: 105% !important;
+        }
+
+        .accordion-img {
+            transform: scale(1.06);
         }
 
         .accordion-item p.text-white {
@@ -453,7 +485,6 @@
         }
     }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const viewport = document.querySelector('.accordion-viewport');

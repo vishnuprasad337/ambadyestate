@@ -91,11 +91,11 @@
 
     <style>
         :root {
-            --primary-blue: #2563eb;
-            --dark-blue: #1e40af;
-            --light-blue: #dbeafe;
+            --primary-blue: #1f4d3a;
+            --dark-blue: #14332a;
+            --light-blue: #dcebe3;
             --sidebar-width: 280px;
-            --header-height: 70px;
+            --header-height: 110px;
             --white: #ffffff;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
@@ -161,6 +161,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            height: 100%;
         }
 
         .logo {
@@ -171,11 +172,14 @@
             font-weight: 700;
             font-size: 20px;
             text-decoration: none;
+            height: 100%;
         }
 
         .logo img {
-            height: 90px;
+            max-height: 95px;
+            height: 100%;
             width: auto;
+            object-fit: contain;
         }
 
         .header-right {
@@ -580,7 +584,20 @@
         /* Hide preloader and other elements */
         #back__preloader,
         .theme__shadow__circle {
-            display: none;
+            display: none !important;
+            height: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        /* Safety net: collapse any leftover fixed/sticky bar that isn't
+           part of our dashboard layout and happens to sit above it */
+        body > *:not(.dashboard-header):not(.dashboard-sidebar):not(.dashboard-main):not(.sidebar-overlay):not(#global-toast):not(.modal):not(script) {
+            max-height: 0 !important;
+            overflow: hidden !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
 
         /* Scrollbar styling */
@@ -961,7 +978,7 @@
             </button>
             
             <a href="/" class="logo">
-    <img src="{% static 'ambadyestate-main/ambady-g.png' %}" alt="Logo" style="height:120px; width:auto;">
+    <img src="{% static 'ambadyestate-main/ambady-g.png' %}" alt="Logo">
 </a>
         </div>
 
@@ -1349,54 +1366,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 </script>
-{% comment %} 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("blogSearchInput");
-    const tableBody = document.querySelector(".custom-table-container table tbody");
-
-    if (!tableBody) return;
-
-    const rows = tableBody.querySelectorAll("tr");
-
-    searchInput.addEventListener("keyup", function() {
-        const searchText = this.value.toLowerCase().trim();
-
-        rows.forEach(row => {
-            const title = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
-            const description = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
-
-            if (title.includes(searchText) || description.includes(searchText)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-
-        // If no match found, show a “no results” message
-        const visibleRows = [...rows].filter(r => r.style.display !== "none");
-        let noResultRow = document.getElementById("noResultRow");
-
-        if (visibleRows.length === 0) {
-            if (!noResultRow) {
-                noResultRow = document.createElement("tr");
-                noResultRow.id = "noResultRow";
-                noResultRow.innerHTML = `
-                    <td colspan="5" class="text-center py-4 text-muted">
-                        No blogs found matching "<strong>${searchText}</strong>"
-                    </td>`;
-                tableBody.appendChild(noResultRow);
-            } else {
-                noResultRow.querySelector("strong").textContent = searchText;
-                noResultRow.style.display = "";
-            }
-        } else if (noResultRow) {
-            noResultRow.style.display = "none";
-        }
-    });
-});
-</script> {% endcomment %}
- 
 
 
     {% block extra_js %}{% endblock %}
