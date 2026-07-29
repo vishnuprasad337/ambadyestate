@@ -100,25 +100,19 @@
             width: 100%;
         }
 
-        .btn-accent.nav-cta {
-            background-color: var(--primary) !important;
-            color: var(--accent-color) !important;
-            border-color: var(--primary) !important;
-            white-space: nowrap;
-            padding: 11px 26px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            border-radius: 6px;
-            flex-shrink: 0;
-            margin-left: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        /* Nav text stays white in both the transparent (top-of-page) and
+           .is-scrolled (olive green bar) header states. */
+        .site-header.is-scrolled .site-navbar .navbar-nav .nav-link {
+            color: #ffffff !important;
         }
 
-        .btn-accent.nav-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .site-header.is-scrolled .site-navbar .navbar-nav .nav-link::after {
+            background-color: #ffffff;
+        }
+
+        .site-header.is-scrolled .site-navbar .navbar-nav .nav-link:hover,
+        .site-header.is-scrolled .site-navbar .navbar-nav .nav-link.active {
+            color: #ffffff !important;
         }
 
         @media (max-width: 1300px) {
@@ -368,7 +362,15 @@
 
         .request-loader:hover { background-color: var(--accent-color-2); }
 
+        /* Logo: stays white in both the transparent (top-of-page) header and
+           the .is-scrolled (olive green bar) header, so it never darkens
+           against the header background. */
         .site-brand img {
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        .site-header.is-scrolled .site-brand img {
             filter: brightness(0) invert(1);
         }
 
@@ -384,7 +386,7 @@
 .loader { display: flex; align-items: center; justify-content: center; }
 .loader > div {
   display: inline-flex; width: 22px; height: 22px; margin: 0 6px;
-  border-radius: 50%; background: #6f8a63;
+ border-radius: 50%; background: #9CAE7D;
   animation: bounce 1.48s ease-in-out infinite both;
 }
 .loader > div:nth-child(1) { animation-delay: -0.32s; }
@@ -405,7 +407,7 @@
 [data-theme="dark"] #preloader {
   background: #1f1a12;
 }
-[data-theme="dark"] .loader > div { background: #8ba57e; }
+[data-theme="dark"] .loader > div { background: #9CAE7D; }
 
 /* ===== END PRELOADER ===== */
     </style>

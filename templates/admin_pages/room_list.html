@@ -33,7 +33,6 @@
                     <th scope="col">Room Image</th>
                     <th scope="col">Room Category</th>
                     <th scope="col">Price/Night</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Description</th>
                     <th scope="col" class="text-center">Actions</th>
                 </tr>
@@ -53,9 +52,6 @@
                     </td>
                     <td>{{ room.room_category }}</td>
                     <td>₹{{ room.price_per_night }}</td>
-                    <td>
-                        <span class="status-badge {{ room.status }}">{{ room.get_status_display }}</span>
-                    </td>
                     <td class="description-cell">{{ room.description|truncatechars:30|safe }}</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
@@ -76,7 +72,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="7" class="text-center py-4">
+                    <td colspan="6" class="text-center py-4">
                         <p class="text-muted">No rooms found. <a href="{% url 'ambadyestate_app:room_add' %}">Add your first room</a></p>
                     </td>
                 </tr>
@@ -257,25 +253,6 @@ function showToast(message, type = 'info') {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-/* Status badge in table */
-.status-badge {
-    display: inline-block;
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.status-badge.active {
-    background: #dcfce7;
-    color: #16a34a;
-}
-
-.status-badge.inactive {
-    background: #fee2e2;
-    color: #dc2626;
 }
 
 /* Drag and drop styles */

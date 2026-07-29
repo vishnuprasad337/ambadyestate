@@ -906,9 +906,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="nearby-card-img-wrap">
                         <img src="{{ destination.image.url }}" alt="{{ destination.name }}" loading="lazy">
                         <div class="nearby-overlay"></div>
-                        {% if destination.distance %}
-                        <div class="nearby-tag">{{ destination.distance }}</div>
-                        {% endif %}
+                       
                         <div class="nearby-card-body">
                             <h4>{{ destination.name }}</h4>
                             <p>{{ destination.description|striptags|truncatewords:16 }}</p>

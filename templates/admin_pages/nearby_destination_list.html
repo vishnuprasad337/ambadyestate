@@ -26,9 +26,6 @@
                     <th scope="col">Sl No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Distance</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Status</th>
                     <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -42,15 +39,6 @@
                     <td>
                         {% if destination.description %}
                             <p class="text-muted mb-0 small">{{ destination.description|truncatechars:40|safe }}</p>
-                        {% endif %}
-                    </td>
-                    <td>{{ destination.distance }}</td>
-                    <td>{{ destination.location }}</td>
-                    <td>
-                        {% if destination.status %}
-                            <span class="badge bg-success">{{ destination.status }}</span>
-                        {% else %}
-                            <span class="badge bg-secondary">{{ destination.status }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -69,7 +57,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="7" class="text-center py-4">
+                    <td colspan="3" class="text-center py-4">
                         <p class="text-muted">No nearby destinations found. <a href="{% url 'ambadyestate_app:nearby_destination_create' %}">Add your first destination</a></p>
                     </td>
                 </tr>
@@ -307,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 noResultRow.id = "noResultRow";
                 tableBody.appendChild(noResultRow);
             }
-            const colCount = rows[0]?.querySelectorAll("td").length || 7;
+            const colCount = rows[0]?.querySelectorAll("td").length || 3;
 
             noResultRow.innerHTML = `
                 <td colspan="${colCount}" class="text-center py-4 text-muted">
@@ -342,14 +330,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         rows.forEach((row) => {
             const nameCell = row.querySelector("td:nth-child(2)");
-            const locationCell = row.querySelector("td:nth-child(5)");
 
-            const values = [
-                nameCell?.textContent.toLowerCase() || "",
-                locationCell?.textContent.toLowerCase() || ""
-            ];
+            const nameValue = nameCell?.textContent.toLowerCase() || "";
 
-            const match = searchText === "" || values.some(val => val.includes(searchText));
+            const match = searchText === "" || nameValue.includes(searchText);
 
             if (match) {
                 row.style.display = "";
@@ -357,7 +341,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (searchText !== "") {
                     highlightMatch(nameCell, searchText);
-                    highlightMatch(locationCell, searchText);
                 }
             } else {
                 row.style.display = "none";

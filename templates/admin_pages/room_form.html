@@ -244,6 +244,27 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
     background: #dc3545;
 }
 
+/* Marks the first thumbnail (which becomes the new cover image) so users
+   understand why file order matters when picking multiple images. */
+.gallery-image-preview .gallery-thumb.is-cover {
+    border: 2px solid #4f46e5;
+}
+
+.gallery-image-preview .gallery-thumb.is-cover .cover-badge {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: #4f46e5;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
 .existing-image-thumb {
     width: 120px;
     height: 100px;
@@ -391,81 +412,6 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
 }
 </style>
 
-<!-- Tag Input Styles -->
-<style>
-.tag-input-wrapper {
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: 0.6rem 0.75rem;
-    background-color: #fff;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.tag-input-wrapper:focus-within {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
-}
-
-.tag-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background-color: #eef2ff;
-    color: #4338ca;
-    padding: 0.35rem 0.65rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.tag-chip .tag-remove {
-    cursor: pointer;
-    font-weight: 700;
-    line-height: 1;
-    color: #4338ca;
-}
-
-.tag-chip .tag-remove:hover {
-    color: #dc2626;
-}
-
-.tag-input-field {
-    border: none;
-    outline: none;
-    flex: 1;
-    min-width: 120px;
-    padding: 0.35rem 0;
-    font-size: 1rem;
-}
-
-.tag-input-add-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.tag-input-add-row input {
-    flex: 1;
-}
-
-.tag-add-btn {
-    background: #4f46e5;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0 1.1rem;
-    font-weight: 500;
-    transition: background 0.3s;
-}
-
-.tag-add-btn:hover {
-    background: #4338ca;
-}
-</style>
-
 <!-- Status Toggle Styles -->
 <style>
 .status-switch-wrapper {
@@ -570,60 +516,23 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                     <span class="text-danger field-error" id="price_per_night-error"></span>
                                 </div>
 
-                                <!-- Sleeping Arrangements -->
-                                <div class="col-12 mb-3 mt-2">
-                                    <h6 class="text-muted text-uppercase fw-bold small border-bottom pb-2">Sleeping Arrangements</h6>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Bedroom Beds</label>
-                                    <div class="tag-input-wrapper" id="bedroom_beds-wrapper" data-hidden-input="bedroom_beds_hidden" data-initial="{{ form.bedroom_beds.value|default:'' }}"></div>
-                                    <div class="tag-input-add-row">
-                                        <input type="text" class="form-control modern-input tag-type-input" id="bedroom_beds-type-input" placeholder="e.g. 1 king bed">
-                                        <button type="button" class="tag-add-btn" data-target="bedroom_beds">Add</button>
-                                    </div>
-                                    <input type="hidden" name="bedroom_beds" id="bedroom_beds_hidden">
-                                    {% if form.bedroom_beds.errors %}<div class="text-danger small mt-1">{{ form.bedroom_beds.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="bedroom_beds-error"></span>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Living Room Beds</label>
-                                    <div class="tag-input-wrapper" id="living_room_beds-wrapper" data-hidden-input="living_room_beds_hidden" data-initial="{{ form.living_room_beds.value|default:'' }}"></div>
-                                    <div class="tag-input-add-row">
-                                        <input type="text" class="form-control modern-input tag-type-input" id="living_room_beds-type-input" placeholder="e.g. 1 sofa bed">
-                                        <button type="button" class="tag-add-btn" data-target="living_room_beds">Add</button>
-                                    </div>
-                                    <input type="hidden" name="living_room_beds" id="living_room_beds_hidden">
-                                    {% if form.living_room_beds.errors %}<div class="text-danger small mt-1">{{ form.living_room_beds.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="living_room_beds-error"></span>
-                                </div>
-
                                 <!-- Media -->
                                 <div class="col-12 mb-3 mt-2">
                                     <h6 class="text-muted text-uppercase fw-bold small border-bottom pb-2">Media</h6>
                                 </div>
 
-                                <!-- Cover / Main Image: this is the Room.main_image field itself.
-                                     It MUST post under name="main_image" or it never reaches the
-                                     model and the hero image on the detail page stays empty. -->
-                                <div class="col-12 mb-4">
-                                    <label for="main_image_input" class="form-label">Cover Image{% if action != 'Edit' %} <span class="text-danger">*</span>{% endif %}</label>
-                                    {% if action == 'Edit' and room.main_image %}
+                                {% if action == 'Edit' and room.main_image %}
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Current Cover Image</label>
                                     <div class="room-image-preview mb-2">
                                         <img src="{{ room.main_image.url }}" alt="Current cover image">
                                     </div>
-                                    <div class="form-text mb-2">Current cover image. Choose a new file below to replace it, or leave blank to keep it.</div>
-                                    {% endif %}
-                                    <input type="file" name="main_image" id="main_image_input" class="form-control modern-input" accept="image/*">
-                                    {% if form.main_image.errors %}<div class="text-danger small mt-1">{{ form.main_image.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="main_image_input-error"></span>
-                                    <div class="form-text">This is the hero image shown at the top of the room detail page. Recommended size: 1200x600 pixels. Max size: 5MB.</div>
                                 </div>
+                                {% endif %}
 
                                 {% if action == 'Edit' and room.images.all %}
-                                <div class="col-12 mb-4">
-                                    <label class="form-label">Gallery Images</label>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Current Gallery Images</label>
                                     <div class="gallery-image-preview">
                                         {% for img in room.images.all %}
                                         <div class="gallery-thumb existing-image-thumb">
@@ -639,12 +548,21 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                 </div>
                                 {% endif %}
 
+                                <!-- Room Images: single multi-file field. The FIRST file selected
+                                     becomes Room.main_image (the hero/cover image); any additional
+                                     files become RoomImage gallery rows. This replaces the old
+                                     separate "Cover Image" + "Gallery Images" inputs so there's only
+                                     one control to manage. -->
                                 <div class="col-12 mb-4">
-                                    <label for="gallery_images_input" class="form-label">{% if action == 'Edit' %}Add More Gallery Images{% else %}Gallery Images{% endif %}</label>
-                                    <input type="file" name="gallery_images" id="gallery_images_input" class="form-control modern-input" accept="image/*" multiple>
-                                    {% if image_form.gallery_images.errors %}<div class="text-danger small mt-1">{{ image_form.gallery_images.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="gallery_images_input-error"></span>
-                                    <div class="form-text">You can select multiple images. Recommended size: 1200x600 pixels. Max size: 5MB each.</div>
+                                    <label for="room_images_input" class="form-label">
+                                        Room Images{% if action != 'Edit' %} <span class="text-danger">*</span>{% endif %}
+                                    </label>
+                                    <input type="file" name="room_images" id="room_images_input" class="form-control modern-input" accept="image/*" multiple>
+                                    {% if image_form.room_images.errors %}<div class="text-danger small mt-1">{{ image_form.room_images.errors|first }}</div>{% endif %}
+                                    <span class="text-danger field-error" id="room_images_input-error"></span>
+                                    <div class="form-text">
+                                        Select one or more images. <strong>The first image becomes the cover/hero image</strong>{% if action == 'Edit' %} (leave blank to keep the current cover){% endif %}; any additional images are added to the gallery. Recommended size: 1200x600 pixels. Max size: 5MB each.
+                                    </div>
                                     <div class="gallery-image-preview mt-2" id="imagePreview"></div>
                                 </div>
 
@@ -712,11 +630,12 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
 // Room image handling: accumulate files across multiple picker opens (native <input multiple>
 // replaces the selection every time the dialog is reopened, so we manage our own file list
-// and keep the input's FileList in sync via DataTransfer).
+// and keep the input's FileList in sync via DataTransfer). The FIRST file in the accumulated
+// list is highlighted as the cover image, matching what the server will use as main_image.
 (function () {
-    const input = document.getElementById('gallery_images_input');
+    const input = document.getElementById('room_images_input');
     const preview = document.getElementById('imagePreview');
-    const errorSpan = document.getElementById('gallery_images_input-error');
+    const errorSpan = document.getElementById('room_images_input-error');
 
     let selectedFiles = [];
 
@@ -732,8 +651,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const reader = new FileReader();
             reader.onload = function (ev) {
                 const thumb = document.createElement('div');
-                thumb.className = 'gallery-thumb';
+                thumb.className = 'gallery-thumb' + (index === 0 ? ' is-cover' : '');
                 thumb.innerHTML = `
+                    ${index === 0 ? '<span class="cover-badge">Cover</span>' : ''}
                     <img src="${ev.target.result}" alt="${file.name}">
                     <span class="file-name">${file.name}</span>
                     <span class="gallery-thumb-remove" data-index="${index}" title="Remove">&times;</span>
@@ -821,119 +741,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- Tag Input Logic -->
-<script>
-(function () {
-    const tagFields = ['bedroom_beds', 'living_room_beds'];
-    const tagStore = {};
-
-    // Robustly parse a tag field's initial server value into a clean array of strings.
-    // Handles plain "a, b, c" values as well as values that were accidentally stored/rendered
-    // as a stringified (possibly double-encoded) Python/JSON list, e.g. "['Safe', 'Balcony']"
-    // or "[\"['Garden view']\"]" — both of which used to leak raw brackets/quotes into the UI.
-    function parseTagString(raw) {
-        if (!raw) return [];
-        const out = [];
-
-        function stripWrap(s) {
-            return s.replace(/^[\[\]'"\s]+|[\[\]'"\s]+$/g, '');
-        }
-
-        function process(value) {
-            if (Array.isArray(value)) {
-                value.forEach(process);
-                return;
-            }
-            if (value === null || value === undefined) return;
-            const s = String(value).trim();
-            if (!s) return;
-
-            if (s.startsWith('[') && s.endsWith(']')) {
-                try {
-                    process(JSON.parse(s));
-                    return;
-                } catch (e) {
-                    try {
-                        process(JSON.parse(s.replace(/'/g, '"')));
-                        return;
-                    } catch (e2) {
-                        // fall through to plain cleanup below
-                    }
-                }
-            }
-
-            const cleaned = stripWrap(s);
-            if (!cleaned) return;
-            out.push(cleaned);
-        }
-
-        const trimmedRaw = String(raw).trim();
-        if (trimmedRaw.startsWith('[')) {
-            process(trimmedRaw);
-        } else {
-            trimmedRaw.split(',').forEach(part => process(part));
-        }
-
-        // De-duplicate while preserving order
-        return out.filter((v, i) => out.indexOf(v) === i);
-    }
-
-    tagFields.forEach(field => {
-        const wrapper = document.getElementById(`${field}-wrapper`);
-        const typeInput = document.getElementById(`${field}-type-input`);
-        const hiddenInput = document.getElementById(`${field}_hidden`);
-        const addBtn = document.querySelector(`.tag-add-btn[data-target="${field}"]`);
-
-        // Pre-populate from server-rendered initial value (edit mode / re-render after validation error)
-        const initialRaw = wrapper.dataset.initial || '';
-        tagStore[field] = parseTagString(initialRaw);
-
-        function renderTags() {
-            wrapper.innerHTML = '';
-            tagStore[field].forEach((tag, index) => {
-                const chip = document.createElement('span');
-                chip.className = 'tag-chip';
-                chip.innerHTML = `${tag} <span class="tag-remove" data-index="${index}">&times;</span>`;
-                wrapper.appendChild(chip);
-            });
-            hiddenInput.value = tagStore[field].join(',');
-        }
-
-        function addTag() {
-            const value = typeInput.value.trim();
-            if (!value) return;
-            if (tagStore[field].includes(value)) {
-                typeInput.value = '';
-                return;
-            }
-            tagStore[field].push(value);
-            typeInput.value = '';
-            renderTags();
-            typeInput.focus();
-        }
-
-        addBtn.addEventListener('click', addTag);
-
-        typeInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ',') {
-                e.preventDefault();
-                addTag();
-            }
-        });
-
-        wrapper.addEventListener('click', function (e) {
-            if (e.target.classList.contains('tag-remove')) {
-                const index = parseInt(e.target.dataset.index, 10);
-                tagStore[field].splice(index, 1);
-                renderTags();
-            }
-        });
-
-        renderTags();
-    });
-})();
-</script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
@@ -957,23 +764,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 return null;
             }
         },
-        main_image: {
-            element: document.getElementById('main_image_input'),
-            error: document.getElementById('main_image_input-error'),
+        room_images: {
+            element: document.getElementById('room_images_input'),
+            error: document.getElementById('room_images_input-error'),
             validate: function(files) {
-                if (!files || !files.length) return null;
-                for (const f of files) {
-                    if (!f.type.startsWith('image/')) return `'${f.name}' is not a valid image file.`;
-                    if (f.size > 5 * 1024 * 1024) return `'${f.name}' exceeds the 5MB size limit.`;
+                if (!files || !files.length) {
+                    {% if action != 'Edit' %}
+                    return "Please select at least one image.";
+                    {% else %}
+                    return null;
+                    {% endif %}
                 }
-                return null;
-            }
-        },
-        gallery_images: {
-            element: document.getElementById('gallery_images_input'),
-            error: document.getElementById('gallery_images_input-error'),
-            validate: function(files) {
-                if (!files || !files.length) return null;
                 for (const f of files) {
                     if (!f.type.startsWith('image/')) return `'${f.name}' is not a valid image file.`;
                     if (f.size > 5 * 1024 * 1024) return `'${f.name}' exceeds the 5MB size limit.`;

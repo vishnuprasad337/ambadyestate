@@ -397,70 +397,6 @@
             padding: 32px;
         }
 
-        .dashboard-banner {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            border-radius: 16px;
-            padding: 32px;
-            color: var(--white);
-            margin-bottom: 32px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>');
-            opacity: 0.5;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .banner-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--white);
-        }
-
-        .banner-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 24px;
-            color: var(--white);
-        }
-
-        .banner-stats {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .stat-icon {
-            width: 24px;
-            height: 24px;
-            opacity: 0.8;
-            color: var(--white);
-        }
-
-        .stat-text {
-            font-weight: 600;
-            color: var(--white);
-        }
-
         /* Content Cards */
         .content-grid {
             display: grid;
@@ -529,17 +465,9 @@
                 padding: 20px 16px;
             }
 
-            .banner-stats {
-                gap: 16px;
-            }
-
             .content-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
-            }
-
-            .banner-title {
-                font-size: 24px;
             }
 
             .user-profile span {
@@ -550,18 +478,6 @@
         @media (max-width: 480px) {
             .dashboard-content {
                 padding: 16px 12px;
-            }
-
-            .dashboard-banner {
-                padding: 24px 20px;
-            }
-
-            .banner-title {
-                font-size: 20px;
-            }
-
-            .banner-subtitle {
-                font-size: 14px;
             }
         }
 
@@ -1142,14 +1058,6 @@
     <!-- Main Content -->
     <main class="dashboard-main">
         <div class="dashboard-content">
-            <!-- Dashboard Banner -->
-            <div class="dashboard-banner">
-                <div class="banner-content">
-                    <h1 class="banner-title">Welcome back! Admin</h1>
-                    <p class="banner-subtitle">An overview of your resort's activity in Munnar today..</p>
-                </div>
-            </div>
-
             <!-- Content Area -->
             {% block content %}
             <div class="content-grid">

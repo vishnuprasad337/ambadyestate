@@ -714,6 +714,9 @@ a {
     max-width: none;
     width: 100%;
     margin-bottom: 18px;
+    /* Match navbar font */
+    font-family: var(--font-2);
+    text-transform: uppercase;
 }
 
 .hero-copy {
@@ -2560,4 +2563,42 @@ a {
     font-weight: 400;
     line-height: 1.6;
     margin: 0;
+}
+
+/* ===== GLOBAL HEADING FONT UNIFICATION =====
+   Forces every heading across the site to use the same typeface,
+   weight, and casing (Plus Jakarta Sans / var(--font-1), 600, normal
+   case), overriding any Playfair Display, Poppins, uppercase, or
+   letter-spacing set locally inside individual section styles.
+   Font sizes are left untouched — only typeface/weight/case are unified. */
+
+h1, h2, h3, h4, h5, h6,
+.about-hero-title,
+.why-split-heading,
+.why-card-title,
+.testi-heading,
+.pkg-card-v3-title,
+.booking-modal-title,
+.feature-card h3,
+.process-card h3,
+.service-body h3,
+.project-card h3,
+.about-feature-text h5,
+.accordion-item h4,
+.blog-card-body h4 {
+    font-family: var(--font-1) !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-style: normal !important;
+}
+
+/* Hero title: uppercase override to match navbar (must come after the
+   global heading unification rule above, since that rule uses !important
+   on text-transform and would otherwise win) */
+.hero-title,
+.about-hero-title {
+    font-family: var(--font-2) !important;
+    text-transform: uppercase !important;
+    font-weight: 500 !important;
 }

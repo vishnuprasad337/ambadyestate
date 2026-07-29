@@ -1125,455 +1125,437 @@
         startCycle();
     });
 </script>
-<!-- ===== WHY CHOOSE US SECTION (subtle bg pattern, boy image left, 3-col cards right) ===== -->
+<!-- ===== WHY CHOOSE US SECTION (centered, leaf-corner, arch icon cards) ===== -->
 <div id="why-choose-us" class="section why-pattern-section">
-
-    <div class="why-pattern-bg" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');"></div>
+    <div class="why-pattern-bg" style="background-image: url('{% static 'ambadyestate-main/bg2.png' %}');"></div>
 
     <div class="r-container why-pattern-content">
 
-        <!-- Header: kicker + heading + intro text -->
+        <!-- Header: heading + intro text (centered) -->
         <div class="why-split-header scrollanimation animated scroll-fadeInUp">
-            <span class="why-split-ghost">Why Us?</span>
+            <h3 class="why-split-heading">Why Choose Us</h3>
 
-            <div class="why-split-kicker">
-                <span class="why-split-kicker-icon"><i class="fa-solid fa-leaf"></i></span>
-                <span>Why Choose Us</span>
-            </div>
-
-            <h3 class="why-split-heading">
-                <span class="accent-color-2">Why choose us</span> for your Munnar estate stay?
-            </h3>
+            <span class="why-heading-divider"><i class="fa-solid fa-leaf"></i></span>
 
             <p class="why-split-text">
-                At Ambady Estate the hospitality guests trust, we combine colonial charm, genuine
-                care, and a working plantation to deliver an exceptional stay in the heart of Kerala.
+                At Ambady Estate, every detail is designed to offer you a rare blend of
+                luxury, nature and heartfelt hospitality.
             </p>
         </div>
 
-        <div class="why-lr-grid">
+        <!-- 3-column card grid -->
+        <div class="why-lr-cards">
 
-            <!-- Left: image panel -->
-            <div class="why-lr-imgcol scrollanimation animated scroll-fadeInLeft">
-                <img class="why-thinking-char-lg" src="{% static 'ambadyestate-main/pvr9.png' %}" alt="Why Ambady Estate?">
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why.png' %}" alt="Nature's Embrace" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Nature's Embrace</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">Surrounded by lush greenery and serene landscapes for a refreshing escape.</p>
             </div>
 
-            <!-- Right: 3-per-row card grid -->
-            <div class="why-lr-cards">
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 21H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M5 21V11H19V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                            <path d="M5 11C5 7 8 4 12 4C16 4 19 7 19 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M9 21V16H15V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Cardamom Curing House</h4>
-                    <p class="why-card-text">Our age-old traditional curing house, where cardamom is dried and processed by hand.</p>
-                </div>
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6.5V11C19 15.5 16 18.5 12 20C8 18.5 5 15.5 5 11V6.5L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                            <path d="M9 11.5L11.2 13.7L15.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Certified Organic Plantation</h4>
-                    <p class="why-card-text">EU, NOP &amp; NPOP certified — cultivating natural spices for over 20 years.</p>
-                </div>
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 21C12 21 5 14.6 5 9.5C5 5.9 8.13401 3 12 3C15.866 3 19 5.9 19 9.5C19 14.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                            <circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.5"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Nestled in Nature</h4>
-                    <p class="why-card-text">Located inside a private space, secluded within the lap of nature.</p>
-                </div>
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 21V13L12 6L20 13V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                            <path d="M9 21V15H15V21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                            <path d="M12 6V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M8.5 9.5C9 8 10.3 7.2 12 7.2C13.7 7.2 15 8 15.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Eco-Friendly Architecture</h4>
-                    <p class="why-card-text">Thoughtfully built with natural materials that blend into the landscape.</p>
-                </div>
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 3V10.5C6 11.6 6.9 12.5 8 12.5V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 3V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M8 3V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M8 3V12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M17 3C17 3 15 5.2 15 8.5C15 10.5 16.2 11.7 17 12V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Locavore Cuisine</h4>
-                    <p class="why-card-text">Fresh, seasonal dishes made with ingredients grown right on the estate.</p>
-                </div>
-
-                <div class="why-card scrollanimation animated scroll-fadeInUp">
-                    <span class="why-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9C4 8 5 10 6 9C7 8 8 10 9 9C10 8 11 10 12 9C13 8 14 10 15 9C16 8 17 10 18 9C19 8 20 10 21 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3 13.5C4 12.5 5 14.5 6 13.5C7 12.5 8 14.5 9 13.5C10 12.5 11 14.5 12 13.5C13 12.5 14 14.5 15 13.5C16 12.5 17 14.5 18 13.5C19 12.5 20 14.5 21 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3 18C4 17 5 19 6 18C7 17 8 19 9 18C10 17 11 19 12 18C13 17 14 19 15 18C16 17 17 19 18 18C19 17 20 19 21 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <h4 class="why-card-title">Valley-View Pool</h4>
-                    <p class="why-card-text">A stand-out open pool with sweeping, uninterrupted views of the valley.</p>
-                </div>
-
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why1.png' %}" alt="Luxury Living" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Luxury Living</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">Thoughtfully designed villas with premium amenities for your comfort.</p>
             </div>
+
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why2.png' %}" alt="Warm Hospitality" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Warm Hospitality</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">Personalized service and heartfelt care to make you feel at home.</p>
+            </div>
+
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why3.png' %}" alt="Exquisite Dining" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Exquisite Dining</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">A delightful culinary experience with fresh, locally sourced ingredients.</p>
+            </div>
+
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why4.png' %}" alt="Wellness &amp; Relaxation" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Wellness &amp; Relaxation</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">Rejuvenate your mind, body and soul with our wellness experiences.</p>
+            </div>
+
+            <div class="why-card scrollanimation animated scroll-fadeInUp">
+                <span class="why-card-icon why-card-icon-img">
+                    <img src="{% static 'ambadyestate-main/why5.png' %}" alt="Memorable Experiences" loading="lazy">
+                </span>
+                <h4 class="why-card-title">Memorable Experiences</h4>
+                <span class="why-card-divider"></span>
+                <p class="why-card-text">Curated activities and moments that create lasting memories with your loved ones.</p>
+            </div>
+
+        </div>
+
+        <!-- Bottom tagline -->
+        <div class="why-footer-tagline scrollanimation animated scroll-fadeInUp">
+            <span class="why-footer-divider"><i class="fa-solid fa-leaf"></i></span>
+            <p>RELAX &bull; REJUVENATE &bull; RECONNECT</p>
         </div>
 
     </div>
 </div>
+
 <style>
-/* ---- Section shell + subtle background pattern ---- */
+/* ---- Section shell ---- */
 .why-pattern-section {
     position: relative;
-    padding: 40px 0 44px;
-    overflow: visible;
-    background-color: var(--bg-color, #f7f7f2);
+    padding: 50px 0 40px;   /* reduced from 80px 0 70px */
+    overflow: hidden;
+    background-color: var(--bg-color, #faf8f2);
 }
 
+/* New dedicated background layer — guarantees the image renders on all
+   devices regardless of any global mobile CSS affecting inline styles */
 .why-pattern-bg {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     background-size: cover;
-    background-position: center 30%;
+    background-position: center;
     background-repeat: no-repeat;
-    opacity: 2;   /* was 0.14 — bumped up */
     z-index: 0;
-    pointer-events: none;
 }
 
 .why-pattern-content {
     position: relative;
     z-index: 1;
-    overflow: visible;
 }
 
-/* ---- Header (text only) — left-aligned, tightened spacing ---- */
+/* ---- Header (centered) ---- */
 .why-split-header {
     position: relative;
-    max-width: 620px;
-    margin: 0 0 12px;
-    text-align: left;
-    padding-left: 0;
-    overflow: visible;
+    max-width: 640px;
+    margin: 0 auto 28px;   /* reduced from 50px */
+    text-align: center;
 }
 
-.why-split-ghost {
-    position: absolute;
-    top: -6px;
-    left: 0;
-    transform: none;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0.035);
-    white-space: nowrap;
-    z-index: 0;
-    pointer-events: none;
-    line-height: 1;
+.why-split-heading {
+    font-family: var(--font-1, sans-serif);
+    line-height: 1.2;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #1b4332;
+    margin-bottom: 14px;
 }
 
-.why-split-kicker {
+.why-heading-divider {
+    display: block;
+    color: var(--accent-color);
+    font-size: 1rem;
+    margin-bottom: 18px;
+    opacity: 0.7;
+}
+
+.why-split-text {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--text-color-2);
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* ---- 3-column card grid, centered content, with divider lines ---- */
+.why-lr-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 40px;
+    row-gap: 0;
     position: relative;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-bottom: 10px;
+    max-width: 980px;
+    margin: 0 auto;
 }
 
-.why-split-kicker-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid var(--accent-color);
+.why-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    padding: 0 20px 20px;   /* reduced from 44px bottom */
+    position: relative;
+    cursor: pointer;
+}
+
+/* Vertical dividers between columns 1-2 and 2-3 */
+.why-lr-cards .why-card:nth-child(3n+1)::after,
+.why-lr-cards .why-card:nth-child(3n+2)::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    bottom: 20px;   /* reduced from 44px */
+    width: 1px;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+/* Horizontal divider between row 1 and row 2 */
+.why-lr-cards .why-card:nth-child(-n+3) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.why-lr-cards .why-card:nth-child(n+4) {
+    padding-top: 20px;   /* reduced from 44px */
+}
+
+/* Soft blurred circular icon badge (no arch, no hard border) */
+.why-card-icon {
+    position: relative;
+    width: 200px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--accent-color);
-    font-size: 0.9rem;
+    margin-bottom: 8px;   /* reduced from 16px */
+    transition: transform 0.25s ease, color 0.3s ease;
 }
 
-.why-split-kicker span:last-child {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-color);
+.why-card-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-color) 22%, transparent) 0%, color-mix(in srgb, var(--accent-color) 10%, transparent) 55%, transparent 78%);
+    filter: blur(2px);
+    z-index: 0;
+    transition: background 0.3s ease, filter 0.3s ease;
 }
 
-.why-split-heading {
+.why-card-icon svg {
     position: relative;
     z-index: 1;
-    font-size: 2.4rem;
-    line-height: 1.2;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 10px;
-}
-
-.why-split-text {
-    position: relative;
-    z-index: 1;
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: var(--text-color-2);
-    max-width: 560px;
-    margin: 0;
-}
-
-/* ---- Left 3-col card grid / right image panel ---- */
-.why-lr-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 32px;
-    align-items: start;
-    position: relative;
-    overflow: visible;
-    margin-top: 8px;
-}
-
-.why-lr-imgcol {
-    position: relative;
-    border-radius: 20px;
-    overflow: visible;
-    height: 560px;
-    margin: 0;
-    width: 130%;
+    width: 88px;   /* doubled from 44px */
+    height: 88px;  /* doubled from 44px */
     display: block;
-    left: -40px;
-    z-index: 2;
 }
 
-.why-thinking-char-lg {
-    width: 100%;
-    height: 100%;
+.why-card-icon-img img {
+    position: relative;
+    z-index: 1;
+    width: 112px;  /* doubled from 56px */
+    height: auto;
+    display: block;
     object-fit: contain;
-    object-position: left top;
-    display: block;
-    transform: none;
-}
-
-.why-lr-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    position: relative;
-    z-index: 1;
-}
-
-/* ---- Cards: one-by-one auto color cycle, text stays readable ---- */
-.why-card {
-    position: relative;
-    background: var(--card-bg, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 14px;
-    padding: 22px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    animation: why-card-color-cycle 12s ease-in-out infinite;
-}
-
-.why-lr-cards .why-card:nth-child(1) { animation-delay: 0s;  }
-.why-lr-cards .why-card:nth-child(2) { animation-delay: 2s;  }
-.why-lr-cards .why-card:nth-child(3) { animation-delay: 4s;  }
-.why-lr-cards .why-card:nth-child(4) { animation-delay: 6s;  }
-.why-lr-cards .why-card:nth-child(5) { animation-delay: 8s;  }
-.why-lr-cards .why-card:nth-child(6) { animation-delay: 10s; }
-
-@keyframes why-card-color-cycle {
-    0%   { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
-    8%   { background: color-mix(in srgb, var(--accent-color) 78%, black 22%); border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%); }
-    16%  { background: color-mix(in srgb, var(--accent-color) 78%, black 22%); border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%); }
-    24%  { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
-    100% { background: var(--card-bg, #fff); border-color: rgba(0, 0, 0, 0.06); }
+    transform: scale(1.5); /* compensates for transparent padding baked into the PNG files */
+    /* Default state: force a dark, visible icon against the light gradient badge */
+    filter: brightness(0) opacity(0.75);
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .why-card-title {
-    animation: why-card-text-cycle 12s ease-in-out infinite;
-}
-
-.why-lr-cards .why-card:nth-child(1) .why-card-title,
-.why-lr-cards .why-card:nth-child(1) .why-card-text,
-.why-lr-cards .why-card:nth-child(1) .why-card-icon { animation-delay: 0s;  }
-.why-lr-cards .why-card:nth-child(2) .why-card-title,
-.why-lr-cards .why-card:nth-child(2) .why-card-text,
-.why-lr-cards .why-card:nth-child(2) .why-card-icon { animation-delay: 2s;  }
-.why-lr-cards .why-card:nth-child(3) .why-card-title,
-.why-lr-cards .why-card:nth-child(3) .why-card-text,
-.why-lr-cards .why-card:nth-child(3) .why-card-icon { animation-delay: 4s;  }
-.why-lr-cards .why-card:nth-child(4) .why-card-title,
-.why-lr-cards .why-card:nth-child(4) .why-card-text,
-.why-lr-cards .why-card:nth-child(4) .why-card-icon { animation-delay: 6s;  }
-.why-lr-cards .why-card:nth-child(5) .why-card-title,
-.why-lr-cards .why-card:nth-child(5) .why-card-text,
-.why-lr-cards .why-card:nth-child(5) .why-card-icon { animation-delay: 8s;  }
-.why-lr-cards .why-card:nth-child(6) .why-card-title,
-.why-lr-cards .why-card:nth-child(6) .why-card-text,
-.why-lr-cards .why-card:nth-child(6) .why-card-icon { animation-delay: 10s; }
-
-@keyframes why-card-text-cycle {
-    0%   { color: var(--text-color); }
-    8%   { color: #ffffff; }
-    16%  { color: #ffffff; }
-    24%  { color: var(--text-color); }
-    100% { color: var(--text-color); }
-}
-
-@keyframes why-card-text-muted-cycle {
-    0%   { color: var(--text-color-2); }
-    8%   { color: rgba(255, 255, 255, 0.85); }
-    16%  { color: rgba(255, 255, 255, 0.85); }
-    24%  { color: var(--text-color-2); }
-    100% { color: var(--text-color-2); }
-}
-
-@keyframes why-card-icon-cycle {
-    0%   { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
-    8%   { color: #ffffff; background: rgba(255, 255, 255, 0.16); }
-    16%  { color: #ffffff; background: rgba(255, 255, 255, 0.16); }
-    24%  { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
-    100% { color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent); }
-}
-
-.why-card-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    margin-bottom: 4px;
-    animation: why-card-icon-cycle 12s ease-in-out infinite;
-}
-
-.why-card-icon svg { width: 26px; height: 26px; display: block; }
-
-.why-card-title {
-    font-size: 1.15rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
     font-weight: 700;
+    color: var(--text-color);
     margin: 0;
-    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.why-card-divider {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    opacity: 0.6;
+    margin: 6px 0 4px;
 }
 
 .why-card-text {
-    font-size: 0.98rem;
-    line-height: 1.6;
-    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.7;
     color: var(--text-color-2);
-    animation: why-card-text-muted-cycle 12s ease-in-out infinite;
-}
-
-.why-card:hover,
-.why-card:focus-within,
-.why-card:active {
-    animation-play-state: paused;
-    transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
-    background: color-mix(in srgb, var(--accent-color) 78%, black 22%) !important;
-    border-color: color-mix(in srgb, var(--accent-color) 60%, black 15%);
+    margin: 0;
+    max-width: 260px;
+    transition: color 0.3s ease;
 }
 
 .why-card:hover .why-card-icon,
 .why-card:focus-within .why-card-icon,
-.why-card:active .why-card-icon {
-    animation-play-state: paused;
-    background: rgba(255, 255, 255, 0.16) !important;
-    color: #fff !important;
+.why-card:active .why-card-icon,
+.why-card.is-active .why-card-icon {
+    transform: translateY(-3px) scale(1.05);
+    color: #ffffff;
+}
+
+.why-card:hover .why-card-icon::before,
+.why-card:focus-within .why-card-icon::before,
+.why-card:active .why-card-icon::before,
+.why-card.is-active .why-card-icon::before {
+    background: #1b4332;
+    filter: none;
+}
+
+/* Active/hover state: flip the raster icons to white so they stay visible
+   against the solid dark-green badge background */
+.why-card:hover .why-card-icon-img img,
+.why-card:focus-within .why-card-icon-img img,
+.why-card:active .why-card-icon-img img,
+.why-card.is-active .why-card-icon-img img {
+    filter: brightness(0) invert(1);
 }
 
 .why-card:hover .why-card-title,
 .why-card:focus-within .why-card-title,
-.why-card:active .why-card-title {
-    animation-play-state: paused;
-    color: #fff !important;
+.why-card:active .why-card-title,
+.why-card.is-active .why-card-title {
+    color: #1b4332;
 }
 
 .why-card:hover .why-card-text,
 .why-card:focus-within .why-card-text,
-.why-card:active .why-card-text {
-    animation-play-state: paused;
-    color: rgba(255, 255, 255, 0.85) !important;
+.why-card:active .why-card-text,
+.why-card.is-active .why-card-text {
+    color: #1b4332;
+}
+
+/* ---- Bottom tagline ---- */
+.why-footer-tagline {
+    text-align: center;
+    margin-top: 14px;   /* reduced from 30px */
+}
+
+.why-footer-divider {
+    display: block;
+    color: var(--accent-color);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    opacity: 0.7;
+}
+
+.why-footer-tagline p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--text-color);
+    margin: 0;
 }
 
 @media (max-width: 1199px) {
-    .why-split-ghost { font-size: 2.4rem; top: -4px; }
-    .why-split-heading { font-size: 2rem; }
-    .why-lr-cards { grid-template-columns: repeat(2, 1fr); }
+    .why-split-heading { font-size: 2.6rem; }
+    .why-lr-cards { column-gap: 24px; row-gap: 20px; }
 }
 
-/* ---- Mobile/tablet: tightened spacing, smaller image box ---- */
 @media (max-width: 991px) {
-    .why-pattern-section { padding: 24px 0; }
-    .why-lr-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        margin-top: 0;
-    }
-    .why-lr-imgcol {
-        order: -1;
-        height: 260px;
-        min-height: unset;
-        left: 0;
-        width: 100%;
-        z-index: 1;
-        margin-bottom: 4px;
-    }
+    .why-pattern-section { padding: 40px 0; }
     .why-lr-cards { grid-template-columns: repeat(2, 1fr); }
-    .why-split-header { margin-bottom: 12px; }
+    .why-lr-cards .why-card:nth-child(3n+1)::after,
+    .why-lr-cards .why-card:nth-child(3n+2)::after {
+        display: none;
+    }
+    .why-lr-cards .why-card:nth-child(odd)::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: -20px;
+        bottom: 20px;
+        width: 1px;
+        background: rgba(0, 0, 0, 0.08);
+    }
+    .why-lr-cards .why-card:nth-child(-n+3) {
+        border-bottom: none;
+    }
+    .why-lr-cards .why-card:nth-child(-n+4) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .why-lr-cards .why-card:nth-child(n+5) {
+        padding-top: 20px;
+    }
 }
 
 @media (max-width: 767px) {
-    .why-pattern-section { padding: 20px 0; }
+    .why-pattern-section { padding: 32px 0; }
     .why-pattern-section .r-container {
         padding-left: 20px;
         padding-right: 20px;
         box-sizing: border-box;
     }
-    .why-split-ghost { display: none; }
-    .why-split-heading { font-size: 1.6rem; margin-bottom: 8px; }
-    .why-split-text { font-size: 0.95rem; margin-bottom: 0; }
-    .why-split-header { margin-bottom: 10px; }
-    .why-lr-grid { gap: 10px; }
-    .why-lr-cards { grid-template-columns: 1fr; gap: 14px; }
-    .why-card { padding: 18px 16px; }
-    .why-lr-imgcol { height: 220px; margin-bottom: 2px; }
-}
-
-@media (max-width: 480px) {
-    .why-pattern-section { padding: 16px 0; }
-    .why-pattern-section .r-container {
-        padding-left: 16px;
-        padding-right: 16px;
+    .why-split-heading { font-size: 2rem; }
+    .why-split-text { font-size: 0.95rem; }
+    .why-split-header { margin-bottom: 20px; }
+    .why-lr-cards { grid-template-columns: 1fr; row-gap: 0; }
+    .why-lr-cards .why-card::after { display: none; }
+    .why-lr-cards .why-card {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding-top: 16px;
+        padding-bottom: 16px;
     }
-    .why-lr-imgcol { height: 190px; }
+    .why-lr-cards .why-card:last-child { border-bottom: none; }
 }
 </style>
+
+<script>
+(function () {
+    var cards = document.querySelectorAll('#why-choose-us .why-card');
+    if (!cards.length) return;
+
+    var current = -1;
+    var intervalId = null;
+    var intervalMs = 1800; // how fast it cycles, in ms
+
+    function activateNext() {
+        cards.forEach(function (c) { c.classList.remove('is-active'); });
+        current = (current + 1) % cards.length;
+        cards[current].classList.add('is-active');
+    }
+
+    function startAutoCycle() {
+        if (intervalId) return;
+        activateNext();
+        intervalId = setInterval(activateNext, intervalMs);
+    }
+
+    function stopAutoCycle() {
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+    }
+
+    // Start cycling automatically as soon as the page loads
+    startAutoCycle();
+
+    // Briefly pause if someone hovers/taps a card, then resume auto-cycling
+    cards.forEach(function (card) {
+        card.addEventListener('mouseenter', stopAutoCycle);
+        card.addEventListener('mouseleave', startAutoCycle);
+        card.addEventListener('touchstart', function () {
+            stopAutoCycle();
+            setTimeout(startAutoCycle, 2500);
+        }, { passive: true });
+    });
+
+    // Pause when the section scrolls out of view (saves battery/CPU)
+    var section = document.getElementById('why-choose-us');
+    if ('IntersectionObserver' in window && section) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) startAutoCycle();
+                else stopAutoCycle();
+            });
+        }, { threshold: 0.2 });
+        observer.observe(section);
+    }
+})();
+</script>
 <!-- ===== PACKAGES SECTION (v3 — full-bleed image, gradient overlay, GARDEN DESIGN style) ===== -->
 <div id="packages" class="section pkg-section-v2" style="background-image: url('{% static 'ambadyestate-main/image/bg_feature.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
@@ -1604,7 +1586,7 @@
 
                     <div class="pkg-card-v3-body">
                         <h3 class="pkg-card-v3-title">{{ package.name }}</h3>
-                        <p class="pkg-card-v3-desc">{{ package.description|truncatewords:18 }}</p>
+                        <p class="pkg-card-v3-desc">{{ package.description|striptags|truncatewords:18 }}</p>
                         {% if package.price %}
                         <div class="pkg-card-v3-price">
                             &#8377;{{ package.price }} <span>/ package</span>
@@ -1783,392 +1765,557 @@
         .pkg-card-v3 { height: 340px; }
     }
 </style>
+<!-- ===== TESTIMONIALS SECTION (cream + leaf-corner, Ambady Estate theme) ===== -->
+<div class="section testi-hero-section" style="background-image: url('{% static 'ambadyestate-main/bg1.png' %}');">
 
-<!-- ===== TESTIMONIALS SECTION (image-bg, floating card layout) ===== -->
-<div class="section testi-hero-section" style="background-image: url('{% static 'ambadyestate-main/image/img.jpg' %}');">
-    <div class="testi-hero-overlay"></div>
-
+   
     <div class="r-container position-relative">
-        <div class="row row-cols-xl-2 row-cols-1 align-items-center g-5">
 
-            <!-- Left: heading + checklist -->
-            <div class="col">
-                <div class="testi-hero-kicker">
-                    <i class="fa-solid fa-leaf"></i>
-                    <span>Testimonials</span>
+        <!-- Logo top-right -->
+        
+
+        <!-- Centered heading -->
+        <div class="testi-top-header text-center">
+            <div class="testi-kicker">
+                <span class="testi-kicker-line"></span>
+                <span>Testimonial</span>
+                <span class="testi-kicker-line"></span>
+            </div>
+            <h2 class="testi-heading">Memories That Last Forever</h2>
+            <p class="testi-sub">Heartfelt stories from our guests who experienced<br>the magic of Ambady Estate.</p>
+        </div>
+
+        {% if testimonials %}
+        <div class="testi-body">
+
+            <!-- Left: active photo -->
+            <div class="testi-photo-col">
+                <div class="testi-photo-wrap">
+                    {% for testimonial in testimonials %}
+                    <div class="testi-photo {% if forloop.first %}active{% endif %}" data-photo="{{ forloop.counter0 }}">
+                        {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+                        {% endif %}
+                        {% if testimonial.caption %}
+                        <span class="testi-photo-caption">{{ testimonial.caption }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-
-                <h2 class="testi-hero-heading">
-                    <span class="accent-color-2">Our happy</span> guests say
-                </h2>
-
-                <p class="testi-hero-sub">
-                    Every stay leaves a story. Hear directly from guests across the world who
-                    trusted Ambady Estate to host their Munnar getaway.
-                </p>
-
-                <ul class="testi-hero-checklist">
-                    <li><span class="testi-check"><i class="fa-solid fa-check"></i></span>Warm, attentive estate hospitality</li>
-                    <li><span class="testi-check"><i class="fa-solid fa-check"></i></span>Guest satisfaction is our priority</li>
-                    <li><span class="testi-check"><i class="fa-solid fa-check"></i></span>Authentic, locally sourced experiences</li>
-                    <li><span class="testi-check"><i class="fa-solid fa-check"></i></span>Reliable, well-timed service</li>
-                </ul>
             </div>
 
-            <!-- Right: floating testimonial card -->
-            <div class="col">
-                <div class="testi-hero-card">
+            <!-- Right: thumb rail + card -->
+            <div class="testi-content-col">
+                <div class="testi-card-row">
 
-                    {% if testimonials %}
-                    <div class="testi-hero-slides" id="testiSlides">
-                        {% for testimonial in testimonials %}
-                        <div class="testi-hero-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
-                            <div class="testi-hero-top">
-                                <div class="testi-hero-avatar">
+                    <div class="testi-thumb-rail">
+                        <span class="testi-quote-icon top"><i class="fa-solid fa-quote-left"></i></span>
+                        <div class="testi-thumb-scroll">
+                            <div class="testi-thumb-track" id="testiThumbs">
+                                {% for testimonial in testimonials %}
+                                <button type="button" class="testi-thumb {% if forloop.first %}active{% endif %}" data-thumb="{{ forloop.counter0 }}">
                                     {% if testimonial.image %}
                                     <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
                                     {% else %}
                                     <i class="fa-solid fa-user"></i>
                                     {% endif %}
-                                </div>
-                                <div>
-                                    <h5>{{ testimonial.name }}</h5>
-                                    <span>Valued Guest</span>
-                                </div>
-                                <span class="testi-hero-quote"><i class="fa-solid fa-quote-right"></i></span>
+                                </button>
+                                {% endfor %}
                             </div>
-                            <p class="testi-hero-text">{{ testimonial.review }}</p>
                         </div>
-                        {% endfor %}
+                        <span class="testi-quote-icon bottom"><i class="fa-solid fa-quote-right"></i></span>
                     </div>
 
-                    <div class="testi-hero-dots" id="testiDots">
+                    <div class="testi-content-wrap" id="testiContent">
                         {% for testimonial in testimonials %}
-                        <span class="testi-dot {% if forloop.first %}active{% endif %}" data-dot="{{ forloop.counter0 }}"></span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <p class="testi-hero-text">No reviews yet.</p>
-                    {% endif %}
-
-                    <div class="testi-hero-bottom">
-                        <div class="testi-hero-rating">
-                            <span class="testi-hero-rating-num">4.8</span>
-                            <div class="testi-hero-rating-right">
-                                <div class="testi-hero-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                                </div>
-                                <span class="testi-hero-rating-label">200+ reviews on Google</span>
+                        <div class="testi-content {% if forloop.first %}active{% endif %}" data-content="{{ forloop.counter0 }}">
+                            <div class="testi-name-row">
+                                <h3 class="testi-name">{{ testimonial.name }}</h3>
+                                <span class="testi-big-quote"><i class="fa-solid fa-quote-right"></i></span>
                             </div>
+                            {% if testimonial.location %}
+                            <span class="testi-location"><i class="fa-solid fa-location-dot"></i> {{ testimonial.location }}</span>
+                            {% endif %}
+                            {% if testimonial.rating %}
+<div class="testi-rating">
+    {% for i in "12345" %}
+        {% if forloop.counter <= testimonial.rating %}
+        <i class="fa-solid fa-star"></i>
+        {% else %}
+        <i class="fa-regular fa-star"></i>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+                            <p class="testi-text">{{ testimonial.review }}</p>
                         </div>
-                        <button type="button" class="testi-hero-btn js-open-booking-modal">
-                            <span>Connect With Us</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
+                        {% endfor %}
+
+                        <div class="testi-divider"><i class="fa-solid fa-leaf"></i></div>
+
+                        <div class="testi-footer">
+                            <div class="testi-nav">
+                                <button type="button" class="testi-nav-btn" id="testiPrev" aria-label="Previous">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="testi-nav-btn active" id="testiNext" aria-label="Next">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            
+                        </div>
                     </div>
+
                 </div>
             </div>
 
         </div>
+        {% else %}
+        <p class="text-center">No reviews yet.</p>
+        {% endif %}
+
     </div>
 </div>
 
 <style>
-    .testi-hero-section {
-        position: relative;
-        overflow: hidden;
-        padding: 100px 0;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
+   @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@800;900&display=swap');
 
-    .testi-hero-overlay {
+.testi-heading {
+    font-family: var(--font-1, sans-serif);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #23392a;
+    line-height: 1.25;
+    margin-bottom: 16px;
+}
+    .testi-leaf {
         position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(6, 14, 6, 0.65) 0%, rgba(6, 14, 6, 0.35) 100%);
+        width: 130px;
+        height: 130px;
         z-index: 0;
+        pointer-events: none;
     }
+    .testi-leaf.tl { top: -10px; left: -10px; }
+    .testi-leaf.tr { top: -10px; right: -10px; }
+    .testi-leaf.bl { bottom: -10px; left: -10px; }
+    .testi-leaf.br { bottom: -10px; right: -10px; }
 
     .testi-hero-section .position-relative { position: relative; z-index: 1; }
 
-    .testi-hero-kicker {
+    .testi-brand {
+        position: absolute;
+        top: 0;
+        right: 20px;
         display: flex;
         align-items: center;
         gap: 10px;
+        z-index: 2;
+    }
+
+    .testi-brand i {
+        font-size: 1.6rem;
+        color: #2d4a34;
+    }
+
+    .testi-brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .testi-brand-name {
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        color: #2d4a34;
+    }
+
+    .testi-brand-tag {
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+        color: #7a8b78;
+    }
+
+    .testi-top-header {
+        max-width: 640px;
+        margin: 40px auto 56px;
+    }
+
+    .testi-kicker {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
         font-size: 0.85rem;
         font-weight: 700;
-        letter-spacing: 1.2px;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        color: #fff;
+        color: #7a8b3f;
+        margin-bottom: 14px;
+    }
+
+    .testi-kicker-line { width: 34px; height: 1px; background: #7a8b3f; display: inline-block; }
+
+    .testi-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #23392a;
+        line-height: 1.25;
         margin-bottom: 16px;
     }
 
-    .testi-hero-kicker i { color: var(--accent-color-2, #c8a86a); font-size: 1rem; }
+    .testi-sub { font-size: 1rem; color: #6b7563; line-height: 1.7; }
 
-    .testi-hero-heading {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #fff;
-        line-height: 1.15;
-        margin-bottom: 18px;
-    }
-
-    .testi-hero-sub {
-        font-size: 1rem;
-        line-height: 1.8;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 460px;
-        margin-bottom: 32px;
-    }
-
-    .testi-hero-checklist {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    .testi-hero-checklist li {
+    /* Two-column layout (plain flexbox, no framework dependency) */
+    .testi-body {
         display: flex;
         align-items: center;
-        gap: 14px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
+        gap: 48px;
+        flex-wrap: nowrap;
     }
 
-    .testi-check {
-        width: 26px;
-        height: 26px;
-        min-width: 26px;
-        border-radius: 50%;
-        background: var(--accent-color);
+    .testi-photo-col { flex: 1 1 0; min-width: 0; }
+    .testi-content-col { flex: 1 1 0; min-width: 0; }
+.testi-photo-wrap {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;      /* was 4 / 5 — shorter now */
+    width: 100%;
+    max-width: 480px;
+    max-height: 360px;        /* new — hard cap on height */
+    margin: 0 auto;
+    background-color: #e9e4d6;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 4 / 3) {
+    .testi-photo-wrap {
+        height: 0;
+        padding-bottom: 75%; /* 4:3 ratio */
+    }
+}
+
+.testi-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-color: #e9e4d6;
+}
+.testi-photo.active { opacity: 1; }
+
+.testi-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+    .testi-photo-caption {
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        background: rgba(35, 57, 42, 0.65);
         color: #fff;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.3rem;
+        padding: 8px 20px;
+        border-radius: 100px;
+        backdrop-filter: blur(3px);
+    }
+
+    /* Right card row */
+    .testi-card-row { display: flex; gap: 28px; align-items: stretch; }
+
+    .testi-thumb-rail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        position: relative;
+        padding: 6px 0;
+    }
+
+    .testi-quote-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.75rem;
+        color: #fff;
+        background: #2d4a34;
+        font-size: 0.85rem;
+        flex-shrink: 0;
     }
 
-    .testi-hero-card {
-        background: var(--accent-color-3, #e8f5e3);
-        border-radius: 28px;
-        padding: 40px 40px 32px;
-        max-width: 520px;
-        margin-left: auto;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    .testi-quote-icon.bottom {
+        background: transparent;
+        color: #2d4a34;
+        border: 1px solid #2d4a34;
     }
 
-    .testi-hero-slides { position: relative; min-height: 190px; }
+    .testi-thumb-scroll {
+        max-height: 212px; /* 3 thumbs (60px) + 2 gaps (16px) */
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .testi-thumb-scroll::-webkit-scrollbar { display: none; }
 
-    .testi-hero-slide {
+    .testi-thumb-track { display: flex; flex-direction: column; gap: 16px; position: relative; padding: 4px 0; }
+
+    .testi-thumb-track::before {
+        content: '';
         position: absolute;
-        inset: 0;
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 0;
+        border-left: 2px dashed rgba(45, 74, 52, 0.25);
+        transform: translateX(-50%);
+        z-index: 0;
     }
 
-    .testi-hero-slide.active {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
+    .testi-thumb {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        border: 2px solid transparent;
+        padding: 0;
+        overflow: hidden;
+        background: #eee;
+        cursor: pointer;
         position: relative;
-    }
-
-    .testi-hero-top {
+        z-index: 1;
         display: flex;
         align-items: center;
-        gap: 14px;
-        margin-bottom: 18px;
+        justify-content: center;
+        color: #2d4a34;
+        flex-shrink: 0;
+        transition: border-color 0.3s ease, transform 0.3s ease;
     }
 
-    .testi-hero-avatar {
-        width: 52px;
-        height: 52px;
-        min-width: 52px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.06);
+    .testi-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .testi-thumb.active { border-color: #2d4a34; transform: scale(1.05); }
+
+    .testi-content-wrap { flex: 1; min-width: 0; }
+    .testi-content { display: none; }
+    .testi-content.active { display: block; animation: testiFade 0.5s ease; }
+.testi-rating {
+    display: flex;
+    gap: 3px;
+    color: #d9a441;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+    @keyframes testiFade {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .testi-name-row {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .testi-big-quote {
+        font-size: 2.6rem;
+        line-height: 1;
+        color: #4a6b4f;
+        opacity: 0.35;
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: flex-start;
         justify-content: center;
         overflow: hidden;
-        color: var(--accent-color);
-        font-size: 1.3rem;
     }
 
-    .testi-hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-    .testi-hero-top h5 {
-        font-size: 1.1rem;
+    .testi-name {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2rem;
         font-weight: 700;
-        color: var(--text-color);
-        margin: 0 0 2px;
+        color: #2d4a34;
+        margin: 0 0 6px;
     }
 
-    .testi-hero-top span {
+    .testi-location {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         font-size: 0.85rem;
-        color: var(--text-color-2);
+        color: #8a8f80;
+        margin-bottom: 16px;
     }
 
-    .testi-hero-quote {
-        margin-left: auto;
-        color: var(--accent-color);
-        font-size: 1.8rem;
-        opacity: 0.5;
-        align-self: flex-start;
-    }
+    .testi-location i { color: #b0473f; }
 
-    .testi-hero-text {
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: var(--text-color-2);
-        margin: 0;
-    }
+    .testi-text { font-size: 1.05rem; line-height: 1.85; color: #4b5548; margin: 0; }
 
-    .testi-hero-dots {
+    .testi-divider {
         display: flex;
-        gap: 8px;
-        margin: 20px 0 24px;
+        align-items: center;
+        gap: 12px;
+        margin: 26px 0;
+        color: #7a8b3f;
+        font-size: 0.8rem;
     }
 
-    .testi-dot {
-        width: 8px;
-        height: 8px;
+    .testi-divider::before, .testi-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(45, 74, 52, 0.15);
+    }
+
+    .testi-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; max-width: 100%; }
+
+    .testi-nav { display: flex; gap: 10px; }
+
+    .testi-nav-btn {
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
-        background: rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(45, 74, 52, 0.25);
+        background: #fff;
+        color: #2d4a34;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
-        transition: background 0.3s ease, width 0.3s ease;
+        transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
-    .testi-dot.active {
-        background: var(--accent-color);
-        width: 22px;
-        border-radius: 100px;
+    .testi-nav-btn.active, .testi-nav-btn:hover {
+        background: #2d4a34;
+        border-color: #2d4a34;
+        color: #fff;
     }
 
-    .testi-hero-bottom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
-        padding-top: 24px;
-        flex-wrap: wrap;
-    }
-
-    .testi-hero-rating {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .testi-hero-rating-num {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 2.4rem;
-        font-weight: 800;
-        color: var(--text-color);
-        line-height: 1;
-    }
-
-    .testi-hero-rating-right {
+    .testi-google {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        align-items: flex-end;
+        gap: 2px;
+        max-width: 140px;
+        overflow: hidden;
+        flex-shrink: 0;
     }
-
-    .testi-hero-stars i { color: #FBBC04; font-size: 0.9rem; margin-right: 2px; }
-
-    .testi-hero-rating-label {
-        font-size: 0.8rem;
-        color: var(--text-color-2);
-        font-weight: 600;
-    }
-
-    .testi-hero-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: var(--text-color, #163017);
-        color: #fff;
-        border: none;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 700;
-        padding: 13px 22px;
-        border-radius: 100px;
-        cursor: pointer;
-        transition: background 0.3s ease, gap 0.3s ease;
-        white-space: nowrap;
-    }
-
-    .testi-hero-btn:hover { background: var(--accent-color); gap: 14px; color: #fff; }
+    .testi-google-logo { font-size: 1.1rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+    .testi-google-sub { font-size: 0.72rem; font-weight: 600; color: #8a8f80; white-space: nowrap; }
+    .testi-google-sub i { color: #FBBC04; font-size: 0.65rem; margin-left: 1px; }
 
     @media (max-width: 991px) {
-        .testi-hero-section { background-attachment: scroll; padding: 80px 0; }
-        .testi-hero-heading { font-size: 2.2rem; }
-        .testi-hero-card { margin: 0 auto; max-width: 100%; padding: 32px 26px 26px; }
+        .testi-hero-section { padding: 70px 0; }
+        .testi-heading { font-size: 2rem; }
+        .testi-body { flex-direction: column; gap: 32px; }
+        .testi-photo-col, .testi-content-col { flex: 1 1 100%; width: 100%; }
+        .testi-photo-wrap { aspect-ratio: 16 / 10; }
+        .testi-brand { position: static; justify-content: center; margin-bottom: 20px; }
     }
 
     @media (max-width: 767px) {
-        .testi-hero-section { padding: 56px 0; }
-        .testi-hero-section .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-            box-sizing: border-box;
+        .testi-card-row { flex-direction: column; }
+        .testi-thumb-rail { flex-direction: row; }
+        .testi-thumb-scroll {
+            max-height: none;
+            overflow-x: auto;
+            overflow-y: visible;
+            width: 100%;
         }
-        .testi-hero-kicker { justify-content: center; font-size: 0.78rem; }
-        .testi-hero-heading { font-size: 1.7rem; text-align: center; }
-        .testi-hero-sub { font-size: 0.9rem; text-align: center; margin-left: auto; margin-right: auto; }
-        .testi-hero-checklist { align-items: flex-start; max-width: 320px; margin: 0 auto; }
-        .testi-hero-checklist li { font-size: 0.9rem; }
-        .testi-hero-card { padding: 24px 20px 20px; border-radius: 20px; }
-        .testi-hero-heading-num, .testi-hero-rating-num { font-size: 2rem; }
-    }
-
-    @media (max-width: 575px) {
-        .testi-hero-section { padding: 44px 0; }
-        .testi-hero-section .r-container {
-            padding-left: 16px;
-            padding-right: 16px;
+        .testi-thumb-track { flex-direction: row; }
+        .testi-thumb-track::before {
+            left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 0;
+            border-left: none; border-top: 2px dashed rgba(45, 74, 52, 0.25);
+            transform: translateY(-50%);
         }
-        .testi-hero-bottom { flex-direction: column; align-items: flex-start; }
-        .testi-hero-btn { width: 100%; justify-content: center; }
-        .testi-hero-top { flex-wrap: wrap; gap: 10px; }
-        .testi-hero-quote { display: none; }
-        .testi-hero-text { font-size: 0.95rem; }
+        .testi-heading { font-size: 1.6rem; }
+        .testi-name { font-size: 1.6rem; }
+        .testi-leaf { width: 80px; height: 80px; }
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const slides = document.querySelectorAll('.testi-hero-slide');
-        const dots = document.querySelectorAll('.testi-dot');
-        if (!slides.length) return;
+        const photos = document.querySelectorAll('.testi-photo');
+        const thumbs = document.querySelectorAll('.testi-thumb');
+        const contents = document.querySelectorAll('.testi-content');
+        const prevBtn = document.getElementById('testiPrev');
+        const nextBtn = document.getElementById('testiNext');
+        if (!thumbs.length) return;
 
         let current = 0;
+        const total = thumbs.length;
 
         function activate(index) {
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
+            index = (index + total) % total;
+            photos.forEach(el => el.classList.remove('active'));
+            thumbs.forEach(el => el.classList.remove('active'));
+            contents.forEach(el => el.classList.remove('active'));
+
+            if (photos[index]) photos[index].classList.add('active');
+            thumbs[index].classList.add('active');
+            if (contents[index]) contents[index].classList.add('active');
+
+            const scrollBox = thumbs[index].closest('.testi-thumb-scroll');
+            if (scrollBox) {
+                const thumbTop = thumbs[index].offsetTop;
+                const thumbHeight = thumbs[index].offsetHeight;
+                const boxHeight = scrollBox.clientHeight;
+                scrollBox.scrollTo({
+                    top: thumbTop - (boxHeight / 2) + (thumbHeight / 2),
+                    behavior: 'smooth'
+                });
+            }
+
             current = index;
         }
 
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => activate(i));
-        });
+        thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => activate(i)));
+        nextBtn.addEventListener('click', () => activate(current + 1));
+        prevBtn.addEventListener('click', () => activate(current - 1));
 
-        setInterval(() => {
-            const next = (current + 1) % slides.length;
-            activate(next);
-        }, 4500);
+        // Only start auto-rotating once this section is actually in view
+        let autoTimer = null;
+        const testiSection = document.querySelector('.testi-hero-section');
+
+        function startAuto() {
+            if (autoTimer) return;
+            autoTimer = setInterval(() => activate(current + 1), 5000);
+        }
+
+        function stopAuto() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
+            }
+        }
+
+        if (testiSection) {
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        startAuto();
+                    } else {
+                        stopAuto();
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            observer.observe(testiSection);
+        }
     });
 </script>
 

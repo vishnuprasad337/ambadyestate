@@ -329,10 +329,18 @@ def room_add(request):
         image_form = RoomImageForm(request.POST, request.FILES)
 
         if form.is_valid() and image_form.is_valid():
-            room = form.save()
+            files = image_form.cleaned_data.get("room_images") or []
+            if not files:
+                messages.error(request, "Please upload at least one image.")
+                return render(request, "admin_pages/room_form.html",
+                              {"form": form, "image_form": image_form, "action": "Add"})
 
-            for f in image_form.cleaned_data.get("gallery_images") or []:
-                RoomImage.objects.create(room=room, image=f)
+            room = form.save(commit=False)
+            room.main_image = files[0]
+            room.save()
+
+            for order, f in enumerate(files[1:], start=1):
+                RoomImage.objects.create(room=room, image=f, order=order)
 
             messages.success(request, "Room added successfully.")
             return redirect("ambadyestate_app:room_detail", slug=room.slug)
@@ -348,25 +356,34 @@ def room_add(request):
         {"form": form, "image_form": image_form, "action": "Add"},
     )
 
-
+from django.db.models import Max
 @login_required
 def room_edit(request, slug):
     room = get_object_or_404(Room, slug=slug)
- 
+
     if request.method == "POST":
         form = RoomForm(request.POST, request.FILES, instance=room)
         image_form = RoomImageForm(request.POST, request.FILES)
- 
+
         if form.is_valid() and image_form.is_valid():
-            form.save()
- 
-            for f in image_form.cleaned_data.get("gallery_images") or []:
-                RoomImage.objects.create(room=room, image=f)
- 
+            room = form.save(commit=False)
+
+            files = image_form.cleaned_data.get("room_images") or []
+            if files:
+                # first newly-picked image replaces the cover; rest go to gallery
+                room.main_image = files[0]
+
+            room.save()
+
+            if len(files) > 1:
+                last_order = room.images.aggregate(Max("order"))["order__max"] or 0
+                for i, f in enumerate(files[1:], start=1):
+                    RoomImage.objects.create(room=room, image=f, order=last_order + i)
+
             delete_ids = request.POST.getlist("delete_images")
             if delete_ids:
                 RoomImage.objects.filter(id__in=delete_ids, room=room).delete()
- 
+
             messages.success(request, "Room updated successfully.")
             return redirect("ambadyestate_app:room_detail", slug=room.slug)
         else:
@@ -374,13 +391,12 @@ def room_edit(request, slug):
     else:
         form = RoomForm(instance=room)
         image_form = RoomImageForm()
- 
+
     return render(
         request,
         "admin_pages/room_form.html",
         {"form": form, "image_form": image_form, "action": "Edit", "room": room},
     )
-
 
 @login_required
 def room_delete(request, slug):
@@ -427,11 +443,18 @@ def activity_create(request):
         gallery_form = ActivityGalleryUploadForm(request.POST, request.FILES)
 
         if form.is_valid() and gallery_form.is_valid():
-            activity = form.save()
+            files = gallery_form.cleaned_data.get("activity_images") or []
+            if not files:
+                messages.error(request, "Please upload at least one image.")
+                return render(request, "admin_pages/activity_form.html",
+                              {"form": form, "gallery_form": gallery_form, "is_edit": False})
 
-            new_files = gallery_form.cleaned_data.get("gallery_images") or []
-            for f in new_files:
-                ActivityImage.objects.create(activity=activity, image=f)
+            activity = form.save(commit=False)
+            activity.image = files[0]
+            activity.save()
+
+            for order, f in enumerate(files[1:], start=1):
+                ActivityImage.objects.create(activity=activity, image=f, order=order)
 
             messages.success(request, "Activity created successfully.")
             return redirect("ambadyestate_app:activity_list")
@@ -446,6 +469,8 @@ def activity_create(request):
         "admin_pages/activity_form.html",
         {"form": form, "gallery_form": gallery_form, "is_edit": False},
     )
+
+
 @login_required
 def activity_update(request, slug):
     activity = get_object_or_404(Activity, slug=slug)
@@ -455,17 +480,24 @@ def activity_update(request, slug):
         gallery_form = ActivityGalleryUploadForm(request.POST, request.FILES)
 
         if form.is_valid() and gallery_form.is_valid():
-            form.save()
+            activity = form.save(commit=False)
+
+            files = gallery_form.cleaned_data.get("activity_images") or []
+            if files:
+                # first newly-picked image replaces the cover; rest go to gallery
+                activity.image = files[0]
+
+            activity.save()
+
+            if len(files) > 1:
+                last_order = activity.images.aggregate(Max("order"))["order__max"] or 0
+                for i, f in enumerate(files[1:], start=1):
+                    ActivityImage.objects.create(activity=activity, image=f, order=last_order + i)
 
             # Remove any existing gallery images the admin checked "Remove" on
             for img in activity.images.all():
                 if request.POST.get(f"delete_image_{img.id}"):
                     img.delete()
-
-            # Add any newly uploaded gallery images
-            new_files = gallery_form.cleaned_data.get("gallery_images") or []
-            for f in new_files:
-                ActivityImage.objects.create(activity=activity, image=f)
 
             messages.success(request, "Activity updated successfully.")
             return redirect("ambadyestate_app:activity_list")
@@ -479,6 +511,7 @@ def activity_update(request, slug):
         request,
         "admin_pages/activity_form.html",
         {"form": form, "gallery_form": gallery_form, "is_edit": True, "activity": activity},
+    
     )
 @login_required
 def activity_delete(request, slug):
@@ -491,9 +524,35 @@ def activity_delete(request, slug):
 
 # --------- Nearest destinamtion ---------
 
+import random
+
 from .models import NearbyDestination
 from .models import NearbyDestination, NearbyDestinationImage
 from .forms import NearbyDestinationForm, NearbyDestinationGalleryUploadForm
+
+
+def _apply_random_cover(destination, files):
+    """
+    Given a NearbyDestination instance and a list of freshly uploaded
+    files, pick one at random to become the cover (hero) image and
+    save the rest as NearbyDestinationImage gallery rows.
+
+    Any new upload replaces the existing cover image (the old cover is
+    NOT kept), since the whole point is "a random one becomes the hero".
+    """
+    if not files:
+        return
+
+    files = list(files)
+    cover = random.choice(files)
+    files.remove(cover)
+
+    destination.image = cover
+    destination.save()
+
+    for f in files:
+        NearbyDestinationImage.objects.create(destination=destination, image=f)
+
 
 @login_required
 def nearby_destination_list(request):
@@ -507,6 +566,7 @@ def nearby_destination_list(request):
         {"destinations": page_obj, "page_obj": page_obj},
     )
 
+
 @login_required
 def nearby_destination_detail(request, slug):
     destination = get_object_or_404(NearbyDestination, slug=slug)
@@ -516,6 +576,7 @@ def nearby_destination_detail(request, slug):
         {"destination": destination},
     )
 
+
 @login_required
 def nearby_destination_create(request):
     if request.method == "POST":
@@ -523,11 +584,18 @@ def nearby_destination_create(request):
         gallery_form = NearbyDestinationGalleryUploadForm(request.POST, request.FILES)
 
         if form.is_valid() and gallery_form.is_valid():
-            destination = form.save()
+            new_files = gallery_form.cleaned_data.get("destination_images") or []
 
-            new_files = gallery_form.cleaned_data.get("gallery_images") or []
-            for f in new_files:
-                NearbyDestinationImage.objects.create(destination=destination, image=f)
+            if not new_files:
+                # image is required on the model — creation needs at
+                # least one uploaded file to become the cover image.
+                messages.error(request, "Please upload at least one image.")
+                return render(request, "admin_pages/nearby_destination_form.html", {
+                    "form": form, "gallery_form": gallery_form, "action": "Add",
+                })
+
+            destination = form.save(commit=False)
+            _apply_random_cover(destination, new_files)
 
             messages.success(request, "Nearby destination created successfully.")
             return redirect("ambadyestate_app:nearby_destination_list")
@@ -540,6 +608,8 @@ def nearby_destination_create(request):
     return render(request, "admin_pages/nearby_destination_form.html", {
         "form": form, "gallery_form": gallery_form, "action": "Add",
     })
+
+
 @login_required
 def nearby_destination_update(request, slug):
     destination = get_object_or_404(NearbyDestination, slug=slug)
@@ -556,10 +626,10 @@ def nearby_destination_update(request, slug):
                 if request.POST.get(f"delete_image_{img.id}"):
                     img.delete()
 
-            # Add any newly uploaded gallery images
-            new_files = gallery_form.cleaned_data.get("gallery_images") or []
-            for f in new_files:
-                NearbyDestinationImage.objects.create(destination=destination, image=f)
+            # If new images were uploaded, one random one replaces the
+            # cover image; the rest are added to the gallery.
+            new_files = gallery_form.cleaned_data.get("destination_images") or []
+            _apply_random_cover(destination, new_files)
 
             messages.success(request, "Nearby destination updated successfully.")
             return redirect("ambadyestate_app:nearby_destination_list")
@@ -572,6 +642,8 @@ def nearby_destination_update(request, slug):
     return render(request, "admin_pages/nearby_destination_form.html", {
         "form": form, "gallery_form": gallery_form, "action": "Edit", "destination": destination,
     })
+
+
 @login_required
 def nearby_destination_delete(request, slug):
     destination = get_object_or_404(NearbyDestination, slug=slug)
@@ -630,7 +702,6 @@ def package_update(request, slug):
         package.name = request.POST.get("name")
         package.duration = request.POST.get("duration")
         package.price = request.POST.get("price") or None
-        package.status = request.POST.get("status")
         package.description = request.POST.get("description")
 
         if request.POST.get("image-clear"):
@@ -657,7 +728,6 @@ def package_delete(request, slug):
         messages.success(request, f'Package "{name}" deleted.')
         return redirect("ambadyestate_app:package_list")
     return render(request, "admin_pages/package_confirm_delete.html", {"package": package})
-
 
 # --------- Reservation ---------
 
@@ -804,7 +874,7 @@ from django.urls import reverse
 def home(request):
     packages = Package.objects.filter(status="active").order_by('-created_at')
     rooms = Room.objects.filter(status="active").order_by('-created_at')[:6]
-    activities = Activity.objects.filter(status="active").order_by('-created_at')
+    activities = Activity.objects.all().order_by('-created_at')
     testimonials = Testimonial.objects.all().order_by('-created_at')[:3]
     blogs = Blog.objects.all().order_by('-created_at')[:4]
 
@@ -823,7 +893,7 @@ def home(request):
 def about_page(request):
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
     testimonials = Testimonial.objects.all().order_by('-created_at')[:6] if hasattr(Testimonial, 'created_at') else Testimonial.objects.all()[:6]
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
 
     return render(request, 'front-end/about.html', {
         'packages': packages,   
@@ -836,7 +906,7 @@ def booking_page(request):
     packages = Package.objects.all().order_by('-created_at') if hasattr(Package, 'created_at') else Package.objects.all()
     selected_slug = request.GET.get('package')
     selected_package = Package.objects.filter(slug=selected_slug).first() if selected_slug else None
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
 
     if request.method == "POST":
         form = ReservationForm(request.POST)
@@ -863,7 +933,7 @@ def booking_page(request):
 def rooms_page(request):
     rooms = Room.objects.filter(status="active").order_by('-created_at')
     nearby_destinations = NearbyDestination.objects.filter(status="active").order_by('-created_at')
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
 
     return render(request, 'front-end/rooms.html', {
@@ -876,7 +946,7 @@ def rooms_page(request):
 
 def room_details(request, slug):
     room = get_object_or_404(Room, slug=slug)
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
     return render(request, "front-end/room-details.html", {
         "room": room,
@@ -887,7 +957,7 @@ def room_details(request, slug):
 
 def packages_page(request):
     packages = Package.objects.filter(status="active").order_by('-created_at')
-    activities = Activity.objects.filter(status="active").order_by('created_at')
+    activities = Activity.objects.all().order_by('created_at')
     return render(request, 'front-end/packages.html', {
         'packages': packages,
         'activities': activities,
@@ -897,7 +967,7 @@ def packages_page(request):
 def package_details(request, slug):
     package = get_object_or_404(Package, slug=slug, status="active")
     other_packages = Package.objects.filter(status="active").exclude(slug=slug).order_by('-created_at')
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = other_packages[:6]  
 
     return render(request, 'front-end/package-details.html', {
@@ -909,7 +979,7 @@ def package_details(request, slug):
 
 
 def activities_page(request):
-    activities = Activity.objects.filter(status="active").order_by("-created_at")
+    activities = Activity.objects.all().order_by("-created_at")
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
     context = {
         "activities": activities,
@@ -919,11 +989,9 @@ def activities_page(request):
 
 
 def activity_details(request, slug):
-    activity = get_object_or_404(Activity, slug=slug, status="active")
+    activity = get_object_or_404(Activity, slug=slug)
 
-    other_activities = Activity.objects.filter(
-        status="active"
-    ).exclude(pk=activity.pk).order_by("-created_at")
+    other_activities = Activity.objects.all().exclude(pk=activity.pk).order_by("-created_at")
 
     gallery_images = activity.images.all().order_by("order", "uploaded_at")
 
@@ -943,7 +1011,7 @@ def activity_details(request, slug):
 
 def blog_page(request):
     blogs = Blog.objects.all().order_by('-created_at')
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
     return render(request, 'front-end/blog.html', {
         'blogs': blogs,
@@ -955,7 +1023,7 @@ def blog_page(request):
 def blog_details(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     other_blogs = Blog.objects.exclude(slug=slug).order_by('-created_at')[:3]
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6] 
 
     return render(request, 'front-end/blog-details.html', {
@@ -969,7 +1037,7 @@ from django.http import JsonResponse
 def contact_page(request):
     """Public-facing Contact Us page — info cards, enquiry form, and map."""
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6] 
 
     if request.method == "POST":
@@ -1028,7 +1096,7 @@ def nearby_destination_details(request, slug):
         .exclude(pk=destination.pk)
         .order_by("-created_at")[:3]
     )
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
 
     context = {
@@ -1044,7 +1112,7 @@ def nearby_destination_details(request, slug):
 def gallery(request):
     categories = Category.objects.all().order_by("name")
     images = GalleryImage.objects.select_related("category").order_by("-uploaded_at")
-    activities = Activity.objects.filter(status="active").order_by('-created_at')[:6]
+    activities = Activity.objects.all().order_by('-created_at')[:6]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6]  
 
     context = {

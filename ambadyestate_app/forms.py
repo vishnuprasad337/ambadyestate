@@ -38,15 +38,16 @@ class RoomForm(forms.ModelForm):
         fields = [
             "status",
             "room_category",
-            "bedroom_beds",
-            "living_room_beds",
             "description",
             "price_per_night",
-            "main_image",
+            # main_image is now set programmatically from the first
+            # uploaded room_images file — not a form field anymore.
         ]
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
         }
+
+
 # --------- Multiple Gallery Images for a Room ---------
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -76,19 +77,19 @@ class MultipleFileField(forms.FileField):
             result = single_file_clean(data, initial)
         return result
 
-class RoomImageForm(forms.Form):
-    gallery_images = MultipleFileField(required=False)
 
-    def clean_gallery_images(self):
-        files = self.cleaned_data.get("gallery_images")
+class RoomImageForm(forms.Form):
+    room_images = MultipleFileField(required=False)
+
+    def clean_room_images(self):
+        files = self.cleaned_data.get("room_images")
         if files:
             for f in files:
                 if not f.content_type.startswith("image/"):
                     raise forms.ValidationError(f"'{f.name}' is not a valid image file.")
-                if f.size > 5 * 1024 * 1024:  # 5MB limit
+                if f.size > 5 * 1024 * 1024:
                     raise forms.ValidationError(f"'{f.name}' exceeds the 5MB size limit.")
         return files
-
 
 
 from django.forms import inlineformset_factory
@@ -101,32 +102,22 @@ from .models import Activity, ActivityImage
 class ActivityForm(forms.ModelForm):
     class Meta:
         model = Activity
-        fields = [
-            "name",
-            "description",
-            "image",
-            "status",
-            "duration",
-            "price",
-            "location",
-        ]
+        fields = ["name", "description"]
+        # image is no longer a form field — it's set programmatically
+        # from the first file in activity_images (see views.py)
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4, "class": "form-control"}),
             "name": forms.TextInput(attrs={"class": "form-control"}),
-            "duration": forms.TextInput(attrs={"class": "form-control"}),
-            "location": forms.TextInput(attrs={"class": "form-control"}),
-            "price": forms.NumberInput(attrs={"class": "form-control"}),
-            "status": forms.Select(attrs={"class": "form-select"}),
-            "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
 
 
 class ActivityGalleryUploadForm(forms.Form):
-    """One field, multiple files — used to add new gallery images in one go."""
-    gallery_images = MultipleFileField(required=False)
+    """Single multi-file field. The FIRST file becomes Activity.image
+    (the cover image); any additional files become ActivityImage gallery rows."""
+    activity_images = MultipleFileField(required=False)
 
-    def clean_gallery_images(self):
-        files = self.cleaned_data.get("gallery_images")
+    def clean_activity_images(self):
+        files = self.cleaned_data.get("activity_images")
         if files:
             for f in files:
                 if not f.content_type.startswith("image/"):
@@ -134,7 +125,6 @@ class ActivityGalleryUploadForm(forms.Form):
                 if f.size > 5 * 1024 * 1024:  # 5MB limit
                     raise forms.ValidationError(f"'{f.name}' exceeds the 5MB size limit.")
         return files
-
 from .models import NearbyDestination, NearbyDestinationImage
 
 
@@ -144,27 +134,27 @@ class NearbyDestinationForm(forms.ModelForm):
         fields = [
             "name",
             "description",
-            "image",
-            "status",
             "distance",
-            "location",
+            # image is no longer a form field — one file from
+            # destination_images is picked at random in the view and
+            # becomes NearbyDestination.image (the cover/hero image).
+            # status and location are intentionally excluded from the form.
         ]
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4, "class": "form-control"}),
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "distance": forms.TextInput(attrs={"class": "form-control"}),
-            "location": forms.TextInput(attrs={"class": "form-control"}),
-            "status": forms.Select(attrs={"class": "form-select"}),
-            "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
 
 
 class NearbyDestinationGalleryUploadForm(forms.Form):
-    """One field, multiple files — used to add new gallery images in one go."""
-    gallery_images = MultipleFileField(required=False)
+    """Single multi-file field. One randomly chosen file becomes
+    NearbyDestination.image (the cover/hero image); the rest become
+    NearbyDestinationImage gallery rows."""
+    destination_images = MultipleFileField(required=False)
 
-    def clean_gallery_images(self):
-        files = self.cleaned_data.get("gallery_images")
+    def clean_destination_images(self):
+        files = self.cleaned_data.get("destination_images")
         if files:
             for f in files:
                 if not f.content_type.startswith("image/"):
@@ -185,7 +175,6 @@ class PackageForm(forms.ModelForm):
             "name",
             "description",
             "image",
-            "status",
             "duration",
             "price",
             "rooms",
@@ -195,7 +184,6 @@ class PackageForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "duration": forms.TextInput(attrs={"class": "form-control", "placeholder": "e.g. 3 Days / 2 Nights"}),
             "price": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
-            "status": forms.Select(attrs={"class": "form-select"}),
             "rooms": forms.SelectMultiple(attrs={"class": "form-select", "size": 6}),
             "activities": forms.SelectMultiple(attrs={"class": "form-select", "size": 6}),
             "image": forms.ClearableFileInput(attrs={"class": "form-control"}),

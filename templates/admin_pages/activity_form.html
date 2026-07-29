@@ -192,6 +192,86 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
     background: #f9fafb;
 }
 
+/* New-upload preview grid + cover badge, matching the Room form pattern */
+.gallery-image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.gallery-image-preview .gallery-thumb {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f9fafb;
+    flex-shrink: 0;
+}
+
+.gallery-image-preview .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-image-preview .gallery-thumb .file-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 2px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-image-preview .gallery-thumb-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.gallery-image-preview .gallery-thumb-remove:hover {
+    background: #dc3545;
+}
+
+.gallery-image-preview .gallery-thumb.is-cover {
+    border: 2px solid #4f46e5;
+}
+
+.gallery-image-preview .gallery-thumb.is-cover .cover-badge {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: #4f46e5;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
 @media (max-width: 1200px) {
     .form-wrapper { max-width: 100%; }
 }
@@ -262,46 +342,6 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
                                     {{ form.name.errors }}
                                 </div>
 
-                                <!-- Location -->
-                                <div class="col-12 mb-4">
-                                    <label for="{{ form.location.id_for_label }}" class="form-label">Location</label>
-                                    {{ form.location }}
-                                    {{ form.location.errors }}
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col-12 col-md-6 mb-4">
-                                    <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
-                                    {{ form.status }}
-                                    {{ form.status.errors }}
-                                </div>
-
-                                <!-- Duration -->
-                                <div class="col-12 col-md-6 mb-4">
-                                    <label for="{{ form.duration.id_for_label }}" class="form-label">Duration</label>
-                                    {{ form.duration }}
-                                    {{ form.duration.errors }}
-                                </div>
-
-                                <!-- Price -->
-                                <div class="col-12 mb-4">
-                                    <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
-                                    {{ form.price }}
-                                    {{ form.price.errors }}
-                                </div>
-
-                                <!-- Cover Image (single, main thumbnail for the activity) -->
-                                <div class="col-12 mb-4">
-                                    <label for="{{ form.image.id_for_label }}" class="form-label">Cover Image</label>
-                                    {% if is_edit and activity.image %}
-                                        <div>
-                                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="current-image-preview" style="width:90px;">
-                                        </div>
-                                    {% endif %}
-                                    {{ form.image }}
-                                    {{ form.image.errors }}
-                                </div>
-
                                 <!-- Description -->
                                 <div class="col-12 mb-4">
                                     <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
@@ -310,47 +350,64 @@ img, input, textarea, select, .form-control, .form-select, .form-text {
                                 </div>
                             </div>
 
-                            <!-- Gallery Images: one multi-file input + existing image list -->
+                            <!-- Activity Images: one multi-file input. The FIRST file becomes the
+                                 cover image (Activity.image); any additional files become
+                                 ActivityImage gallery rows. -->
                             <div class="gallery-section mt-2 mb-4">
-                                <h5 class="gallery-section-title">Gallery Images</h5>
+                                <h5 class="gallery-section-title">Activity Images</h5>
 
                                 {% if gallery_form.non_field_errors %}
                                     <div class="alert alert-danger">{{ gallery_form.non_field_errors }}</div>
                                 {% endif %}
 
+                                {% if is_edit and activity.image %}
+                                <div class="mb-3">
+                                    <label class="form-label">Current Cover Image</label>
+                                    <div>
+                                        <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="current-image-preview" style="width:160px;">
+                                    </div>
+                                </div>
+                                {% endif %}
+
                                 {% if is_edit and activity.images.all %}
-                                <div class="row mb-3">
-                                    {% for gallery_image in activity.images.all %}
-                                    <div class="col-6 col-md-3 mb-3">
-                                        <div class="gallery-existing-item">
-                                            <img src="{{ gallery_image.image.url }}" alt="Gallery image" class="current-image-preview">
-                                            <div class="gallery-delete-check">
-                                                <input type="checkbox" name="delete_image_{{ gallery_image.id }}" id="delete_image_{{ gallery_image.id }}">
-                                                <label for="delete_image_{{ gallery_image.id }}">Remove</label>
+                                <div class="mb-3">
+                                    <label class="form-label">Current Gallery Images</label>
+                                    <div class="row">
+                                        {% for gallery_image in activity.images.all %}
+                                        <div class="col-6 col-md-3 mb-3">
+                                            <div class="gallery-existing-item">
+                                                <img src="{{ gallery_image.image.url }}" alt="Gallery image" class="current-image-preview">
+                                                <div class="gallery-delete-check">
+                                                    <input type="checkbox" name="delete_image_{{ gallery_image.id }}" id="delete_image_{{ gallery_image.id }}">
+                                                    <label for="delete_image_{{ gallery_image.id }}">Remove</label>
+                                                </div>
                                             </div>
                                         </div>
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
                                 </div>
                                 {% endif %}
 
                                 <div class="gallery-upload-box">
-    <label for="{{ gallery_form.gallery_images.id_for_label }}" class="form-label">
-        Add Gallery Images
-    </label>
-    <input
-        type="file"
-        name="gallery_images"
-        id="{{ gallery_form.gallery_images.id_for_label }}"
-        class="form-control"
-        accept="image/*"
-        multiple>
-    <small class="text-muted d-block mt-1">
-        Hold <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac) while clicking, or drag-select,
-        to choose more than one image at once.
-    </small>
-    {{ gallery_form.gallery_images.errors }}
-</div>
+                                    <label for="{{ gallery_form.activity_images.id_for_label }}" class="form-label">
+                                        {% if is_edit %}Add / Replace Images{% else %}Upload Images{% endif %}
+                                    </label>
+                                    <input
+                                        type="file"
+                                        name="activity_images"
+                                        id="{{ gallery_form.activity_images.id_for_label }}"
+                                        class="form-control"
+                                        accept="image/*"
+                                        multiple>
+                                    <small class="text-muted d-block mt-1">
+                                        Select one or more images. <strong>The first image becomes the cover image</strong>{% if is_edit %} (leave blank to keep the current cover){% endif %};
+                                        any additional images are added to the gallery. Hold <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac)
+                                        while clicking, or drag-select, to choose more than one image at once.
+                                    </small>
+                                    {{ gallery_form.activity_images.errors }}
+                                    <div class="gallery-image-preview mt-3" id="imagePreview"></div>
+                                </div>
+                            </div>
 
                             <!-- Submit Button -->
                             <div class="dashboard__form__button">
@@ -408,5 +465,74 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error(error));
     }
 });
+</script>
+
+<script>
+// Activity image handling: accumulate files across multiple picker opens (native
+// <input multiple> replaces the selection every time the dialog is reopened, so we
+// manage our own file list and keep the input's FileList in sync via DataTransfer).
+// The FIRST file in the accumulated list is highlighted as the cover image, matching
+// what the server will use as Activity.image.
+(function () {
+    const input = document.getElementById('{{ gallery_form.activity_images.id_for_label }}');
+    const preview = document.getElementById('imagePreview');
+
+    if (!input || !preview) return;
+
+    let selectedFiles = [];
+
+    function syncInputFiles() {
+        const dt = new DataTransfer();
+        selectedFiles.forEach(file => dt.items.add(file));
+        input.files = dt.files;
+    }
+
+    function renderPreview() {
+        preview.innerHTML = '';
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                const thumb = document.createElement('div');
+                thumb.className = 'gallery-thumb' + (index === 0 ? ' is-cover' : '');
+                thumb.innerHTML = `
+                    ${index === 0 ? '<span class="cover-badge">Cover</span>' : ''}
+                    <img src="${ev.target.result}" alt="${file.name}">
+                    <span class="file-name">${file.name}</span>
+                    <span class="gallery-thumb-remove" data-index="${index}" title="Remove">&times;</span>
+                `;
+                preview.appendChild(thumb);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function syncAndRender() {
+        syncInputFiles();
+        renderPreview();
+    }
+
+    input.addEventListener('change', function () {
+        const newFiles = Array.from(input.files || []);
+
+        newFiles.forEach(file => {
+            const isDuplicate = selectedFiles.some(
+                f => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified
+            );
+            if (!isDuplicate) {
+                selectedFiles.push(file);
+            }
+        });
+
+        syncAndRender();
+    });
+
+    preview.addEventListener('click', function (e) {
+        if (e.target.classList.contains('gallery-thumb-remove')) {
+            const index = parseInt(e.target.dataset.index, 10);
+            selectedFiles.splice(index, 1);
+            syncAndRender();
+        }
+    });
+})();
 </script>
 {% endblock %}

@@ -373,44 +373,6 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
 }
 </style>
 
-<!-- Status Toggle Styles -->
-<style>
-.status-switch-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 0.6rem;
-}
-
-.status-toggle-input {
-    width: 3rem !important;
-    height: 1.5rem !important;
-    cursor: pointer;
-    margin: 0 !important;
-    flex-shrink: 0;
-}
-
-.status-toggle-input:focus {
-    box-shadow: none !important;
-    outline: none;
-}
-
-.status-toggle-input:checked {
-    background-color: #16a34a;
-    border-color: #16a34a;
-}
-
-.status-switch-label {
-    cursor: pointer;
-    margin-bottom: 0;
-}
-
-.status-switch-text {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-</style>
-
 {% endblock %}
 {% block content %}
 <div class="dashboard sp_bottom_100">
@@ -452,60 +414,34 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                 </div>
 
                                 <div class="col-md-6 mb-4">
-                                    <label class="form-label d-block">Status</label>
-                                    <input type="hidden" name="status" id="status" class="status-hidden-input" value="{{ form.status.value|default:'active' }}">
-                                    <div class="form-check form-switch status-switch-wrapper">
-                                        <input
-                                            class="form-check-input status-toggle-input"
-                                            type="checkbox"
-                                            role="switch"
-                                            id="statusSwitch"
-                                            {% if form.status.value == "active" or not form.status.value %}checked{% endif %}
-                                        >
-                                        <label class="form-check-label status-switch-label" for="statusSwitch">
-                                            <span class="status-switch-text">{% if form.status.value == "inactive" %}Inactive{% else %}Active{% endif %}</span>
-                                        </label>
-                                    </div>
-                                    {% if form.status.errors %}<div class="text-danger small mt-1">{{ form.status.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="status-error"></span>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
                                     <label for="distance" class="form-label">Distance</label>
                                     <input type="text" name="distance" id="distance" class="form-control modern-input" placeholder="e.g. 12 km" value="{{ form.distance.value|default:'' }}">
                                     {% if form.distance.errors %}<div class="text-danger small mt-1">{{ form.distance.errors|first }}</div>{% endif %}
                                     <span class="text-danger field-error" id="distance-error"></span>
                                 </div>
 
-                                <div class="col-md-6 mb-4">
-                                    <label for="location" class="form-label">Location</label>
-                                    <input type="text" name="location" id="location" class="form-control modern-input" placeholder="e.g. Idukki, Kerala" value="{{ form.location.value|default:'' }}">
-                                    {% if form.location.errors %}<div class="text-danger small mt-1">{{ form.location.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="location-error"></span>
-                                </div>
+                                <!--
+                                    "status" and "location" removed: NearbyDestinationForm
+                                    intentionally excludes them, so posting them had no effect.
+                                -->
 
                                 <!-- Media -->
                                 <div class="col-12 mb-3 mt-2">
                                     <h6 class="text-muted text-uppercase fw-bold small border-bottom pb-2">Media</h6>
                                 </div>
 
+                                {% if action == 'Edit' and destination.image %}
                                 <div class="col-12 mb-4">
-                                    <label for="image_input" class="form-label">Image{% if action != 'Edit' %} <span class="text-danger">*</span>{% endif %}</label>
-                                    {% if action == 'Edit' and destination.image %}
+                                    <label class="form-label">Current Cover Image</label>
                                     <div class="destination-image-preview mb-2">
-                                        <img src="{{ destination.image.url }}" alt="Current image" id="currentImagePreview">
+                                        <img src="{{ destination.image.url }}" alt="Current cover image">
                                     </div>
-                                    <div class="form-text mb-2">Current image. Choose a new file below to replace it, or leave blank to keep it.</div>
-                                    {% else %}
-                                    <div class="destination-image-preview mb-2" id="currentImagePreviewWrap" style="display:none;">
-                                        <img src="" alt="Image preview" id="currentImagePreview">
+                                    <div class="form-text">
+                                        This is auto-selected at random from the gallery images below.
+                                        Uploading new gallery images will replace it with a new random pick.
                                     </div>
-                                    {% endif %}
-                                    <input type="file" name="image" id="image_input" class="form-control modern-input" accept="image/*">
-                                    {% if form.image.errors %}<div class="text-danger small mt-1">{{ form.image.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="image_input-error"></span>
-                                    <div class="form-text">Recommended size: 1200x600 pixels. Max size: 5MB.</div>
                                 </div>
+                                {% endif %}
 
                                 <!-- Gallery Images -->
                                 <div class="col-12 mb-3 mt-2">
@@ -538,23 +474,25 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
 
                                 <div class="col-12 mb-4">
                                     <div class="gallery-upload-box">
-                                        <label for="{{ gallery_form.gallery_images.id_for_label }}" class="form-label">
-                                            Add Gallery Images
+                                        <label for="{{ gallery_form.destination_images.id_for_label }}" class="form-label">
+                                            Add Images{% if action != 'Edit' %} <span class="text-danger">*</span>{% endif %}
                                         </label>
                                         <input
                                             type="file"
-                                            name="gallery_images"
-                                            id="{{ gallery_form.gallery_images.id_for_label }}"
+                                            name="destination_images"
+                                            id="{{ gallery_form.destination_images.id_for_label }}"
                                             class="form-control modern-input"
                                             accept="image/*"
                                             multiple>
-                                        {% if gallery_form.gallery_images.errors %}
-                                        <div class="text-danger small mt-1">{{ gallery_form.gallery_images.errors|first }}</div>
+                                        {% if gallery_form.destination_images.errors %}
+                                        <div class="text-danger small mt-1">{{ gallery_form.destination_images.errors|first }}</div>
                                         {% endif %}
+                                        <span class="text-danger field-error" id="destination_images-error"></span>
                                         <div class="form-text mb-2">
                                             Hold <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac) while clicking,
                                             or drag-select, to choose more than one image at once.
-                                            Recommended size: 1200x600 pixels. Max size: 5MB each.
+                                            One of these will be picked at random as the cover image; the rest
+                                            become gallery images. Recommended size: 1200x600 pixels. Max size: 5MB each.
                                         </div>
 
                                         <div class="gallery-image-preview mt-2" id="newGalleryPreview"></div>
@@ -621,37 +559,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- Single Image Preview -->
-<script>
-(function () {
-    const input = document.getElementById('image_input');
-    const previewWrap = document.getElementById('currentImagePreviewWrap');
-    const previewImg = document.getElementById('currentImagePreview');
-
-    if (!input) return;
-
-    input.addEventListener('change', function () {
-        const file = input.files && input.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            if (previewImg) {
-                previewImg.src = e.target.result;
-            }
-            if (previewWrap) {
-                previewWrap.style.display = 'flex';
-            }
-        };
-        reader.readAsDataURL(file);
-    });
-})();
-</script>
-
 <!-- Multi-file Gallery Preview + per-file removal (keeps the input's FileList in sync) -->
 <script>
 (function () {
-    const input = document.getElementById('{{ gallery_form.gallery_images.id_for_label }}');
+    const input = document.getElementById('{{ gallery_form.destination_images.id_for_label }}');
     const previewContainer = document.getElementById('newGalleryPreview');
 
     if (!input || !previewContainer) return;
@@ -705,30 +616,10 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<!-- Status Toggle Logic -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('statusSwitch');
-    const hiddenInput = document.getElementById('status');
-    const textSpan = document.querySelector('.status-switch-text');
-
-    if (toggle && hiddenInput && textSpan) {
-        toggle.addEventListener('change', function () {
-            if (this.checked) {
-                hiddenInput.value = 'active';
-                textSpan.textContent = 'Active';
-            } else {
-                hiddenInput.value = 'inactive';
-                textSpan.textContent = 'Inactive';
-            }
-        });
-    }
-});
-</script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
+    const isEdit = {% if action == 'Edit' %}true{% else %}false{% endif %};
 
     const fields = {
         name: {
@@ -739,11 +630,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 return null;
             }
         },
-        image: {
-            element: document.getElementById('image_input'),
-            error: document.getElementById('image_input-error'),
+        destination_images: {
+            element: document.getElementById('{{ gallery_form.destination_images.id_for_label }}'),
+            error: document.getElementById('destination_images-error'),
             validate: function(files) {
-                if (!files || !files.length) return null;
+                if (!files || !files.length) {
+                    // required only on create, since the cover image
+                    // is picked from this field
+                    return isEdit ? null : "Please upload at least one image.";
+                }
                 for (const f of files) {
                     if (!f.type.startsWith('image/')) return `'${f.name}' is not a valid image file.`;
                     if (f.size > 5 * 1024 * 1024) return `'${f.name}' exceeds the 5MB size limit.`;

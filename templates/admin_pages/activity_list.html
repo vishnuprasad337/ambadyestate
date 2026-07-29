@@ -23,10 +23,9 @@
             <thead class="table-light">
                 <tr>
                     <th scope="col" width="60">Sl No</th>
+                    <th scope="col" width="90">Image</th>
                     <th scope="col">Activity</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
                     <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -34,22 +33,21 @@
                 {% for activity in activities %}
                 <tr class="activity-row" data-id="{{ activity.id }}">
                     <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if activity.image %}
+                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="activity-thumb">
+                        {% else %}
+                            <span class="text-muted">No image</span>
+                        {% endif %}
+                    </td>
                     <td>{{ activity.name }}</td>
                     <td>
-                        {% if activity.duration %}
-                            {{ activity.duration }}
+                        {% if activity.description %}
+                            <span class="activity-desc-preview">{{ activity.description|striptags|truncatewords:15 }}</span>
                         {% else %}
-                            <span class="text-muted">Not set</span>
+                            <span class="text-muted">No description</span>
                         {% endif %}
                     </td>
-                    <td>
-                        {% if activity.status == "active" %}
-                            <span class="badge bg-success">Active</span>
-                        {% else %}
-                            <span class="badge bg-secondary">Inactive</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ activity.price|default:"-" }}</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a href="{% url 'ambadyestate_app:activity_detail' activity.slug %}" class="btn btn-sm btn-primary me-1">
@@ -66,7 +64,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">No activities yet.</td>
+                    <td colspan="5" class="text-center py-4 text-muted">No activities yet.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -166,8 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function resetHighlights(rows) {
         rows.forEach(row => {
             const cells = [
-                row.querySelector("td:nth-child(2)"), // Activity name
-                row.querySelector("td:nth-child(3)")  // Duration
+                row.querySelector("td:nth-child(3)"), // Activity name
+                row.querySelector("td:nth-child(4)")  // Description
             ];
             cells.forEach(cell => {
                 if (!cell) return;
@@ -186,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 noResultRow.id = "noResultRow";
                 tableBody.appendChild(noResultRow);
             }
-            const colCount = rows[0]?.querySelectorAll("td").length || 6;
+            const colCount = rows[0]?.querySelectorAll("td").length || 5;
             noResultRow.innerHTML = `
                 <td colspan="${colCount}" class="text-center py-4 text-muted">
                     No results found for "<strong>${escapeHtml(searchText)}</strong>"
@@ -205,23 +203,23 @@ document.addEventListener("DOMContentLoaded", function () {
         let visibleCount = 0;
 
         rows.forEach(row => {
-            const nameCell = row.querySelector("td:nth-child(2)");
-            const durationCell = row.querySelector("td:nth-child(3)");
+            const nameCell = row.querySelector("td:nth-child(3)");
+            const descCell = row.querySelector("td:nth-child(4)");
 
             const nameText = (nameCell?.textContent || "").toLowerCase();
-            const durationText = (durationCell?.textContent || "").toLowerCase();
+            const descText = (descCell?.textContent || "").toLowerCase();
 
             const match =
                 searchText === "" ||
                 nameText.includes(searchText) ||
-                durationText.includes(searchText);
+                descText.includes(searchText);
 
             if (match) {
                 row.style.display = "";
                 visibleCount++;
                 if (searchText !== "") {
                     if (nameText.includes(searchText)) highlightMatch(nameCell, searchText);
-                    if (durationText.includes(searchText)) highlightMatch(durationCell, searchText);
+                    if (descText.includes(searchText)) highlightMatch(descCell, searchText);
                 }
             } else {
                 row.style.display = "none";
@@ -274,6 +272,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .activity-row:hover {
     background-color: #f8f9fa;
+}
+
+.activity-thumb {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
+.activity-desc-preview {
+    display: inline-block;
+    max-width: 320px;
+    color: #4b5563;
 }
 
 @media (max-width: 768px) {
