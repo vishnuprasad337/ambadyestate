@@ -26,7 +26,7 @@
 </section>
 
 <!-- ===== ARTICLE BODY: heading, then large image, then description ===== -->
-<div class="section blog-body-section">
+<div class="section blog-body-section bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/pack1.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div class="r-container">
         <div class="row justify-content-center">
             <div class="col col-xl-9">
@@ -62,7 +62,7 @@
 
 <!-- ===== RELATED POSTS ===== -->
 {% if other_blogs %}
-<div class="section blog-related-section">
+<div class="section blog-related-section bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div class="r-container">
         <div class="blog-related-heading">
             <span class="blog-eyebrow">More from the Estate</span>
@@ -159,7 +159,28 @@
     }
 
     /* Article body */
-    .blog-body-section { padding: 70px 0 90px; background: var(--estate-cream); }
+    .blog-body-section {
+        position: relative !important;
+        padding: 70px 0 90px;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .blog-body-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(250, 248, 242, 0.5);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .blog-body-section > .r-container,
+    .blog-body-section > .blog-content-img-wrap {
+        position: relative;
+        z-index: 1;
+    }
 
     /* Image with side spacing — matches the hero section's inset treatment */
     .blog-content-img-wrap {
@@ -252,7 +273,29 @@
     .blog-back-link:hover { gap: 14px; color: var(--estate-gold); }
 
     /* Related */
-    .blog-related-section { padding: 90px 0; background: #fff; border-top: 1px solid var(--estate-line); }
+    .blog-related-section {
+        position: relative !important;
+        padding: 90px 0;
+        border-top: 1px solid var(--estate-line);
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .blog-related-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.45);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .blog-related-section > .r-container {
+        position: relative;
+        z-index: 1;
+    }
+
     .blog-related-heading { max-width: 640px; }
 
     .blog-card { border-radius: 16px; overflow: hidden; cursor: pointer; }

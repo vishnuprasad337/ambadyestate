@@ -176,11 +176,11 @@
                             {% endif %}
                         </div>
 
-                        <div>
-                            <a href="{% url 'ambadyestate_app:contact_page' %}" class="btn btn-accent px-5 py-3">
-                                Contact Us
-                            </a>
-                        </div>
+                       <div>
+    <a href="javascript:void(0)" class="btn btn-accent px-5 py-3 js-open-booking-modal">
+        Contact Us
+    </a>
+</div>
                     </div>
                 </div>
             </div>
@@ -698,27 +698,30 @@
 </style>
 {% endif %}
 
-<!-- ===== RELATED ACTIVITIES ===== -->
-{% if related_activities %}
+<!-- ===== RELATED PACKAGES ===== -->
+{% if packages %}
 <div id="related-activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/act.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
         <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
             style="max-width: 700px;">
-            <h6 class="accent-color-2">More to Explore</h6>
-            <h3>Other Activities You Might Like</h3>
+            <h6 class="accent-color-2">Plan Your Stay</h6>
+            <h3>Packages You Might Like</h3>
         </div>
 
         <div class="row row-cols-xl-3 row-cols-1 g-4">
-            {% for related in related_activities %}
+            {% for package in packages %}
             <div class="col">
-                <a href="{% url 'ambadyestate_app:activity_details' related.slug %}" class="activity-card">
+                <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="activity-card">
                     <div class="activity-card-img-wrap">
-                        <img src="{{ related.image.url }}" alt="{{ related.name }}" loading="lazy">
+                        {% if package.image %}
+                        <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
+                        {% endif %}
                         <div class="activity-overlay"></div>
                         <div class="activity-card-body">
-                            <h4>{{ related.name }}</h4>
+                            <h4>{{ package.name }}</h4>
+                            
                             <span class="activity-read-more">
-                                Read More
+                                View Package
                                 <i class="fa-solid fa-arrow-right"></i>
                             </span>
                         </div>
@@ -729,7 +732,6 @@
         </div>
     </div>
 </div>
-
 <style>
     #related-activities {
         padding: 80px 0;
@@ -939,5 +941,474 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+<!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
+<div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
+    <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+        <button type="button" class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
+        <!-- Header -->
+        <div class="booking-modal-header">
+            <span class="booking-modal-eyebrow">Ambady Estate</span>
+            <h3 id="bookingModalTitle" class="booking-modal-title">Book Your Stay</h3>
+            <p class="booking-modal-sub">Share a few details and we'll confirm availability on WhatsApp instantly.</p>
+        </div>
+
+        <form class="booking-modal-form" id="bookingModalForm" novalidate>
+
+            <!-- Guest details -->
+            <div class="booking-modal-section-label">Guest Details</div>
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_name"><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="bm_name" name="guest_name" placeholder="Your name" required>
+                    <span class="booking-modal-error" data-field-error="guest_name"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="bm_phone" name="guest_phone" placeholder="+91 9876543210" required>
+                    <span class="booking-modal-error" data-field-error="guest_phone"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-field">
+                <label for="bm_email"><i class="fa-solid fa-envelope"></i> Email</label>
+                <input type="email" id="bm_email" name="guest_email" placeholder="you@example.com" required>
+                <span class="booking-modal-error" data-field-error="guest_email"></span>
+            </div>
+
+            <!-- Stay details -->
+            <div class="booking-modal-section-label">Stay Details</div>
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_checkin"><i class="fa-solid fa-calendar-check"></i> Check-in</label>
+                    <input type="date" id="bm_checkin" name="check_in" required>
+                    <span class="booking-modal-error" data-field-error="check_in"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_checkout"><i class="fa-solid fa-calendar-xmark"></i> Check-out</label>
+                    <input type="date" id="bm_checkout" name="check_out" required>
+                    <span class="booking-modal-error" data-field-error="check_out"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-row">
+                <div class="booking-modal-field">
+                    <label for="bm_guests"><i class="fa-solid fa-users"></i> Guests</label>
+                    <input type="number" id="bm_guests" name="num_guests" min="1" placeholder="e.g. 2" required>
+                    <span class="booking-modal-error" data-field-error="num_guests"></span>
+                </div>
+                <div class="booking-modal-field">
+                    <label for="bm_package">
+                        <i class="fa-solid fa-gift"></i> Package
+                        <span class="booking-modal-optional-tag">optional</span>
+                    </label>
+                    <select id="bm_package" name="package">
+                        <option value="" selected>No package preference</option>
+                        {% for package in packages %}
+                        <option value="{{ package.id }}">{{ package.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="booking-modal-error" data-field-error="package"></span>
+                </div>
+            </div>
+
+            <div class="booking-modal-field">
+                <label for="bm_message">
+                    <i class="fa-solid fa-comment-dots"></i> Special Requests
+                    <span class="booking-modal-optional-tag">optional</span>
+                </label>
+                <textarea id="bm_message" name="special_requests" placeholder="Preferred cottage, occasion, dietary needs..."></textarea>
+            </div>
+
+            <button type="submit" class="booking-modal-submit">
+                <span class="btn-label">Send via WhatsApp</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+
+            <div id="bookingModalMsg" class="booking-modal-msg" role="status" aria-live="polite"></div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* ===== BOOKING MODAL — REDESIGN ===== */
+    .booking-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(10, 18, 10, 0.65);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .booking-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .booking-modal-box {
+        position: relative;
+        background: #fff;
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 24px;
+        padding: 44px 40px 36px;
+        transform: translateY(24px) scale(0.98);
+        transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    .booking-modal-overlay.active .booking-modal-box {
+        transform: translateY(0) scale(1);
+    }
+
+    .booking-modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: var(--accent-color-3, #eaf4e2);
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        z-index: 2;
+    }
+
+    .booking-modal-close:hover {
+        background: var(--accent-color);
+        color: #fff;
+        transform: rotate(90deg);
+    }
+
+    /* Header */
+    .booking-modal-header {
+        margin-bottom: 28px;
+        padding-right: 30px;
+    }
+
+    .booking-modal-eyebrow {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #c8a86a);
+        margin-bottom: 8px;
+    }
+
+    .booking-modal-title {
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 3vw, 1.9rem);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 800;
+        color: var(--text-color);
+    }
+
+    .booking-modal-sub {
+        color: var(--text-color-2);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Section labels */
+    .booking-modal-section-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--accent-color);
+        margin: 4px 0 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .booking-modal-section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.08);
+    }
+
+    /* Form layout */
+    .booking-modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .booking-modal-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .booking-modal-field label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 7px;
+    }
+
+    .booking-modal-field label i {
+        color: var(--accent-color);
+        font-size: 0.85rem;
+        width: 14px;
+        text-align: center;
+    }
+
+    .booking-modal-optional-tag {
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--text-color-2);
+        text-transform: none;
+        letter-spacing: 0;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-left: auto;
+    }
+
+    .booking-modal-field input,
+    .booking-modal-field select,
+    .booking-modal-field textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 16px;
+        border: 1.5px solid rgba(44, 95, 26, 0.14);
+        border-radius: 12px;
+        font-size: max(16px, 0.92rem);
+        font-family: var(--font-3, 'DM Sans', sans-serif);
+        color: var(--text-color);
+        background: var(--accent-color-3, #eaf4e2);
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .booking-modal-field select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232c5f1a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 36px;
+        cursor: pointer;
+    }
+
+    .booking-modal-field textarea {
+        min-height: 90px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    .booking-modal-field input:focus,
+    .booking-modal-field select:focus,
+    .booking-modal-field textarea:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 4px rgba(44, 95, 26, 0.1);
+        background: #fff;
+    }
+
+    .booking-modal-error {
+        display: block;
+        font-size: 0.76rem;
+        color: #d64545;
+        margin-top: 5px;
+        min-height: 15px;
+    }
+
+    .booking-modal-submit {
+        margin-top: 8px;
+        padding: 16px 26px;
+        background: var(--accent-color);
+        color: #fff;
+        border: none;
+        border-radius: 100px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease, gap 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 10px 24px rgba(44, 95, 26, 0.18);
+    }
+
+    .booking-modal-submit:hover:not(:disabled) {
+        background: #25D366;
+        gap: 16px;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    .booking-modal-submit:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .booking-modal-msg {
+        margin-top: 4px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        min-height: 18px;
+        text-align: center;
+    }
+
+    .booking-modal-msg.success { color: #2c5f1a; }
+    .booking-modal-msg.error { color: #d64545; }
+
+    body.booking-modal-open {
+        overflow: hidden;
+    }
+
+    @media (max-width: 575px) {
+        .booking-modal-box {
+            padding: 32px 22px 26px;
+            border-radius: 20px;
+        }
+
+        .booking-modal-row {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .booking-modal-header {
+            padding-right: 20px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ===== Update this to your real WhatsApp business number (country code, no + or spaces) =====
+        var BOOKING_WHATSAPP_NUMBER = '919633870962';
+
+        var overlay = document.getElementById('bookingModalOverlay');
+        var closeBtn = document.getElementById('bookingModalClose');
+        var form = document.getElementById('bookingModalForm');
+        var msgBox = document.getElementById('bookingModalMsg');
+        var submitBtn = form ? form.querySelector('.booking-modal-submit') : null;
+        var btnLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
+
+        if (!overlay || !form) return;
+
+        function openModal() {
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('booking-modal-open');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('booking-modal-open');
+        }
+
+        document.querySelectorAll('.js-open-booking-modal').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                openModal();
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            form.querySelectorAll('[data-field-error]').forEach(function (el) {
+                el.textContent = '';
+            });
+            msgBox.textContent = '';
+            msgBox.classList.remove('success', 'error');
+
+            var hasError = false;
+            var lines = ['New Booking Request — Ambady Estate'];
+
+            function humanize(name) {
+                if (!name) return 'Field';
+                return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+            }
+
+            // Includes input, select, and textarea so the package dropdown is validated + included
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                var labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
+
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    hasError = true;
+                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
+                    if (errEl) errEl.textContent = 'This field is required.';
+                    return;
+                }
+
+                var displayValue = '';
+                if (field.tagName === 'SELECT') {
+                    var selectedOption = field.options[field.selectedIndex];
+                    displayValue = (selectedOption && field.value) ? selectedOption.textContent.trim() : '';
+                } else {
+                    displayValue = field.value ? field.value.trim() : '';
+                }
+
+                if (displayValue) {
+                    lines.push(labelText + ': ' + displayValue);
+                }
+            });
+
+            if (hasError) {
+                msgBox.textContent = 'Please fill in the required fields.';
+                msgBox.classList.add('error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            var originalLabel = btnLabel.textContent;
+            btnLabel.textContent = 'Opening WhatsApp…';
+
+            var message = encodeURIComponent(lines.join('\n'));
+            var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
+
+            msgBox.textContent = 'Redirecting you to WhatsApp…';
+            msgBox.classList.add('success');
+
+            setTimeout(function () {
+                window.location.href = waUrl;
+                submitBtn.disabled = false;
+                btnLabel.textContent = originalLabel;
+            }, 400);
+        });
+    });
+</script>
 {% endblock %}

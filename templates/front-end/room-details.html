@@ -137,17 +137,18 @@
                     {% endif %}
 
                     <div class="room-quickfact room-quickfact-cta reveal-left" style="--d:3">
-    <div class="room-quickfact-icon">
-        <i class="fa-solid fa-calendar-check"></i>
-    </div>
-    <div class="room-quickfact-body room-quickfact-body-cta">
-        <span class="room-quickfact-title">Book Now</span>
-        <a href="#" class="room-quickfact-link js-open-room-enquiry-modal">
-            <span>Enquiry about stay</span>
-            <i class="fa-solid fa-arrow-right"></i>
-        </a>
-    </div>
+                        <div class="room-quickfact-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="room-quickfact-body">
+    
+    <a href="#"
+       class="room-quickfact-btn js-open-room-enquiry-modal">
+        Enquiry Now
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
 </div>
+                    </div>
 
                 </div>
 
@@ -157,8 +158,9 @@
     </div>
 
 </div>
-<!-- ===== ROOM GALLERY — cinematic bento mosaic ===== -->
-<div class="section room-gallery-section">
+<!-- ===== ROOM GALLERY — clean 3-column grid ===== -->
+<div class="section room-gallery-section bg-attach-cover"
+    style="background-image: url('{% static 'ambadyestate-main/bg1.png' %}');">
     <div class="r-container">
         <div class="room-gallery-heading">
             <span class="room-eyebrow reveal-fade">Gallery</span>
@@ -168,7 +170,7 @@
 
         <div class="room-gallery-grid mt-5" id="roomGalleryGrid">
             {% if room.main_image %}
-            <a href="{{ room.main_image.url }}" class="room-gallery-item reveal-scale featured" style="--d:0" data-index="01" data-lightbox="room-gallery">
+            <a href="{{ room.main_image.url }}" class="room-gallery-item reveal-scale" style="--d:0" data-index="01" data-lightbox="room-gallery">
                 <img src="{{ room.main_image.url }}" alt="{{ room.room_category|default:'Room' }}" data-parallax="0.04">
                 <span class="room-gallery-zoom"></span>
                 <span class="room-icon-box"><i class="fa-solid fa-expand"></i></span>
@@ -190,7 +192,6 @@
         <div class="room-gallery-pagination" id="roomGalleryPagination"></div>
     </div>
 </div>
-
 <!-- Simple lightbox overlay -->
 <div class="room-lightbox" id="roomLightbox">
     <button type="button" class="room-lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
@@ -233,6 +234,7 @@
         <form class="room-enquiry-modal-form" id="roomEnquiryModalForm" novalidate>
             <div class="room-enquiry-modal-body">
 
+                <div class="room-enquiry-modal-section-label">Guest Details</div>
                 <div class="room-enquiry-modal-row">
                     <div class="room-enquiry-modal-field">
                         <label for="rem_first_name"><i class="fa-solid fa-user"></i> First Name</label>
@@ -256,6 +258,41 @@
                     <label for="rem_email"><i class="fa-solid fa-envelope"></i> Email</label>
                     <input type="email" id="rem_email" name="email" class="form-control" placeholder="you@example.com" required>
                     <span class="room-enquiry-modal-error" data-field-error="email"></span>
+                </div>
+
+                <div class="room-enquiry-modal-section-label">Stay Details</div>
+                <div class="room-enquiry-modal-row">
+                    <div class="room-enquiry-modal-field">
+                        <label for="rem_checkin"><i class="fa-solid fa-calendar-check"></i> Check-in</label>
+                        <input type="date" id="rem_checkin" name="check_in" class="form-control" required>
+                        <span class="room-enquiry-modal-error" data-field-error="check_in"></span>
+                    </div>
+                    <div class="room-enquiry-modal-field">
+                        <label for="rem_checkout"><i class="fa-solid fa-calendar-xmark"></i> Check-out</label>
+                        <input type="date" id="rem_checkout" name="check_out" class="form-control" required>
+                        <span class="room-enquiry-modal-error" data-field-error="check_out"></span>
+                    </div>
+                </div>
+
+                <div class="room-enquiry-modal-row">
+                    <div class="room-enquiry-modal-field">
+                        <label for="rem_guests"><i class="fa-solid fa-users"></i> Guests</label>
+                        <input type="number" id="rem_guests" name="num_guests" class="form-control" min="1" placeholder="e.g. 2" required>
+                        <span class="room-enquiry-modal-error" data-field-error="num_guests"></span>
+                    </div>
+                    <div class="room-enquiry-modal-field">
+                        <label for="rem_package">
+                            <i class="fa-solid fa-gift"></i> Package
+                            <span class="room-enquiry-modal-optional-tag">optional</span>
+                        </label>
+                        <select id="rem_package" name="package" class="form-control">
+                            <option value="" selected>No package preference</option>
+                            {% for package in packages %}
+                            <option value="{{ package.id }}">{{ package.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="room-enquiry-modal-error" data-field-error="package"></span>
+                    </div>
                 </div>
 
                 <div class="room-enquiry-modal-field">
@@ -360,15 +397,16 @@
 
     /* ===== Hero — parallax + grain + line reveal ===== */
     .room-hero-section {
-        position: relative;
-        width: calc(100% - 40px);
-        margin: 20px auto 0;
-        min-height: 82vh;
-        display: flex;
-        align-items: flex-end;
-        overflow: hidden;
-        border-radius: 32px;
-    }
+    position: relative;
+    width: calc(100% - 40px);
+    margin: 20px auto 0;
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 32px;
+}
 
     .room-hero-bg {
         position: absolute;
@@ -401,13 +439,14 @@
     }
 
     .room-hero-content {
-        position: relative;
-        z-index: 2;
-        padding-bottom: 64px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
 
     .room-hero-breadcrumb {
         display: flex;
@@ -499,19 +538,18 @@
         50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
     }
 
-    @media (max-width: 767px) {
+   @media (max-width: 767px) {
         .room-hero-section { min-height: 62vh; width: calc(100% - 20px); margin: 12px auto 0; border-radius: 22px; }
-        .room-hero-content { padding-bottom: 32px; padding-left: 20px; padding-right: 20px; }
+        .room-hero-content { padding-left: 20px; padding-right: 20px; }
         .room-hero-scrollcue { display: none; }
-        .room-hero-breadcrumb { font-size: 0.78rem; flex-wrap: wrap; row-gap: 4px; }
+        .room-hero-breadcrumb { font-size: 0.78rem; flex-wrap: wrap; row-gap: 4px; justify-content: center; }
     }
 
     @media (max-width: 480px) {
         .room-hero-section { border-radius: 16px; min-height: 55vh; }
-        .room-hero-content { padding-left: 16px; padding-right: 16px; padding-bottom: 24px; }
+        .room-hero-content { padding-left: 16px; padding-right: 16px; }
         .room-hero-eyebrow { font-size: 0.7rem; letter-spacing: 1.8px; }
     }
-
     /* ===== About section — sticky slider + scrolling copy ===== */
     .room-about-section {
         position: relative;
@@ -669,20 +707,43 @@
     .room-quickfact-text { font-size: 0.9rem; color: var(--estate-stone); }
     .room-quickfact-cta { align-items: center; }
 
-    .room-quickfact-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        color: var(--estate-forest);
-        font-weight: 700;
-        text-decoration: none;
-        transition: gap 0.3s ease, color 0.3s ease;
+   .room-quickfact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #fff;
+    text-decoration: none;
+    background: var(--estate-forest);
+    border: 1px solid var(--estate-forest);
+    padding: 11px 22px;
+    border-radius: 100px;
+    box-shadow: 0 8px 20px rgba(11, 49, 40, 0.18);
+    transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease, gap 0.3s ease;
+}
+
+.room-quickfact-btn i {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.room-quickfact-btn:hover {
+    background: var(--estate-clay);
+    border-color: var(--estate-clay);
+    color: #fff;
+    gap: 14px;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(184, 50, 31, 0.28);
+}
+
+@media (max-width: 575px) {
+    .room-quickfact-btn {
+        font-size: 0.8rem;
+        padding: 9px 18px;
     }
-
-    .room-quickfact-link i { font-size: 0.75rem; transition: transform 0.3s ease; }
-    .room-quickfact-link:hover { color: var(--estate-clay); gap: 12px; }
-
+}
     /* ===== Slider (with subtle image parallax on scroll) ===== */
     .room-slider {
         position: relative;
@@ -789,153 +850,152 @@
         .room-slider-dots { bottom: 12px; }
     }
 
-    /* ===== Gallery — bento mosaic ===== */
-    .room-gallery-section {
-        padding: 110px 0;
-        background: #fff;
-        border-top: 1px solid var(--estate-line);
-    }
+    /* ===== Gallery — clean 3-column grid with bg image ===== */
+.room-gallery-section {
+    position: relative;
+    padding: 110px 0;
+    border-top: 1px solid var(--estate-line);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-    .room-gallery-heading { max-width: 640px; margin: 0 auto; text-align: center; }
-    .room-gallery-sub { color: var(--estate-stone); margin-top: 4px; }
+.room-gallery-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.55);
+    z-index: 0;
+    pointer-events: none;
+}
+.room-gallery-section > .r-container {
+    position: relative;
+    z-index: 1;
+}
 
-    .room-gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 190px;
-        gap: 18px;
-    }
+.room-gallery-heading { max-width: 640px; margin: 0 auto; text-align: center; }
+.room-gallery-sub { color: var(--estate-stone); margin-top: 4px; }
 
-    .room-gallery-item.featured {
-        grid-column: span 2;
-        grid-row: span 2;
-    }
+.room-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
 
-    .room-gallery-item {
-        position: relative;
-        display: block;
-        border-radius: 18px;
-        overflow: hidden;
-        box-shadow: 0 10px 26px rgba(11, 49, 40, 0.1);
-    }
+.room-gallery-item {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3.2;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 26px rgba(11, 49, 40, 0.1);
+}
 
-    .room-gallery-item img {
-        width: 100%;
-        height: 118%;
-        object-fit: cover;
-        display: block;
-        will-change: transform;
-        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+.room-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
-    .room-gallery-item:hover img { transform: scale(1.07) !important; }
+.room-gallery-item:hover img { transform: scale(1.07) !important; }
 
-    .room-gallery-item::before {
-        content: attr(data-index);
-        position: absolute;
-        left: 14px;
-        bottom: 12px;
-        z-index: 2;
-        font-size: 0.78rem;
-        font-weight: 500;
-        color: #fff;
-        letter-spacing: 1px;
-        opacity: 0;
-        transform: translateY(6px);
-        transition: opacity 0.35s ease, transform 0.35s ease;
-    }
+.room-gallery-item::before {
+    content: attr(data-index);
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
 
-    .room-gallery-item:hover::before { opacity: 0.9; transform: translateY(0); }
+.room-gallery-item:hover::before { opacity: 0.9; transform: translateY(0); }
 
-    .room-gallery-zoom {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(7, 31, 25, 0.55) 0%, rgba(7, 31, 25, 0) 45%);
-        opacity: 0;
-        transition: opacity 0.35s ease;
-    }
+.room-gallery-zoom {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7, 31, 25, 0.55) 0%, rgba(7, 31, 25, 0) 45%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
 
-    .room-gallery-item:hover .room-gallery-zoom { opacity: 1; }
+.room-gallery-item:hover .room-gallery-zoom { opacity: 1; }
 
-    .room-gallery-pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 44px;
-    }
+.room-gallery-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 44px;
+}
 
-    .room-gallery-page-btn {
-        min-width: 40px; height: 40px; padding: 0 4px;
-        border-radius: 50%;
-        border: 1px solid var(--estate-line);
-        background: #fff;
-        color: var(--estate-ink);
-        font-size: 0.9rem;
-        font-weight: 600;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer;
-        transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-    }
+.room-gallery-page-btn {
+    min-width: 40px; height: 40px; padding: 0 4px;
+    border-radius: 50%;
+    border: 1px solid var(--estate-line);
+    background: #fff;
+    color: var(--estate-ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
 
-    .room-gallery-page-btn:hover:not(:disabled) { border-color: var(--estate-forest); transform: translateY(-2px); }
-    .room-gallery-page-btn.active { background: var(--estate-forest); border-color: var(--estate-forest); color: #fff; }
-    .room-gallery-page-btn.nav-btn { border-radius: 50%; color: var(--estate-forest); }
-    .room-gallery-page-btn.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+.room-gallery-page-btn:hover:not(:disabled) { border-color: var(--estate-forest); transform: translateY(-2px); }
+.room-gallery-page-btn.active { background: var(--estate-forest); border-color: var(--estate-forest); color: #fff; }
+.room-gallery-page-btn.nav-btn { border-radius: 50%; color: var(--estate-forest); }
+.room-gallery-page-btn.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
-    .room-icon-box {
-        width: 44px; height: 44px; border-radius: 50%;
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        display: flex; align-items: center; justify-content: center;
-        color: #fff;
-        flex-shrink: 0;
-        transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
-    }
+.room-icon-box {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
 
-    .room-gallery-item .room-icon-box {
-        position: absolute; top: 16px; right: 16px; z-index: 2;
-        opacity: 0; transform: translateY(-8px);
-    }
+.room-gallery-item .room-icon-box {
+    position: absolute; top: 16px; right: 16px; z-index: 2;
+    opacity: 0; transform: translateY(-8px);
+}
 
-    .room-gallery-item:hover .room-icon-box { opacity: 1; transform: translateY(0); background: rgba(255, 255, 255, 0.22); }
+.room-gallery-item:hover .room-icon-box { opacity: 1; transform: translateY(0); background: rgba(255, 255, 255, 0.22); }
 
-    .room-icon-box-static {
-        width: 34px; height: 34px; opacity: 1; transform: none; margin-left: 4px;
-        background: rgba(7, 31, 25, 0.12);
-        border-color: rgba(7, 31, 25, 0.2);
-        color: var(--estate-forest-deep);
-    }
+@media (max-width: 991px) {
+    .room-gallery-section { padding: 70px 0; }
+    .room-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
 
-    .room-booking-btn:hover .room-icon-box-static { background: rgba(7, 31, 25, 0.2); }
+@media (max-width: 767px) {
+    .room-gallery-section { padding: 50px 0; }
+    .room-gallery-section .r-container { padding-left: 20px; padding-right: 20px; }
+    .room-gallery-grid { gap: 14px; }
+    .room-gallery-sub { font-size: 0.9rem; }
+    .room-gallery-pagination { margin-top: 30px; gap: 8px; }
+    .room-gallery-page-btn { min-width: 36px; height: 36px; font-size: 0.85rem; }
+}
 
-    @media (max-width: 991px) {
-        .room-gallery-section { padding: 70px 0; }
-        .room-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
-        .room-gallery-item.featured { grid-column: span 2; grid-row: span 1; }
-    }
+@media (max-width: 575px) {
+    .room-gallery-section { padding: 40px 0; }
+    .room-gallery-grid { grid-template-columns: 1fr; gap: 16px; }
+}
 
-    @media (max-width: 767px) {
-        .room-gallery-section { padding: 50px 0; }
-        .room-gallery-section .r-container { padding-left: 20px; padding-right: 20px; }
-        .room-gallery-grid { gap: 14px; grid-auto-rows: 180px; }
-        .room-gallery-sub { font-size: 0.9rem; }
-        .room-gallery-pagination { margin-top: 30px; gap: 8px; }
-        .room-gallery-page-btn { min-width: 36px; height: 36px; font-size: 0.85rem; }
-    }
-
-    @media (max-width: 575px) {
-        .room-gallery-section { padding: 40px 0; }
-        .room-gallery-grid { grid-template-columns: 1fr; gap: 16px; }
-        .room-gallery-item.featured { grid-column: span 1; }
-    }
-
-    @media (max-width: 400px) {
-        .room-gallery-section .r-container { padding-left: 16px; padding-right: 16px; }
-    }
-
+@media (max-width: 400px) {
+    .room-gallery-section .r-container { padding-left: 16px; padding-right: 16px; }
+}
     /* Lightbox */
     .room-lightbox {
         position: fixed; inset: 0; z-index: 9999;
@@ -1039,255 +1099,284 @@
 
     /* ===== ROOM ENQUIRY MODAL — matches booking modal styling ===== */
     .room-enquiry-modal-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 999;
-        background: rgba(10, 18, 10, 0.65);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(10, 18, 10, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 
-    .room-enquiry-modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
+.room-enquiry-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
-    .room-enquiry-modal-box {
-        position: relative;
-        background: #fff;
-        width: 100%;
-        max-width: 560px;
-        max-height: 90vh;
-        overflow-y: auto;
-        border-radius: 24px;
-        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
-        transform: translateY(24px) scale(0.98);
-        transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-    }
+.room-enquiry-modal-box {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    transform: translateY(24px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
 
-    .room-enquiry-modal-overlay.active .room-enquiry-modal-box {
-        transform: translateY(0) scale(1);
-    }
+.room-enquiry-modal-overlay.active .room-enquiry-modal-box {
+    transform: translateY(0) scale(1);
+}
 
-    .room-enquiry-modal-close {
-        position: absolute;
-        top: 18px;
-        right: 18px;
-        z-index: 5;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: none;
-        background: rgba(255, 255, 255, 0.14);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
-    }
+.room-enquiry-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 5;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
 
-    .room-enquiry-modal-close:hover {
-        background: var(--estate-gold);
-        transform: rotate(90deg);
-        color: var(--estate-forest-deep);
-    }
+.room-enquiry-modal-close:hover {
+    background: var(--estate-gold);
+    transform: rotate(90deg);
+    color: var(--estate-forest-deep);
+}
 
-    .room-enquiry-modal-header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        background: var(--estate-forest-deep);
-        padding: 32px 36px 26px;
-        border-radius: 24px 24px 0 0;
-    }
+.room-enquiry-modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--estate-forest-deep);
+    padding: 32px 36px 26px;
+    border-radius: 24px 24px 0 0;
+}
 
-    .room-enquiry-modal-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--estate-gold);
-        margin-bottom: 10px;
-    }
+.room-enquiry-modal-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--estate-gold);
+    margin-bottom: 10px;
+}
 
-    .room-enquiry-modal-eyebrow::before {
-        content: "";
-        display: inline-block;
-        width: 22px;
-        height: 1.5px;
-        background: var(--estate-gold);
-        margin-right: 8px;
-        vertical-align: middle;
-    }
+.room-enquiry-modal-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--estate-gold);
+    margin-right: 8px;
+    vertical-align: middle;
+}
 
-    .room-enquiry-modal-title {
-        color: #fff;
-        font-weight: 700;
-        font-size: 1.4rem;
-        margin: 0 0 8px;
-    }
+.room-enquiry-modal-title {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+}
 
-    .room-enquiry-modal-sub {
-        color: rgba(255, 255, 255, 0.75);
-        font-size: 0.88rem;
-        line-height: 1.6;
-        margin: 0;
-    }
+.room-enquiry-modal-sub {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0;
+}
 
-    .room-enquiry-modal-body {
-        padding: 28px 36px 8px;
-        background: var(--estate-cream);
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-    }
+.room-enquiry-modal-body {
+    padding: 28px 36px 8px;
+    background: var(--estate-cream);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
 
-    .room-enquiry-modal-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
+/* ===== Section labels (Guest Details / Stay Details) ===== */
+.room-enquiry-modal-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--estate-forest);
+    margin: 4px 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .room-enquiry-modal-field label {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: var(--estate-ink);
-        margin-bottom: 6px;
-    }
+.room-enquiry-modal-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--estate-line);
+}
 
-    .room-enquiry-modal-field label i {
-        color: var(--estate-forest);
-        font-size: 0.82rem;
-        width: 14px;
-        text-align: center;
-    }
+.room-enquiry-modal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
 
-    .room-enquiry-modal-optional-tag {
-        font-size: 0.65rem;
-        font-weight: 600;
-        color: var(--estate-stone);
-        text-transform: none;
-        letter-spacing: 0;
-        background: rgba(0, 0, 0, 0.05);
-        padding: 2px 8px;
-        border-radius: 20px;
-        margin-left: auto;
-    }
+.room-enquiry-modal-field label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--estate-ink);
+    margin-bottom: 6px;
+}
 
-    .room-enquiry-modal-field .form-control {
-        width: 100%;
-        box-sizing: border-box;
-        border: 1.5px solid var(--estate-line);
-        border-radius: 12px;
-        padding: 12px 16px;
-        font-size: max(16px, 0.9rem);
-        color: var(--estate-ink);
-        background: #fff;
-        outline: none;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        appearance: none;
-        -webkit-appearance: none;
-    }
+.room-enquiry-modal-field label i {
+    color: var(--estate-forest);
+    font-size: 0.82rem;
+    width: 14px;
+    text-align: center;
+}
 
-    .room-enquiry-modal-field textarea.form-control {
-        min-height: 90px;
-        resize: vertical;
-        line-height: 1.6;
-    }
+.room-enquiry-modal-optional-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--estate-stone);
+    text-transform: none;
+    letter-spacing: 0;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: auto;
+}
 
-    .room-enquiry-modal-field .form-control:focus {
-        border-color: var(--estate-forest);
-        box-shadow: 0 0 0 4px rgba(11, 49, 40, 0.1);
-    }
+.room-enquiry-modal-field .form-control {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid var(--estate-line);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: max(16px, 0.9rem);
+    color: var(--estate-ink);
+    background: #fff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
 
-    .room-enquiry-modal-error {
-        display: block;
-        font-size: 0.76rem;
-        color: #d64545;
-        margin-top: 5px;
-        min-height: 15px;
-    }
+/* ===== Select dropdown (Package field) ===== */
+.room-enquiry-modal-field select.form-control {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%230b3128' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
 
-    .room-enquiry-modal-footer {
-        padding: 12px 36px 32px;
-        background: var(--estate-cream);
-        border-radius: 0 0 24px 24px;
-    }
+.room-enquiry-modal-field textarea.form-control {
+    min-height: 90px;
+    resize: vertical;
+    line-height: 1.6;
+}
 
-    .room-enquiry-modal-submit {
-        width: 100%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-weight: 700;
-        cursor: pointer;
-        border: none;
-        border-radius: 100px;
-        padding: 15px 26px;
-        box-shadow: 0 10px 24px rgba(11, 49, 40, 0.18);
-        transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, gap 0.3s ease;
-    }
+.room-enquiry-modal-field .form-control:focus {
+    border-color: var(--estate-forest);
+    box-shadow: 0 0 0 4px rgba(11, 49, 40, 0.1);
+}
 
-    .room-enquiry-modal-submit:hover:not(:disabled) {
-        background: #25D366;
-        transform: translateY(-2px);
-        gap: 16px;
-        box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
-    }
+.room-enquiry-modal-error {
+    display: block;
+    font-size: 0.76rem;
+    color: #d64545;
+    margin-top: 5px;
+    min-height: 15px;
+}
 
-    .room-enquiry-modal-submit:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-    }
+.room-enquiry-modal-footer {
+    padding: 12px 36px 32px;
+    background: var(--estate-cream);
+    border-radius: 0 0 24px 24px;
+}
 
-    .room-enquiry-icon-box-static {
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.25);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
+.room-enquiry-modal-submit {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    border-radius: 100px;
+    padding: 15px 26px;
+    box-shadow: 0 10px 24px rgba(11, 49, 40, 0.18);
+    transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, gap 0.3s ease;
+}
 
-    .room-enquiry-modal-msg {
-        margin-top: 12px;
-        font-size: 0.88rem;
-        font-weight: 600;
-        min-height: 18px;
-        text-align: center;
-    }
+.room-enquiry-modal-submit:hover:not(:disabled) {
+    background: #25D366;
+    transform: translateY(-2px);
+    gap: 16px;
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
+}
 
-    .room-enquiry-modal-msg.success { color: var(--estate-forest); }
-    .room-enquiry-modal-msg.error { color: #d64545; }
+.room-enquiry-modal-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
 
-    body.room-enquiry-modal-open {
-        overflow: hidden;
-    }
+.room-enquiry-icon-box-static {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
 
-    @media (max-width: 575px) {
-        .room-enquiry-modal-header { padding: 26px 22px 20px; }
-        .room-enquiry-modal-body { padding: 22px 22px 6px; }
-        .room-enquiry-modal-footer { padding: 10px 22px 26px; }
-        .room-enquiry-modal-title { font-size: 1.15rem; }
-        .room-enquiry-modal-row { grid-template-columns: 1fr; gap: 16px; }
-    }
+.room-enquiry-modal-msg {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    min-height: 18px;
+    text-align: center;
+}
+
+.room-enquiry-modal-msg.success { color: var(--estate-forest); }
+.room-enquiry-modal-msg.error { color: #d64545; }
+
+body.room-enquiry-modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 575px) {
+    .room-enquiry-modal-header { padding: 26px 22px 20px; }
+    .room-enquiry-modal-body { padding: 22px 22px 6px; }
+    .room-enquiry-modal-footer { padding: 10px 22px 26px; }
+    .room-enquiry-modal-title { font-size: 1.15rem; }
+    .room-enquiry-modal-row { grid-template-columns: 1fr; gap: 16px; }
+}
 </style>
 
 <script>
@@ -1522,7 +1611,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
             }
 
-            form.querySelectorAll('input, textarea').forEach(function (field) {
+            // Now includes select so the package dropdown is captured
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
                 const label = form.querySelector('label[for="' + field.id + '"]');
                 const labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
 
@@ -1533,7 +1623,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                const displayValue = field.value ? field.value.trim() : '';
+                let displayValue = '';
+                if (field.tagName === 'SELECT') {
+                    const selectedOption = field.options[field.selectedIndex];
+                    displayValue = (selectedOption && field.value) ? selectedOption.textContent.trim() : '';
+                } else {
+                    displayValue = field.value ? field.value.trim() : '';
+                }
+
                 if (displayValue) {
                     lines.push(labelText + ': ' + displayValue);
                 }
@@ -1541,6 +1638,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (hasError) {
                 msgBox.textContent = 'Please fill in the required fields.';
+                msgBox.classList.add('error');
+                return;
+            }
+
+            // Check-out must be after check-in
+            const checkInField = form.querySelector('#rem_checkin');
+            const checkOutField = form.querySelector('#rem_checkout');
+            if (checkInField && checkOutField && checkInField.value && checkOutField.value && checkOutField.value <= checkInField.value) {
+                const errEl = form.querySelector('[data-field-error="check_out"]');
+                if (errEl) errEl.textContent = 'Check-out must be after check-in.';
+                msgBox.textContent = 'Please fix the highlighted field.';
                 msgBox.classList.add('error');
                 return;
             }
@@ -1564,5 +1672,4 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 });
 </script>
-
 {% endblock %}

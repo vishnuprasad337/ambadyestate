@@ -17,7 +17,7 @@
             <i class="fa-solid fa-chevron-right"></i>
             <span>{{ package.name }}</span>
         </span>
-        <span class="pkg-hero-eyebrow"><i></i>Ambady Estate, Munnar</span>
+       
         <h1 class="pkg-hero-title">{{ package.name }}</h1>
     </div>
     <div class="pkg-hero-scrollcue" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></div>
@@ -777,7 +777,31 @@ html, body {
     transition: color 0.25s ease, transform 0.25s ease, font-weight 0.25s ease;
     will-change: transform, color;
 }
+/* ===== TEXT CLARITY FIX — Package description & inclusions ===== */
+.pkg-description-block h3 {
+    color: #1a1e16 !important;
+    font-weight: 800 !important;
+}
 
+.pkg-magnetic-text h5,
+.pkg-magnetic-text h4,
+.pkg-magnetic-text strong {
+    color: #1a1e16 !important;
+    font-weight: 800 !important;
+}
+
+.pkg-magnetic-text p {
+    color: #333d30 !important;
+}
+
+.pkg-magnetic-text li {
+    color: #2b342a !important;
+    font-weight: 500 !important;
+}
+
+.pkg-magnetic-text li::before {
+    background: var(--accent-color, #2c5f1a) !important;
+}
 /* ===== ROOM / ACTIVITY CARDS ===== */
 .pkg-includes-block {
     margin-top: 36px;

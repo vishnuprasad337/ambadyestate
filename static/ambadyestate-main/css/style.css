@@ -2602,3 +2602,44 @@ h1, h2, h3, h4, h5, h6,
     text-transform: uppercase !important;
     font-weight: 500 !important;
 }
+
+/* ===== UNIFIED BUTTON FONT — Plus Jakarta Sans (bold, tight tracking) =====
+   Matches the heavy-weight Plus Jakarta Sans style used in the site's
+   hero headings (e.g. "HONEYMOON") so every clickable button-like
+   element shares the same typeface, weight, and letter-spacing —
+   regardless of any page-scoped <style> blocks or inline styles that
+   didn't declare a font and would otherwise fall back to the browser
+   default. */
+button,
+a.btn,
+.btn,
+.btn-accent,
+.btn-light-solid,
+.btn-light-outline,
+.nav-cta,
+.submit_form,
+.submit_form.accent,
+.submit_form-subscribe,
+.hero-btn-solid,
+.hero-btn-outline,
+.js-open-booking-modal,
+.booking-modal-submit,
+.booking-modal-close,
+.activity-explore-item,
+.activity-read-more,
+.testi-nav-btn,
+.gallery-page-btn,
+.story-play-btn,
+.story-explore-link,
+.blog-read-more,
+.about-quote-btn,
+.pkg-card-v3-arrow,
+.accordion-button,
+input[type="submit"],
+input[type="button"] {
+    font-family: var(--font-1) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px !important;
+    text-transform: uppercase !important;
+    font-size: 1.05rem !important;
+}

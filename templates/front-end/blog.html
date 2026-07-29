@@ -128,7 +128,9 @@
 </style>
 
 <!-- ===== BLOG GRID ===== -->
-<div id="blog-listing" class="section">
+<div id="blog-listing" class="section bg-attach-cover"
+    style="background-image: url('{% static 'ambadyestate-main/pack1.png' %}');">
+    
     <div class="r-container">
         <div class="blog-viewport" id="blogViewport">
             {% for blog in blogs %}
@@ -183,8 +185,27 @@
 ========================================== */
 
 #blog-listing{
+    position: relative;
     padding:100px 0;
     overflow:hidden;
+    background-image: url('{% static "ambadyestate-main/image/pack.png" %}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+#blog-listing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 0;
+    pointer-events: none;
+}
+
+#blog-listing > .r-container {
+    position: relative;
+    z-index: 1;
 }
 
 .blog-viewport{
@@ -476,6 +497,7 @@
 
     #blog-listing{
         padding:60px 0;
+        position: relative;
     }
 
     .blog-card-img-wrap{

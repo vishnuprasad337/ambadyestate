@@ -990,11 +990,8 @@ def activities_page(request):
 
 def activity_details(request, slug):
     activity = get_object_or_404(Activity, slug=slug)
-
     other_activities = Activity.objects.all().exclude(pk=activity.pk).order_by("-created_at")
-
     gallery_images = activity.images.all().order_by("order", "uploaded_at")
-
     related_activities = other_activities[:3]
     packages = Package.objects.filter(status="active").order_by('-created_at')[:6] 
 
@@ -1003,11 +1000,10 @@ def activity_details(request, slug):
         "other_activities": other_activities,
         "gallery_images": gallery_images,
         "related_activities": related_activities,
-        "activities": other_activities,   # used for footer
-        "packages": packages,  
+        "activities": other_activities,
+        "packages": packages,
     }
     return render(request, "front-end/activity_details.html", context)
-
 
 def blog_page(request):
     blogs = Blog.objects.all().order_by('-created_at')

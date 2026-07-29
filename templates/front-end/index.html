@@ -39,13 +39,13 @@
         </span>
     </span>
 </a>
-<h1 class="hero-title reveal-up reveal-delay-2">
+<h1 class="hero-title reveal-up reveal-delay-2" id="heroRotatingTitle">
     STAY ABOVE<br><b>THE VALLEY</b>
 </h1>
-<p class="hero-copy reveal-up reveal-delay-3">Wake up to cool mountain air, estate views, and the
+<p class="hero-copy reveal-up reveal-delay-3" id="heroRotatingCopy">Wake up to cool mountain air, estate views, and the
     quiet rhythm of Munnar. Ambady Estate is designed for relaxed holidays, family time, and
     peaceful plantation stays surrounded by nature.</p>
-<div class="hero-actions reveal-up reveal-delay-4">
+<div class="hero-actions reveal-up reveal-delay-4" id="heroRotatingActions">
     <a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Book Your Stays</a>
 </div>
 
@@ -201,6 +201,8 @@
                 letter-spacing: -1px;
                 margin-bottom: 20px;
                 text-transform: uppercase;
+                transition: opacity 0.6s ease, transform 0.6s ease;
+                white-space: normal;
             }
 
             .hero-title b {
@@ -214,6 +216,7 @@
                 line-height: 1.75;
                 max-width: 520px;
                 margin-bottom: 36px;
+                transition: opacity 0.6s ease, transform 0.6s ease;
             }
 
             .hero-actions {
@@ -221,6 +224,8 @@
                 flex-wrap: wrap;
                 gap: 16px;
                 align-items: center;
+                transition: opacity 0.6s ease, transform 0.6s ease;
+                margin-bottom: 24px;
             }
 
             .hero-btn-solid {
@@ -367,6 +372,7 @@
 
                 .hero-slider-progress {
                     padding: 0 20px;
+                    bottom: 24px;
                 }
 
                 .hero-content {
@@ -386,6 +392,7 @@
                 .hero-actions {
                     flex-direction: column;
                     align-items: flex-start;
+                    margin-bottom: 60px;
                 }
 
                 .hero-actions .btn {
@@ -420,6 +427,71 @@
                 justify-content: flex-start !important;
             }
         </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var heroTitle = document.getElementById('heroRotatingTitle');
+    var heroCopy = document.getElementById('heroRotatingCopy');
+    var heroActions = document.getElementById('heroRotatingActions');
+    if (!heroTitle || !heroCopy || !heroActions) return;
+
+    // Each slide now has its own title + paragraph + button, all rotating together
+    var slides = [
+        {
+            title: 'STAY ABOVE<br><b>THE VALLEY</b>',
+            copy: 'Wake up to cool mountain air, estate views, and the quiet rhythm of Munnar. Ambady Estate is designed for relaxed holidays, family time, and peaceful plantation stays surrounded by nature.',
+            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Book Your Stays</a>'
+        },
+        {
+            title: 'WAKE UP TO<br><b>COOL AIR</b>',
+            copy: 'Start each morning surrounded by misty hills and the scent of cardamom. Every cottage at Ambady Estate is placed to catch the best of Munnar\'s cool mountain climate and quiet plantation calm.',
+            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Check Availability</a>'
+        },
+        {
+            title: 'LIVE AMONG<br><b>OUR ESTATE</b>',
+            copy: 'Explore 70 acres of certified organic cardamom plantation, guided nature trails, and a traditional curing house — a rare, immersive stay inside a living working estate in the heart of Munnar.',
+            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Plan Your Visit</a>'
+        }
+    ];
+    var current = 0;
+
+    setInterval(function () {
+        heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(10px)';
+        heroCopy.style.opacity = '0';
+        heroCopy.style.transform = 'translateY(10px)';
+        heroActions.style.opacity = '0';
+        heroActions.style.transform = 'translateY(10px)';
+
+        setTimeout(function () {
+            current = (current + 1) % slides.length;
+            heroTitle.innerHTML = slides[current].title;
+            heroCopy.textContent = slides[current].copy;
+            heroActions.innerHTML = slides[current].buttons;
+
+            heroTitle.style.opacity = '1';
+            heroTitle.style.transform = 'translateY(0)';
+            heroCopy.style.opacity = '1';
+            heroCopy.style.transform = 'translateY(0)';
+            heroActions.style.opacity = '1';
+            heroActions.style.transform = 'translateY(0)';
+
+            // Re-attach the booking modal listener since innerHTML was replaced
+            heroActions.querySelectorAll('.js-open-booking-modal').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var overlay = document.getElementById('bookingModalOverlay');
+                    if (overlay) {
+                        overlay.classList.add('active');
+                        overlay.setAttribute('aria-hidden', 'false');
+                        document.body.classList.add('booking-modal-open');
+                    }
+                });
+            });
+        }, 600);
+    }, 4000);
+});
+</script>
 <!-- Section About Us -->
 </style>
 </style>
@@ -1252,10 +1324,11 @@
                     </svg>
                     <span class="line"></span>
                 </div>
+<div class="founder-text">
+    <p>We are dedicated to giving every traveler a warm, comfortable, and unforgettable stay at Ambady Estate — from the moment you arrive at our plantation gates to the quiet mornings spent watching mist roll over the hills. Every cottage, every meal, and every small detail is looked after with the same care we'd give a guest in our own home, so that Munnar stays with you long after you've left.</p>
 
-                <div class="founder-text">
-                    <p>We are dedicated to giving every traveler a warm, comfortable, and unforgettable stay at Ambady Estate — from the moment you arrive at our plantation gates to the quiet mornings spent watching mist roll over the hills. Every cottage, every meal, and every small detail is looked after with the same care we'd give a guest in our own home, so that Munnar stays with you long after you've left.</p>
-                </div>
+    <p class="founder-motto">Every guest is a friend we haven't met yet.</p>
+</div>
 
                 <div class="founder-stats">
                     <div class="founder-stat reveal-up reveal-delay-1">
@@ -1407,6 +1480,49 @@
         color: var(--text-color-2);
         margin: 0;
     }
+    /* ===== FOUNDER MOTTO LINE ===== */
+/* ===== FOUNDER MOTTO LINE ===== */
+.founder-text p:first-child {
+    margin-bottom: 18px;
+}
+
+.founder-motto {
+    font-family: var(--founder-script);
+    font-style: italic;
+    font-size: 1.35rem !important;
+    line-height: 1.5 !important;
+    color: var(--accent-color-2) !important;
+    padding-left: 0;
+    border-left: none; /* removed the vertical bar */
+    margin: 0 !important;
+    position: relative;
+}
+
+.founder-motto::before {
+    content: '\201C';
+    font-family: var(--founder-serif);
+    color: var(--accent-color-2);
+    opacity: 0.7;
+    font-size: 1.6em; /* bigger opening quote */
+    margin-right: 4px;
+    vertical-align: -0.15em;
+}
+
+.founder-motto::after {
+    content: '\201D';
+    font-family: var(--founder-serif);
+    color: var(--accent-color-2);
+    opacity: 0.7;
+    font-size: 1.6em; /* bigger closing quote */
+    margin-left: 4px;
+    vertical-align: -0.15em;
+}
+
+@media (max-width: 575px) {
+    .founder-motto {
+        font-size: 1.15rem !important;
+    }
+}
 
     /* ---- Stats ---- */
     .founder-stats {
