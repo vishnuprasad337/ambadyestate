@@ -2485,10 +2485,11 @@ if (magneticEl) {
                     </label>
                     <select id="bm_package" name="package">
                         <option value="">No package preference</option>
-                        {% for p in packages %}
-                        <option value="{{ p.id }}" {% if p.id == package.id %}selected{% endif %}>{{ p.name }}</option>
-                        {% empty %}
                         <option value="{{ package.id }}" selected>{{ package.name }}</option>
+                        {% for p in packages %}
+                        {% if p.id != package.id %}
+                        <option value="{{ p.id }}">{{ p.name }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                     <span class="booking-modal-error" data-field-error="package"></span>
