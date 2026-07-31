@@ -4,13 +4,12 @@
 {% block content %}
 
         <section id="home" class="hero-section">
-            <div class="swiper hero-slider">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" style="background-image: url('{% static 'ambadyestate-main/image/new/hero11.webp' %}');"></div>
-                    <div class="swiper-slide" style="background-image: url('{% static 'ambadyestate-main/image/new/hero2.webp' %}');"></div>
-                    <div class="swiper-slide" style="background-image: url('{% static 'ambadyestate-main/image/new/hero3.webp' %}');"></div>
-                </div>
-            </div>
+            <video class="hero-video" autoplay loop muted playsinline
+                poster="{% static 'ambadyestate-main/image/new/hero11.webp' %}">
+                <source src="{% static 'ambadyestate-main/hero.mov' %}" type="video/mp4">
+            </video>
+
+            
 
             <!-- Dark overlay -->
             <div class="hero-overlay"></div>
@@ -135,15 +134,7 @@
 
 
             <!-- Slider progress bar — bottom left -->
-            <div class="hero-slider-progress">
-                <div class="hero-slider-progress-inner">
-                    <span class="hero-slide-current">01</span>
-                    <div class="hero-progress-track">
-                        <div class="hero-progress-bar"></div>
-                    </div>
-                    <span class="hero-slide-total">03</span>
-                </div>
-            </div>
+            
         </section>
 
         <style>
@@ -155,18 +146,13 @@
                 overflow: hidden;
             }
 
-            .hero-slider {
+            .hero-video {
                 position: absolute;
                 inset: 0;
                 width: 100%;
                 height: 100%;
-            }
-
-            .hero-slider .swiper-slide {
-                background-size: cover;
-                background-position: center;
-                width: 100%;
-                height: 100%;
+                object-fit: cover;
+                z-index: 0;
             }
 
             .hero-overlay {
@@ -313,44 +299,9 @@
 
             /* Progress bar */
             .hero-slider-progress {
-                position: absolute;
-                bottom: 36px;
-                left: 0;
-                right: 0;
-                z-index: 3;
-                padding: 0 80px;
-            }
-
-            .hero-slider-progress-inner {
-                display: flex;
-                align-items: center;
-                gap: 16px;
-                max-width: 300px;
-            }
-
-            .hero-slide-current,
-            .hero-slide-total {
-                font-size: 0.8rem;
-                font-weight: 700;
-                color: rgba(255, 255, 255, 0.8);
-                letter-spacing: 1px;
-            }
-
-            .hero-progress-track {
-                flex: 1;
-                height: 2px;
-                background: rgba(255, 255, 255, 0.25);
-                border-radius: 2px;
-                overflow: hidden;
-            }
-
-            .hero-progress-bar {
-                height: 100%;
-                background: #fff;
-                width: 25%;
-                border-radius: 2px;
-                transition: width 0.5s ease;
-            }
+                    padding: 0 20px;
+                    bottom: 24px;
+                }
 
             /* Navbar */
             .site-navbar .navbar-nav .nav-link {
@@ -535,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Right: Hero Image (image only, no video) -->
             <div class="col col-xl-7 mb-xl-0 mb-4 scrollanimation animated scroll-fadeInRight">
                 <div class="about-hero-media">
-                    <img src="{% static 'ambadyestate-main/pvr7.png' %}" class="about-hero-img" alt="Ambady Estate">
+                    <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-hero-img" alt="Ambady Estate">
                 </div>
             </div>
         </div>
@@ -662,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="about-card-divider"></span>
                     <p>Standout open pool overlooking the valley.</p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/place4.webp' %}" alt="Valley-view Pool">
+                        <img src="{% static 'ambadyestate-main/am6.jpeg' %}" alt="Valley-view Pool">
                     </div>
                 </div>
             </div>
@@ -761,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <img src="{% static 'ambadyestate-main/image/new/restaurent.webp' %}" alt="Locovore Cuisine">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/place4.webp' %}" alt="Valley-view Pool">
+                    <img src="{% static 'ambadyestate-main/am6.jpeg' %}" alt="Valley-view Pool">
                 </div>
                 <div class="about-cards-image-item">
                     <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" alt="Guided Trails">
@@ -780,7 +731,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <!-- Bottom: Full width quote banner -->
         <div class="about-quote-banner scrollanimation animated scroll-fadeInUp">
-            <img src="{% static 'ambadyestate-main/image/new/about.png' %}" class="about-quote-bg" alt="Ambady Estate view">
+            <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-quote-bg" alt="Ambady Estate view">
             <div class="about-quote-content">
                 <svg class="about-quote-mark" width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 26V15.6C0 6.9 4.7 1.6 12.4 0l1.6 4.1C9.1 5.4 6.6 8.4 6.6 12.4h6.8V26H0Zm20.6 0V15.6C20.6 6.9 25.3 1.6 33 0l1.6 4.1c-4.9 1.3-7.4 4.3-7.4 8.3H34V26H20.6Z" fill="currentColor"/>
@@ -1052,22 +1003,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .about-quote-banner::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(10, 12, 8, 0.25) 0%, rgba(10, 12, 8, 0.7) 55%, rgba(10, 12, 8, 0.8) 100%);
-        z-index: 1;
-    }
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10, 12, 8, 0.05) 0%, rgba(10, 12, 8, 0.35) 55%, rgba(10, 12, 8, 0.5) 100%);
+    z-index: 1;
+}
 
     .about-quote-content {
-        position: relative;
-        z-index: 2;
-        max-width: 480px;
-        margin-left: auto;
-        padding: 50px 60px;
-        color: #f4efe2;
-    }
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+    margin-left: auto;
+    padding: 50px 60px;
+    color: #ffffff;
+}
 
+.about-quote-content p {
+    font-weight: 600;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.2px;
+}
     .about-quote-mark {
         color: var(--accent-color-2, #c8a86a);
         margin-bottom: 14px;
@@ -1250,35 +1206,82 @@ document.addEventListener('DOMContentLoaded', function () {
         const row = document.querySelector('.about-card-row');
         const cards = document.querySelectorAll('.about-card-row .about-feature-card');
         const imageItems = document.querySelectorAll('.about-cards-image-panel .about-cards-image-item');
-        if (cards.length) {
-            const defaultCard = cards[0];
+        const wrapper = document.querySelector('.about-cards-wrapper');
 
-            function activate(target) {
-                const index = Array.from(cards).indexOf(target);
-                cards.forEach(card => card.classList.toggle('active', card === target));
-                imageItems.forEach((item, i) => item.classList.toggle('active', i === index));
+        if (!cards.length) return;
+
+        let currentIndex = 0;
+        let autoTimer = null;
+        const AUTO_INTERVAL = 3500; // ms between auto-switches
+
+        function activateIndex(index) {
+            currentIndex = (index + cards.length) % cards.length;
+            cards.forEach((card, i) => card.classList.toggle('active', i === currentIndex));
+            imageItems.forEach((item, i) => item.classList.toggle('active', i === currentIndex));
+        }
+
+        function nextCard() {
+            activateIndex(currentIndex + 1);
+        }
+
+        function startAuto() {
+            if (autoTimer) return;
+            autoTimer = setInterval(nextCard, AUTO_INTERVAL);
+        }
+
+        function stopAuto() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
             }
+        }
 
-            const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+        function restartAuto() {
+            stopAuto();
+            startAuto();
+        }
 
-            if (isDesktop) {
-                cards.forEach(card => {
-                    card.addEventListener('mouseenter', () => activate(card));
+        const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+
+        // Manual interaction still works, but auto-cycling resumes after it
+        if (isDesktop) {
+            cards.forEach((card, i) => {
+                card.addEventListener('mouseenter', () => {
+                    stopAuto();
+                    activateIndex(i);
                 });
-                row.addEventListener('mouseleave', () => activate(defaultCard));
-            } else {
-                cards.forEach(card => {
-                    card.addEventListener('click', () => {
-                        const alreadyOpen = card.classList.contains('active');
-                        cards.forEach(c => c.classList.remove('active'));
-                        if (!alreadyOpen) card.classList.add('active');
-                    });
+            });
+            row.addEventListener('mouseleave', () => {
+                restartAuto();
+            });
+        } else {
+            cards.forEach((card, i) => {
+                card.addEventListener('click', () => {
+                    stopAuto();
+                    activateIndex(i);
+                    // resume auto-cycling a bit after a tap
+                    setTimeout(restartAuto, AUTO_INTERVAL);
                 });
-            }
+            });
+        }
+
+        // Only run the auto-cycle while the section is actually visible
+        if (wrapper) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        startAuto();
+                    } else {
+                        stopAuto();
+                    }
+                });
+            }, { threshold: 0.3 });
+            observer.observe(wrapper);
+        } else {
+            startAuto();
         }
     });
 </script>
-
 </style>
 </style>
 
@@ -1287,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <!-- ===== MEET THE FOUNDER SECTION ===== -->
-<div id="founder" class="section founder-section" style="background-image: url('{% static 'ambadyestate-main/bg5.png' %}');">
+<div id="founder" class="section founder-section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
     <div class="r-container">
         <div class="founder-grid">
 
@@ -1522,7 +1525,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .founder-motto {
         font-size: 1.15rem !important;
     }
-}
+}      
 
     /* ---- Stats ---- */
     .founder-stats {
@@ -1700,39 +1703,57 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
         <!-- Cottages -->
-        <div id="process" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
-            <div class="r-container d-flex flex-column gap-3">
-                <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
-                    style="max-width: 700px;">
-                    <h6 class="accent-color-2">Our Accommodations</h6>
-                    <h3>Colonial Cottages &amp; Private Villa</h3>
-                    <p>Each chalet is placed with care overlooking the majestic landscape of Munnar — some face the
-                        valleys and mountains, others nestle within the woods.</p>
-                </div>
-                <div class="accordion-container">
-                    {% for room in rooms %}
-                    <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative"
-                        style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');">
-                        <div class="bg-overlay"></div>
-                        <div class="d-flex flex-column justify-content-between align-items-end text-white position-relative h-100"
-                            style="z-index: 2; padding: 40px;">
-                            <span class="icon-box link">
-                                <i class="rtmicon rtmicon-arrow-right" style="font-size: 30px;"></i>
-                            </span>
-                            <div class="d-flex flex-column gap-2 w-100">
-                                <h4>{{ room.room_category|default:"Room" }}</h4>
-                                <p class="text-white">
-    {{ room.description|truncatewords:35 }}
+<div id="process" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
+    <div class="r-container d-flex flex-column gap-3">
+        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
+            style="max-width: 700px;">
+            <h6 class="accent-color-2">Our Accommodations</h6>
+            <h3>Colonial Cottages &amp; Private Villa</h3>
+            <p>Each chalet is placed with care overlooking the majestic landscape of Munnar — some face the
+                valleys and mountains, others nestle within the woods.</p>
+        </div>
+
+        <div class="accordion-viewport">
+            <div class="accordion-track" id="roomsTrack">
+                {% for room in rooms %}
+                    {% if forloop.counter0|divisibleby:2 %}<div class="accordion-page">{% endif %}
+                        <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative"
+                            style="background-image: url('{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}');">
+                            <div class="bg-overlay"></div>
+                            <div class="d-flex flex-column justify-content-between align-items-end text-white position-relative h-100"
+                                style="z-index: 2; padding: 40px;">
+                                <span class="icon-box link">
+                                    <i class="rtmicon rtmicon-arrow-right" style="font-size: 30px;"></i>
+                                </span>
+                                <div class="d-flex flex-column gap-2 w-100">
+                                    <h4>{{ room.room_category|default:"Room" }}</h4>
+                                    <p class="text-white">
+    {{ room.description|striptags|truncatewords:35 }}
 </p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    {% empty %}
-                    <p class="text-center w-100">No rooms available right now.</p>
-                    {% endfor %}
-                </div>
+                        </a>
+                    {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+                {% empty %}
+                    <div class="accordion-page">
+                        <p class="text-center w-100">No rooms available right now.</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
+
+        <div class="accordion-slider-controls" id="roomsControls">
+            <button type="button" class="accordion-slider-prev" id="roomsPrev" aria-label="Previous rooms">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="accordion-slider-pagination" id="roomsPagination"></div>
+            <button type="button" class="accordion-slider-next" id="roomsNext" aria-label="Next rooms">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
 <style>
     /* ===== ACCOMMODATIONS SECTION ===== */
     #process {
@@ -1740,9 +1761,25 @@ document.addEventListener('DOMContentLoaded', function () {
         background-position: center;
     }
 
-    .accordion-container {
+    /* Viewport clips everything outside the visible pair of cards */
+    .accordion-viewport {
+        overflow: hidden;
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    /* Track holds every "page" (a page = one pair of rooms) side by side,
+       and slides horizontally in page-width (100%) increments */
+    .accordion-track {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Each page always shows exactly 2 rooms (or 1 on the last odd page) */
+    .accordion-page {
         display: flex;
         gap: 16px;
+        flex: 0 0 100%;
         height: 460px;
     }
 
@@ -1750,41 +1787,28 @@ document.addEventListener('DOMContentLoaded', function () {
         position: relative;
         border-radius: 20px;
         overflow: hidden;
-        background: none; /* image now lives on ::before so it can zoom without ever losing coverage */
+        background: none;
         cursor: pointer;
         flex: 1;
         will-change: flex;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    /* Image layer, separated from the card box so resizing the box (accordion
-       expand/collapse) never shrinks the image below full coverage. Previously
-       the image lived directly on .accordion-item at background-size: 105%,
-       which only scales relative to the box — once the box got narrow/tall in
-       its collapsed state, 105% wasn't enough to cover it, exposing the
-       section's own leafy background as a "border" around the card. cover
-       always fills the box completely regardless of its aspect ratio, so
-       that gap can't happen. */
     .accordion-item::before {
         content: '';
         position: absolute;
         inset: 0;
-        background-image: inherit; /* reuses the same inline image URL set per room */
+        background-image: inherit;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         z-index: 0;
-        /* resting scale (all cards equal width, nothing hovered) matches the
-           original design's tighter, zoomed-in crop */
         transform: scale(1.06);
         transition: transform 1.2s ease;
     }
 
-    /* Once a sibling is hovered and this card shrinks to flex: 0.75, drop the
-       zoom back to scale(1) — cover already guarantees full coverage on its
-       own, so the extra 1.06 crop was making the small card look
-       over-cropped/zoomed instead of sitting plainly inside its frame. */
-    .accordion-container:has(.accordion-item:hover) .accordion-item:not(:hover)::before {
+    /* Hover-expand effect, scoped to the currently visible page only */
+    .accordion-page:has(.accordion-item:hover) .accordion-item:not(:hover)::before {
         transform: scale(1);
     }
 
@@ -1810,18 +1834,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 rgba(10, 20, 10, 0.05) 100%);
     }
 
-    /* Expand ratios */
-    .accordion-container:has(.accordion-item:hover) .accordion-item {
+    .accordion-page:has(.accordion-item:hover) .accordion-item {
         flex: 0.75;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
+    .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
         flex: 2.0;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    /* ===== Inner layout — content flush to bottom, no extra space ===== */
     .accordion-item > div[style*="z-index: 2"] {
         padding: 28px !important;
         justify-content: flex-end !important;
@@ -1835,7 +1857,6 @@ document.addEventListener('DOMContentLoaded', function () {
         overflow: hidden;
     }
 
-    /* Icon box */
     .accordion-item .icon-box.link {
         width: 44px;
         height: 44px;
@@ -1867,7 +1888,6 @@ document.addEventListener('DOMContentLoaded', function () {
         font-size: 16px !important;
     }
 
-    /* Heading — no bottom margin, sits right above description */
     .accordion-item h4 {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 1.4rem;
@@ -1882,56 +1902,127 @@ document.addEventListener('DOMContentLoaded', function () {
             opacity 0.8s ease;
     }
 
-    /* Description — clean line-clamp, no mid-word cutoff */
-.accordion-item p.text-white {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.85) !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(6px);
+    .accordion-item p.text-white {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.85) !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(6px);
 
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    max-height: none; /* let line-clamp control the cutoff instead */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-height: none;
 
-    will-change: opacity, transform;
-    transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
-}
+        will-change: opacity, transform;
+        transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
+    }
 
-.accordion-item:hover p.text-white {
-    opacity: 1;
-    transform: translateY(0);
-}
-    /* Decorative underline — removed to match reference (no underline shown) */
+    .accordion-item:hover p.text-white {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     .accordion-item::after {
         content: none;
     }
 
-    /* ===== Responsive ===== */
-    @media (max-width: 991px) {
-        .accordion-container {
+    /* ===== Slider controls (matches your Activities slider style) ===== */
+    .accordion-slider-controls {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    /* Hide controls entirely when there's only one page (2 or fewer rooms) */
+    .accordion-slider-controls.single-page {
+        display: none;
+    }
+
+    .accordion-slider-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .accordion-slider-pagination .accordion-dot {
+        width: 28px;
+        height: 3px;
+        border-radius: 2px;
+        background: rgba(26, 30, 22, 0.2);
+        opacity: 1;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .accordion-slider-pagination .accordion-dot.active {
+        background: var(--accent-color);
+        width: 48px;
+    }
+
+    .accordion-slider-prev,
+    .accordion-slider-next {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 30, 22, 0.15);
+        background: #fff;
+        color: var(--accent-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .accordion-slider-prev:hover,
+    .accordion-slider-next:hover {
+        background: var(--accent-color);
+        color: #fff;
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+    }
+
+    .accordion-slider-prev:disabled,
+    .accordion-slider-next:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .about-feature-icon svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    /* ===== Responsive: stack the pair into one column on small screens ===== */
+    @media (max-width: 767px) {
+        .accordion-page {
             flex-direction: column;
             height: auto;
         }
 
         .accordion-item,
-        .accordion-container:has(.accordion-item:hover) .accordion-item,
-        .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
+        .accordion-page:has(.accordion-item:hover) .accordion-item,
+        .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
             flex: none !important;
             min-height: 280px;
         }
 
         .accordion-item > div[style*="z-index: 2"] {
             padding: 24px !important;
-        }
-
-        .accordion-item > div[style*="z-index: 2"] > div:last-child {
-            gap: 4px;
         }
 
         .accordion-item p.text-white {
@@ -1945,14 +2036,56 @@ document.addEventListener('DOMContentLoaded', function () {
             transform: translateY(0);
         }
     }
-
-    .about-feature-icon svg {
-        width: 20px;
-        height: 20px;
-        display: block;
-    }
 </style>
-        <div class="section why-choose-section position-relative" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #fafcf8;">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('roomsTrack');
+    const pages = track ? track.querySelectorAll('.accordion-page') : [];
+    const prevBtn = document.getElementById('roomsPrev');
+    const nextBtn = document.getElementById('roomsNext');
+    const pagination = document.getElementById('roomsPagination');
+    const controls = document.getElementById('roomsControls');
+
+    if (!track || !pages.length) return;
+
+    const totalPages = pages.length;
+    let current = 0;
+
+    // Hide the prev/next + dots entirely if everything fits on one page
+    if (totalPages <= 1) {
+        if (controls) controls.classList.add('single-page');
+        return;
+    }
+
+    // Build pagination dots — one per page (each page = a pair of rooms)
+    pages.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'accordion-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to rooms page ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        pagination.appendChild(dot);
+    });
+
+    const dots = pagination.querySelectorAll('.accordion-dot');
+
+    function goTo(index) {
+        current = Math.max(0, Math.min(index, totalPages - 1));
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === totalPages - 1;
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    goTo(0);
+});
+</script>
+       <div class="section why-choose-section position-relative" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #fafcf8;">
             <div
                 style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: url('{% static 'ambadyestate-main/image/bg_about.png' %}'); background-size: cover; opacity: 0.4; pointer-events: none; z-index: 0;">
             </div>
@@ -1963,8 +2096,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="col-12 col-xl-5 mb-5 mb-xl-0 scrollanimation animated scroll-fadeInRight">
                         <div class="why-image-wrapper">
 
-                            <video autoplay loop muted playsinline poster="{% static 'ambadyestate-main/image/new/why.webp' %}" class="why-video">
-                               <source src="{% static 'ambadyestate-main/video/your-video-file.mp4' %}" type="video/mp4">
+                            <video muted loop playsinline poster="{% static 'ambadyestate-main/image/new/why.webp' %}" class="why-video">
+                               <source src="{% static 'ambadyestate-main/am1.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
 
@@ -2055,7 +2188,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .why-video {
                 width: 100%;
                 height: 100%;
-                min-height: 480px;
+                min-height: 640px;
                 object-fit: cover;
                 border-radius: 24px;
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
@@ -2151,7 +2284,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 .why-video {
-                    min-height: 400px;
+                    min-height: 520px;
                 }
             }
 
@@ -2234,7 +2367,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 .why-video {
-                    min-height: 220px;
+                    min-height: 320px;
                 }
 
                 .google-review-float {
@@ -2266,7 +2399,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             @media (max-width: 480px) {
                 .why-video {
-                    min-height: 180px;
+                    min-height: 260px;
                 }
 
                 .why-image-wrapper {
@@ -2275,6 +2408,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const video = document.querySelector('.why-choose-section .why-video');
+    if (!video) return;
+
+    // Plays the video from the start every time the section scrolls into
+    // view, and pauses it (without resetting) once it scrolls back out —
+    // so it "wakes up" fresh each time a visitor reaches this part of the page.
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                video.currentTime = 0;
+                video.play().catch(() => {
+                    /* Autoplay can be blocked before any user interaction —
+                       safe to ignore, video will still play muted on most
+                       browsers since it has the muted attribute. */
+                });
+            } else {
+                video.pause();
+            }
+        });
+    }, {
+        threshold: 0.4 // section is considered "reached" once ~40% is visible
+    });
+
+    observer.observe(video);
+});
+</script>
         <!-- Section Activities -->
         <div id="services" class="section" style="background-image: url('{% static 'ambadyestate-main/image/Background.png' %}');">
             <div class="r-container d-flex flex-column gap-4">
@@ -3623,21 +3785,20 @@ testi-heading {
   </style>
 
       
+<!-- Section CTA -->
+        <div id="contact" class="section cta-section position-relative overflow-hidden">
 
-        <!-- Section CTA -->
-        <div id="contact" class="section cta-section position-relative overflow-hidden" style="
-            background-image: url('{% static 'ambadyestate-main/image/new/hero3.webp' %}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        ">
+            <!-- Video background -->
+            <video class="cta-video-bg" autoplay loop muted playsinline>
+                <source src="{% static 'ambadyestate-main/am8.mp4' %}" type="video/mp4">
+            </video>
 
             <!-- Overlay -->
             <div style="
-        position: absolute; inset: 0;
-        background: rgba(26, 30, 22, 0.55);
-        z-index: 1;
-    "></div>
+    position: absolute; inset: 0;
+    background: rgba(26, 30, 22, 0.28);
+    z-index: 1;
+"></div>
 
             <!-- Decorative circles -->
             <div style="
@@ -3716,6 +3877,20 @@ testi-heading {
                 </div>
             </div>
         </div>
+
+<style>
+    .cta-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        pointer-events: none;
+    }
+</style>
 
 
 

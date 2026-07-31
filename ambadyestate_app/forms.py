@@ -30,24 +30,23 @@ class GalleryImageForm(forms.ModelForm):  # no need
 
  
 from .models import Room, RoomImage
- 
- 
+
+
 class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = [
-            "status",
             "room_category",
             "description",
             "price_per_night",
+            # status field removed from the form — the model's default
+            # value is used instead (status is no longer editable here).
             # main_image is now set programmatically from the first
             # uploaded room_images file — not a form field anymore.
         ]
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
         }
-
-
 # --------- Multiple Gallery Images for a Room ---------
 
 class MultipleFileInput(forms.ClearableFileInput):

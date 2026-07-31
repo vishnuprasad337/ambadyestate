@@ -141,7 +141,7 @@
             {% for room in rooms %}
                 {% if forloop.counter0|divisibleby:3 %}
                     {% if not forloop.first %}</div>{% endif %}
-                    <div class="accordion-container{% if forloop.first %} active{% endif %}">
+                    <div class="accordion-container">
                 {% endif %}
                 <a href="{% url 'ambadyestate_app:room_details' room.slug %}" class="accordion-item position-relative">
                     <img class="accordion-img" src="{% if room.main_image %}{{ room.main_image.url }}{% else %}{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}{% endif %}" alt="{{ room.room_category|default:'Room' }}">
@@ -166,10 +166,6 @@
                 </div>
             {% endfor %}
         </div>
-
-        {% if rooms|length > 3 %}
-        <div class="accordion-dots"></div>
-        {% endif %}
     </div>
 </div>
 
@@ -184,16 +180,15 @@
 
     .accordion-viewport {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
     .accordion-container {
-        display: none;
+        display: flex;
         gap: 16px;
         height: 460px;
-    }
-
-    .accordion-container.active {
-        display: flex;
         animation: fadeInSlide 0.6s ease;
     }
 
@@ -209,7 +204,16 @@
         border-radius: 20px;
         overflow: hidden;
         cursor: pointer;
-        flex: 1;
+
+        /* FIXED base size: always exactly 1/3 of the row, regardless of how
+           many cards are in that row. flex-grow:0 + flex-shrink:0 means a
+           lone leftover card (e.g. the 4th room sitting alone in its own
+           row) no longer stretches to fill 100% width — it sits at the same
+           width as the cards above it, with empty space beside it. It only
+           grows when hovered/touched, via the rule further down. */
+        flex: 0 0 calc((100% - 32px) / 3) !important;
+        max-width: calc((100% - 32px) / 3);
+
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         will-change: flex;
     }
@@ -263,18 +267,21 @@
                 rgba(10, 20, 10, 0.05) 100%);
     }
 
-    /* Expand ratios — kept less extreme than a tighter collapse would allow:
-       the more a card narrows, the harder object-fit: cover has to crop its
-       image to fill that shape without gaps. 0.85/1.7 keeps the small card
-       wide enough that its photo doesn't look overly zoomed/cropped, while
-       still giving the hovered card a clear size difference. */
+    /* Expand ratios on hover. For a full row of 3, the hovered card grows to
+       1.7fr while the other two shrink to 0.85fr each — the original
+       accordion effect. For a row where a card is alone (no siblings to
+       shrink), this same rule still fires on hover but has nothing to share
+       space with, so the card simply grows to fill the row — the "becomes
+       large on touch" behavior, while staying at the fixed 1/3 size at rest. */
     .accordion-container:has(.accordion-item:hover) .accordion-item {
-        flex: 0.85;
+        flex: 0.85 !important;
+        max-width: none;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
-        flex: 1.7;
+        flex: 1.7 !important;
+        max-width: none;
         transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -373,35 +380,13 @@
         overflow: hidden;
     }
 
-    /* Dots navigation */
-    .accordion-dots {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 24px;
-    }
-
-    .accordion-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(200, 168, 106, 0.3);
-        cursor: pointer;
-        transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .accordion-dot.active {
-        background: var(--accent-color-2, #c8a86a);
-        transform: scale(1.2);
-    }
-
     /* ===== RESPONSIVE ===== */
     @media (max-width: 991px) {
         #rooms {
             padding: 70px 0;
         }
 
-        .accordion-container.active {
+        .accordion-container {
             flex-direction: column;
             height: auto;
         }
@@ -410,6 +395,7 @@
         .accordion-container:has(.accordion-item:hover) .accordion-item,
         .accordion-container:has(.accordion-item:hover) .accordion-item:hover {
             flex: none !important;
+            max-width: none !important;
             min-height: 280px;
         }
 
@@ -485,55 +471,6 @@
         }
     }
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const viewport = document.querySelector('.accordion-viewport');
-    if (!viewport) return;
-
-    const slides = Array.from(viewport.querySelectorAll('.accordion-container'));
-    if (slides.length <= 1) return; // 3 or fewer rooms — nothing to rotate
-
-    const dotsWrap = document.querySelector('.accordion-dots');
-    let current = 0;
-    let intervalId;
-    const AUTO_DELAY = 5000; // 5 seconds per set
-
-    // Build dots
-    slides.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.className = 'accordion-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => {
-            goToSlide(i);
-            resetTimer();
-        });
-        dotsWrap.appendChild(dot);
-    });
-    const dots = Array.from(dotsWrap.children);
-
-    function goToSlide(index) {
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = index;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
-    }
-
-    function nextSlide() {
-        goToSlide((current + 1) % slides.length);
-    }
-
-    function resetTimer() {
-        clearInterval(intervalId);
-        intervalId = setInterval(nextSlide, AUTO_DELAY);
-    }
-
-    resetTimer();
-
-    // Pause auto-rotate while hovering over the cards
-    viewport.addEventListener('mouseenter', () => clearInterval(intervalId));
-    viewport.addEventListener('mouseleave', resetTimer);
-});
-</script>
 <!-- Section Amenities -->
 <div id="projects" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_service.png' %}');">
     <div class="r-container d-flex flex-column gap-5 align-items-center">

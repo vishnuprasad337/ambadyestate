@@ -363,14 +363,12 @@
                     <h1 class="detail-title">{{ room.room_category }}</h1>
 
                     <div class="tag-row">
-                        <span class="tag-pill status-{{ room.status }}">
-                            <i class="fas fa-circle" style="font-size:8px;"></i> {{ room.get_status_display }}
-                        </span>
+                       
                         {% if room.size_sqm %}
                             <span class="tag-pill"><i class="fas fa-ruler-combined"></i> {{ room.size_sqm }} m&sup2;</span>
                         {% endif %}
                         <span class="tag-pill"><i class="fas fa-tag"></i> &#8377;{{ room.price_per_night }} / night</span>
-                        <span class="tag-pill"><i class="fas fa-users"></i> {{ room.total_guests }} guest{{ room.total_guests|pluralize }}</span>
+                       
                     </div>
 
                     
@@ -384,9 +382,6 @@
                         <li><span class="info-label">Price per Night</span><span class="info-value">&#8377;{{ room.price_per_night }}</span></li>
                        
                       
-                        <li><span class="info-label">Bedroom Beds</span><span class="info-value">{{ room.bedroom_beds|default:"—" }}</span></li>
-                        <li><span class="info-label">Living Room Beds</span><span class="info-value">{{ room.living_room_beds|default:"—" }}</span></li>
-                        <li><span class="info-label">Rating</span><span class="info-value">{% if room.rating_average %}{{ room.rating_average }} &#9733; ({{ room.review_count }} review{{ room.review_count|pluralize }}){% else %}—{% endif %}</span></li>
                     </ul>
                      
                     

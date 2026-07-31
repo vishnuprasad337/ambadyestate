@@ -412,44 +412,6 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
 }
 </style>
 
-<!-- Status Toggle Styles -->
-<style>
-.status-switch-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 0.6rem;
-}
-
-.status-toggle-input {
-    width: 3rem !important;
-    height: 1.5rem !important;
-    cursor: pointer;
-    margin: 0 !important;
-    flex-shrink: 0;
-}
-
-.status-toggle-input:focus {
-    box-shadow: none !important;
-    outline: none;
-}
-
-.status-toggle-input:checked {
-    background-color: #16a34a;
-    border-color: #16a34a;
-}
-
-.status-switch-label {
-    cursor: pointer;
-    margin-bottom: 0;
-}
-
-.status-switch-text {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-</style>
-
 {% endblock %}
 {% block content %}
 <div class="dashboard sp_bottom_100">
@@ -488,25 +450,6 @@ img, input, textarea, select, .form-control, .modern-input, .form-text {
                                     <input type="text" name="room_category" id="room_category" class="form-control modern-input" placeholder="e.g. Entire villa" value="{{ form.room_category.value|default:'' }}" required>
                                     {% if form.room_category.errors %}<div class="text-danger small mt-1">{{ form.room_category.errors|first }}</div>{% endif %}
                                     <span class="text-danger field-error" id="room_category-error"></span>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label d-block">Status <span class="text-danger">*</span></label>
-                                    <input type="hidden" name="status" id="status" class="status-hidden-input" value="{{ form.status.value|default:'active' }}">
-                                    <div class="form-check form-switch status-switch-wrapper">
-                                        <input
-                                            class="form-check-input status-toggle-input"
-                                            type="checkbox"
-                                            role="switch"
-                                            id="statusSwitch"
-                                            {% if form.status.value == "active" or not form.status.value %}checked{% endif %}
-                                        >
-                                        <label class="form-check-label status-switch-label" for="statusSwitch">
-                                            <span class="status-switch-text">{% if form.status.value == "inactive" %}Inactive{% else %}Active{% endif %}</span>
-                                        </label>
-                                    </div>
-                                    {% if form.status.errors %}<div class="text-danger small mt-1">{{ form.status.errors|first }}</div>{% endif %}
-                                    <span class="text-danger field-error" id="status-error"></span>
                                 </div>
 
                                 <div class="col-md-6 mb-4">
@@ -718,27 +661,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 })();
-</script>
-
-<!-- Status Toggle Logic -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('statusSwitch');
-    const hiddenInput = document.getElementById('status');
-    const textSpan = document.querySelector('.status-switch-text');
-
-    if (toggle && hiddenInput && textSpan) {
-        toggle.addEventListener('change', function () {
-            if (this.checked) {
-                hiddenInput.value = 'active';
-                textSpan.textContent = 'Active';
-            } else {
-                hiddenInput.value = 'inactive';
-                textSpan.textContent = 'Inactive';
-            }
-        });
-    }
-});
 </script>
 
 <script>

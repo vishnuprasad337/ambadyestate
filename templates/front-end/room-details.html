@@ -100,42 +100,11 @@
 
                 <div class="room-quickfacts">
 
-                    {% if room.bedroom_beds %}
-                    <div class="room-quickfact reveal-left" style="--d:0">
-                        <div class="room-quickfact-icon">
-                            <i class="fa-solid fa-door-open"></i>
-                        </div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Bedroom</span>
-                            <span class="room-quickfact-text">{{ room.bedroom_beds }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
+                    
 
-                    {% if room.living_room_beds %}
-                    <div class="room-quickfact reveal-left" style="--d:1">
-                        <div class="room-quickfact-icon">
-                            <i class="fa-solid fa-bed"></i>
-                        </div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Living Space</span>
-                            <span class="room-quickfact-text">{{ room.living_room_beds }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
+                   
 
-                    {% if room.rating_average %}
-                    <div class="room-quickfact reveal-left" style="--d:2">
-                        <div class="room-quickfact-icon">
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="room-quickfact-body">
-                            <span class="room-quickfact-title">Guest Rating</span>
-                            <span class="room-quickfact-text">{{ room.rating_average }} / 5</span>
-                        </div>
-                    </div>
-                    {% endif %}
-
+                   
                     <div class="room-quickfact room-quickfact-cta reveal-left" style="--d:3">
                         <div class="room-quickfact-icon">
                             <i class="fa-solid fa-calendar-check"></i>
