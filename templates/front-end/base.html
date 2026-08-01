@@ -99,7 +99,9 @@
         .site-navbar .navbar-nav .nav-link.active::after {
             width: 100%;
         }
-
+ :root {
+    --navbar-h: 96px; /* fallback until JS measures the real header */
+}
         /* Nav text stays white in both the transparent (top-of-page) and
            .is-scrolled (olive green bar) header states. */
         .site-header.is-scrolled .site-navbar .navbar-nav .nav-link {
@@ -452,7 +454,27 @@
         </div>
     </header>
     <!-- End Header -->
+<script>
+(function () {
+    var header = document.getElementById('header');
+    if (!header) return;
 
+    function setNavbarHeightVar() {
+        var h = header.getBoundingClientRect().height;
+        if (h > 0) {
+            document.documentElement.style.setProperty('--navbar-h', h + 'px');
+        }
+    }
+
+    setNavbarHeightVar();
+    window.addEventListener('load', setNavbarHeightVar);
+    window.addEventListener('resize', setNavbarHeightVar);
+
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(setNavbarHeightVar).observe(header);
+    }
+})();
+</script>
     <!-- Main -->
     <main>
         {% block content %}{% endblock %}

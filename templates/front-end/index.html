@@ -567,48 +567,56 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="about-hero-media">
                     <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-hero-img about-hero-img-main" alt="Ambady Estate">
                 </div>
+                <div class="about-hero-cta">
+        <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
+            <span>Explore Now</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
             </div>
 
-            <!-- Paragraph content (always third) -->
-            <div class="about-content-col">
-                <div class="d-flex flex-column gap-3 about-text-col">
-                    <p class="about-desc">
-                        In the 90's, our journey began with a beautiful 70-acre cardamom estate in the
-                        heart of Munnar. When we first came here, there were only two old cardamom
-                        curing houses, staff quarters, and endless greenery. What made us fall in love
-                        with this place was its peaceful beauty—the misty mountains, fresh mountain
-                        air, colourful butterflies, and the gentle chirping of birds.
-                    </p>
+            <!-- Paragraph content (masked scroll-reveal: only fills to image's bottom border, remaining text scrolls up inside the mask, then the whole row releases into the Discover section) -->
+            <div class="about-content-scroll-wrapper">
+                <div class="about-content-col">
+                    <div class="d-flex flex-column gap-3 about-text-col">
+                        <p class="about-desc">
+                            In the 90's, our journey began with a beautiful 70-acre cardamom estate in the
+                            heart of Munnar. When we first came here, there were only two old cardamom
+                            curing houses, staff quarters, and endless greenery. What made us fall in love
+                            with this place was its peaceful beauty—the misty mountains, fresh mountain
+                            air, colourful butterflies, and the gentle chirping of birds.
+                        </p>
 
-                    <p class="about-desc">
-                        We knew this place was too special to change. So, we made a promise to
-                        protect it. We chose to grow our cardamom using natural and organic farming
-                        methods, just as nature intended. Even today, we continue natural farming to
-                        keep our land healthy and beautiful.
-                    </p>
+                        <p class="about-desc">
+                            We knew this place was too special to change. So, we made a promise to
+                            protect it. We chose to grow our cardamom using natural and organic farming
+                            methods, just as nature intended. Even today, we continue natural farming to
+                            keep our land healthy and beautiful.
+                        </p>
 
-                    <p class="about-desc">
-                        In 2004, we welcomed our first guests by building eight boutique cottages with
-                        great care. We protected the trees and preserved the natural beauty around us,
-                        so every guest could enjoy the same peaceful feeling that made us fall in love
-                        with this place.
-                    </p>
+                        <p class="about-desc">
+                            In 2004, we welcomed our first guests by building eight boutique cottages with
+                            great care. We protected the trees and preserved the natural beauty around us,
+                            so every guest could enjoy the same peaceful feeling that made us fall in love
+                            with this place.
+                        </p>
 
-                    <p class="about-desc">
-                        Today, Ambady Estate is proudly known as one of the Best Resorts in Munnar,
-                        offering the perfect blend of comfort, peace, and nature. Whether you're
-                        looking for a Luxury Resort in Munnar or a peaceful Nature Resort in Munnar,
-                        we invite you to experience the beauty of Munnar with us.
-                    </p>
+                        <p class="about-desc">
+                            Today, Ambady Estate is proudly known as one of the Best Resorts in Munnar,
+                            offering the perfect blend of comfort, peace, and nature. Whether you're
+                            looking for a Luxury Resort in Munnar or a peaceful Nature Resort in Munnar,
+                            we invite you to experience the beauty of Munnar with us.
+                        </p>
 
-                    <p class="about-desc">
-                        Every morning, the gentle chirping of Hornbills, Malabar Whistling Thrushes,
-                        Sunbirds, Woodpeckers, and many other birds welcomes you to a new day.
-                        Colourful butterflies fly through our cardamom plantations, and during
-                        different seasons, beautiful migratory birds also visit our estate. Every walk
-                        here brings you closer to nature and leaves you with memories you'll always
-                        cherish.
-                    </p>
+                        <p class="about-desc">
+                            Every morning, the gentle chirping of Hornbills, Malabar Whistling Thrushes,
+                            Sunbirds, Woodpeckers, and many other birds welcomes you to a new day.
+                            Colourful butterflies fly through our cardamom plantations, and during
+                            different seasons, beautiful migratory birds also visit our estate. Every walk
+                            here brings you closer to nature and leaves you with memories you'll always
+                            cherish.
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -626,7 +634,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <h3 class="unique-section-heading">What Makes Us Unique</h3>
         </div>
 
-        <!-- What Makes Us Unique — vertical expanding accordion + two-image pop panel -->
+        <!-- What Makes Us Unique — vertical expanding accordion + two-image pop panel.
+             On desktop, scrolling into this block pins the page and steps through
+             each card/image in turn; once the last card is reached, scrolling
+             continues normally into the next section (see script at bottom). -->
         <div class="about-cards-wrapper scrollanimation animated scroll-fadeInUp">
             <div class="about-card-row">
 
@@ -780,33 +791,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </div>
 
-            <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only) -->
+            <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only).
+                 class="no-fade" keeps the page-wide scroll-fade script from touching these —
+                 they're controlled entirely by the stack-front/stack-back JS below. -->
             <div class="about-cards-image-panel">
                 <div class="about-cards-image-item active">
-                    <img src="{% static 'ambadyestate-main/am12.jpg' %}" alt="Private Retreat">
+                    <img src="{% static 'ambadyestate-main/am12.jpg' %}" class="no-fade" alt="Private Retreat">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am14.png' %}" alt="Eco Architecture">
+                    <img src="{% static 'ambadyestate-main/am14.png' %}" class="no-fade" alt="Eco Architecture">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am15.png' %}" alt="Locovore Cuisine">
+                    <img src="{% static 'ambadyestate-main/am15.png' %}" class="no-fade" alt="Locovore Cuisine">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am6.jpeg' %}" alt="Valley-view Pool">
+                    <img src="{% static 'ambadyestate-main/am6.jpeg' %}" class="no-fade" alt="Valley-view Pool">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" alt="Guided Trails">
+                    <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" class="no-fade" alt="Guided Trails">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am16.png' %}" alt="Organic Farm">
+                    <img src="{% static 'ambadyestate-main/am16.png' %}" class="no-fade" alt="Organic Farm">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am17.png' %}" alt="Goshala">
+                    <img src="{% static 'ambadyestate-main/am17.png' %}" class="no-fade" alt="Goshala">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" alt="Birding Paradise">
+                    <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" class="no-fade" alt="Birding Paradise">
                 </div>
+                
             </div>
+            
         </div>
 
         <!-- Bottom: Full width quote banner -->
@@ -830,6 +845,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 <style>
+    html {
+    scrollbar-gutter: stable;
+}
     /* =====================================================
        ABOUT SECTION
     ===================================================== */
@@ -840,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* =====================================================
        TOP STORY AREA
-       Left: heading + scrollable content
+       Left: heading + masked scroll-reveal content
        Right: sticky fixed image
     ===================================================== */
 
@@ -858,54 +876,56 @@ document.addEventListener('DOMContentLoaded', function () {
         margin-bottom: 70px;
     }
 
-    /* Heading */
+    /* Heading — sticky too, so it stays pinned alongside the image
+       while the text scrolls through the mask, and only releases
+       together with the image once the text is fully revealed.
+       Offset now derives from the real navbar height (--navbar-h,
+       set in base.html) instead of a hardcoded guess. */
     .about-heading-col {
         grid-area: heading;
+
+        position: sticky;
+        top: calc(var(--navbar-h, 96px) + 20px - 60px);
+
+        align-self: start;
     }
 
     /* =====================================================
-       SCROLLABLE STORY CONTENT
+       MASKED SCROLL-REVEAL STORY CONTENT
+       - .about-content-scroll-wrapper: tall spacer (height set by JS)
+         that gives the page room to scroll while text moves through
+         the mask; once exhausted, the sticky mask below releases
+         naturally into the next section.
+       - .about-content-col: sticky mask, fixed to the image's height,
+         clips (overflow:hidden) so only "one image-height" of text
+         shows at a time.
+       - .about-text-col: the actual paragraphs, translated upward by
+         JS in sync with scroll position.
     ===================================================== */
 
-    .about-content-col {
+    .about-content-scroll-wrapper {
         grid-area: content;
+        position: relative;
+        width: 100%;
+    }
+
+    .about-content-col {
+        position: sticky;
+        top: calc(var(--navbar-h, 96px) + 20px); /* must match .about-image-col's top */
 
         width: 100%;
-        height: 500px;
+        height: 500px; /* must match .about-image-col's height */
         max-height: 65vh;
 
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
 
         padding-right: 18px;
         box-sizing: border-box;
-
-        scrollbar-width: thin;
-        scrollbar-color: rgba(105, 120, 90, 0.65) transparent;
     }
 
-    /* Chrome, Edge and Safari scrollbar */
-    .about-content-col::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    .about-content-col::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    .about-content-col::-webkit-scrollbar-thumb {
-        background: rgba(105, 120, 90, 0.6);
-        border-radius: 20px;
-    }
-
-    .about-content-col::-webkit-scrollbar-thumb:hover {
-        background: rgba(75, 95, 65, 0.85);
-    }
-
-    /* Story paragraphs */
     .about-text-col {
         max-width: 100%;
-        padding-bottom: 4px;
+        will-change: transform;
     }
 
     .about-text-col .about-desc:last-child {
@@ -917,19 +937,30 @@ document.addEventListener('DOMContentLoaded', function () {
     ===================================================== */
 
     .about-image-col {
-    grid-area: image;
+        grid-area: image;
 
-    position: sticky;
-    top: 120px;
-    margin-top: 30px;   /* was -34px — increase this value to move image further down */
+        position: sticky;
+        top: calc(var(--navbar-h, 96px) + 20px);
+        margin-top: 30px;   /* was -34px — increase this value to move image further down */
 
-    align-self: start;
+        align-self: start;
 
-    width: 100%;
-    height: 500px;
-    max-height: 65vh;
+        width: 100%;
+        height: 500px;
+        max-height: 65vh;
+    }
+.about-hero-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
 }
 
+@media (max-width: 991px) {
+    .about-hero-cta {
+        margin-top: 14px;
+        margin-bottom: 10px;
+    }
+}
     .about-hero-media {
         position: relative;
 
@@ -1469,8 +1500,21 @@ document.addEventListener('DOMContentLoaded', function () {
         margin-bottom: 32px;
     }
 
-    /* Remove internal story scrolling */
+    /* Un-stick the heading on mobile/tablet — normal stacked flow */
+    .about-heading-col {
+        position: relative;
+        top: auto;
+    }
+
+    /* Remove masked scroll effect entirely on mobile — natural stacked flow */
+    .about-content-scroll-wrapper {
+        height: auto !important;
+    }
+
     .about-content-col {
+        position: relative;
+        top: auto;
+
         width: 100%;
 
         height: auto;
@@ -1483,6 +1527,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         margin-top: 0;
         padding-top: 0;
+    }
+
+    .about-text-col {
+        transform: none !important;
     }
 
     /* Remove sticky image */
@@ -1708,126 +1756,357 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 </style>
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    const row = document.querySelector('.about-card-row');
-    const cards = document.querySelectorAll('.about-card-row .about-feature-card');
-    const imageItems = document.querySelectorAll('.about-cards-image-panel .about-cards-image-item');
-    const wrapper = document.querySelector('.about-cards-wrapper');
+document.addEventListener('DOMContentLoaded', function () {
+    const wrapper = document.querySelector('.about-content-scroll-wrapper');
+    const mask = document.querySelector('.about-content-col');
+    const textCol = document.querySelector('.about-text-col');
 
-    if (!cards.length) return;
+    if (!wrapper || !mask || !textCol) return;
 
-    let currentIndex = 0;
-    let autoTimer = null;
-    let leavingTimeoutId = null; // tracks the single in-flight "leaving" cleanup
-    let transitionLock = false;  // debounce: ignore new triggers until current one settles
-    const AUTO_INTERVAL = 3500; // ms between auto-switches
-    const TRANSITION_LOCK_MS = 380; // roughly matches the CSS transition length
+    const isDesktop = () => window.matchMedia('(min-width: 992px)').matches;
+    const PIN_TOLERANCE = 4;
 
-    function activateIndex(index) {
-        if (transitionLock) return;
+    let maxTranslate = 0;
+    let progress = 0;
+    let locked = false;
+    let touchStartY = 0;
 
-        const newIndex = (index + cards.length) % cards.length;
-        if (newIndex === currentIndex) return;
+    // Reads the same --navbar-h variable that base.html keeps in sync with
+    // the real header height, so the lock's pin-detection always matches
+    // the CSS top offset exactly — never a separate hardcoded number.
+    function getStickyTop() {
+        var val = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
+        var navH = parseFloat(val) || 96;
+        return navH + 20;
+    }
 
-        const backIndex = (newIndex + 1) % cards.length;
-        const outgoingIndex = currentIndex;
+    function measure() {
+        if (!isDesktop()) {
+            maxTranslate = 0;
+            textCol.style.transform = 'none';
+            return;
+        }
+        maxTranslate = Math.max(0, textCol.scrollHeight - mask.offsetHeight);
+    }
 
-        transitionLock = true;
-        setTimeout(() => { transitionLock = false; }, TRANSITION_LOCK_MS);
+    function applyProgress() {
+        textCol.style.transform = 'translateY(' + (-progress * maxTranslate) + 'px)';
+    }
 
-        cards.forEach((card, i) => card.classList.toggle('active', i === newIndex));
+    function isAtPinPoint() {
+        const rect = wrapper.getBoundingClientRect();
+        const stickyTop = getStickyTop();
+        return rect.top <= stickyTop + PIN_TOLERANCE && rect.top >= stickyTop - mask.offsetHeight;
+    }
 
-        if (leavingTimeoutId) {
-            clearTimeout(leavingTimeoutId);
-            leavingTimeoutId = null;
+    function engageLock() {
+        if (locked) return;
+        locked = true;
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function releaseLock() {
+        if (!locked) return;
+        locked = false;
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+    }
+
+    function handleDelta(delta) {
+        if (!isDesktop() || maxTranslate <= 0) return false;
+
+        if (delta === 0) {
+            return locked;
         }
 
-        if (outgoingIndex !== newIndex) {
-            imageItems[outgoingIndex].classList.remove('stack-front', 'stack-back');
-            imageItems[outgoingIndex].classList.add('stack-leaving');
-            leavingTimeoutId = setTimeout(() => {
-                imageItems[outgoingIndex].classList.remove('stack-leaving');
-                leavingTimeoutId = null;
-            }, 350);
+        const goingDown = delta > 0;
+
+        if (locked) {
+            progress = goingDown
+                ? Math.min(1, progress + delta / maxTranslate)
+                : Math.max(0, progress + delta / maxTranslate);
+            applyProgress();
+            if (progress >= 1 || progress <= 0) {
+                releaseLock();
+            }
+            return true;
         }
 
-        imageItems.forEach((item, i) => {
-            if (i !== outgoingIndex && i !== newIndex && i !== backIndex) {
-                item.classList.remove('stack-front', 'stack-back', 'stack-leaving');
+        if (goingDown && progress < 1 && isAtPinPoint()) {
+            engageLock();
+            progress = Math.min(1, progress + delta / maxTranslate);
+            applyProgress();
+            if (progress >= 1) releaseLock();
+            return true;
+        }
+
+        if (!goingDown && progress > 0 && isAtPinPoint()) {
+            engageLock();
+            progress = Math.max(0, progress + delta / maxTranslate);
+            applyProgress();
+            if (progress <= 0) releaseLock();
+            return true;
+        }
+
+        return false;
+    }
+
+    function onWheel(e) {
+        if (handleDelta(e.deltaY)) {
+            e.preventDefault();
+        }
+    }
+
+    function onTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+    }
+
+    function onTouchMove(e) {
+        const currentY = e.touches[0].clientY;
+        const delta = touchStartY - currentY;
+        if (handleDelta(delta)) {
+            e.preventDefault();
+        }
+        touchStartY = currentY;
+    }
+
+    function onKeyDown(e) {
+        if (!locked) return;
+        const blocked = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space', 'End', 'Home'];
+        if (blocked.includes(e.code) || blocked.includes(e.key)) {
+            e.preventDefault();
+            const delta = (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Home') ? -60 : 60;
+            handleDelta(delta);
+        }
+    }
+
+    function refresh() {
+        measure();
+        applyProgress();
+    }
+
+    window.addEventListener('load', refresh);
+    window.addEventListener('resize', refresh);
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('keydown', onKeyDown);
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(refresh);
+    }
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(function () { refresh(); }).observe(textCol);
+    }
+
+    const heroImg = document.querySelector('.about-hero-img-main');
+    if (heroImg && !heroImg.complete) {
+        heroImg.addEventListener('load', refresh);
+    }
+
+    refresh();
+});
+</script>
+<script>
+/* =====================================================
+   DISCOVER SECTION — SCROLL-JACKED CARD/IMAGE STEPPER
+   On desktop, once the Discover block reaches the top
+   trigger point, page scroll is frozen and each further
+   scroll "tick" advances (or reverses) one card + its
+   matching image in the stack panel. Once the last card
+   is reached and the user keeps scrolling down, the lock
+   releases and the page scrolls normally into the next
+   section. Scrolling back up from below re-engages the
+   lock and steps backward through the cards.
+===================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    var wrapper = document.querySelector('.about-cards-wrapper');
+    var cards = document.querySelectorAll('.about-feature-card');
+    var imageItems = document.querySelectorAll('.about-cards-image-item');
+    if (!wrapper || !cards.length || !imageItems.length) return;
+
+    var isDesktop = function () {
+        return window.matchMedia('(min-width: 992px)').matches;
+    };
+
+    var totalCards = cards.length;
+    var currentIndex = 0;
+    var locked = false;
+    var isStepping = false;
+    var STEP_COOLDOWN = 700; // ms — blocks further steps until this elapses, so one scroll gesture = one image change
+    var DELTA_MIN = 4; // ignores near-zero noise events (e.g. trackpad micro-jitter)
+    var PIN_TOLERANCE = 4;
+    var touchStartY = 0;
+
+    function getStickyTop() {
+        var val = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
+        var navH = parseFloat(val) || 96;
+        return navH + 20;
+    }
+
+    function setActiveCard(index) {
+        cards.forEach(function (c) { c.classList.remove('active'); });
+        cards[index].classList.add('active');
+    }
+
+    function swapImage(index) {
+        if (index === currentIndex) return;
+
+        imageItems.forEach(function (item, i) {
+            item.classList.remove('stack-leaving');
+            if (i === currentIndex) {
+                item.classList.remove('stack-front');
+                item.classList.add('stack-leaving');
             }
         });
 
-        imageItems[newIndex].classList.remove('stack-leaving', 'stack-back');
-        imageItems[newIndex].classList.add('stack-front');
-
-        if (backIndex !== newIndex) {
-            imageItems[backIndex].classList.remove('stack-front', 'stack-leaving');
-            imageItems[backIndex].classList.add('stack-back');
-        }
-
-        currentIndex = newIndex;
-    }
-
-    function nextCard() {
-        activateIndex(currentIndex + 1);
-    }
-
-    function startAuto() {
-        if (autoTimer) return;
-        autoTimer = setInterval(nextCard, AUTO_INTERVAL);
-    }
-
-    function stopAuto() {
-        if (autoTimer) {
-            clearInterval(autoTimer);
-            autoTimer = null;
-        }
-    }
-
-    function restartAuto() {
-        stopAuto();
-        startAuto();
-    }
-
-    const isDesktop = window.matchMedia('(min-width: 992px)').matches;
-
-    if (isDesktop) {
-        cards.forEach((card, i) => {
-            card.addEventListener('mouseenter', () => {
-                stopAuto();
-                activateIndex(i);
-            });
-        });
-        row.addEventListener('mouseleave', () => {
-            restartAuto();
-        });
-    } else {
-        cards.forEach((card, i) => {
-            card.addEventListener('click', () => {
-                stopAuto();
-                activateIndex(i);
-                setTimeout(restartAuto, AUTO_INTERVAL);
-            });
-        });
-    }
-
-    imageItems[0].classList.add('stack-front');
-    if (imageItems[1]) imageItems[1].classList.add('stack-back');
-
-    if (wrapper) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    startAuto();
-                } else {
-                    stopAuto();
+        setTimeout(function () {
+            imageItems.forEach(function (item, i) {
+                item.classList.remove('stack-front', 'stack-back', 'stack-leaving');
+                if (i === index) {
+                    item.classList.add('stack-front');
+                } else if (i === currentIndex) {
+                    item.classList.add('stack-back');
                 }
             });
-        }, { threshold: 0.3 });
-        observer.observe(wrapper);
-    } else {
-        startAuto();
+            currentIndex = index;
+        }, 260);
     }
+
+    function goTo(index) {
+        index = Math.max(0, Math.min(index, totalCards - 1));
+        if (index === currentIndex) return;
+        setActiveCard(index);
+        swapImage(index);
+    }
+
+    // Show the first card/image immediately on load
+    imageItems[0].classList.add('stack-front');
+
+    // Clicking a card still jumps straight to it (accessibility / manual override)
+    cards.forEach(function (card, index) {
+        card.addEventListener('click', function () {
+            goTo(index);
+        });
+    });
+
+    function isAtPinPoint() {
+        var rect = wrapper.getBoundingClientRect();
+        var stickyTop = getStickyTop();
+        return rect.top <= stickyTop + PIN_TOLERANCE && rect.bottom > stickyTop + PIN_TOLERANCE;
+    }
+
+    function engageLock() {
+        if (locked) return;
+        locked = true;
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function releaseLock() {
+        if (!locked) return;
+        locked = false;
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+    }
+
+    function stepAndCooldown(nextIndex) {
+        isStepping = true;
+        goTo(nextIndex);
+        setTimeout(function () {
+            isStepping = false;
+        }, STEP_COOLDOWN);
+    }
+
+    function handleDelta(delta) {
+        if (!isDesktop()) return false;
+        if (Math.abs(delta) < DELTA_MIN) return locked;
+
+        var goingDown = delta > 0;
+
+        // Scrolling UP always behaves like normal page scroll — no reverse
+        // stepping through cards. If a lock happened to be engaged, drop it.
+        if (!goingDown) {
+            if (locked) releaseLock();
+            return false;
+        }
+
+        // From here on, delta is a downward scroll.
+        if (locked) {
+            // Still animating/cooling down from the last step — swallow this
+            // scroll event so it doesn't skip ahead, but keep the page pinned.
+            if (isStepping) return true;
+
+            if (currentIndex < totalCards - 1) {
+                stepAndCooldown(currentIndex + 1);
+                return true;
+            }
+
+            // No cards left — release into the next section.
+            releaseLock();
+            return false;
+        }
+
+        // Not locked yet — engage only if there's still an un-viewed card
+        // and we've scrolled to the section's pin point.
+        if (currentIndex < totalCards - 1 && isAtPinPoint()) {
+            engageLock();
+            stepAndCooldown(currentIndex + 1);
+            return true;
+        }
+
+        return false;
+    }
+
+    function onWheel(e) {
+        if (handleDelta(e.deltaY)) {
+            e.preventDefault();
+        }
+    }
+
+    function onTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+    }
+
+    function onTouchMove(e) {
+        var currentY = e.touches[0].clientY;
+        var delta = touchStartY - currentY;
+        if (handleDelta(delta)) {
+            e.preventDefault();
+        }
+        touchStartY = currentY;
+    }
+
+    function onKeyDown(e) {
+        if (!locked) return;
+        var downKeys = ['ArrowDown', 'PageDown', 'Space', 'End'];
+        var upKeys = ['ArrowUp', 'PageUp', 'Home'];
+
+        if (downKeys.indexOf(e.code) !== -1 || downKeys.indexOf(e.key) !== -1) {
+            e.preventDefault();
+            handleDelta(60);
+            return;
+        }
+
+        if (upKeys.indexOf(e.code) !== -1 || upKeys.indexOf(e.key) !== -1) {
+            // Let scrolling up release the lock and behave normally — don't preventDefault
+            releaseLock();
+        }
+    }
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('keydown', onKeyDown);
+
+    // Safety: if the viewport is resized down to mobile while locked, release
+    window.addEventListener('resize', function () {
+        if (locked && !isDesktop()) {
+            releaseLock();
+            isStepping = false;
+        }
+    });
 });
 </script>
 
@@ -1855,7 +2134,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Photo -->
             <div class="founder-photo-wrap scrollanimation animated scroll-fadeInLeft">
                 <div class="founder-photo-frame">
-                    <img src="{% static 'ambadyestate-main/fo.png' %}" alt="Arun Joseph, Founder of Ambady Estate">
+                    <img src="{% static 'ambadyestate-main/fo.png' %}" alt="Rajesh, Founder of Ambady Estate">
                 </div>
             </div>
 
@@ -2692,12 +2971,18 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
 
                             </div>
+
+                            <div class="why-cta-wrap">
+                                <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
+                                    <span>Book Your Stay</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 <style>
             /* ===== REVAMPED WHY CHOOSE US SECTION ===== */
             .why-choose-section {
@@ -2712,17 +2997,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             .why-video {
-                width: 100%;
-                height: 100%;
-                min-height: 640px;
-                object-fit: cover;
-                border-radius: 24px;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-                display: block;
-                background-color: #e9ecef;
-                /* Fallback color while loading */
-            }
-
+    width: 100%;
+    height: 100%;
+    min-height: 800px;   /* was 640px */
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    display: block;
+    background-color: #e9ecef;
+}
             /* Google Review Float */
             .google-review-float {
                 position: absolute;
@@ -2797,6 +3080,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 color: #ffffff;
                 transform: scale(1.05) rotate(-5deg);
             }
+.why-cta-wrap {
+    margin-top: 40px;
+}
+
+.why-cta-wrap .btn-accent {
+    width: fit-content;
+}
 
             /* Responsive Adjustments */
             @media (max-width: 1199px) {
@@ -2935,6 +3225,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             /* ===== FIX: Prevent heading overflow on mobile ===== */
 @media (max-width: 991px) {
+    .why-choose-section .row.align-items-center {
+        display: flex;
+        flex-direction: column;
+    }
+
     .why-choose-section .r-container {
         width: 100%;
         max-width: 100%;
@@ -2944,13 +3239,75 @@ document.addEventListener('DOMContentLoaded', function () {
         padding-right: 20px;
     }
 
-    .why-content-wrapper h3 {
+    /* Flatten the Bootstrap columns so their children become
+       direct flex items we can reorder freely */
+    .why-choose-section .row.align-items-center > .col-xl-5,
+    .why-choose-section .row.align-items-center > .col-xl-7,
+    .why-content-wrapper {
+        display: contents;
+    }
+
+    /* 1. Heading block first */
+    .why-content-wrapper > h6 {
+        order: 1;
+    }
+
+    .why-content-wrapper > h3 {
+        order: 2;
+        margin-bottom: 20px !important;
         width: 100%;
-        max-width: 100%;
+        max-width: 100vw;
         box-sizing: border-box;
+        padding: 0 20px;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
+    }
+
+    /* 2. Image second — narrower and centered, not full-bleed */
+    .why-image-wrapper {
+        order: 3;
+        margin-bottom: 24px;
+        width: 80%;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 3. Rest of the content (paragraph + feature list) last */
+    .why-content-wrapper > p.mb-5 {
+        order: 4;
+    }
+
+    .why-content-wrapper > .why-features-list {
+        order: 5;
+    }
+
+    /* 4. CTA button comes after everything else */
+    .why-content-wrapper > .why-cta-wrap {
+        order: 6;
+    }
+
+    /* Turn each feature into an actual card */
+    .why-features-list {
+        gap: 20px !important;
+    }
+
+    .why-feature-item {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 28px 24px;
+        box-shadow: 0 8px 28px rgba(44, 95, 26, 0.08);
+        border: 1px solid rgba(44, 95, 26, 0.06);
+        text-align: center;
+    }
+
+    .why-icon-box {
+        margin: 0 auto;
+    }
+
+    .why-feature-text h5 {
+        margin-top: 4px;
     }
 }
         </style>
