@@ -2643,3 +2643,15 @@ input[type="button"] {
     text-transform: uppercase !important;
     font-size: 1.05rem !important;
 }
+/* ===== GLOBAL IMAGE FADE IN/OUT ON SCROLL ===== */
+img.fade-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22, 1, .36, 1);
+    will-change: opacity, transform;
+}
+
+img.fade-scroll.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}

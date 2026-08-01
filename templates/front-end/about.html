@@ -2423,5 +2423,89 @@
         }
     }
 </style>
+<style>
+    /* ===== PAGE-WIDE FADE + MOVEMENT ON EVERY SCROLL — IMAGES + CARDS ===== */
+    img.page-fade-img,
+    .page-fade-card {
+        opacity: 0;
+        transform: translateY(45px) scale(0.94);
+        transition: opacity 0.75s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.75s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
 
+    img.page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    /* Cards that already animate transform on hover (accordion-item,
+       about-feature-card) get the scroll movement applied to a wrapper
+       instead, so hover animations stay untouched */
+    .page-fade-wrap {
+        opacity: 0;
+        transform: translateY(45px) scale(0.94);
+        transition: opacity 0.75s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.75s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    .page-fade-wrap.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ---- Images ----
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)'
+    );
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    // ---- Simple cards (safe to animate transform directly) ----
+    var pageFadeCards = document.querySelectorAll(
+        '.feature-card, .amenity-card, .process-card, .project-card, ' +
+        '.testimonial-quote, .founder-stat, ' +
+        '.blog-card, .value-strip-item, .why-feature-item, .service-panel, ' +
+        '.final-cta-card, .story-img-wrap'
+    );
+    pageFadeCards.forEach(function (card) {
+        card.classList.add('page-fade-card');
+    });
+
+    // ---- Interactive cards: wrap in a div so the movement doesn't
+    //      collide with their own hover transitions ----
+    var interactiveCards = document.querySelectorAll(
+        '.accordion-item, .about-feature-card'
+    );
+    interactiveCards.forEach(function (card) {
+        if (card.parentElement.classList.contains('page-fade-wrap')) return; // already wrapped
+        var wrapper = document.createElement('div');
+        wrapper.className = 'page-fade-wrap';
+        card.parentNode.insertBefore(wrapper, card);
+        wrapper.appendChild(card);
+    });
+    var pageFadeWraps = document.querySelectorAll('.page-fade-wrap');
+
+    // ---- Single shared observer for all three groups ----
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -5% 0px'
+    });
+
+    pageFadeImages.forEach(function (el) { pageFadeObserver.observe(el); });
+    pageFadeCards.forEach(function (el) { pageFadeObserver.observe(el); });
+    pageFadeWraps.forEach(function (el) { pageFadeObserver.observe(el); });
+});
+</script>
 {% endblock %}

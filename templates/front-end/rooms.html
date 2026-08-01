@@ -1292,4 +1292,56 @@ document.addEventListener('DOMContentLoaded', function () {
     nextBtn.addEventListener('click', () => goToPage(current + 1));
 });
 </script>
+<style>
+    /* ===== PAGE-WIDE FADE IN/OUT ON EVERY SCROLL — IMAGES + CARDS ===== */
+    img.page-fade-img,
+    .page-fade-card {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    img.page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // ---- Images ----
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)'
+    );
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    // ---- Cards (add every card-type class used across the page) ----
+    var pageFadeCards = document.querySelectorAll(
+        '.feature-card, .amenity-card, .process-card, .project-card, ' +
+        '.testimonial-quote, .about-feature-card, .founder-stat, ' +
+        '.blog-card, .value-strip-item, .why-feature-item, .service-panel, ' +
+        '.final-cta-card, .accordion-item, .story-img-wrap'
+    );
+    pageFadeCards.forEach(function (card) {
+        card.classList.add('page-fade-card');
+    });
+
+    // ---- Single shared observer for both ----
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -5% 0px'
+    });
+
+    pageFadeImages.forEach(function (el) { pageFadeObserver.observe(el); });
+    pageFadeCards.forEach(function (el) { pageFadeObserver.observe(el); });
+});
+</script>
 {% endblock %}

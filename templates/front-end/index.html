@@ -39,11 +39,11 @@
     </span>
 </a>
 <h1 class="hero-title reveal-up reveal-delay-2" id="heroRotatingTitle">
-    STAY ABOVE<br><b>THE VALLEY</b>
+    WELCOME TO THE<br><b>BEST RESORT IN MUNNAR</b>
 </h1>
-<p class="hero-copy reveal-up reveal-delay-3" id="heroRotatingCopy">Wake up to cool mountain air, estate views, and the
-    quiet rhythm of Munnar. Ambady Estate is designed for relaxed holidays, family time, and
-    peaceful plantation stays surrounded by nature.</p>
+<p class="hero-copy reveal-up reveal-delay-3" id="heroRotatingCopy">Enjoy staying at the Best Resort in Munnar where
+    the luxury of the place is matched with the beauty of nature. With misty mountains around and green cardamom
+    plantations and fresh mountain air around, each moment here is relaxing</p>
 <div class="hero-actions reveal-up reveal-delay-4" id="heroRotatingActions">
     <a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Book Your Stays</a>
 </div>
@@ -54,27 +54,24 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 
     background: transparent;
     padding: 12px 20px;
+    margin-top: 60px;
     margin-bottom: 18px;
 
     text-decoration: none;
     transition: transform 0.3s ease;
 }
 
-.hero-rating-pill:hover {
-    transform: translateY(-3px);
-}
-
 .hero-rating-g-logo {
     width: 90px;
     height: auto;
     display: block;
+    line-height: 0;
     filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
 }
-
 .hero-rating-reviews-row {
     display: flex;
     align-items: center;
@@ -138,72 +135,74 @@
         </section>
 
         <style>
-            .hero-section {
-                position: relative;
-                width: 100%;
-                height: 100vh;
-                min-height: 600px;
-                overflow: hidden;
-            }
+             .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        min-height: 600px;
+        overflow: hidden;
+    }
 
-            .hero-video {
-                position: absolute;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                z-index: 0;
-            }
+    .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
 
-            .hero-overlay {
-                position: absolute;
-                inset: 0;
-                background: rgba(10, 18, 10, 0.15);
-                z-index: 1;
-            }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 18, 10, 0.15);
+        z-index: 1;
+    }
 
-            section.hero-section .hero-content {
-                position: absolute !important;
-                inset: 0;
-                z-index: 3;
-                display: flex !important;
-                align-items: flex-start !important;
-                padding-top: 260px !important;
-                padding-bottom: 0 !important;
-                width: 100% !important;
-                justify-content: flex-start !important;
-            }
+    section.hero-section .hero-content {
+    position: absolute !important;
+    inset: 0;
+    z-index: 3;
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 320px !important;
+    background: transparent !important;
+    min-height: unset !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+}
 
-            .hero-copy-block {
-                max-width: 700px;
-            }
+    .hero-copy-block {
+        max-width: 700px;
+        padding-left: 40px;
+    }
 
-            .hero-title {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                font-size: clamp(3rem, 7vw, 6.5rem);
-                font-weight: 300;
-                color: #fff;
-                line-height: 1.05;
-                letter-spacing: -1px;
-                margin-bottom: 20px;
-                text-transform: uppercase;
-                transition: opacity 0.6s ease, transform 0.6s ease;
-                white-space: normal;
-            }
+    .hero-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: clamp(2rem, 4.5vw, 4rem);
+        font-weight: 300;
+        color: #fff;
+        line-height: 1.05;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        white-space: normal;
+    }
 
-            .hero-title b {
-                font-weight: 800;
-                display: block;
-            }
+    .hero-title b {
+        font-weight: 800;
+        display: block;
+    }
 
-            .hero-copy {
-                font-size: 1.05rem;
-                color: rgba(255, 255, 255, 0.9);
-                line-height: 1.75;
-                max-width: 520px;
-                margin-bottom: 36px;
-                transition: opacity 0.6s ease, transform 0.6s ease;
-            }
+    .hero-copy {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.75;
+        max-width: 520px;
+        margin-bottom: 36px;
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
 
             .hero-actions {
                 display: flex;
@@ -377,6 +376,104 @@
                 width: 100% !important;
                 justify-content: flex-start !important;
             }
+            /* HERO SECTION */
+section.hero-section {
+    position: relative !important;
+    min-height: 100vh !important;
+    overflow: hidden !important;
+}
+
+/* Dark overlay */
+section.hero-section .hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(10, 18, 10, 0.42) !important;
+    z-index: 1 !important;
+}
+
+/* Hero content */
+section.hero-section .hero-content {
+    position: relative !important;
+    z-index: 3 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+
+    width: 100% !important;
+    min-height: 100vh !important;
+
+    padding: 150px 20px 110px !important;
+    box-sizing: border-box !important;
+
+    background: transparent !important;
+}
+
+/* Mobile and tablet */
+@media (max-width: 991px) {
+
+    .hero-stats-card {
+        display: none !important;
+    }
+
+    .hero-title {
+        font-size: clamp(2.3rem, 9vw, 3.6rem) !important;
+        line-height: 1.08 !important;
+        margin-bottom: 24px !important;
+    }
+
+    .hero-description {
+        font-size: 1.05rem !important;
+        line-height: 1.7 !important;
+        max-width: 100% !important;
+        margin-bottom: 28px !important;
+    }
+
+    .hero-actions {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        margin-bottom: 0 !important;
+    }
+
+    .hero-actions .btn {
+        width: 220px !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    .hero-slider-progress {
+        left: 20px !important;
+        right: 20px !important;
+        width: auto !important;
+        padding: 0 !important;
+        bottom: 25px !important;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 575px) {
+
+    section.hero-section {
+        min-height: 850px !important;
+    }
+
+    section.hero-section .hero-content {
+        min-height: 850px !important;
+        padding: 125px 28px 100px !important;
+        justify-content: flex-start !important;
+    }
+
+    .hero-title {
+        font-size: 2.35rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        line-height: 1.75 !important;
+    }
+}
         </style>
 
 <script>
@@ -388,22 +485,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Each slide now has its own title + paragraph + button, all rotating together
     var slides = [
-        {
-            title: 'STAY ABOVE<br><b>THE VALLEY</b>',
-            copy: 'Wake up to cool mountain air, estate views, and the quiet rhythm of Munnar. Ambady Estate is designed for relaxed holidays, family time, and peaceful plantation stays surrounded by nature.',
-            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Book Your Stays</a>'
-        },
-        {
-            title: 'WAKE UP TO<br><b>COOL AIR</b>',
-            copy: 'Start each morning surrounded by misty hills and the scent of cardamom. Every cottage at Ambady Estate is placed to catch the best of Munnar\'s cool mountain climate and quiet plantation calm.',
-            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Check Availability</a>'
-        },
-        {
-            title: 'LIVE AMONG<br><b>OUR ESTATE</b>',
-            copy: 'Explore 70 acres of certified organic cardamom plantation, guided nature trails, and a traditional curing house — a rare, immersive stay inside a living working estate in the heart of Munnar.',
-            buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Plan Your Visit</a>'
-        }
-    ];
+    {
+        title: 'WELCOME TO THE<br><b>BEST RESORT IN MUNNAR</b>',
+        copy: 'Enjoy staying at the Best Resort in Munnar where the luxury of the place is matched with the beauty of nature. With misty mountains around and green cardamom plantations and fresh mountain air ',
+        buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Book Your Stays</a>'
+    },
+    {
+        title: 'WAKE UP TO THE<br><b>HEART OF NATURE</b>',
+        copy: 'Wake up to the soft mist, cool mountain air and the bright sunlight of the morning. Stroll in the lush greenery and experience the freshness and peace of nature in the best way.',
+        buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Check Availability</a>'
+    },
+    {
+        title: 'ENJOY THE SOOTHING<br><b>SOUNDS OF BIRDS</b>',
+        copy: 'The chirping of the birds will be an alarm for you to wake up to a beautiful new day. The sounds of the birds along with the freshness of nature are going to relax you thoroughly.',
+        buttons: '<a href="javascript:void(0)" class="btn hero-btn-solid js-open-booking-modal">Plan Your Visit</a>'
+    }
+];
     var current = 0;
 
     setInterval(function () {
@@ -450,45 +547,71 @@ document.addEventListener('DOMContentLoaded', function () {
 <div id="about" class="section bg-attach-cover about-creative" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
     <div class="r-container">
 
-        <!-- Top: Text + Hero Image -->
-        <div class="row row-cols-xl-2 row-cols-1 align-items-center about-top-row">
+        <!-- Top: Heading + Images + Content -->
+        <div class="about-top-row scrollanimation animated scroll-fadeInLeft">
 
-            <!-- Left: Content -->
-            <div class="col col-xl-5 mb-4 mb-xl-0 scrollanimation animated scroll-fadeInLeft">
-                <div class="d-flex flex-column gap-3 about-text-col">
-                    <div class="about-eyebrow">
-                        <span>About Us</span>
-                        <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                            <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-
-                    <h3 class="about-heading">Welcome to<br>Ambady Estate</h3>
-
-                    <p class="about-desc">
-                        Ambady Estate is a serene luxury boutique resort set on the periphery of a
-                        70-acre cardamom plantation. Designed for travellers seeking peace, privacy
-                        and authentic Munnar charms, our property blends colonial heritage with
-                        modern comfort.
-                    </p>
-
-                    <p class="about-desc">
-                        Built around nature, Ambady Estate offers standalone cottages and a private
-                        villa, plantation trails, scenic viewpoints, traditional spice experiences,
-                        unique locovore cuisine and warm Kerala hospitality. Our USP is the
-                        traditional curing house, our adjoining pure certified organic farm, and a
-                        goshala housing rare breeds of indigenous cows.
-                    </p>
+            <!-- Heading (always first) -->
+            <div class="about-heading-col">
+                <div class="about-eyebrow">
+                    <span>About Us</span>
+                    <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
                 </div>
+                <h3 class="about-heading">Our Story</h3>
             </div>
 
-            <!-- Right: Hero Image (image only, no video) -->
-            <div class="col col-xl-7 mb-xl-0 mb-4 scrollanimation animated scroll-fadeInRight">
+            <!-- Image (always second, sticky while content scrolls) -->
+            <div class="about-image-col">
                 <div class="about-hero-media">
-                    <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-hero-img" alt="Ambady Estate">
+                    <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-hero-img about-hero-img-main" alt="Ambady Estate">
                 </div>
             </div>
+
+            <!-- Paragraph content (always third) -->
+            <div class="about-content-col">
+                <div class="d-flex flex-column gap-3 about-text-col">
+                    <p class="about-desc">
+                        In the 90's, our journey began with a beautiful 70-acre cardamom estate in the
+                        heart of Munnar. When we first came here, there were only two old cardamom
+                        curing houses, staff quarters, and endless greenery. What made us fall in love
+                        with this place was its peaceful beauty—the misty mountains, fresh mountain
+                        air, colourful butterflies, and the gentle chirping of birds.
+                    </p>
+
+                    <p class="about-desc">
+                        We knew this place was too special to change. So, we made a promise to
+                        protect it. We chose to grow our cardamom using natural and organic farming
+                        methods, just as nature intended. Even today, we continue natural farming to
+                        keep our land healthy and beautiful.
+                    </p>
+
+                    <p class="about-desc">
+                        In 2004, we welcomed our first guests by building eight boutique cottages with
+                        great care. We protected the trees and preserved the natural beauty around us,
+                        so every guest could enjoy the same peaceful feeling that made us fall in love
+                        with this place.
+                    </p>
+
+                    <p class="about-desc">
+                        Today, Ambady Estate is proudly known as one of the Best Resorts in Munnar,
+                        offering the perfect blend of comfort, peace, and nature. Whether you're
+                        looking for a Luxury Resort in Munnar or a peaceful Nature Resort in Munnar,
+                        we invite you to experience the beauty of Munnar with us.
+                    </p>
+
+                    <p class="about-desc">
+                        Every morning, the gentle chirping of Hornbills, Malabar Whistling Thrushes,
+                        Sunbirds, Woodpeckers, and many other birds welcomes you to a new day.
+                        Colourful butterflies fly through our cardamom plantations, and during
+                        different seasons, beautiful migratory birds also visit our estate. Every walk
+                        here brings you closer to nature and leaves you with memories you'll always
+                        cherish.
+                    </p>
+                </div>
+            </div>
+
         </div>
 
         <!-- Section heading, matching the "About Us" eyebrow + heading style -->
@@ -503,48 +626,11 @@ document.addEventListener('DOMContentLoaded', function () {
             <h3 class="unique-section-heading">What Makes Us Unique</h3>
         </div>
 
-        <!-- What Makes Us Unique — same vertical expanding accordion + side image panel design -->
+        <!-- What Makes Us Unique — vertical expanding accordion + two-image pop panel -->
         <div class="about-cards-wrapper scrollanimation animated scroll-fadeInUp">
             <div class="about-card-row">
 
-            <div class="about-feature-card active" data-image="{% static 'ambadyestate-main/image/new/unique-curing-house.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 20h16M6 20V10l6-6 6 6v10" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M10 20v-6h4v6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h5>Curing House</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Our age-old traditional cardamom curing house, where cardamom is dried and processed.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/cardomon.webp' %}" alt="Curing House">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-organic.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 21s-7-5.1-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.9-11 11-11 11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h5>Certified Organic</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>EU, NOP &amp; NPOP certified cardamom plantation, cultivating natural spices and food products for over 20 years.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/honeymoon.webp' %}" alt="Certified Organic">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-private.webp' %}">
+            <div class="about-feature-card active" data-image="{% static 'ambadyestate-main/image/new/unique-private.webp' %}">
                 <div class="about-card-head">
                     <div class="about-card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -557,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="about-card-divider"></span>
                     <p>Located inside a private space within the lap of nature.</p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}" alt="Private Retreat">
+                        <img src="{% static 'ambadyestate-main/am12.jpg' %}" alt="Private Retreat">
                     </div>
                 </div>
             </div>
@@ -576,7 +662,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="about-card-divider"></span>
                     <p>Eco-friendly architecture designed to blend into the natural surroundings.</p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/hero2.webp' %}" alt="Eco Architecture">
+                        <img src="{% static 'ambadyestate-main/am14.png' %}" alt="Eco Architecture">
                     </div>
                 </div>
             </div>
@@ -594,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="about-card-divider"></span>
                     <p>Fresh, seasonal, locally-sourced dishes rooted in the flavours of the estate.</p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/restaurent.webp' %}" alt="Locovore Cuisine">
+                        <img src="{% static 'ambadyestate-main/am15.png' %}" alt="Locovore Cuisine">
                     </div>
                 </div>
             </div>
@@ -648,9 +734,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="about-card-body">
                     <span class="about-card-divider"></span>
-                    <p>Experience our organic products — cardamom, arabica coffee, ginger, black pepper, shatavari and seasonal produce.</p>
+                    <p>Experience our organic products such as cardamom, arabica coffee, ginger, black pepper, shatavari and seasonal produce </p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/place6.webp' %}" alt="Organic Farm">
+                        <img src="{% static 'ambadyestate-main/am16.png' %}" alt="Organic Farm">
                     </div>
                 </div>
             </div>
@@ -669,7 +755,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="about-card-divider"></span>
                     <p>A goshala housing rare breeds of indigenous cows.</p>
                     <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/am1.png' %}" alt="Goshala">
+                        <img src="{% static 'ambadyestate-main/am17.png' %}" alt="Goshala">
                     </div>
                 </div>
             </div>
@@ -697,19 +783,13 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only) -->
             <div class="about-cards-image-panel">
                 <div class="about-cards-image-item active">
-                    <img src="{% static 'ambadyestate-main/image/new/cardomon.webp' %}" alt="Curing House">
+                    <img src="{% static 'ambadyestate-main/am12.jpg' %}" alt="Private Retreat">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/honeymoon.webp' %}" alt="Certified Organic">
+                    <img src="{% static 'ambadyestate-main/am14.png' %}" alt="Eco Architecture">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/colonial_cottage.webp' %}" alt="Private Retreat">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/hero2.webp' %}" alt="Eco Architecture">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/restaurent.webp' %}" alt="Locovore Cuisine">
+                    <img src="{% static 'ambadyestate-main/am15.png' %}" alt="Locovore Cuisine">
                 </div>
                 <div class="about-cards-image-item">
                     <img src="{% static 'ambadyestate-main/am6.jpeg' %}" alt="Valley-view Pool">
@@ -718,10 +798,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" alt="Guided Trails">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/place6.webp' %}" alt="Organic Farm">
+                    <img src="{% static 'ambadyestate-main/am16.png' %}" alt="Organic Farm">
                 </div>
                 <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/am1.png' %}" alt="Goshala">
+                    <img src="{% static 'ambadyestate-main/am17.png' %}" alt="Goshala">
                 </div>
                 <div class="about-cards-image-item">
                     <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" alt="Birding Paradise">
@@ -750,61 +830,127 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 <style>
-    /* ===== ABOUT SECTION ===== */
+    /* =====================================================
+       ABOUT SECTION
+    ===================================================== */
+
     .about-creative {
         padding: 110px 0 90px;
     }
 
+    /* =====================================================
+       TOP STORY AREA
+       Left: heading + scrollable content
+       Right: sticky fixed image
+    ===================================================== */
+
     .about-top-row {
-        margin-bottom: 60px;
+        display: grid;
+        grid-template-columns: minmax(320px, 0.9fr) minmax(500px, 1.3fr);
+        grid-template-areas:
+            "heading image"
+            "content image";
+
+        column-gap: 55px;
+        row-gap: 18px;
+
+        align-items: start;
+        margin-bottom: 70px;
     }
 
-    /* --- Text column --- */
+    /* Heading */
+    .about-heading-col {
+        grid-area: heading;
+    }
+
+    /* =====================================================
+       SCROLLABLE STORY CONTENT
+    ===================================================== */
+
+    .about-content-col {
+        grid-area: content;
+
+        width: 100%;
+        height: 500px;
+        max-height: 65vh;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        padding-right: 18px;
+        box-sizing: border-box;
+
+        scrollbar-width: thin;
+        scrollbar-color: rgba(105, 120, 90, 0.65) transparent;
+    }
+
+    /* Chrome, Edge and Safari scrollbar */
+    .about-content-col::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .about-content-col::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .about-content-col::-webkit-scrollbar-thumb {
+        background: rgba(105, 120, 90, 0.6);
+        border-radius: 20px;
+    }
+
+    .about-content-col::-webkit-scrollbar-thumb:hover {
+        background: rgba(75, 95, 65, 0.85);
+    }
+
+    /* Story paragraphs */
     .about-text-col {
-        max-width: 460px;
+        max-width: 100%;
+        padding-bottom: 4px;
     }
 
-    .about-eyebrow {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--accent-color-2, #9c8a4f);
+    .about-text-col .about-desc:last-child {
+        margin-bottom: 0;
     }
 
-    .about-heading {
-        font-size: 3.2rem;
-        line-height: 1.18;
-        font-weight: 700;
-        color: var(--text-color);
-        margin: 0;
-    }
+    /* =====================================================
+       STICKY IMAGE
+    ===================================================== */
 
-    .about-desc {
-        font-size: 1.15rem;
-        line-height: 1.75;
-        color: var(--text-color-2);
-        margin: 0;
-    }
+    .about-image-col {
+    grid-area: image;
 
-    /* --- Hero media --- */
+    position: sticky;
+    top: 120px;
+    margin-top: 30px;   /* was -34px — increase this value to move image further down */
+
+    align-self: start;
+
+    width: 100%;
+    height: 500px;
+    max-height: 65vh;
+}
+
     .about-hero-media {
         position: relative;
-        border-radius: 24px;
+
+        width: 100%;
+        height: 100%;
+
         overflow: hidden;
-        min-height: 600px;
+        border-radius: 24px;
     }
 
     .about-hero-img {
+        display: block;
+
         width: 100%;
         height: 100%;
-        min-height: 600px;
+
         object-fit: cover;
-        display: block;
+        object-position: center;
+
         border-radius: 24px;
+
         transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -812,14 +958,58 @@ document.addEventListener('DOMContentLoaded', function () {
         transform: scale(1.04);
     }
 
-    /* --- "What Makes Us Unique" section heading, matching the eyebrow+heading style --- */
+    /* =====================================================
+       ABOUT HEADING
+    ===================================================== */
+
+    .about-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        font-size: 1rem;
+        font-weight: 700;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        color: var(--accent-color-2, #9c8a4f);
+    }
+
+    .about-heading {
+        font-size: 3.2rem;
+        line-height: 1.18;
+        font-weight: 700;
+
+        color: var(--text-color);
+
+        margin: 0;
+    }
+
+    .about-desc {
+        font-size: 1.15rem;
+        line-height: 1.75;
+
+        color: var(--text-color-2);
+
+        margin: 0;
+    }
+
+    /* =====================================================
+       WHAT MAKES US UNIQUE
+    ===================================================== */
+
     .unique-section-head {
         text-align: center;
+
         max-width: 560px;
+
         margin: 0 auto 40px;
+
         display: flex;
         flex-direction: column;
         align-items: center;
+
         gap: 14px;
     }
 
@@ -831,137 +1021,262 @@ document.addEventListener('DOMContentLoaded', function () {
         font-size: 2.4rem;
         line-height: 1.2;
         font-weight: 700;
+
         color: var(--text-color);
+
         margin: 0;
     }
 
-    /* --- Feature cards: VERTICAL expanding accordion (stacked top to bottom) --- */
+    /* =====================================================
+       FEATURE CARDS
+    ===================================================== */
+
     .about-cards-wrapper {
-    display: grid;
-    grid-template-columns: 0.96fr 1fr;
-    gap: 20px;
-    margin-bottom: 60px;
-    position: relative;
-}
+        display: grid;
 
-.about-card-row {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    /* this is now the ONLY thing that determines the row's height */
-}
+        grid-template-columns: 0.96fr 1fr;
 
-.about-cards-image-panel {
-    grid-column: 2;
-    position: absolute;
-    inset: 0;              /* stretches to exactly match the card row's height */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow: hidden;
-}
-    .about-cards-image-item {
-        border-radius: 20px;
-        overflow: hidden;
-        flex: 0 0 0%;
-        opacity: 0;
-        transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, box-shadow 0.4s ease;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+        gap: 20px;
+
+        margin-bottom: 60px;
+
+        position: relative;
     }
 
-    .about-cards-image-item.active {
-        flex: 1 1 0%;
-        opacity: 1;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    .about-card-row {
+        grid-column: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+    /* =====================================================
+       FEATURE IMAGE PANEL
+    ===================================================== */
+
+    .about-cards-image-panel {
+        grid-column: 2;
+
+        position: sticky;
+
+        top: 100px;
+
+        align-self: start;
+
+        height: 600px;
+        max-height: 80vh;
+    }
+
+    .about-cards-image-item {
+        position: absolute;
+
+        inset: 6px;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        opacity: 0;
+
+        transform: scale(0.8) translate(0, 0);
+
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+
+        border: 4px solid #fff;
+
+        transition:
+            transform 0.4s cubic-bezier(0.34, 1.25, 0.64, 1) 0.15s,
+            opacity 0.35s ease 0.15s,
+            box-shadow 0.4s ease,
+            filter 0.4s ease;
+
+        pointer-events: none;
+
+        z-index: 1;
     }
 
     .about-cards-image-item img {
+        display: block;
+
         width: 100%;
         height: 100%;
+
         object-fit: cover;
-        display: block;
+        object-position: center;
     }
+
+    /* Back image */
+    .about-cards-image-item.stack-back {
+        opacity: 1;
+
+        transform: scale(0.8) translate(34px, 34px);
+
+        z-index: 3;
+
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+
+        filter: brightness(0.85);
+    }
+
+    /* Front image */
+    .about-cards-image-item.stack-front {
+        opacity: 1;
+
+        transform: scale(1) translate(0, 0);
+
+        z-index: 6;
+
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.25);
+
+        pointer-events: auto;
+
+        filter: brightness(1);
+    }
+
+    /* Leaving image */
+    .about-cards-image-item.stack-leaving {
+        opacity: 0;
+
+        transform: scale(1.15) translate(-24px, -24px);
+
+        transition:
+            transform 0.3s ease-in,
+            opacity 0.22s ease-in,
+            filter 0.4s ease;
+
+        z-index: 7;
+    }
+
+    /* =====================================================
+       FEATURE CARD
+    ===================================================== */
 
     .about-feature-card {
         position: relative;
+
         width: 100%;
+
         background: #fff;
+
         border-radius: 20px;
+
         padding: 20px 26px 20px 76px;
+
         display: flex;
         flex-direction: column;
+
         overflow: hidden;
+
         cursor: pointer;
+
         box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
-        transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, padding 0.4s ease;
+
+        transition:
+            max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.4s ease,
+            padding 0.4s ease;
+
         max-height: 84px;
     }
 
     .about-feature-card.active {
         max-height: 200px;
+
         padding: 24px 30px;
+
         box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
     }
 
-    /* Heading: pinned near the left edge while collapsed, inline once expanded */
+    /* Card heading */
     .about-card-head {
         position: absolute;
+
         left: 26px;
         top: 20px;
+
         display: flex;
         flex-direction: row;
+
         align-items: center;
+
         gap: 16px;
+
         transition: all 0.3s ease;
     }
 
     .about-feature-card.active .about-card-head {
         position: relative;
+
         left: 0;
         top: 0;
     }
 
+    /* Card icon */
     .about-card-icon {
         width: 46px;
         height: 46px;
+
         min-width: 46px;
+
         border-radius: 50%;
+
         background: var(--accent-color-3, #eef2e6);
+
         display: flex;
+
         align-items: center;
         justify-content: center;
+
         color: var(--accent-color);
-        transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
+
+        transition:
+            background 0.35s ease,
+            color 0.35s ease,
+            transform 0.35s ease;
     }
 
     .about-feature-card.active .about-card-icon {
         background: var(--accent-color);
+
         color: #fff;
+
         transform: rotate(-8deg) scale(1.06);
     }
 
     .about-card-head h5 {
         font-size: 1.3rem;
+
         font-weight: 700;
+
         color: var(--text-color);
+
         margin: 0;
+
         white-space: nowrap;
     }
 
-    /* Body: description only, revealed on expand */
+    /* Card body */
     .about-card-body {
         display: flex;
+
         flex-direction: column;
+
         min-height: 0;
+
         opacity: 0;
+
         pointer-events: none;
+
         transition: opacity 0.35s ease 0.1s;
     }
 
     .about-feature-card.active .about-card-body {
         opacity: 1;
+
         pointer-events: auto;
+
         margin-top: 14px;
     }
 
@@ -971,86 +1286,137 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .about-feature-card p {
         font-size: 1.05rem;
+
         line-height: 1.6;
+
         color: var(--text-color-2);
+
         margin: 0;
     }
 
-    /* Mobile-only image inside each card body, hidden on desktop */
+    /* Hidden on desktop */
     .about-card-mobile-img {
         display: none;
     }
 
-    /* --- Quote banner --- */
+    /* =====================================================
+       QUOTE BANNER
+    ===================================================== */
+
     .about-quote-banner {
         position: relative;
-        border-radius: 24px;
-        overflow: hidden;
+
         min-height: 300px;
+
         display: flex;
+
         align-items: center;
+
+        border-radius: 24px;
+
+        overflow: hidden;
+
         border: 1px solid var(--bg-color, #faf8f4);
+
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
 
     .about-quote-bg {
         position: absolute;
+
         inset: 0;
+
         width: 100%;
         height: 100%;
+
         object-fit: cover;
+
         z-index: 0;
     }
 
     .about-quote-banner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(10, 12, 8, 0.05) 0%, rgba(10, 12, 8, 0.35) 55%, rgba(10, 12, 8, 0.5) 100%);
-    z-index: 1;
-}
+        content: "";
+
+        position: absolute;
+
+        inset: 0;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(10, 12, 8, 0.05) 0%,
+                rgba(10, 12, 8, 0.35) 55%,
+                rgba(10, 12, 8, 0.5) 100%
+            );
+
+        z-index: 1;
+    }
 
     .about-quote-content {
-    position: relative;
-    z-index: 2;
-    max-width: 480px;
-    margin-left: auto;
-    padding: 50px 60px;
-    color: #ffffff;
-}
+        position: relative;
 
-.about-quote-content p {
-    font-weight: 600;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 0, 0, 0.6);
-    letter-spacing: 0.2px;
-}
+        z-index: 2;
+
+        max-width: 480px;
+
+        margin-left: auto;
+
+        padding: 50px 60px;
+
+        color: #fff;
+    }
+
     .about-quote-mark {
         color: var(--accent-color-2, #c8a86a);
+
         margin-bottom: 14px;
     }
 
-    .about-quote-content p {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: 1.6rem;
-        line-height: 1.5;
-        margin: 0;
-    }
+   .about-quote-content p {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+    margin: 0;
+    text-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.85),
+        0 0 20px rgba(0, 0, 0, 0.6);
+}
 
     .about-quote-btn {
         display: inline-flex;
+
         align-items: center;
+
         gap: 10px;
+
         margin-top: 26px;
+
         padding: 13px 28px;
+
         border-radius: 50px;
+
         background: var(--accent-color, #9c8a4f);
+
         color: #fff;
+
         font-size: 0.95rem;
+
         font-weight: 600;
+
         letter-spacing: 0.5px;
+
         text-transform: uppercase;
+
         text-decoration: none;
-        transition: background 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+
+        transition:
+            background 0.35s ease,
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
@@ -1060,8 +1426,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .about-quote-btn:hover {
         background: var(--accent-color-2, #c8a86a);
+
         color: #fff;
+
         transform: translateY(-2px);
+
         box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
     }
 
@@ -1069,225 +1438,398 @@ document.addEventListener('DOMContentLoaded', function () {
         transform: translateX(4px);
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 991px) {
+    /* =====================================================
+   TABLET AND MOBILE
+===================================================== */
+
+@media (max-width: 991px) {
+
+    .about-creative {
+        padding: 60px 0;
+    }
+
+    #about .r-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Normal stacked layout */
+    .about-top-row {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+            "heading"
+            "image"
+            "content";
+
+        row-gap: 8px;
+
+        margin-bottom: 32px;
+    }
+
+    /* Remove internal story scrolling */
+    .about-content-col {
+        width: 100%;
+
+        height: auto;
+
+        max-height: none;
+
+        overflow: visible;
+
+        padding-right: 0;
+
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    /* Remove sticky image */
+    .about-image-col {
+        position: relative;
+
+        margin-top: 0;
+        top: auto;
+
+        width: 100%;
+
+        height: auto;
+
+        max-height: none;
+    }
+
+    .about-hero-media {
+        width: 100%;
+
+        height: 260px;
+
+        border-radius: 18px;
+    }
+
+    .about-hero-img {
+        width: 100%;
+
+        height: 100%;
+
+        border-radius: 18px;
+    }
+
+    .about-text-col {
+        max-width: 100%;
+
+        text-align: left;
+    }
+
+    .about-text-col > *:first-child {
+        margin-top: 0;
+    }
+
+    .about-heading {
+        font-size: 2.3rem;
+    }
+
+    .about-desc {
+        font-size: 1.05rem;
+    }
+
+    /* Unique section */
+    .unique-section-head {
+        margin-bottom: 24px;
+    }
+
+    .unique-section-heading {
+        font-size: 1.7rem;
+    }
+
+    /* Cards */
+    .about-cards-wrapper {
+        display: block;
+
+        margin-bottom: 32px;
+    }
+
+    .about-card-row {
+        width: 100%;
+
+        gap: 14px;
+    }
+
+    /* Hide desktop image panel */
+    .about-cards-image-panel {
+        display: none;
+    }
+
+    .about-feature-card {
+        max-height: 84px;
+
+        padding: 20px !important;
+
+        transition:
+            max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.4s ease;
+    }
+
+    .about-feature-card.active {
+        max-height: 420px;
+
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-card-head {
+        position: relative !important;
+
+        left: 0 !important;
+
+        top: 0 !important;
+    }
+
+    .about-card-body {
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition: opacity 0.35s ease 0.1s;
+    }
+
+    .about-feature-card.active .about-card-body {
+        opacity: 1;
+
+        pointer-events: auto;
+
+        margin-top: 16px;
+    }
+
+    /* Show card image on mobile */
+    .about-card-mobile-img {
+        display: block;
+
+        margin-top: 16px;
+
+        border-radius: 14px;
+
+        overflow: hidden;
+    }
+
+    .about-card-mobile-img img {
+        display: block;
+
+        width: 100%;
+
+        height: 200px;
+
+        object-fit: cover;
+    }
+
+    /* Quote */
+    .about-quote-content {
+    margin-left: 0;
+    padding: 50px 26px 34px;
+    max-width: 100%;
+}
+
+.about-quote-content p {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.85),
+        0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+    .about-quote-btn {
+        margin-top: 20px;
+
+        padding: 11px 22px;
+
+        font-size: 0.85rem;
+    }
+}
+
+    /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+    @media (max-width: 575px) {
+
         .about-creative {
-            padding: 60px 0;
-        }
-
-        #about .r-container {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .about-top-row {
-            margin-bottom: 32px;
-        }
-
-        .unique-section-head {
-            margin-bottom: 24px;
-        }
-
-        .unique-section-heading {
-            font-size: 1.7rem;
-        }
-
-        .about-text-col {
-            max-width: 100%;
-            text-align: left;
+            padding: 50px 0;
         }
 
         .about-heading {
-            font-size: 2.3rem;
+            font-size: 2rem;
         }
 
-        .about-hero-media,
-        .about-hero-img {
-            min-height: 260px;
-            border-radius: 18px;
+        .about-eyebrow {
+            font-size: 0.8rem;
+
+            letter-spacing: 1.5px;
         }
 
-        .about-cards-wrapper {
-            margin-bottom: 32px;
-            display: block;
+        .about-hero-media {
+            height: 230px;
         }
 
-        .about-card-row {
-            gap: 14px;
-            width: 100%;
+        .about-desc {
+            font-size: 1rem;
+
+            line-height: 1.7;
         }
 
-        /* Hide the desktop side image panel on mobile (hover-based swap doesn't work on touch) */
-        .about-cards-image-panel {
-            display: none;
+        .about-card-head h5 {
+            font-size: 1.1rem;
+
+            white-space: normal;
         }
 
-        .about-feature-card {
-            max-height: 84px;
-            padding: 20px !important;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        .about-card-icon {
+            width: 42px;
+
+            height: 42px;
+
+            min-width: 42px;
         }
 
         .about-feature-card.active {
-            max-height: 420px;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-card-head {
-            position: relative !important;
-            left: 0 !important;
-            top: 0 !important;
-        }
-
-        .about-card-body {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease 0.1s;
-        }
-
-        .about-feature-card.active .about-card-body {
-            opacity: 1;
-            pointer-events: auto;
-            margin-top: 16px;
-        }
-
-        /* Show each card's own image on mobile instead */
-        .about-card-mobile-img {
-            display: block;
-            margin-top: 16px;
-            border-radius: 14px;
-            overflow: hidden;
+            max-height: 450px;
         }
 
         .about-card-mobile-img img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
+            height: 180px;
         }
 
         .about-quote-content {
-            margin-left: 0;
-            padding: 34px 26px;
-            max-width: 100%;
+            padding: 30px 22px;
         }
 
         .about-quote-content p {
-            font-size: 1.25rem;
-        }
-
-        .about-quote-btn {
-            margin-top: 20px;
-            padding: 11px 22px;
-            font-size: 0.85rem;
-        }
-    }
-
-    /* Mobile order: image first, then description */
-    @media (max-width: 1199.98px) {
-        #about .about-top-row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        #about .about-top-row .col-xl-5 {
-            order: 2;
-            margin-top: 24px;
-        }
-
-        #about .about-top-row .col-xl-7 {
-            order: 1;
+            font-size: 1.15rem;
         }
     }
 </style>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const row = document.querySelector('.about-card-row');
-        const cards = document.querySelectorAll('.about-card-row .about-feature-card');
-        const imageItems = document.querySelectorAll('.about-cards-image-panel .about-cards-image-item');
-        const wrapper = document.querySelector('.about-cards-wrapper');
+   document.addEventListener('DOMContentLoaded', function () {
+    const row = document.querySelector('.about-card-row');
+    const cards = document.querySelectorAll('.about-card-row .about-feature-card');
+    const imageItems = document.querySelectorAll('.about-cards-image-panel .about-cards-image-item');
+    const wrapper = document.querySelector('.about-cards-wrapper');
 
-        if (!cards.length) return;
+    if (!cards.length) return;
 
-        let currentIndex = 0;
-        let autoTimer = null;
-        const AUTO_INTERVAL = 3500; // ms between auto-switches
+    let currentIndex = 0;
+    let autoTimer = null;
+    let leavingTimeoutId = null; // tracks the single in-flight "leaving" cleanup
+    let transitionLock = false;  // debounce: ignore new triggers until current one settles
+    const AUTO_INTERVAL = 3500; // ms between auto-switches
+    const TRANSITION_LOCK_MS = 380; // roughly matches the CSS transition length
 
-        function activateIndex(index) {
-            currentIndex = (index + cards.length) % cards.length;
-            cards.forEach((card, i) => card.classList.toggle('active', i === currentIndex));
-            imageItems.forEach((item, i) => item.classList.toggle('active', i === currentIndex));
+    function activateIndex(index) {
+        if (transitionLock) return;
+
+        const newIndex = (index + cards.length) % cards.length;
+        if (newIndex === currentIndex) return;
+
+        const backIndex = (newIndex + 1) % cards.length;
+        const outgoingIndex = currentIndex;
+
+        transitionLock = true;
+        setTimeout(() => { transitionLock = false; }, TRANSITION_LOCK_MS);
+
+        cards.forEach((card, i) => card.classList.toggle('active', i === newIndex));
+
+        if (leavingTimeoutId) {
+            clearTimeout(leavingTimeoutId);
+            leavingTimeoutId = null;
         }
 
-        function nextCard() {
-            activateIndex(currentIndex + 1);
+        if (outgoingIndex !== newIndex) {
+            imageItems[outgoingIndex].classList.remove('stack-front', 'stack-back');
+            imageItems[outgoingIndex].classList.add('stack-leaving');
+            leavingTimeoutId = setTimeout(() => {
+                imageItems[outgoingIndex].classList.remove('stack-leaving');
+                leavingTimeoutId = null;
+            }, 350);
         }
 
-        function startAuto() {
-            if (autoTimer) return;
-            autoTimer = setInterval(nextCard, AUTO_INTERVAL);
-        }
-
-        function stopAuto() {
-            if (autoTimer) {
-                clearInterval(autoTimer);
-                autoTimer = null;
+        imageItems.forEach((item, i) => {
+            if (i !== outgoingIndex && i !== newIndex && i !== backIndex) {
+                item.classList.remove('stack-front', 'stack-back', 'stack-leaving');
             }
+        });
+
+        imageItems[newIndex].classList.remove('stack-leaving', 'stack-back');
+        imageItems[newIndex].classList.add('stack-front');
+
+        if (backIndex !== newIndex) {
+            imageItems[backIndex].classList.remove('stack-front', 'stack-leaving');
+            imageItems[backIndex].classList.add('stack-back');
         }
 
-        function restartAuto() {
-            stopAuto();
-            startAuto();
+        currentIndex = newIndex;
+    }
+
+    function nextCard() {
+        activateIndex(currentIndex + 1);
+    }
+
+    function startAuto() {
+        if (autoTimer) return;
+        autoTimer = setInterval(nextCard, AUTO_INTERVAL);
+    }
+
+    function stopAuto() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
         }
+    }
 
-        const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+    function restartAuto() {
+        stopAuto();
+        startAuto();
+    }
 
-        // Manual interaction still works, but auto-cycling resumes after it
-        if (isDesktop) {
-            cards.forEach((card, i) => {
-                card.addEventListener('mouseenter', () => {
+    const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+
+    if (isDesktop) {
+        cards.forEach((card, i) => {
+            card.addEventListener('mouseenter', () => {
+                stopAuto();
+                activateIndex(i);
+            });
+        });
+        row.addEventListener('mouseleave', () => {
+            restartAuto();
+        });
+    } else {
+        cards.forEach((card, i) => {
+            card.addEventListener('click', () => {
+                stopAuto();
+                activateIndex(i);
+                setTimeout(restartAuto, AUTO_INTERVAL);
+            });
+        });
+    }
+
+    imageItems[0].classList.add('stack-front');
+    if (imageItems[1]) imageItems[1].classList.add('stack-back');
+
+    if (wrapper) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    startAuto();
+                } else {
                     stopAuto();
-                    activateIndex(i);
-                });
+                }
             });
-            row.addEventListener('mouseleave', () => {
-                restartAuto();
-            });
-        } else {
-            cards.forEach((card, i) => {
-                card.addEventListener('click', () => {
-                    stopAuto();
-                    activateIndex(i);
-                    // resume auto-cycling a bit after a tap
-                    setTimeout(restartAuto, AUTO_INTERVAL);
-                });
-            });
-        }
-
-        // Only run the auto-cycle while the section is actually visible
-        if (wrapper) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        startAuto();
-                    } else {
-                        stopAuto();
-                    }
-                });
-            }, { threshold: 0.3 });
-            observer.observe(wrapper);
-        } else {
-            startAuto();
-        }
-    });
+        }, { threshold: 0.3 });
+        observer.observe(wrapper);
+    } else {
+        startAuto();
+    }
+});
 </script>
-</style>
-</style>
-
-
-
-
 
 <!-- ===== MEET THE FOUNDER SECTION ===== -->
 <div id="founder" class="section founder-section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
@@ -1327,11 +1869,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </svg>
                     <span class="line"></span>
                 </div>
-<div class="founder-text">
-    <p>We are dedicated to giving every traveler a warm, comfortable, and unforgettable stay at Ambady Estate — from the moment you arrive at our plantation gates to the quiet mornings spent watching mist roll over the hills. Every cottage, every meal, and every small detail is looked after with the same care we'd give a guest in our own home, so that Munnar stays with you long after you've left.</p>
+                <div class="founder-text">
+                    <p>We are dedicated to giving every traveler a warm, comfortable, and unforgettable stay at Ambady Estate — from the moment you arrive at our plantation gates to the quiet mornings spent watching mist roll over the hills. Every cottage, every meal, and every small detail is looked after with the same care we'd give a guest in our own home, so that Munnar stays with you long after you've left.</p>
 
-    <p class="founder-motto">Every guest is a friend we haven't met yet.</p>
-</div>
+                    <p class="founder-motto">Every guest is a friend we haven't met yet.</p>
+                </div>
 
                 <div class="founder-stats">
                     <div class="founder-stat reveal-up reveal-delay-1">
@@ -1363,12 +1905,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         </div>
 
-        <!-- Decorative line-art sketch, bottom right -->
-        <svg class="founder-sketch" width="260" height="170" viewBox="0 0 260 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40 150 L120 60 L200 150" stroke="var(--text-color)" stroke-width="1"/>
-            <rect x="55" y="100" width="130" height="50" stroke="var(--text-color)" stroke-width="1"/>
-            <path d="M0 160 C 60 140, 200 140, 260 160" stroke="var(--text-color)" stroke-width="1"/>
-        </svg>
+    </div>
+
+    <!-- Decorative corner photo — a real shot of the estate cottage, tucked
+         into the bottom-right corner as a background layer. It sits BEHIND
+         the content (.founder-grid has a higher z-index), so it can overlap
+         into that corner freely without covering any text, and it doesn't
+         add extra height to the section since it's positioned absolutely. -->
+    <div class="founder-corner-photo-row">
+        <div class="founder-corner-photo scrollanimation animated scroll-fadeInUp">
+            <img src="{% static 'ambadyestate-main/am12.jpg' %}" alt="Ambady Estate cottage">
+        </div>
     </div>
 </div>
 
@@ -1394,6 +1941,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .founder-grid {
+        position: relative;
+        z-index: 2;
         display: grid;
         grid-template-columns: .85fr 1.15fr;
         grid-template-areas:
@@ -1483,49 +2032,49 @@ document.addEventListener('DOMContentLoaded', function () {
         color: var(--text-color-2);
         margin: 0;
     }
+
     /* ===== FOUNDER MOTTO LINE ===== */
-/* ===== FOUNDER MOTTO LINE ===== */
-.founder-text p:first-child {
-    margin-bottom: 18px;
-}
-
-.founder-motto {
-    font-family: var(--founder-script);
-    font-style: italic;
-    font-size: 1.35rem !important;
-    line-height: 1.5 !important;
-    color: var(--accent-color-2) !important;
-    padding-left: 0;
-    border-left: none; /* removed the vertical bar */
-    margin: 0 !important;
-    position: relative;
-}
-
-.founder-motto::before {
-    content: '\201C';
-    font-family: var(--founder-serif);
-    color: var(--accent-color-2);
-    opacity: 0.7;
-    font-size: 1.6em; /* bigger opening quote */
-    margin-right: 4px;
-    vertical-align: -0.15em;
-}
-
-.founder-motto::after {
-    content: '\201D';
-    font-family: var(--founder-serif);
-    color: var(--accent-color-2);
-    opacity: 0.7;
-    font-size: 1.6em; /* bigger closing quote */
-    margin-left: 4px;
-    vertical-align: -0.15em;
-}
-
-@media (max-width: 575px) {
-    .founder-motto {
-        font-size: 1.15rem !important;
+    .founder-text p:first-child {
+        margin-bottom: 18px;
     }
-}      
+
+    .founder-motto {
+        font-family: var(--founder-script);
+        font-style: italic;
+        font-size: 1.35rem !important;
+        line-height: 1.5 !important;
+        color: var(--accent-color-2) !important;
+        padding-left: 0;
+        border-left: none;
+        margin: 0 !important;
+        position: relative;
+    }
+
+    .founder-motto::before {
+        content: '\201C';
+        font-family: var(--founder-serif);
+        color: var(--accent-color-2);
+        opacity: 0.7;
+        font-size: 1.6em;
+        margin-right: 4px;
+        vertical-align: -0.15em;
+    }
+
+    .founder-motto::after {
+        content: '\201D';
+        font-family: var(--founder-serif);
+        color: var(--accent-color-2);
+        opacity: 0.7;
+        font-size: 1.6em;
+        margin-left: 4px;
+        vertical-align: -0.15em;
+    }
+
+    @media (max-width: 575px) {
+        .founder-motto {
+            font-size: 1.15rem !important;
+        }
+    }
 
     /* ---- Stats ---- */
     .founder-stats {
@@ -1599,13 +2148,36 @@ document.addEventListener('DOMContentLoaded', function () {
         color: var(--accent-color-2);
     }
 
-    /* ---- Decorative sketch ---- */
-    .founder-sketch {
+    /* ---- Decorative corner photo (replaces the old line-art sketch) ----
+       Small polaroid-style photo, right-aligned and placed in normal document
+       flow BELOW the grid — this guarantees it can never overlap the stats
+       cards or signature above it, no matter how much horizontal space that
+       content actually takes up at a given viewport width. */
+    .founder-corner-photo-row {
         position: absolute;
         right: 0;
         bottom: 0;
-        opacity: 0.35;
+        z-index: 0;
         pointer-events: none;
+    }
+
+    /* Blended into the background only via a soft edge fade — the photo itself
+       keeps its true colors, brightness, and contrast untouched. Edges dissolve
+       into the cream backdrop via mask-image so it reads as part of the page
+       rather than a card sitting on top of it. */
+    .founder-corner-photo {
+        width: 460px;
+        -webkit-mask-image: radial-gradient(ellipse 120% 120% at 72% 62%, #000 40%, rgba(0, 0, 0, 0.6) 62%, transparent 88%);
+        mask-image: radial-gradient(ellipse 120% 120% at 72% 62%, #000 40%, rgba(0, 0, 0, 0.6) 62%, transparent 88%);
+    }
+
+    .founder-corner-photo img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 24px;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -1613,8 +2185,8 @@ document.addEventListener('DOMContentLoaded', function () {
         .founder-grid {
             gap: 44px;
         }
-        .founder-sketch {
-            display: none;
+        .founder-corner-photo {
+            width: 320px;
         }
     }
 
@@ -1639,6 +2211,11 @@ document.addEventListener('DOMContentLoaded', function () {
             max-width: 320px;
             margin: 0 auto;
         }
+        /* Hide the corner photo on tablet/mobile — no room for it without
+           overlapping the stacked content */
+        .founder-corner-photo-row {
+            display: none;
+        }
     }
 
     @media (max-width: 575px) {
@@ -1653,55 +2230,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const founderSection = document.getElementById('founder');
-    if (!founderSection) return;
-
-    const revealEls = founderSection.querySelectorAll('.reveal-up, .scrollanimation');
-    if (!revealEls.length) return;
-
-    // If a global scroll-reveal observer already exists on the site, this is
-    // harmless — it just adds the same .is-visible class a second time.
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                runCountUp(entry.target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2 });
-
-    revealEls.forEach((el) => observer.observe(el));
-
-    function runCountUp(container) {
-        const counters = container.querySelectorAll('.founder-count');
-        counters.forEach((counter) => {
-            const target = parseInt(counter.dataset.count, 10) || 0;
-            const suffix = counter.dataset.suffix || '';
-            const duration = 1200; // ms
-            const startTime = performance.now();
-
-            function tick(now) {
-                const progress = Math.min((now - startTime) / duration, 1);
-                // ease-out cubic
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const value = Math.round(eased * target);
-                counter.textContent = value + suffix;
-
-                if (progress < 1) {
-                    requestAnimationFrame(tick);
-                } else {
-                    counter.textContent = target + suffix;
-                }
-            }
-            requestAnimationFrame(tick);
-        });
-    }
-});
-</script>
         <!-- Cottages -->
 <div id="process" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
@@ -2097,7 +2625,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="why-image-wrapper">
 
                             <video muted loop playsinline poster="{% static 'ambadyestate-main/image/new/why.webp' %}" class="why-video">
-                               <source src="{% static 'ambadyestate-main/am8.mp4' %}" type="video/mp4">
+                               <source src="{% static 'ambadyestate-main/am11.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
 
@@ -2114,9 +2642,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 Stunning natural surroundings in the heart of Munnar</h3>
                             <p class="mb-5"
                                 style="color: var(--text-color-2); font-size: 1.05rem; line-height: 1.8; max-width: 95%;">
-                                Discover why guests from across the world return to Ambady Estate — for the colonial
-                                charm, the organic plantation, the misty mountain views, and the warmth of authentic
-                                Kerala hospitality.
+                                Every visit to Ambady Estate is a chance to slow down, breathe in the fresh mountain air, and reconnect with nature. Nestled within our 70-acre organic cardamom plantation, you'll experience the perfect blend of comfort, sustainable living, and the charm of an authentic plantation stay.  Whether you're looking for a luxury resort in Munnar to unwind, a nature resort in Munnar surrounded by breathtaking landscapes, or one of the best resorts in Munnar for a memorable getaway, Ambady Estate welcomes you with warm hospitality and unforgettable experiences
                             </p>
 
                             <div class="why-features-list d-flex flex-column gap-4">
@@ -2407,6 +2933,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     max-width: 280px;
                 }
             }
+            /* ===== FIX: Prevent heading overflow on mobile ===== */
+@media (max-width: 991px) {
+    .why-choose-section .r-container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .why-content-wrapper h3 {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+}
         </style>
 
 <script>
@@ -3402,6 +3948,26 @@ testi-heading {
         .testi-name { font-size: 1.6rem; }
         .testi-leaf { width: 80px; height: 80px; }
     }
+    @media (max-width: 767px) {
+    .testi-name {
+        margin-bottom: 12px !important;
+    }
+
+    .testi-rating {
+        margin-bottom: 20px !important;
+        gap: 5px !important;
+    }
+
+    .testi-text {
+        font-size: 1rem !important;
+        line-height: 2 !important;
+        margin-bottom: 8px;
+    }
+
+    .testi-content {
+        padding: 0 4px;
+    }
+}
 </style>
 
 <script>
@@ -3483,17 +4049,13 @@ testi-heading {
                 <!-- Top row: heading + two paragraphs -->
                 <div class="story-top scrollanimation animated scroll-fadeInUp">
                     <div class="story-heading">
-                        <h2>RESTAURANT<br><span>AT AMBADY ESTATE</span><br>IN MUNNAR</h2>
+                        <h2>Where your sense of taste<br><span>merges with nature</span></h2>
                     </div>
                     <div class="story-para">
-                        <p>At Ambady Estate we have been following the locovore system where we collect the fresh
-                            vegetables and fruits within the property, according to season thus making it a farm to
-                            table experience. </p>
+                        <p>At Ambady Estate, we have been following the locavore system, where we collect fresh vegetables and fruits from within the property according to the season, making it a true farm-to-table experience at our luxury resort in Munnar.  </p>
                     </div>
                     <div class="story-para">
-                        <p>We acquire all items from a 10 km radius so that we can give
-                            fresh and delicious food to all our guests. On request we can provide you with a cooking
-                            demo of our chef speciality dishes and also try to make food which is truly local.</p>
+                        <p> Even so, we acquire all other ingredients from within a 10 km radius so that we can serve fresh and delicious food to all our guests. On request, we can provide you with a cooking demonstration of our chef's specialty dishes and also prepare food that is truly local, making every meal a memorable experience at one of the best resorts in Munnar.</p>
                     </div>
                 </div>
 
@@ -3794,9 +4356,9 @@ testi-heading {
             </video>
 
             <!-- Overlay -->
-            <div style="
+          <div style="
     position: absolute; inset: 0;
-    background: rgba(26, 30, 22, 0.28);
+    background: rgba(16, 56, 18, 0.42);
     z-index: 1;
 "></div>
 
@@ -4547,5 +5109,44 @@ testi-heading {
         });
     });
 </script>
+<style>
+    /* ===== PAGE-WIDE IMAGE FADE IN/OUT ON EVERY SCROLL ===== */
+    img.page-fade-img {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
 
+    img.page-fade-img.page-fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Select every image on this page, except logos/no-fade tagged ones
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)'
+    );
+
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -5% 0px'
+    });
+
+    pageFadeImages.forEach(function (img) {
+        pageFadeObserver.observe(img);
+    });
+});
+</script>
 {% endblock %}

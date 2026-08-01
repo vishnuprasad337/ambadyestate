@@ -110,6 +110,26 @@ function initAmbadySite() {
     });
   }
 
+  // ===== GLOBAL IMAGE FADE IN ON FIRST SCROLL INTO VIEW =====
+  const fadeImages = document.querySelectorAll(
+    "img:not(.site-brand img):not(.footer-brand img):not(.no-fade)"
+  );
+
+  fadeImages.forEach((img) => img.classList.add("fade-scroll"));
+
+  const imageFadeObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("fade-in");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
+  );
+
+  fadeImages.forEach((img) => imageFadeObserver.observe(img));
+
   updateHeaderState();
   activateCurrentSection();
   window.addEventListener("scroll", () => {
