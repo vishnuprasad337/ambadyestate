@@ -550,16 +550,69 @@ document.addEventListener('DOMContentLoaded', function () {
         <!-- Top: Heading + Images + Content -->
         <div class="about-top-row scrollanimation animated scroll-fadeInLeft">
 
-            <!-- Heading (always first) -->
-            <div class="about-heading-col">
-                <div class="about-eyebrow">
-                    <span>About Us</span>
-                    <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                        <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                    </svg>
+            <!-- Left column: heading + masked scroll-reveal content, both live in the
+                 same sticky context now so the heading stays visible the whole time
+                 the text is scrolling through the mask (previously the heading had
+                 its own short grid row and scrolled away once that row ended). -->
+            <div class="about-left-col">
+
+                <!-- Heading (always first) -->
+                <div class="about-heading-col">
+                    <div class="about-eyebrow">
+                        <span>About Us</span>
+                        <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="about-heading">Our Story</h3>
                 </div>
-                <h3 class="about-heading">Our Story</h3>
+
+                <!-- Paragraph content (masked scroll-reveal: only fills to image's bottom border, remaining text scrolls up inside the mask, then the whole row releases into the Discover section) -->
+                <div class="about-content-scroll-wrapper">
+                    <div class="about-content-col">
+                        <div class="d-flex flex-column gap-3 about-text-col">
+                            <p class="about-desc">
+                                In the 90's, our journey began with a beautiful 70-acre cardamom estate in the
+                                heart of Munnar. When we first came here, there were only two old cardamom
+                                curing houses, staff quarters, and endless greenery. What made us fall in love
+                                with this place was its peaceful beauty—the misty mountains, fresh mountain
+                                air, colourful butterflies, and the gentle chirping of birds.
+                            </p>
+
+                            <p class="about-desc">
+                                We knew this place was too special to change. So, we made a promise to
+                                protect it. We chose to grow our cardamom using natural and organic farming
+                                methods, just as nature intended. Even today, we continue natural farming to
+                                keep our land healthy and beautiful.
+                            </p>
+
+                            <p class="about-desc">
+                                In 2004, we welcomed our first guests by building eight boutique cottages with
+                                great care. We protected the trees and preserved the natural beauty around us,
+                                so every guest could enjoy the same peaceful feeling that made us fall in love
+                                with this place.
+                            </p>
+
+                            <p class="about-desc">
+                                Today, Ambady Estate is proudly known as one of the Best Resorts in Munnar,
+                                offering the perfect blend of comfort, peace, and nature. Whether you're
+                                looking for a Luxury Resort in Munnar or a peaceful Nature Resort in Munnar,
+                                we invite you to experience the beauty of Munnar with us.
+                            </p>
+
+                            <p class="about-desc">
+                                Every morning, the gentle chirping of Hornbills, Malabar Whistling Thrushes,
+                                Sunbirds, Woodpeckers, and many other birds welcomes you to a new day.
+                                Colourful butterflies fly through our cardamom plantations, and during
+                                different seasons, beautiful migratory birds also visit our estate. Every walk
+                                here brings you closer to nature and leaves you with memories you'll always
+                                cherish.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Image (always second, sticky while content scrolls) -->
@@ -573,51 +626,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <i class="fa-solid fa-arrow-right"></i>
         </a>
     </div>
-            </div>
-
-            <!-- Paragraph content (masked scroll-reveal: only fills to image's bottom border, remaining text scrolls up inside the mask, then the whole row releases into the Discover section) -->
-            <div class="about-content-scroll-wrapper">
-                <div class="about-content-col">
-                    <div class="d-flex flex-column gap-3 about-text-col">
-                        <p class="about-desc">
-                            In the 90's, our journey began with a beautiful 70-acre cardamom estate in the
-                            heart of Munnar. When we first came here, there were only two old cardamom
-                            curing houses, staff quarters, and endless greenery. What made us fall in love
-                            with this place was its peaceful beauty—the misty mountains, fresh mountain
-                            air, colourful butterflies, and the gentle chirping of birds.
-                        </p>
-
-                        <p class="about-desc">
-                            We knew this place was too special to change. So, we made a promise to
-                            protect it. We chose to grow our cardamom using natural and organic farming
-                            methods, just as nature intended. Even today, we continue natural farming to
-                            keep our land healthy and beautiful.
-                        </p>
-
-                        <p class="about-desc">
-                            In 2004, we welcomed our first guests by building eight boutique cottages with
-                            great care. We protected the trees and preserved the natural beauty around us,
-                            so every guest could enjoy the same peaceful feeling that made us fall in love
-                            with this place.
-                        </p>
-
-                        <p class="about-desc">
-                            Today, Ambady Estate is proudly known as one of the Best Resorts in Munnar,
-                            offering the perfect blend of comfort, peace, and nature. Whether you're
-                            looking for a Luxury Resort in Munnar or a peaceful Nature Resort in Munnar,
-                            we invite you to experience the beauty of Munnar with us.
-                        </p>
-
-                        <p class="about-desc">
-                            Every morning, the gentle chirping of Hornbills, Malabar Whistling Thrushes,
-                            Sunbirds, Woodpeckers, and many other birds welcomes you to a new day.
-                            Colourful butterflies fly through our cardamom plantations, and during
-                            different seasons, beautiful migratory birds also visit our estate. Every walk
-                            here brings you closer to nature and leaves you with memories you'll always
-                            cherish.
-                        </p>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -715,24 +723,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
 
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-trails.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 20c4-10 8-14 16-16-2 8-6 12-16 16Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h5>Guided Trails</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Guided nature experiences through plantation trails and scenic viewpoints.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" alt="Guided Trails">
-                    </div>
-                </div>
-            </div>
-
+           
             <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-farm.webp' %}">
                 <div class="about-card-head">
                     <div class="about-card-icon">
@@ -793,34 +784,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
             <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only).
                  class="no-fade" keeps the page-wide scroll-fade script from touching these —
-                 they're controlled entirely by the stack-front/stack-back JS below. -->
-            <div class="about-cards-image-panel">
-                <div class="about-cards-image-item active">
-                    <img src="{% static 'ambadyestate-main/am12.jpg' %}" class="no-fade" alt="Private Retreat">
+                 they're controlled entirely by the stack-front/stack-back JS below.
+                 Wrapped in .about-cards-image-scroll-wrapper so its height can be set by JS
+                 to exactly match .about-card-row's real height — otherwise the fixed-height
+                 sticky panel unsticks before the (taller) card stack finishes scrolling,
+                 leaving empty space below it once the panel's sticky range runs out. -->
+          <div class="about-cards-image-scroll-wrapper">
+                <div class="about-cards-image-panel">
+                    <div class="about-cards-image-item active">
+                        <img src="{% static 'ambadyestate-main/am12.jpg' %}" class="no-fade" alt="Private Retreat">
+                    </div>
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/am14.png' %}" class="no-fade" alt="Eco Architecture">
+                    </div>
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/am15.png' %}" class="no-fade" alt="Locovore Cuisine">
+                    </div>
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/am6.jpeg' %}" class="no-fade" alt="Valley-view Pool">
+                    </div>
+
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/am16.png' %}" class="no-fade" alt="Organic Farm">
+                    </div>
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/am17.png' %}" class="no-fade" alt="Goshala">
+                    </div>
+                    <div class="about-cards-image-item">
+                        <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" class="no-fade" alt="Birding Paradise">
+                    </div>
                 </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am14.png' %}" class="no-fade" alt="Eco Architecture">
+                <div class="about-cards-cta">
+                    <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
+                        <span>Explore Now</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am15.png' %}" class="no-fade" alt="Locovore Cuisine">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am6.jpeg' %}" class="no-fade" alt="Valley-view Pool">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/nature.webp' %}" class="no-fade" alt="Guided Trails">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am16.png' %}" class="no-fade" alt="Organic Farm">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/am17.png' %}" class="no-fade" alt="Goshala">
-                </div>
-                <div class="about-cards-image-item">
-                    <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" class="no-fade" alt="Birding Paradise">
-                </div>
-                
             </div>
+
+
             
         </div>
 
@@ -858,36 +860,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* =====================================================
        TOP STORY AREA
-       Left: heading + masked scroll-reveal content
+       Left: heading + masked scroll-reveal content (single sticky column)
        Right: sticky fixed image
+       NOTE: previously heading + content were two separate grid rows
+       ("heading" / "content"), each with their own sticky context.
+       That meant once you scrolled past the short heading row, the
+       heading itself scrolled away even though the image and text
+       mask were still pinned further down. Now heading + content
+       share one grid area ("left") wrapped in .about-left-col, so
+       the heading and the scrolling text mask are pinned together.
     ===================================================== */
 
     .about-top-row {
         display: grid;
         grid-template-columns: minmax(320px, 0.9fr) minmax(500px, 1.3fr);
-        grid-template-areas:
-            "heading image"
-            "content image";
+        grid-template-areas: "left image";
 
         column-gap: 55px;
-        row-gap: 18px;
 
         align-items: start;
         margin-bottom: 70px;
     }
 
-    /* Heading — sticky too, so it stays pinned alongside the image
-       while the text scrolls through the mask, and only releases
-       together with the image once the text is fully revealed.
-       Offset now derives from the real navbar height (--navbar-h,
+    .about-left-col {
+        grid-area: left;
+    }
+
+    /* Heading — sticky, sits above the text mask inside the same
+       left column, so it stays pinned in place the whole time the
+       paragraph mask below it is scrolling, and only moves away
+       together with everything else once the section releases.
+       Offset derives from the real navbar height (--navbar-h,
        set in base.html) instead of a hardcoded guess. */
     .about-heading-col {
-        grid-area: heading;
-
         position: sticky;
-        top: calc(var(--navbar-h, 96px) + 20px - 60px);
+        top: calc(var(--navbar-h, 96px) + 20px);
 
         align-self: start;
+        margin-bottom: 24px;
+        z-index: 2;
     }
 
     /* =====================================================
@@ -898,20 +909,24 @@ document.addEventListener('DOMContentLoaded', function () {
          naturally into the next section.
        - .about-content-col: sticky mask, fixed to the image's height,
          clips (overflow:hidden) so only "one image-height" of text
-         shows at a time.
+         shows at a time. Its sticky "top" now sits just below the
+         heading (--navbar-h + 20px + the heading's real height +
+         the heading's margin-bottom), using a JS-measured
+         --about-heading-h variable so it always matches exactly,
+         even if the heading text wraps to a different number of
+         lines at some viewport width.
        - .about-text-col: the actual paragraphs, translated upward by
          JS in sync with scroll position.
     ===================================================== */
 
     .about-content-scroll-wrapper {
-        grid-area: content;
         position: relative;
         width: 100%;
     }
 
     .about-content-col {
         position: sticky;
-        top: calc(var(--navbar-h, 96px) + 20px); /* must match .about-image-col's top */
+        top: calc(var(--navbar-h, 96px) + 20px + var(--about-heading-h, 140px) + 24px);
 
         width: 100%;
         height: 500px; /* must match .about-image-col's height */
@@ -951,12 +966,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 .about-hero-cta {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 16px;
 }
 
 @media (max-width: 991px) {
     .about-hero-cta {
+        justify-content: center;
         margin-top: 14px;
         margin-bottom: 10px;
     }
@@ -1069,7 +1085,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         gap: 20px;
 
-        margin-bottom: 60px;
+        margin-bottom: 20px;
+        align-items: start;
 
         position: relative;
     }
@@ -1085,20 +1102,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* =====================================================
        FEATURE IMAGE PANEL
+       .about-cards-image-scroll-wrapper's height is set by JS to exactly
+       match .about-card-row's real rendered height (see script at bottom
+       of this file). This guarantees the sticky panel inside it stays
+       pinned for exactly as long as the card stack takes to scroll by,
+       and releases at the same moment — no leftover empty space, and no
+       gap even if cards are added/removed later.
     ===================================================== */
 
-    .about-cards-image-panel {
+    .about-cards-image-scroll-wrapper {
         grid-column: 2;
+        position: relative;
+        width: 100%;
+        /* height set inline by JS */
+    }
 
+    .about-cards-image-panel {
         position: sticky;
 
         top: 100px;
 
-        align-self: start;
-
-        height: 600px;
+        height: 500px;
         max-height: 80vh;
     }
+ .about-cards-cta {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 100px;   /* increased further to push button down more */
+}
 
     .about-cards-image-item {
         position: absolute;
@@ -1491,19 +1522,39 @@ document.addEventListener('DOMContentLoaded', function () {
         grid-template-columns: 1fr;
 
         grid-template-areas:
-            "heading"
-            "image"
-            "content";
+            "left"
+            "image";
 
         row-gap: 8px;
 
         margin-bottom: 32px;
     }
 
+    /* Un-nest the left column on mobile so its children (.about-heading-col,
+       .about-content-scroll-wrapper) become direct flex/grid children of
+       .about-top-row again, preserving the original stacked order:
+       heading -> image -> content */
+    .about-left-col {
+        display: contents;
+    }
+
     /* Un-stick the heading on mobile/tablet — normal stacked flow */
     .about-heading-col {
         position: relative;
         top: auto;
+        margin-bottom: 0;
+        order: 1;
+    }
+
+    /* Unwrap the image column so its children (image + button)
+       can be ordered independently on mobile — button moves to
+       the end of the section instead of sitting right under the image */
+    .about-image-col {
+        display: contents;
+    }
+
+    .about-content-scroll-wrapper {
+        order: 3;
     }
 
     /* Remove masked scroll effect entirely on mobile — natural stacked flow */
@@ -1533,8 +1584,8 @@ document.addEventListener('DOMContentLoaded', function () {
         transform: none !important;
     }
 
-    /* Remove sticky image */
-    .about-image-col {
+    /* Un-stick image, now ordered as a direct flex child of .about-top-row */
+    .about-hero-media {
         position: relative;
 
         margin-top: 0;
@@ -1542,17 +1593,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         width: 100%;
 
-        height: auto;
-
-        max-height: none;
-    }
-
-    .about-hero-media {
-        width: 100%;
-
         height: 260px;
 
+        max-height: none;
+
         border-radius: 18px;
+
+        order: 2;
     }
 
     .about-hero-img {
@@ -1561,6 +1608,15 @@ document.addEventListener('DOMContentLoaded', function () {
         height: 100%;
 
         border-radius: 18px;
+    }
+
+    /* Button — now a direct flex child of .about-top-row, pushed to the
+       very end of the section (after heading, image, and text) */
+    .about-hero-cta {
+        order: 4;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
     }
 
     .about-text-col {
@@ -1604,7 +1660,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* Hide desktop image panel */
-    .about-cards-image-panel {
+    .about-cards-image-scroll-wrapper {
         display: none;
     }
 
@@ -1755,6 +1811,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 </style>
+
+<script>
+/* =====================================================
+   SYNC --about-heading-h WITH THE REAL HEADING HEIGHT
+   Needed so .about-content-col's sticky "top" always sits
+   exactly below the heading, on any viewport width or if
+   the heading text ever wraps onto a different number of
+   lines. Mirrors the same pattern used for --navbar-h in
+   base.html.
+===================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    var heading = document.querySelector('.about-heading-col');
+    if (!heading) return;
+
+    function syncHeadingHeight() {
+        var h = heading.getBoundingClientRect().height;
+        if (h > 0) {
+            document.documentElement.style.setProperty('--about-heading-h', h + 'px');
+        }
+    }
+
+    syncHeadingHeight();
+    window.addEventListener('load', syncHeadingHeight);
+    window.addEventListener('resize', syncHeadingHeight);
+
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(syncHeadingHeight).observe(heading);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncHeadingHeight);
+    }
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const wrapper = document.querySelector('.about-content-scroll-wrapper');
@@ -1771,13 +1861,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let locked = false;
     let touchStartY = 0;
 
-    // Reads the same --navbar-h variable that base.html keeps in sync with
-    // the real header height, so the lock's pin-detection always matches
-    // the CSS top offset exactly — never a separate hardcoded number.
+    // Must match .about-content-col's CSS "top" exactly:
+    // navbar-h + 20 + heading-h + 24
     function getStickyTop() {
-        var val = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
-        var navH = parseFloat(val) || 96;
-        return navH + 20;
+        var navVal = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
+        var navH = parseFloat(navVal) || 96;
+
+        var headingVal = getComputedStyle(document.documentElement).getPropertyValue('--about-heading-h').trim();
+        var headingH = parseFloat(headingVal) || 140;
+
+        return navH + 20 + headingH + 24;
     }
 
     function measure() {
@@ -1906,6 +1999,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     refresh();
+});
+</script>
+<script>
+/* =====================================================
+   SYNC IMAGE PANEL SCROLL-WRAPPER HEIGHT WITH THE REAL
+   CARD-ROW HEIGHT
+   The image panel's outer wrapper (.about-cards-image-scroll-wrapper)
+   must be exactly as tall as .about-card-row so the sticky panel
+   inside it stays pinned for the full scroll distance the cards
+   take, and releases at the same moment — otherwise a fixed-height
+   sticky panel that's shorter than the card stack unsticks early,
+   leaving empty space below it while the cards keep scrolling.
+===================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    var cardRow = document.querySelector('.about-card-row');
+    var scrollWrapper = document.querySelector('.about-cards-image-scroll-wrapper');
+
+    if (!cardRow || !scrollWrapper) return;
+
+    function syncImagePanelHeight() {
+        var h = cardRow.getBoundingClientRect().height;
+        if (h > 0) {
+            scrollWrapper.style.height = h + 'px';
+        }
+    }
+
+    syncImagePanelHeight();
+    window.addEventListener('load', syncImagePanelHeight);
+    window.addEventListener('resize', syncImagePanelHeight);
+
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(syncImagePanelHeight).observe(cardRow);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncImagePanelHeight);
+    }
 });
 </script>
 <script>
@@ -2176,7 +2306,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
 
                 <div class="founder-signature reveal-up reveal-delay-4">
-                    <span class="founder-signature-name">Arun Joseph</span>
+                    <span class="founder-signature-name">Rajesh</span>
                     <span class="founder-signature-role">Founder | Ambady Estate</span>
                 </div>
 
@@ -2191,11 +2321,7 @@ document.addEventListener('DOMContentLoaded', function () {
          the content (.founder-grid has a higher z-index), so it can overlap
          into that corner freely without covering any text, and it doesn't
          add extra height to the section since it's positioned absolutely. -->
-    <div class="founder-corner-photo-row">
-        <div class="founder-corner-photo scrollanimation animated scroll-fadeInUp">
-            <img src="{% static 'ambadyestate-main/am12.jpg' %}" alt="Ambady Estate cottage">
-        </div>
-    </div>
+    
 </div>
 
 <style>
