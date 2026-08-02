@@ -2424,36 +2424,28 @@
     }
 </style>
 <style>
-    /* ===== PAGE-WIDE FADE + MOVEMENT ON EVERY SCROLL — IMAGES + CARDS ===== */
-    img.page-fade-img,
-    .page-fade-card {
-        opacity: 0;
-        transform: translateY(45px) scale(0.94);
-        transition: opacity 0.75s cubic-bezier(.22, 1, .36, 1),
-                    transform 0.75s cubic-bezier(.22, 1, .36, 1);
-        will-change: opacity, transform;
-    }
-
-    img.page-fade-img.page-fade-in,
-    .page-fade-card.page-fade-in {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-    /* Cards that already animate transform on hover (accordion-item,
-       about-feature-card) get the scroll movement applied to a wrapper
-       instead, so hover animations stay untouched */
+    /* ===== DIRECTIONAL SCROLL FADE ===== */
+    .page-fade-img,
+    .page-fade-card,
     .page-fade-wrap {
         opacity: 0;
-        transform: translateY(45px) scale(0.94);
-        transition: opacity 0.75s cubic-bezier(.22, 1, .36, 1),
-                    transform 0.75s cubic-bezier(.22, 1, .36, 1);
+        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
         will-change: opacity, transform;
     }
 
+    /* Resting (off-screen) transforms, per direction */
+    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
+    .fade-dir-down  { transform: translateY(-55px) scale(0.96); }
+    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
+    .fade-dir-right { transform: translateX(70px) scale(0.96); }
+
+    /* Visible state — same for all directions */
+    .page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in,
     .page-fade-wrap.page-fade-in {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) translateX(0) scale(1);
     }
 </style>
 
@@ -2468,24 +2460,25 @@ document.addEventListener('DOMContentLoaded', function () {
         img.classList.add('page-fade-img');
     });
 
-    // ---- Simple cards (safe to animate transform directly) ----
+    // ---- Simple cards ----
     var pageFadeCards = document.querySelectorAll(
         '.feature-card, .amenity-card, .process-card, .project-card, ' +
         '.testimonial-quote, .founder-stat, ' +
         '.blog-card, .value-strip-item, .why-feature-item, .service-panel, ' +
-        '.final-cta-card, .story-img-wrap'
+        '.final-cta-card, .story-img-wrap, ' +
+        '.why-card, .pkg-card-v3, .testi-photo-wrap, .testi-thumb, ' +
+        '.about-btn-group, .why-split-header, .why-footer-tagline'
     );
     pageFadeCards.forEach(function (card) {
         card.classList.add('page-fade-card');
     });
 
-    // ---- Interactive cards: wrap in a div so the movement doesn't
-    //      collide with their own hover transitions ----
+    // ---- Interactive cards: wrap first ----
     var interactiveCards = document.querySelectorAll(
-        '.accordion-item, .about-feature-card'
+        '.accordion-item, .about-feature-item, .about-media-wrap'
     );
     interactiveCards.forEach(function (card) {
-        if (card.parentElement.classList.contains('page-fade-wrap')) return; // already wrapped
+        if (card.parentElement.classList.contains('page-fade-wrap')) return;
         var wrapper = document.createElement('div');
         wrapper.className = 'page-fade-wrap';
         card.parentNode.insertBefore(wrapper, card);
@@ -2493,14 +2486,47 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     var pageFadeWraps = document.querySelectorAll('.page-fade-wrap');
 
-    // ---- Single shared observer for all three groups ----
+    var allFadeEls = document.querySelectorAll(
+        '.page-fade-img, .page-fade-card, .page-fade-wrap'
+    );
+
+    // ---- Assign a direction to each element ----
+    // Explicit overrides for elements that should always come from a
+    // specific side (e.g. left-column text vs right-column image).
+    var leftSelectors = '.about-text-col, .about-media-col ~ *, [class*="fadeInLeft"]';
+    var rightSelectors = '.about-media-col, [class*="fadeInRight"]';
+
+    allFadeEls.forEach(function (el, i) {
+        var dir;
+
+        if (el.matches(leftSelectors) || el.closest(leftSelectors)) {
+            dir = 'left';
+        } else if (el.matches(rightSelectors) || el.closest(rightSelectors)) {
+            dir = 'right';
+        } else {
+            // Otherwise alternate: cards in a row take turns coming from
+            // left / right / up, based on their position among siblings
+            // of the same type — gives a natural "each card different
+            // direction" feel for grids (Why Choose Us, Packages, Rooms, etc).
+            var siblings = Array.from(el.parentElement ? el.parentElement.children : []);
+            var indexInParent = siblings.indexOf(el);
+            var pattern = ['up', 'left', 'right'];
+            dir = pattern[indexInParent % pattern.length];
+        }
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 4) * 0.08 + 's';
+    });
+
+    // ---- Observer: fade in immediately BEFORE crossing the edge,
+    //      fade out (back toward its own direction) once it leaves ----
     var pageFadeObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -5% 0px'
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
     });
 
     pageFadeImages.forEach(function (el) { pageFadeObserver.observe(el); });

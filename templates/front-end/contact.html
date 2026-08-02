@@ -135,7 +135,7 @@
     <div class="r-container">
         <div class="row row-cols-xl-4 row-cols-md-2 row-cols-1 g-4">
 
-            <div class="col scrollanimation animated scroll-fadeInUp">
+            <div class="col">
                 <div class="contact-info-card">
                     <div class="contact-info-icon">
                         <i class="fa-solid fa-phone"></i>
@@ -147,7 +147,7 @@
                 </div>
             </div>
 
-            <div class="col scrollanimation animated scroll-fadeInUp">
+            <div class="col">
                 <div class="contact-info-card">
                     <div class="contact-info-icon">
                         <i class="fa-solid fa-envelope"></i>
@@ -159,7 +159,7 @@
                 </div>
             </div>
 
-            <div class="col scrollanimation animated scroll-fadeInUp">
+            <div class="col">
                 <div class="contact-info-card">
                     <div class="contact-info-icon">
                         <i class="fa-solid fa-location-dot"></i>
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <div class="col scrollanimation animated scroll-fadeInUp">
+            <div class="col">
                 <div class="contact-info-card">
                     <div class="contact-info-icon">
                         <i class="fa-solid fa-clock"></i>
@@ -383,7 +383,7 @@
         <div class="contact-fm-wrapper">
 
             <!-- Left: Form -->
-            <div class="contact-fm-left scrollanimation animated scroll-fadeInLeft">
+            <div class="contact-fm-left">
                 <h6 class="accent-color-2">Contact Us</h6>
                 <h3>Let's plan your dream stay — contact our team today</h3>
 
@@ -409,7 +409,7 @@
             </div>
 
             <!-- Right: Map -->
-            <div class="contact-fm-right scrollanimation animated scroll-fadeInRight">
+            <div class="contact-fm-right">
                 <iframe
                     class="contact-fm-map"
                     src="https://www.google.com/maps?q=Ambady+Estate+Munnar+Kerala&output=embed"
@@ -924,6 +924,80 @@ document.addEventListener('DOMContentLoaded', function () {
             msgBox.classList.add('error');
         });
     });
+});
+</script>
+
+<style>
+    /* ===== DIRECTIONAL SCROLL FADE ===== */
+    .page-fade-card {
+        opacity: 0;
+        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
+    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
+    .fade-dir-right { transform: translateX(70px) scale(0.96); }
+
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var pageFadeEls = [];
+
+    // Strip any leftover legacy animation classes/inline styles so they
+    // can't fight our new transform/opacity transitions on the same
+    // elements (this is what was making the animation invisible before).
+    function stripLegacyAnim(el) {
+        if (!el) return;
+        el.classList.remove('scrollanimation', 'animated',
+            'scroll-fadeInUp', 'scroll-fadeInLeft', 'scroll-fadeInRight');
+        el.style.opacity = '';
+        el.style.transform = '';
+    }
+
+    // ---- Contact info cards (4-column row): cycle left/up/up/right ----
+    var infoCols = Array.from(document.querySelectorAll('.contact-info-section .row > .col'));
+    infoCols.forEach(function (col, i) {
+        stripLegacyAnim(col);
+        var pattern = ['left', 'up', 'up', 'right'];
+        var dir = pattern[i % pattern.length];
+        col.classList.add('page-fade-card', 'fade-dir-' + dir);
+        col.style.transitionDelay = (i % 4) * 0.08 + 's';
+        pageFadeEls.push(col);
+    });
+
+    // ---- Contact form: comes from the left (matches its position) ----
+    var formLeft = document.querySelector('.contact-fm-left');
+    if (formLeft) {
+        stripLegacyAnim(formLeft);
+        formLeft.classList.add('page-fade-card', 'fade-dir-left');
+        pageFadeEls.push(formLeft);
+    }
+
+    // ---- Map: comes from the right (matches its position) ----
+    var mapRight = document.querySelector('.contact-fm-right');
+    if (mapRight) {
+        stripLegacyAnim(mapRight);
+        mapRight.classList.add('page-fade-card', 'fade-dir-right');
+        pageFadeEls.push(mapRight);
+    }
+
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-15% 0px -20% 0px'
+    });
+
+    pageFadeEls.forEach(function (el) { pageFadeObserver.observe(el); });
 });
 </script>
 

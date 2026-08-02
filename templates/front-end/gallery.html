@@ -450,5 +450,63 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<style>
+    /* ===== DIRECTIONAL SCROLL FADE ===== */
+    .page-fade-card {
+        opacity: 0;
+        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
 
+    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
+    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
+    .fade-dir-right { transform: translateX(70px) scale(0.96); }
+
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+
+    /* Items hidden by the filter tabs should skip the fade animation
+       entirely (no flash/transition when a filter is switched) */
+    .gallery-item.hidden.page-fade-card {
+        transition: none;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+    var headerEls = document.querySelectorAll('.gallery-filter-row');
+
+    var pageFadeEls = [];
+
+    // Heading/filter row — comes up from below
+    headerEls.forEach(function (el) {
+        el.classList.add('page-fade-card', 'fade-dir-up');
+        pageFadeEls.push(el);
+    });
+
+    // Gallery items — direction cycles per column position (3-col grid)
+    galleryItems.forEach(function (item, i) {
+        var pattern = ['left', 'up', 'right'];
+        var dir = pattern[i % 3];
+        item.classList.add('page-fade-card', 'fade-dir-' + dir);
+        item.style.transitionDelay = (i % 3) * 0.08 + 's';
+        pageFadeEls.push(item);
+    });
+
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
+    });
+
+    pageFadeEls.forEach(function (el) { pageFadeObserver.observe(el); });
+});
+</script>
 {% endblock %}

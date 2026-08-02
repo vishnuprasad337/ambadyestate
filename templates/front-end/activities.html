@@ -454,4 +454,87 @@
     }
 }
 </style>
+<style>
+    /* ===== DIRECTIONAL SCROLL FADE ===== */
+    .page-fade-img,
+    .page-fade-card {
+        opacity: 0;
+        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    /* Resting (off-screen) transforms, per direction */
+    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
+    .fade-dir-down  { transform: translateY(-55px) scale(0.96); }
+    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
+    .fade-dir-right { transform: translateX(70px) scale(0.96); }
+
+    /* Visible state — same for all directions */
+    .page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ---- Images ----
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)'
+    );
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    // ---- Cards (activity cards + heading block) ----
+    var pageFadeCards = document.querySelectorAll(
+        '.activity-card, #activities-list h6, #activities-list h3, #activities-list > .r-container > p'
+    );
+    pageFadeCards.forEach(function (card) {
+        card.classList.add('page-fade-card');
+    });
+
+    var allFadeEls = document.querySelectorAll('.page-fade-img, .page-fade-card');
+
+    // ---- Assign a direction to each element ----
+    allFadeEls.forEach(function (el, i) {
+        var dir;
+
+        // Activity cards: cycle up / left / right based on position
+        // within their row (row-cols-xl-3), so each card in a row of 3
+        // comes from a different direction.
+        if (el.classList.contains('activity-card')) {
+            var col = el.closest('.col');
+            var siblings = col ? Array.from(col.parentElement.children) : [];
+            var indexInRow = siblings.indexOf(col) % 3;
+            var pattern = ['left', 'up', 'right'];
+            dir = pattern[indexInRow];
+        } else {
+            // Images and heading text just come up from below
+            dir = 'up';
+        }
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 3) * 0.1 + 's';
+    });
+
+    // ---- Observer: fades in before crossing the edge, fades out
+    //      (back toward its own direction) once it leaves — works
+    //      scrolling down AND scrolling back up ----
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
+    });
+
+    pageFadeImages.forEach(function (el) { pageFadeObserver.observe(el); });
+    pageFadeCards.forEach(function (el) { pageFadeObserver.observe(el); });
+});
+</script>
 {% endblock %}
