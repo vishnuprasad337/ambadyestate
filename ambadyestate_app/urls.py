@@ -113,6 +113,6 @@ path(
 
 ),
 path("gallery/", views.gallery, name="gallery"),
-
+path('destinations/', views.nearby_destinations_page, name='nearby_destinations_page'),
 ]
 

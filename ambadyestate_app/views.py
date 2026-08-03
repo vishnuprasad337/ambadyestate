@@ -1122,3 +1122,12 @@ from django.shortcuts import render
 
 def page_404(request, exception=None):
     return render(request, 'front-end/404.html', status=404)
+
+def nearby_destinations_page(request):
+    destinations = NearbyDestination.objects.filter(status="active").order_by('-created_at')
+    
+
+    return render(request, 'front-end/nearby-destinations.html', {
+        'destinations': destinations,
+        
+    })

@@ -118,7 +118,7 @@
             <div class="dest-viewer-grid">
 
                 <!-- LEFT: Image viewer -->
-                <div>
+                <div class="dest-anim dest-anim-left" data-anim="left">
                     <div class="dest-main-image-frame">
                         <img id="destMainImage" src="{{ destination.image.url }}" alt="{{ destination.name }}">
                         {% if gallery_images %}
@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- RIGHT: Details -->
-                <div class="dest-info-col">
+                <div class="dest-info-col dest-anim dest-anim-right" data-anim="right">
                     <h6 class="accent-color-2">Nearby Destination</h6>
                     <h3 class="dest-title">{{ destination.name }}</h3>
 
@@ -175,33 +175,6 @@
                 </div>
             </div>
         </div>
-
-        {% if other_destinations %}
-        <div class="dest-more-section">
-            <h5>More to Explore Nearby</h5>
-            <div class="row row-cols-xl-3 row-cols-1 g-4">
-                {% for other in other_destinations %}
-                <div class="col">
-                    <a href="{% url 'ambadyestate_app:nearby_destination_details' other.slug %}" class="dest-more-card">
-                        <div class="dest-more-img-wrap">
-                            <img src="{{ other.image.url }}" alt="{{ other.name }}" loading="lazy">
-                            <div class="dest-more-overlay"></div>
-                            {% if other.distance %}
-                            <div class="dest-more-tag">{{ other.distance }} km</div>
-                            {% endif %}
-                            <div class="dest-more-body">
-                                <h4>{{ other.name }}</h4>
-                                <span class="dest-more-link">
-                                    Read More <i class="fa-solid fa-arrow-right"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
     </div>
 </div>
 
@@ -227,36 +200,84 @@
         z-index: 2;
     }
 
-    /* ---------- Viewer wrap ---------- */
+    /* ---------- Viewer wrap (transparent, matches page bg) ---------- */
     .dest-viewer-wrap {
-        background: #fff;
+        background: transparent;
         border-radius: 24px;
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        border: none;
+        box-shadow: none;
         padding: 32px;
     }
 
     .dest-viewer-grid {
         display: grid;
-        grid-template-columns: 1.3fr 1fr;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        align-items: start;
         gap: 40px;
+    }
+
+    /* ---------- Entrance animations ---------- */
+    .dest-anim {
+        width: 100%;
+        min-width: 0;
+        opacity: 0;
+        transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+    }
+
+    .dest-anim-left {
+        transform: translateX(-70px);
+    }
+
+    .dest-anim-right {
+        transform: translateX(70px);
+    }
+
+    .dest-anim.dest-in-view {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Stagger inner elements of the info column */
+    .dest-info-col > * {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .dest-info-col.dest-in-view > *:nth-child(1) { transition-delay: 0.05s; }
+    .dest-info-col.dest-in-view > *:nth-child(2) { transition-delay: 0.15s; }
+    .dest-info-col.dest-in-view > *:nth-child(3) { transition-delay: 0.25s; }
+    .dest-info-col.dest-in-view > *:nth-child(4) { transition-delay: 0.35s; }
+    .dest-info-col.dest-in-view > *:nth-child(5) { transition-delay: 0.45s; }
+
+    .dest-info-col.dest-in-view > * {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     /* ---------- Left: image viewer ---------- */
     .dest-main-image-frame {
         position: relative;
+        display: block;
         width: 100%;
+        min-width: 100%;
         aspect-ratio: 4 / 3;
+        min-height: 340px;
         border-radius: 16px;
         overflow: hidden;
-        background: #f2f2f2;
+        background: #eceae0;
     }
 
     .dest-main-image-frame img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
         display: block;
+        transition: transform 0.6s ease, opacity 0.4s ease;
     }
 
     .dest-tag {
@@ -299,6 +320,7 @@
     .dest-nav-arrow:hover {
         background: var(--accent-color-2, #c8a86a);
         color: #fff;
+        transform: translateY(-50%) scale(1.08);
     }
 
     .dest-dots-row {
@@ -324,17 +346,24 @@
 
     .dest-thumb-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        width: 100%;
+        gap: 12px;
     }
 
     .dest-thumb-item {
+        position: relative;
+        width: 100%;
         aspect-ratio: 1 / 1;
         border-radius: 10px;
         overflow: hidden;
         cursor: pointer;
         border: 2px solid transparent;
-        transition: border-color 0.3s ease;
+        transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .dest-thumb-item:hover {
+        transform: translateY(-3px);
     }
 
     .dest-thumb-item.active {
@@ -455,96 +484,6 @@
         transform: translateY(-2px);
     }
 
-    /* ---------- More destinations ---------- */
-    .dest-more-section {
-        margin-top: 70px;
-    }
-
-    .dest-more-section h5 {
-        margin-bottom: 24px;
-        font-size: 1.3rem;
-        font-weight: 700;
-    }
-
-    .dest-more-card {
-        display: block;
-        text-decoration: none;
-        border-radius: 18px;
-        overflow: hidden;
-        height: 100%;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    }
-
-    .dest-more-img-wrap {
-        position: relative;
-        overflow: hidden;
-        border-radius: 18px;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        background: #1a1e16;
-    }
-
-    .dest-more-img-wrap img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.75);
-        transition: transform 0.7s ease, filter 0.5s ease;
-    }
-
-    .dest-more-card:hover .dest-more-img-wrap img {
-        transform: scale(1.06);
-        filter: brightness(0.6);
-    }
-
-    .dest-more-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 100%);
-        z-index: 1;
-    }
-
-    .dest-more-tag {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        background: var(--accent-color-2, #c8a86a);
-        color: var(--text-color, #1a1e16);
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 4px;
-        z-index: 2;
-    }
-
-    .dest-more-body {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 20px;
-        z-index: 2;
-    }
-
-    .dest-more-body h4 {
-        color: #fff;
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    .dest-more-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        color: var(--accent-color-2, #c8a86a);
-        font-size: 0.78rem;
-        font-weight: 700;
-    }
-
     /* ---------- Responsive ---------- */
     @media (max-width: 991px) {
         #destination-details {
@@ -557,6 +496,22 @@
             grid-template-columns: 1fr;
             gap: 24px;
         }
+        .dest-anim-left,
+        .dest-anim-right {
+            transform: translateY(40px);
+        }
+        .dest-anim.dest-in-view {
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .dest-anim,
+        .dest-info-col > * {
+            transition: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
     }
 </style>
 
@@ -568,42 +523,64 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevBtn = document.getElementById('destPrevBtn');
     const nextBtn = document.getElementById('destNextBtn');
 
-    if (!mainImage || !thumbItems.length) return;
+    if (mainImage && thumbItems.length) {
+        const images = thumbItems.map(item => item.querySelector('img').src);
+        let currentIndex = 0;
 
-    const images = thumbItems.map(item => item.querySelector('img').src);
-    let currentIndex = 0;
+        images.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dest-dot' + (i === 0 ? ' active' : '');
+            dot.dataset.index = i;
+            dot.addEventListener('click', () => setActive(i));
+            if (dotsRow) dotsRow.appendChild(dot);
+        });
 
-    images.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.className = 'dest-dot' + (i === 0 ? ' active' : '');
-        dot.dataset.index = i;
-        dot.addEventListener('click', () => setActive(i));
-        if (dotsRow) dotsRow.appendChild(dot);
-    });
+        function setActive(index) {
+            currentIndex = index;
+            mainImage.style.opacity = '0';
+            setTimeout(() => {
+                mainImage.src = images[index];
+                mainImage.style.opacity = '1';
+            }, 150);
+            thumbItems.forEach((item, i) => item.classList.toggle('active', i === index));
+            if (dotsRow) {
+                Array.from(dotsRow.children).forEach((dot, i) => dot.classList.toggle('active', i === index));
+            }
+        }
 
-    function setActive(index) {
-        currentIndex = index;
-        mainImage.src = images[index];
-        thumbItems.forEach((item, i) => item.classList.toggle('active', i === index));
-        if (dotsRow) {
-            Array.from(dotsRow.children).forEach((dot, i) => dot.classList.toggle('active', i === index));
+        thumbItems.forEach((item, i) => {
+            item.addEventListener('click', () => setActive(i));
+        });
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                setActive((currentIndex - 1 + images.length) % images.length);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                setActive((currentIndex + 1) % images.length);
+            });
         }
     }
 
-    thumbItems.forEach((item, i) => {
-        item.addEventListener('click', () => setActive(i));
-    });
+    /* ---- Entrance animation on scroll: image + text slide in from opposite directions ---- */
+    const animEls = document.querySelectorAll('.dest-anim');
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            setActive((currentIndex - 1 + images.length) % images.length);
-        });
-    }
+    if ('IntersectionObserver' in window && animEls.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('dest-in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            setActive((currentIndex + 1) % images.length);
-        });
+        animEls.forEach(el => observer.observe(el));
+    } else {
+        animEls.forEach(el => el.classList.add('dest-in-view'));
     }
 });
 </script>
