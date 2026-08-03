@@ -31,7 +31,13 @@
     </div>
 </section>
 
-<!-- ===== ABOUT THIS ROOM — sticky image, scroll-reveal copy ===== -->
+<!-- ===== ABOUT THIS ROOM — sticky image, masked scroll-reveal copy =====
+     Mirrors the homepage "Our Story / About Us" behaviour: the heading
+     stays pinned above a fixed-height mask, the description + quickfacts
+     scroll INSIDE that mask (which is sized to match the sticky image's
+     height), so the section's rendered height never grows past the image
+     height. Once the copy finishes scrolling, the lock releases straight
+     into the Gallery section below — no vacant space in between. -->
 <div id="description" class="section room-about-section bg-attach-cover amenities-koodaram"
     style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
 
@@ -40,7 +46,7 @@
 
             <!-- Left: sticky slider -->
             <div class="room-about-sticky-col">
-                <div class="room-slider">
+                <div class="room-slider reveal-left" style="--d:0">
 
                     <div class="room-slider-track">
 
@@ -62,13 +68,13 @@
 
                     </div>
 
-                    {% if room.price_per_night %}
+                 {% comment %}   {% if room.price_per_night %}
                     <div class="room-price-badge">
                         <span class="room-price-label">From</span>
                         <span class="room-price-value">&#8377;{{ room.price_per_night }}</span>
                         <span class="room-price-suffix">/ night</span>
                     </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
 
                     <button type="button" class="room-slider-nav prev" aria-label="Previous image">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -83,42 +89,56 @@
                 </div>
             </div>
 
-            <!-- Right: scrolling copy + facts -->
+            <!-- Right: sticky heading + masked scroll-reveal copy -->
             <div class="room-about-copy-col">
 
-                <span class="room-eyebrow reveal-fade">
-                    {{ room.room_category|default:"Room" }}
-                </span>
+                <!-- Heading — sticky, stays pinned above the mask the whole
+                     time the description/quickfacts are scrolling inside it. -->
+                <div class="room-about-heading-block">
+                    <span class="room-eyebrow reveal-fade">
+                        {{ room.room_category|default:"Room" }}
+                    </span>
 
-                <h3 class="room-section-title reveal-fade" style="--d:1">
-                    About this <em>room</em>
-                </h3>
+                    <h3 class="room-section-title reveal-fade" style="--d:1">
+                        About this <em>room</em>
+                    </h3>
+                </div>
 
-                <div class="room-detail-desc reveal-fade" style="--d:2">
-    {{ room.description|safe }}
-</div>
+                <!-- Masked scroll-reveal wrapper: height-locked to match the
+                     sticky image, content translates upward inside it via JS.
+                     reveal-right makes this whole column mirror the image's
+                     reveal-left animation so they enter from opposite sides. -->
+                <div class="room-about-content-scroll-wrapper reveal-right" style="--d:1">
+                    <div class="room-about-content-mask">
+                        <div class="room-about-text-col">
 
-                <div class="room-quickfacts">
+                            <!-- NOTE: no reveal-fade/reveal-left classes here on purpose.
+                                 These elements physically translate inside the clipped
+                                 mask as the user scrolls. Per-element fade-in/fade-out is
+                                 now handled separately by JS below (room-desc-fade), scoped
+                                 to the mask itself so it doesn't fight with the translate. -->
+                            <div class="room-detail-desc">
+                                {{ room.description|safe }}
+                            </div>
 
-                    
+                            <div class="room-quickfacts">
+                                <div class="room-quickfact room-quickfact-cta">
+                                    <div class="room-quickfact-icon">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                    </div>
+                                    <div class="room-quickfact-body">
+                                        <a href="#" class="room-quickfact-btn js-open-room-enquiry-modal">
+                                            Enquiry Now
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-                   
+                            <div class="room-about-text-spacer" aria-hidden="true"></div>
 
-                   
-                    <div class="room-quickfact room-quickfact-cta reveal-left" style="--d:3">
-                        <div class="room-quickfact-icon">
-                            <i class="fa-solid fa-calendar-check"></i>
                         </div>
-                        <div class="room-quickfact-body">
-    
-    <a href="#"
-       class="room-quickfact-btn js-open-room-enquiry-modal">
-        Enquiry Now
-        <i class="fa-solid fa-arrow-right"></i>
-    </a>
-</div>
                     </div>
-
                 </div>
 
             </div>
@@ -308,20 +328,24 @@
         outline-offset: 3px;
     }
 
-    .room-page { overflow-x: hidden; max-width: 100%; }
+    .room-page { max-width: 100%; }
 
-    /* ===== Scroll reveal system ===== */
-    .reveal-fade, .reveal-left, .reveal-scale {
+    /* ===== Scroll reveal system =====
+       reveal-left / reveal-right enter from opposite horizontal sides,
+       used to mirror the sticky image against the description column. */
+    .reveal-fade, .reveal-left, .reveal-right, .reveal-scale {
         opacity: 0;
-        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity 0.75s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
         transition-delay: calc(var(--d, 0) * 0.12s);
     }
-    .reveal-fade  { transform: translateY(26px); }
-    .reveal-left  { transform: translateX(-30px); }
-    .reveal-scale { transform: scale(0.94); }
+    .reveal-fade  { transform: translateY(55px); }
+    .reveal-left  { transform: translateX(-95px) rotate(-4deg) scale(0.9); }
+    .reveal-right { transform: translateX(95px) rotate(4deg) scale(0.9); }
+    .reveal-scale { transform: scale(0.82); }
 
     .reveal-fade.in-view,
     .reveal-left.in-view,
+    .reveal-right.in-view,
     .reveal-scale.in-view {
         opacity: 1;
         transform: none;
@@ -519,7 +543,7 @@
         .room-hero-content { padding-left: 16px; padding-right: 16px; }
         .room-hero-eyebrow { font-size: 0.7rem; letter-spacing: 1.8px; }
     }
-    /* ===== About section — sticky slider + scrolling copy ===== */
+    /* ===== About section — sticky slider + masked scrolling copy ===== */
     .room-about-section {
         position: relative;
         padding: 110px 0;
@@ -547,16 +571,78 @@
         align-items: start;
     }
 
+    /* ===== STICKY IMAGE — pinned while the copy scrolls beside it,
+       identical pattern to the homepage's .about-image-col ===== */
     .room-about-sticky-col {
         position: sticky;
-        top: 100px;
+        top: calc(var(--navbar-h, 96px) + 20px);
+        align-self: start;
+    }
+
+    /* ===== Heading — sticky, sits above the masked copy so it stays
+       pinned in place the whole time the description/quickfacts below
+       it are scrolling through the mask. Offset derives from the real
+       navbar height (--navbar-h), same pattern as the homepage About
+       Us section. ===== */
+    .room-about-heading-block {
+        position: sticky;
+        top: calc(var(--navbar-h, 96px) + 20px);
+        align-self: start;
+        margin-bottom: 24px;
+        z-index: 2;
+    }
+
+    /* ===== MASKED SCROLL-REVEAL COPY
+       - .room-about-content-scroll-wrapper: plain container; its own
+         rendered height equals the mask's height (a sticky child still
+         occupies its own height in normal flow), so it never grows
+         taller than the sticky image — no leftover vacant space.
+       - .room-about-content-mask: sticky, height-locked to match the
+         image (.room-slider height), clips overflow so only "one
+         image-height" of copy is visible at a time. Sticky "top" sits
+         just below the heading block, using a JS-measured
+         --room-about-heading-h variable so it always matches exactly,
+         even if the heading wraps differently at some viewport width.
+       - .room-about-text-col: the actual description + quickfacts,
+         translated upward by JS in sync with scroll position. ===== */
+    .room-about-content-scroll-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .room-about-content-mask {
+        position: sticky;
+        top: calc(var(--navbar-h, 96px) + 20px + var(--room-about-heading-h, 120px) + 24px);
+
+        width: 100%;
+        height: 560px; /* must match .room-slider's height */
+        max-height: 65vh;
+
+        overflow: hidden;
+
+        padding-right: 18px;
+        box-sizing: border-box;
+    }
+
+    .room-about-text-col {
+        max-width: 100%;
+        will-change: transform;
+    }
+
+    /* Real spacer element (height set dynamically by JS in measure()) —
+       guarantees a consistent scroll-lock travel distance regardless of
+       how long or short the actual room description is, room to room.
+       See DESIRED_TRAVEL in the scroll-jack script below to tune it. */
+    .room-about-text-spacer {
+        display: block;
+        height: 0;
     }
 
     .room-detail-desc {
         font-size: 1.02rem;
         line-height: 1.85;
         color: var(--estate-stone);
-        margin-top: 18px;
+        margin-top: 0;
         margin-bottom: 32px;
         max-width: 46ch;
     }
@@ -605,6 +691,25 @@
         flex-shrink: 0;
     }
 
+    /* ===== FADE-IN/FADE-OUT FOR EACH PIECE OF CONTENT INSIDE THE MASK
+       Mirrors the homepage's page-wide fade system, but scoped to the
+       elements scrolling through the sticky mask here (paragraphs,
+       lists, headings, quickfacts). Each piece fades in as it enters
+       the mask's visible window and fades out as it exits, while the
+       translateY scroll-jack (JS below) keeps driving the actual
+       upward movement. ===== */
+    .room-desc-fade {
+        opacity: 0;
+        transform: translateY(42px) scale(0.94);
+        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: opacity, transform;
+    }
+
+    .room-desc-fade.room-desc-fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     @media (max-width: 767px) {
         .room-detail-desc li {
             font-size: 0.95rem;
@@ -615,6 +720,49 @@
         .room-about-section { padding: 70px 0; }
         .room-about-grid { grid-template-columns: 1fr; gap: 40px; }
         .room-about-sticky-col { position: static; }
+
+        /* Un-stick the heading + drop the mask entirely on mobile/tablet —
+           natural stacked flow, exactly like the homepage About section. */
+        .room-about-heading-block {
+            position: relative;
+            top: auto;
+            margin-bottom: 0;
+        }
+
+        .room-about-content-scroll-wrapper {
+            height: auto !important;
+        }
+
+        .room-about-content-mask {
+            position: relative;
+            top: auto;
+
+            width: 100%;
+            height: auto;
+            max-height: none;
+
+            overflow: visible;
+            padding-right: 0;
+            margin-top: 18px;
+        }
+
+        .room-about-text-col {
+            transform: none !important;
+        }
+
+        /* On mobile the scroll-jack mask is disabled, so force every
+           fade piece visible instead of waiting for the (mask-scoped)
+           observer that no longer applies here. */
+        .room-desc-fade {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Spacer only exists to guarantee desktop scroll-jack travel —
+           hide it entirely on mobile/tablet where the mask is disabled. */
+        .room-about-text-spacer {
+            display: none;
+        }
     }
 
     @media (max-width: 767px) {
@@ -1062,7 +1210,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         .room-page * { animation: none !important; transition: none !important; }
-        .reveal-fade, .reveal-left, .reveal-scale, .room-hero-title-line { opacity: 1 !important; transform: none !important; }
+        .reveal-fade, .reveal-left, .reveal-right, .reveal-scale, .room-hero-title-line, .room-desc-fade { opacity: 1 !important; transform: none !important; }
         [data-parallax] { transform: none !important; }
     }
 
@@ -1377,20 +1525,21 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', onScroll);
     updateParallax();
 
-    /* ===== Scroll reveal (fade / left / scale) ===== */
-    const revealEls = document.querySelectorAll('.reveal-fade, .reveal-left, .reveal-scale');
-    if (revealEls.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        revealEls.forEach(el => observer.observe(el));
-    }
-
+    /* ===== Scroll reveal (fade / left / right / scale) — now repeats
+   every time the element crosses the trigger zone, in both scroll
+   directions, instead of firing once and permanently unobserving. ===== */
+const revealEls = document.querySelectorAll('.reveal-fade, .reveal-left, .reveal-right, .reveal-scale');
+if (revealEls.length) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle('in-view', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
+    });
+    revealEls.forEach(el => observer.observe(el));
+}
     /* Image slider */
     const slider = document.querySelector('.room-slider');
     if (slider) {
@@ -1639,6 +1788,316 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 400);
         });
     })();
+});
+</script>
+
+<script>
+/* =====================================================
+   SYNC --room-about-heading-h WITH THE REAL HEADING HEIGHT
+   Needed so .room-about-content-mask's sticky "top" always sits
+   exactly below the heading block, on any viewport width or if
+   the heading text ever wraps onto a different number of lines.
+   Mirrors the same pattern used for --about-heading-h on the
+   homepage About Us section.
+===================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    var heading = document.querySelector('.room-about-heading-block');
+    if (!heading) return;
+
+    function syncHeadingHeight() {
+        var h = heading.getBoundingClientRect().height;
+        if (h > 0) {
+            document.documentElement.style.setProperty('--room-about-heading-h', h + 'px');
+        }
+    }
+
+    syncHeadingHeight();
+    window.addEventListener('load', syncHeadingHeight);
+    window.addEventListener('resize', syncHeadingHeight);
+
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(syncHeadingHeight).observe(heading);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncHeadingHeight);
+    }
+});
+</script>
+
+<script>
+/* =====================================================
+   ROOM ABOUT SECTION — MASKED SCROLL-REVEAL COPY ENGINE
+   Same scroll-jack technique as the homepage About Us section:
+   once the mask reaches its pin point, page scroll freezes and
+   further scroll ticks translate the description/quickfacts
+   upward inside the fixed-height mask (matched to the sticky
+   image's height) instead of scrolling the page. Once the text
+   is exhausted, the lock releases and the page continues
+   straight into the Gallery section — no vacant gap in between.
+
+   PER-ELEMENT FADE is driven from this same engine instead of a
+   separate IntersectionObserver: since the text column moves via
+   `transform: translate3d(...)` rather than native scrolling, an
+   observer can lag or miss ticks. Tying the fade calc to the exact
+   same `translateY` used to position the text guarantees it can
+   never desync, and updates correctly in both scroll directions,
+   every single frame.
+
+   SPACER: a real DOM element (.room-about-text-spacer) is resized
+   dynamically in measure() so there's always a guaranteed amount of
+   scroll-jack travel (DESIRED_TRAVEL), regardless of how long or
+   short any given room's description happens to be. A fixed CSS
+   height can't do this reliably across rooms with different content
+   lengths — this computes exactly what's needed, every time.
+
+   SPEED: SCROLL_SPEED_FACTOR + the lowered EASE/MAX_STEP values below
+   slow the whole scroll-jack down — each wheel/trackpad/touch tick now
+   advances the text column less per frame, and the easing catches up
+   more gradually, so the reveal feels calmer instead of snapping past
+   list items before they're readable.
+===================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    const wrapper = document.querySelector('.room-about-content-scroll-wrapper');
+    const mask = document.querySelector('.room-about-content-mask');
+    const textCol = document.querySelector('.room-about-text-col');
+
+    if (!wrapper || !mask || !textCol) return;
+
+    // ----- Tag fadeable text blocks so we can fade each one in/out
+    // individually as it passes through the mask window. Tags every
+    // direct child of the description regardless of tag name — this
+    // covers CMS output that wraps sections in <div>, <section>, etc.,
+    // not just plain p/ul/ol/heading structures. -----
+    const descBlock = textCol.querySelector('.room-detail-desc');
+    const quickfacts = textCol.querySelector('.room-quickfacts');
+    if (descBlock) {
+        Array.from(descBlock.children).forEach(function (el) {
+            el.classList.add('room-desc-fade');
+        });
+    }
+    if (quickfacts) quickfacts.classList.add('room-desc-fade');
+
+    const fadeEls = Array.from(textCol.querySelectorAll('.room-desc-fade'));
+    const spacer = textCol.querySelector('.room-about-text-spacer');
+
+    function updateFades(translateY) {
+        const maskH = mask.offsetHeight;
+        const topMargin = maskH * 0.08;
+        const bottomMargin = maskH * 0.12;
+        fadeEls.forEach(function (el) {
+            const elTop = el.offsetTop - translateY;
+            const elBottom = elTop + el.offsetHeight;
+            const visible = elBottom > topMargin && elTop < (maskH - bottomMargin);
+            el.classList.toggle('room-desc-fade-in', visible);
+        });
+    }
+
+    const isDesktop = () => window.matchMedia('(min-width: 992px)').matches;
+    const PIN_TOLERANCE = 4;
+
+    // Smoothing: "target" jumps instantly to where the wheel/touch says we
+    // should be, "displayed" eases toward it every frame — this is what
+    // removes the jittery/vibrating jump-cuts of applying deltaY directly.
+    const EASE = 0.07;          // lower = smoother/slower catch-up (was 0.14)
+    const SETTLE_EPSILON = 0.0008;
+    const MAX_STEP = 0.22;      // clamps huge single wheel/trackpad spikes (was 0.55)
+
+    // Scales every wheel/trackpad/touch tick down before it's even applied,
+    // so the whole scroll-jack feels slower and calmer, independent of
+    // MAX_STEP. Lower = slower overall response to each scroll gesture.
+    const SCROLL_SPEED_FACTOR = 0.45;
+
+    // Guaranteed scroll-jack travel distance in px, regardless of how
+    // long or short any given room's real description content is.
+    // Raise for a longer/more dramatic scroll-lock feel, lower for
+    // something snappier.
+    const DESIRED_TRAVEL = 400;
+
+    let maxTranslate = 0;
+    let target = 0;
+    let displayed = 0;
+    let locked = false;
+    let touchStartY = 0;
+    let rafId = null;
+
+    // Must match .room-about-content-mask's CSS "top" exactly:
+    // navbar-h + 20 + heading-h + 24
+    function getStickyTop() {
+        var navVal = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
+        var navH = parseFloat(navVal) || 96;
+
+        var headingVal = getComputedStyle(document.documentElement).getPropertyValue('--room-about-heading-h').trim();
+        var headingH = parseFloat(headingVal) || 120;
+
+        return navH + 20 + headingH + 24;
+    }
+
+    function measure() {
+        if (!isDesktop()) {
+            maxTranslate = 0;
+            textCol.style.transform = 'none';
+            return;
+        }
+
+        // Zero the spacer first so we measure the real, natural content
+        // height (excluding any spacer from a previous measure() pass),
+        // then set the spacer to exactly whatever's needed to guarantee
+        // DESIRED_TRAVEL px of scroll-jack travel for THIS room's content.
+        if (spacer) spacer.style.height = '0px';
+        const naturalHeight = textCol.scrollHeight;
+        const neededTotal = mask.offsetHeight + DESIRED_TRAVEL;
+        const spacerHeight = Math.max(0, neededTotal - naturalHeight);
+        if (spacer) spacer.style.height = spacerHeight + 'px';
+
+        maxTranslate = Math.max(0, textCol.scrollHeight - mask.offsetHeight);
+    }
+
+    function render() {
+        const translateY = displayed * maxTranslate;
+        textCol.style.transform = 'translate3d(0, ' + (-translateY) + 'px, 0)';
+        updateFades(translateY);
+    }
+
+    function isAtPinPoint() {
+        const rect = wrapper.getBoundingClientRect();
+        const stickyTop = getStickyTop();
+        return rect.top <= stickyTop + PIN_TOLERANCE && rect.top >= stickyTop - mask.offsetHeight;
+    }
+
+    function engageLock() {
+        locked = true;
+    }
+
+    function releaseLock() {
+        locked = false;
+    }
+
+    // Normalises deltaY across mouse wheels (chunky, large steps) and
+    // trackpads (fine, frequent steps) and across deltaMode units, then
+    // applies SCROLL_SPEED_FACTOR and caps it so one aggressive scroll
+    // gesture can't snap-jump the text.
+    function normalizeDelta(e) {
+        let d = e.deltaY;
+        if (e.deltaMode === 1) d *= 16;       // DOM_DELTA_LINE
+        else if (e.deltaMode === 2) d *= 480; // DOM_DELTA_PAGE
+        const step = maxTranslate > 0 ? (d / maxTranslate) * SCROLL_SPEED_FACTOR : 0;
+        return Math.max(-MAX_STEP, Math.min(MAX_STEP, step));
+    }
+
+    function animate() {
+        const diff = target - displayed;
+        if (Math.abs(diff) < SETTLE_EPSILON) {
+            displayed = target;
+            render();
+            rafId = null;
+            return;
+        }
+        displayed += diff * EASE;
+        render();
+        rafId = requestAnimationFrame(animate);
+    }
+
+    function startAnimating() {
+        if (rafId === null) {
+            rafId = requestAnimationFrame(animate);
+        }
+    }
+
+    function handleDelta(step) {
+        if (!isDesktop() || maxTranslate <= 0) return false;
+
+        if (step === 0) {
+            return locked;
+        }
+
+        const goingDown = step > 0;
+
+        if (locked) {
+            target = goingDown ? Math.min(1, target + step) : Math.max(0, target + step);
+            startAnimating();
+            if (target >= 1 || target <= 0) {
+                releaseLock();
+            }
+            return true;
+        }
+
+        if (goingDown && target < 1 && isAtPinPoint()) {
+            engageLock();
+            target = Math.min(1, target + step);
+            startAnimating();
+            if (target >= 1) releaseLock();
+            return true;
+        }
+
+        if (!goingDown && target > 0 && isAtPinPoint()) {
+            engageLock();
+            target = Math.max(0, target + step);
+            startAnimating();
+            if (target <= 0) releaseLock();
+            return true;
+        }
+
+        return false;
+    }
+
+    function onWheel(e) {
+        if (handleDelta(normalizeDelta(e))) {
+            e.preventDefault();
+        }
+    }
+
+    function onTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+    }
+
+    function onTouchMove(e) {
+        const currentY = e.touches[0].clientY;
+        const rawDelta = touchStartY - currentY;
+        const step = maxTranslate > 0 ? Math.max(-MAX_STEP, Math.min(MAX_STEP, (rawDelta / maxTranslate) * SCROLL_SPEED_FACTOR)) : 0;
+        if (handleDelta(step)) {
+            e.preventDefault();
+        }
+        touchStartY = currentY;
+    }
+
+    function onKeyDown(e) {
+        if (!locked) return;
+        const blocked = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space', 'End', 'Home'];
+        if (blocked.includes(e.code) || blocked.includes(e.key)) {
+            e.preventDefault();
+            const step = (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Home') ? -0.12 : 0.12;
+            handleDelta(step);
+        }
+    }
+
+    function refresh() {
+        measure();
+        target = Math.min(target, 1);
+        displayed = target;
+        render();
+    }
+
+    window.addEventListener('load', refresh);
+    window.addEventListener('resize', refresh);
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('keydown', onKeyDown);
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(refresh);
+    }
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(function () { refresh(); }).observe(textCol);
+    }
+
+    const sliderImg = document.querySelector('.room-slider img.active, .room-slide.active img');
+    if (sliderImg && !sliderImg.complete) {
+        sliderImg.addEventListener('load', refresh);
+    }
+
+    refresh();
 });
 </script>
 {% endblock %}

@@ -2661,8 +2661,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <div class="d-flex flex-column gap-2 w-100">
                                     <h4>{{ room.room_category|default:"Room" }}</h4>
                                     <p class="text-white">
-    {{ room.description|striptags|truncatewords:35 }}
+    {{ room.description|striptags|truncatewords:18 }}
 </p>
+<button type="button" class="accordion-book-btn js-open-booking-modal">
+                <span>Book Now</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
                                 </div>
                             </div>
                         </a>
@@ -2863,6 +2867,36 @@ document.addEventListener('DOMContentLoaded', function () {
     .accordion-item::after {
         content: none;
     }
+    /* ===== BOOK NOW BUTTON (inside each card, always visible) ===== */
+    .accordion-item .accordion-book-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        align-self: flex-end;
+        margin-top: 4px;
+        padding: 7px 14px;
+        background: var(--accent-color-2, #c8a86a);
+        color: var(--text-color, #1a1e16);
+        border: none;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        white-space: nowrap;
+        opacity: 1;
+        transform: translateY(0);
+        transition: background 0.3s ease, color 0.3s ease, gap 0.3s ease;
+    }
+
+    .accordion-item .accordion-book-btn:hover {
+        background: #fff;
+        gap: 10px;
+    }
+
+    .accordion-item .accordion-book-btn i {
+        font-size: 0.62rem;
+    }
 
     /* ===== Slider controls (matches your Activities slider style) ===== */
     .accordion-slider-controls {
@@ -2967,6 +3001,15 @@ document.addEventListener('DOMContentLoaded', function () {
         .accordion-item .icon-box.link {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .accordion-item .accordion-book-btn {
+            opacity: 1;
+            transform: translateY(0);
+            align-self: flex-end;
+            font-size: 0.72rem;
+            padding: 8px 16px;
+            margin-top: 8px;
         }
     }
 </style>
@@ -3466,262 +3509,315 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(video);
 });
 </script>
-        <!-- Section Activities -->
-        <div id="services" class="section" style="background-image: url('{% static 'ambadyestate-main/image/Background.png' %}');">
-            <div class="r-container d-flex flex-column gap-4">
-                <div class="row row-cols-xl-2 row-cols-1 align-items-center">
-                    <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
-                        <h6 class="accent-color-2">Estate Experiences</h6>
-                        <h3>Slow, scenic experiences around Ambady Estate</h3>
-                        <p>Spend your time exploring the landscape, enjoying quiet walks, and taking in the best of
-                            Munnar's cool climate and plantation atmosphere.</p>
-                    </div>
-                    <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
-                        <div class="w-max-content">
-                            <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
-                                <span>Plan Your Stay</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activities carousel -->
-                <div class="swiper activities-slider scrollanimation animated scroll-fadeInUp">
-                    <div class="swiper-wrapper">
-                        {% for activity in activities %}
-                        <div class="swiper-slide">
-                            <a href="{% url 'ambadyestate_app:activity_details' activity.slug %}" class="activity-slide" id="{{ activity.slug }}" style="text-decoration:none; display:grid;">
-                                <div class="activity-media">
-                                    <img src="{{ activity.image.url }}" alt="{{ activity.name }}">
-                                </div>
-                                <div class="activity-content">
-    <h5>{{ activity.name }}</h5>
-    <p>{{ activity.description|striptags|truncatewords:45 }}</p>
-</div>
-                            </a>
-                        </div>
-                        {% empty %}
-                        <div class="swiper-slide">
-                            <p class="text-center">No activities available right now.</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="activities-slider-controls">
-                        <button type="button" class="activities-slider-prev" aria-label="Previous activity">
-                            <i class="fa-solid fa-arrow-left"></i>
-                        </button>
-                        <div class="activities-slider-pagination"></div>
-                        <button type="button" class="activities-slider-next" aria-label="Next activity">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
+        <!-- ===== ACTIVITIES SECTION (dynamic — same style as homepage) ===== -->
+<div id="activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+    <div class="r-container d-flex flex-column gap-4">
+        <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+            <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
+                <h6 class="accent-color-2">Estate Experiences</h6>
+                <h3>Activities &amp; Experiences at Ambady Estate</h3>
+                <p>Spend your time exploring the landscape, enjoying quiet walks, and taking in the best of
+                    Munnar's cool climate and plantation atmosphere.</p>
+            </div>
+            <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
+                <div class="w-max-content">
+                    
                 </div>
             </div>
         </div>
 
-        <style>
-            /* ===== ACTIVITIES SECTION ===== */
-            #services {
-                background-size: cover;
-                background-position: center;
-            }
+        {% if activities %}
+        <div class="swiper activities-slider scrollanimation animated scroll-fadeInUp">
+            <div class="swiper-wrapper">
+                {% for activity in activities %}
+                <div class="swiper-slide">
+                    <div class="activity-slide" id="{{ activity.slug }}">
+                        <div class="activity-media">
+                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" loading="lazy">
+                        </div>
+                        <div class="activity-content">
+                            <h5 class="accent-color">{{ activity.name }}</h5>
+                            <p>{{ activity.description|striptags|truncatewords:45 }}</p>
+                            {% if activity.duration or activity.location %}
+                            <div class="activity-meta">
+                                {% if activity.duration %}
+                                <span class="activity-meta-pill">
+                                    <i class="fa-regular fa-clock"></i> {{ activity.duration }}
+                                </span>
+                                {% endif %}
+                                {% if activity.location %}
+                                <span class="activity-meta-pill">
+                                    <i class="fa-solid fa-location-dot"></i> {{ activity.location }}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
 
-            .activities-slider {
-                width: 100%;
-                border-radius: 24px;
-                overflow: hidden;
-            }
+                            <!-- Explore Now button — now INSIDE each card, opens the booking modal -->
+                            <button type="button" class="activity-explore-btn js-open-booking-modal">
+                                <span>Explore Now</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 
-            .activity-slide {
-                display: grid;
-                grid-template-columns: 620px 1fr;
-                /* was 520px */
-                min-height: 350px;
-                background: #fff;
-                border-radius: 24px;
-                overflow: hidden;
-                /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); */
-            }
+            <div class="activities-slider-controls">
+                <button type="button" class="activities-slider-prev" aria-label="Previous activity">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="activities-slider-pagination"></div>
+                <button type="button" class="activities-slider-next" aria-label="Next activity">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No activities available right now. Please check back soon.</p>
+        {% endif %}
+    </div>
+</div>
 
-            .activity-media {
-                position: relative;
-                overflow: hidden;
-            }
+<style>
+    /* ===== ACTIVITIES SECTION (matches homepage) ===== */
+    #activities {
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        overflow-x: hidden;
+    }
 
-            .activity-media::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, transparent 60%);
-            }
+    .activities-slider {
+        width: 100%;
+        border-radius: 24px;
+        overflow: hidden;
+    }
 
-            .activity-media img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            }
+    .activity-slide {
+        display: grid;
+        grid-template-columns: 620px 1fr;
+        min-height: 350px;
+        background: #fff;
+        border-radius: 24px;
+        overflow: hidden;
+    }
 
-            .swiper-slide-active .activity-media img {
-                transform: scale(1.04);
-            }
+    .activity-media {
+        position: relative;
+        overflow: hidden;
+    }
 
-            .activity-content {
-                padding: 48px 52px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                gap: 18px;
-                position: relative;
-            }
+    .activity-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, transparent 60%);
+    }
 
-            .activity-content::before {
-                content: attr(data-index);
-                position: absolute;
-                top: 24px;
-                right: 36px;
-                font-size: 5rem;
-                font-weight: 800;
-                color: var(--accent-color);
-                opacity: 0.06;
-                line-height: 1;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                pointer-events: none;
-                letter-spacing: -3px;
-            }
+    .activity-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-            .activity-content .activity-divider {
-                width: 48px;
-                height: 3px;
-                background: var(--accent-color-2);
-                border-radius: 2px;
-            }
+    .swiper-slide-active .activity-media img {
+        transform: scale(1.04);
+    }
 
-            .activity-content p {
-                font-size: 1.05rem;
-                line-height: 1.85;
-                color: var(--text-color-2);
-                margin: 0;
-                max-width: 480px;
-            }
+    .activity-content {
+        padding: 48px 52px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        position: relative;
+    }
 
-            /* Controls */
-            .activities-slider-controls {
-                margin-top: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 16px;
-            }
+    .activity-content h5 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.85rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        line-height: 1.2;
+    }
 
-            .activities-slider-pagination {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                flex: 1;
-            }
+    .activity-content p {
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: var(--text-color-2);
+        margin: 0;
+        max-width: 480px;
+    }
 
-            .activities-slider-pagination .swiper-pagination-bullet {
-                width: 28px;
-                height: 3px;
-                border-radius: 2px;
-                margin: 0 !important;
-                background: rgba(26, 30, 22, 0.2);
-                opacity: 1;
-                transition: width 0.3s ease, background 0.3s ease;
-            }
+    .activity-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 
-            .activities-slider-pagination .swiper-pagination-bullet-active {
-                background: var(--accent-color);
-                width: 48px;
-            }
+    .activity-meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-color-3, #f2f7ee);
+        color: var(--accent-color);
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 8px 16px;
+        border-radius: 100px;
+    }
 
-            .activities-slider-nav {
-                display: flex;
-                gap: 10px;
-            }
+    /* Explore Now button — sits inside the card, pushed to the bottom via flex */
+    .activity-explore-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 700;
+        border: none;
+        padding: 13px 24px;
+        border-radius: 100px;
+        cursor: pointer;
+        margin-top: auto;
+        align-self: flex-end;
+        transition: background 0.3s ease, gap 0.3s ease, transform 0.3s ease;
+    }
 
-            .activities-slider-prev,
-            .activities-slider-next {
-                width: 48px;
-                height: 48px;
-                border-radius: 50%;
-                border: 1.5px solid rgba(26, 30, 22, 0.15);
-                background: #fff;
-                color: var(--accent-color);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.85rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
+    .activity-explore-btn:hover {
+        background: var(--accent-color-2, #c8a86a);
+        color: #1a1e16;
+        gap: 14px;
+        transform: translateY(-2px);
+    }
 
-            .activities-slider-prev:hover,
-            .activities-slider-next:hover {
-                background: var(--accent-color);
-                color: #fff;
-                border-color: var(--accent-color);
-                transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
-            }
-            /* Only the activity name — force black, don't touch other cards */
-.activity-content h5 {
-    color: var(--text-color) !important;
-}
+    /* Controls */
+    .activities-slider-controls {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
 
-            @media (max-width: 1199px) {
-                .activity-slide {
-                    grid-template-columns: 400px 1fr;
-                }
+    .activities-slider-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+    }
 
-                .activity-content {
-                    padding: 40px 36px;
-                }
-            }
+    .activities-slider-pagination .swiper-pagination-bullet {
+        width: 28px;
+        height: 3px;
+        border-radius: 2px;
+        margin: 0 !important;
+        background: rgba(26, 30, 22, 0.2);
+        opacity: 1;
+        transition: width 0.3s ease, background 0.3s ease;
+    }
 
-            @media (max-width: 991px) {
-                .activity-slide {
-                    grid-template-columns: 1fr;
-                    min-height: unset;
-                }
+    .activities-slider-pagination .swiper-pagination-bullet-active {
+        background: var(--accent-color);
+        width: 48px;
+    }
 
-                .activity-media {
-                    height: 320px;
-                }
+    .activities-slider-prev,
+    .activities-slider-next {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 30, 22, 0.15);
+        background: #fff;
+        color: var(--accent-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-                .activity-content {
-                    padding: 32px 28px;
-                }
+    .activities-slider-prev:hover,
+    .activities-slider-next:hover {
+        background: var(--accent-color);
+        color: #fff;
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+    }
 
-                .activity-content::before {
-                    display: none;
-                }
+    @media (max-width: 1199px) {
+        .activity-slide {
+            grid-template-columns: 400px 1fr;
+        }
 
-                .activities-slider-controls {
-                    justify-content: center;
-                }
+        .activity-content {
+            padding: 40px 36px;
+        }
+    }
 
-                /* Smaller nav buttons on mobile so they don't dominate next to the image */
-                .activities-slider-prev,
-                .activities-slider-next {
-                    width: 36px;
-                    height: 36px;
-                    font-size: 0.7rem;
-                }
-            }
+    @media (max-width: 991px) {
+        #activities {
+            padding: 70px 0;
+        }
+        .activity-slide {
+            grid-template-columns: 1fr;
+            min-height: unset;
+        }
 
-            @media (max-width: 480px) {
-                .activities-slider-prev,
-                .activities-slider-next {
-                    width: 32px;
-                    height: 32px;
-                    font-size: 0.65rem;
-                }
-            }
-        </style>
+        .activity-media {
+            height: 320px;
+        }
+
+        .activity-content {
+            padding: 32px 28px;
+        }
+
+        .activities-slider-controls {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #activities {
+            padding: 50px 0;
+        }
+        #activities .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .activity-content h5 {
+            font-size: 1.4rem;
+        }
+        .activity-content p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+        .activity-explore-btn {
+            font-size: 0.85rem;
+            padding: 11px 20px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        #activities { padding: 40px 0; }
+        .activity-media { height: 240px; }
+        .activity-content { padding: 24px 20px; }
+    }
+
+    @media (max-width: 400px) {
+        #activities .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+</style>
         <!-- Section Services -->
         <div id="projects" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_service.png' %}');">
             <div class="r-container d-flex flex-column gap-5 align-items-center">
@@ -5097,25 +5193,30 @@ testi-heading {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                color: white;
-                font-size: 0.82rem;
+                color: #fff;
+                font-size: 0.78rem;
                 font-weight: 700;
-                letter-spacing: 1px;
+                letter-spacing: 0.8px;
                 text-transform: uppercase;
                 text-decoration: none;
-                opacity: 0;
-                transform: translateY(6px);
-                transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, color 0.2s;
+                padding: 9px 18px;
+                border: 1.5px solid rgba(255, 255, 255, 0.55);
+                border-radius: 100px;
+                background: transparent;
+                opacity: 1;              /* was 0 — always visible now */
+                transform: translateY(0); /* was translateY(6px) */
+                transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
             }
 
-            .blog-card:hover .blog-read-more {
-                opacity: 1;
-                transform: translateY(0);
+            .blog-read-more:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: #fff;
+                gap: 12px;
             }
 
             .blog-read-more i {
                 transition: transform 0.3s ease;
-                font-size: 0.75rem;
+                font-size: 0.72rem;
             }
 
             .blog-read-more:hover i {

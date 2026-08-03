@@ -332,8 +332,40 @@
     .activity-card:hover h4 { margin-bottom: 4px; }
     .activity-card:hover p { max-height: 100px; opacity: 1; }
     .activity-card:hover .activity-read-more { opacity: 1; transform: translateY(0); }
-    .activity-read-more i { transition: transform 0.3s ease; font-size: 0.75rem; }
-    .activity-read-more:hover i { transform: translateX(4px); }
+    .activity-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 9px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 100px;
+    background: transparent;
+    margin-top: 12px;
+    opacity: 1;              /* always visible now, like the blog card */
+    transform: translateY(0);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+}
+
+.activity-card:hover .activity-read-more {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    gap: 12px;
+}
+
+.activity-read-more i {
+    transition: transform 0.3s ease;
+    font-size: 0.72rem;
+}
+
+.activity-card:hover .activity-read-more i {
+    transform: translateX(4px);
+}
 
     /* ===== MOBILE FIXES: on touch devices there's no hover, so the
        description/read-more text is revealed by default instead. ===== */
@@ -405,9 +437,40 @@
             line-height: 1.5;
             margin-top: 6px;
         }
-        .activity-read-more { font-size: 0.72rem; margin-top: 8px; }
-    }
+        .activity-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 9px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 100px;
+    background: transparent;
+    margin-top: 12px;
+    opacity: 1;              /* always visible now, like the blog card */
+    transform: translateY(0);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+}
 
+.activity-card:hover .activity-read-more {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    gap: 12px;
+}
+
+.activity-read-more i {
+    transition: transform 0.3s ease;
+    font-size: 0.72rem;
+}
+
+.activity-card:hover .activity-read-more i {
+    transform: translateX(4px);
+}
     @media (max-width: 400px) {
         .activity-card-img-wrap { max-height: 230px; }
         .activity-card-body { padding: 14px; }

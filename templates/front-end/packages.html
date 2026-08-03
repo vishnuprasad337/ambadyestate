@@ -269,16 +269,16 @@
 
     /* Mascot pinned to the border of the section, always visible — original size */
     .packages-mascot {
-        position: absolute;
-        bottom: 0;
-        right: -1%;
-        height: 340px;
-        width: auto;
-        z-index: 5;
-        transform: scaleX(-1);
-        filter: drop-shadow(0 18px 20px rgba(26, 30, 22, 0.24));
-        pointer-events: none;
-    }
+    position: absolute;
+    bottom: 0;
+    right: -1%;
+    height: 340px;
+    width: auto;
+    z-index: 5;
+    transform: scaleX(-1);   /* mirrors so the character faces left, into the card */
+    filter: drop-shadow(0 18px 20px rgba(26, 30, 22, 0.24));
+    pointer-events: none;
+}
 
     @media (max-width: 1199px) {
         .packages-mascot {
@@ -663,6 +663,12 @@
                                 {% endif %}
                             </div>
                             {% endif %}
+
+                            <!-- Explore Now button — now INSIDE each card, opens the booking modal -->
+                            <button type="button" class="activity-explore-btn js-open-booking-modal">
+                                <span>Explore Now</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -737,7 +743,6 @@
         padding: 48px 52px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         gap: 18px;
         position: relative;
     }
@@ -774,6 +779,32 @@
         font-weight: 700;
         padding: 8px 16px;
         border-radius: 100px;
+    }
+
+    /* Explore Now button — sits inside the card, pushed to the bottom via flex */
+    .activity-explore-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+        background: var(--accent-color, #2c5f1a);
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 700;
+        border: none;
+        padding: 13px 24px;
+        border-radius: 100px;
+        cursor: pointer;
+        margin-top: auto;
+        align-self: flex-end;
+        transition: background 0.3s ease, gap 0.3s ease, transform 0.3s ease;
+    }
+
+    .activity-explore-btn:hover {
+        background: var(--accent-color-2, #c8a86a);
+        color: #1a1e16;
+        gap: 14px;
+        transform: translateY(-2px);
     }
 
     /* Controls */
@@ -879,6 +910,10 @@
             font-size: 0.92rem;
             line-height: 1.7;
         }
+        .activity-explore-btn {
+            font-size: 0.85rem;
+            padding: 11px 20px;
+        }
     }
 
     @media (max-width: 575px) {
@@ -894,7 +929,6 @@
         }
     }
 </style>
-
 <!-- ===== EVERYTHING YOU NEED FOR A STAY (Koodaram-style reference layout) ===== -->
 <div id="stay-essentials" class="section amenities-koodaram" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
     <div class="amenities-overlay"></div>
@@ -916,7 +950,7 @@
 
         <!-- ===== NEW: illustration filling the vacant space below the button ===== -->
         <div class="amenities-intro-image">
-            <img src="{% static 'ambadyestate-main/pvr5.png' %}" alt="Enquiry at Ambady Estate" loading="lazy">
+            <img src="{% static 'ambadyestate-main/am20.jpeg' %}" alt="Enquiry at Ambady Estate" loading="lazy">
         </div>
     </div>
 </div>
@@ -974,7 +1008,7 @@
     </div>
 </div>
 <style>
-  .amenities-intro-image {
+ .amenities-intro-image {
     margin-top: 32px;
     width: 148%;
     max-width: none;
@@ -982,24 +1016,26 @@
     box-shadow: none;
     border-radius: 0;
     overflow: visible;
-  }
+}
 
-  .amenities-intro-image img {
+.amenities-intro-image img {
     display: block;
     width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 0;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 24px;
+    background: #fff;
+    padding: 14px;                                     /* white frame border */
+    box-sizing: border-box;
+    box-shadow: 0 25px 60px rgba(26, 30, 22, 0.25);     /* soft lifted shadow */
+    transform: rotate(-3deg);                           /* slight tilt like the reference */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
 
-    /* fades the hard rectangle edge into whatever's behind it */
-    -webkit-mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
-                         linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    mask-composite: intersect;
-  }
-
+.amenities-intro-image img:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 30px 70px rgba(26, 30, 22, 0.3);
+}
   @media (max-width: 991px) {
     .amenities-intro-image {
       width: 112%;
@@ -1648,4 +1684,169 @@
         }
     }
 </style>
+<style>
+    /* ===== DIRECTIONAL SCROLL FADE (packages) — bigger, clearer movement ===== */
+    .page-fade-img,
+    .page-fade-card,
+    .page-fade-wrap {
+        opacity: 0;
+        transition: opacity 0.65s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.65s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    /* Bigger, more visible resting offsets per direction */
+    .fade-dir-up    { transform: translateY(90px) scale(0.94); }
+    .fade-dir-down  { transform: translateY(-90px) scale(0.94); }
+    .fade-dir-left  { transform: translateX(-140px) scale(0.94); }
+    .fade-dir-right { transform: translateX(140px) scale(0.94); }
+
+    .page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in,
+    .page-fade-wrap.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+
+    /* Kill the old one-shot library animation everywhere on this page —
+       it locks opacity:1 permanently via animation-fill-mode and fights
+       the transition-based repeat fade below, which is why things only
+       ever animated once, on the way down. */
+    .scrollanimation.animated {
+        animation: none !important;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ---- Images with no competing hover-transition of their own ----
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)' +
+        ':not(.packages-mascot)' +
+        ':not(.package-card-media img)' +
+        ':not(.activity-media img)' +
+        ':not(.amenities-intro-image img)'
+    );
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    // ---- Simple elements with no own competing transition — safe to
+    //      fade directly ----
+    var pageFadeCards = document.querySelectorAll(
+        '.amenity-item, .amenities-intro-image, .packages-slider-controls, .activities-slider-controls'
+    );
+    pageFadeCards.forEach(function (card) {
+        card.classList.add('page-fade-card');
+    });
+
+    // ---- Cards/media that define their OWN transition (hover zoom,
+    //      translateY, box-shadow, etc). Wrap ONLY the outer card —
+    //      wrapping both the card and a child inside it causes
+    //      double-nested fade wrappers and flicker. The image inherits
+    //      the wrapper's fade for free since it's a child of the card. ----
+    var interactiveCards = document.querySelectorAll(
+        '.package-card, .activity-slide, .activity-media'
+    );
+    interactiveCards.forEach(function (card) {
+        if (card.parentElement && card.parentElement.classList.contains('page-fade-wrap')) return;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'page-fade-wrap';
+        card.parentNode.insertBefore(wrapper, card);
+        wrapper.appendChild(card);
+    });
+    var pageFadeWraps = document.querySelectorAll('.page-fade-wrap');
+
+    var allFadeEls = document.querySelectorAll(
+        '.page-fade-img, .page-fade-card, .page-fade-wrap'
+    );
+
+    // ---- Direction assignment based on the element's ACTUAL position
+    //      on screen, so it reads as a natural "coming from where it
+    //      belongs" motion instead of a mechanical repeating pattern.
+    //      Left-half elements slide in from the left, right-half from
+    //      the right, and elements near the horizontal center alternate
+    //      up/down based on index — giving a much more varied, clearly
+    //      directional feel across the page. ----
+    var explicitLeft = '[class*="fadeInLeft"]';
+    var explicitRight = '[class*="fadeInRight"]';
+
+    allFadeEls.forEach(function (el, i) {
+        var dir;
+
+        if (el.matches(explicitLeft) || el.closest(explicitLeft)) {
+            dir = 'left';
+        } else if (el.matches(explicitRight) || el.closest(explicitRight)) {
+            dir = 'right';
+        } else {
+            var rect = el.getBoundingClientRect();
+            var elCenterX = rect.left + rect.width / 2;
+            var viewportCenter = window.innerWidth / 2;
+            var offsetRatio = (elCenterX - viewportCenter) / viewportCenter; // -1 (far left) .. +1 (far right)
+
+            if (offsetRatio < -0.15) {
+                dir = 'left';
+            } else if (offsetRatio > 0.15) {
+                dir = 'right';
+            } else {
+                // Near horizontal center — alternate up/down so a
+                // vertical stack of centered items doesn't all move
+                // identically
+                dir = (i % 2 === 0) ? 'up' : 'down';
+            }
+        }
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 5) * 0.07 + 's';
+    });
+
+    // ---- Catch-all: any element still relying only on the old
+    //      scrollanimation/animated classes gets folded into the new
+    //      repeat-fade system too, using the same position-based
+    //      direction logic, so disabling the old library above doesn't
+    //      leave it permanently invisible. ----
+    document.querySelectorAll('.scrollanimation').forEach(function (el, i) {
+        if (el.classList.contains('page-fade-img') ||
+            el.classList.contains('page-fade-card') ||
+            el.classList.contains('page-fade-wrap')) return;
+
+        el.classList.add('page-fade-card');
+
+        var rect = el.getBoundingClientRect();
+        var elCenterX = rect.left + rect.width / 2;
+        var viewportCenter = window.innerWidth / 2;
+        var offsetRatio = (elCenterX - viewportCenter) / viewportCenter;
+        var dir;
+
+        if (offsetRatio < -0.15) {
+            dir = 'left';
+        } else if (offsetRatio > 0.15) {
+            dir = 'right';
+        } else {
+            dir = (i % 2 === 0) ? 'up' : 'down';
+        }
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 5) * 0.07 + 's';
+    });
+
+    var allFadeElsFinal = document.querySelectorAll(
+        '.page-fade-img, .page-fade-card, .page-fade-wrap'
+    );
+
+    // ---- Observer: fades in/out every time the element crosses the
+    //      trigger zone, in both scroll directions ----
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
+    });
+
+    allFadeElsFinal.forEach(function (el) { pageFadeObserver.observe(el); });
+});
+</script>
 {% endblock %}

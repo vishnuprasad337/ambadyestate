@@ -673,17 +673,29 @@ html, body {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-color, #2c5f1a) transparent;
+    scrollbar-color: rgba(250, 247, 240, 0.6) transparent;
     padding-right: 6px;
 }
 
+.pkg-content-scroll:hover {
+    scrollbar-color: rgba(220, 214, 198, 0.7) transparent;
+}
+
 .pkg-content-scroll::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .pkg-content-scroll::-webkit-scrollbar-thumb {
-    background: var(--accent-color, #2c5f1a);
+    background: rgba(250, 247, 240, 0.6);
     border-radius: 10px;
+}
+
+.pkg-content-scroll:hover::-webkit-scrollbar-thumb {
+    background: rgba(220, 214, 198, 0.7);
+}
+
+.pkg-content-scroll::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .pkg-description-block {
@@ -2513,5 +2525,190 @@ if (magneticEl) {
         </form>
     </div>
 </div>
+<style>
+    /* ===== DIRECTIONAL SCROLL FADE (package details) ===== */
+    .page-fade-img,
+    .page-fade-card,
+    .page-fade-wrap {
+        opacity: 0;
+        transition: opacity 0.65s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.65s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
 
+    .fade-dir-up    { transform: translateY(90px) scale(0.94); }
+    .fade-dir-down  { transform: translateY(-90px) scale(0.94); }
+    .fade-dir-left  { transform: translateX(-140px) scale(0.94); }
+    .fade-dir-right { transform: translateX(140px) scale(0.94); }
+
+    .page-fade-img.page-fade-in,
+    .page-fade-card.page-fade-in,
+    .page-fade-wrap.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+
+    /* Safety net in case the old one-shot scrollanimation library ever
+       touches an element on this page (e.g. via base.html) — it locks
+       opacity:1 permanently and would fight the repeat-fade transitions. */
+    .scrollanimation.animated {
+        animation: none !important;
+    }
+
+    /* ===== Staggered text reveal for the description block ===== */
+    /* Heading, sub-headings, paragraphs and list items inside the
+       description text fade + rise in individually, one after another,
+       instead of the whole block appearing as one flat unit. This now
+       REPEATS every time you scroll past it (in either direction),
+       matching the behavior of the block-level fade system above. */
+    .pkg-description-block h3,
+    .pkg-magnetic-text h5,
+    .pkg-magnetic-text h4,
+    .pkg-magnetic-text li,
+    .pkg-magnetic-text p {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.6s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    .pkg-description-block h3.text-reveal-in,
+    .pkg-magnetic-text h5.text-reveal-in,
+    .pkg-magnetic-text h4.text-reveal-in,
+    .pkg-magnetic-text li.text-reveal-in,
+    .pkg-magnetic-text p.text-reveal-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ---- Images that have their own hover transition are excluded and
+    //      faded via their wrapper instead. On this page that's just the
+    //      package's main content image — the room/activity thumbnails
+    //      are div backgrounds, not <img> tags, so they're unaffected. ----
+    var pageFadeImages = document.querySelectorAll(
+        'img:not(.site-brand img):not(.footer-brand img):not(.no-fade)' +
+        ':not(.pkg-content-img-wrap img)'
+    );
+    pageFadeImages.forEach(function (img) {
+        img.classList.add('page-fade-img');
+    });
+
+    // ---- Structural blocks with NO transition of their own defined
+    //      directly on them — safe to fade directly without touching any
+    //      existing hover/tilt/shine behavior on their children.
+    //      NOTE: .pkg-description-block is intentionally left OUT of this
+    //      list — its heading/paragraphs/list items animate themselves
+    //      individually via the staggered text-reveal system below, so
+    //      fading the whole block too would double up the effect. ----
+    var pageFadeCards = document.querySelectorAll(
+        '.pkg-hero-content, ' +
+        '.pkg-explore-card, ' +
+        '.pkg-pricing-card, ' +
+        '.pkg-content-img-wrap, ' +
+        '.pkg-includes-block, ' +
+        '.pkg-panel'
+    );
+    pageFadeCards.forEach(function (card) {
+        card.classList.add('page-fade-card');
+    });
+
+    // Room/activity card grids and individual cards are intentionally
+    // NOT included here — they already have their own one-shot
+    // "pkgCardRise" reveal (staggered animation-delay + IntersectionObserver
+    // toggling animationPlayState). Fading them again with a second system
+    // would cause the two opacity/transform controllers to fight.
+
+    var allFadeEls = document.querySelectorAll(
+        '.page-fade-img, .page-fade-card, .page-fade-wrap'
+    );
+
+    // ---- Direction based on the element's actual position on screen:
+    //      sidebar (left column) slides from the left, content column
+    //      elements slide from the right or up/down depending on how
+    //      centered they are. ----
+    allFadeEls.forEach(function (el, i) {
+        var rect = el.getBoundingClientRect();
+        var elCenterX = rect.left + rect.width / 2;
+        var viewportCenter = window.innerWidth / 2;
+        var offsetRatio = (elCenterX - viewportCenter) / viewportCenter;
+        var dir;
+
+        if (offsetRatio < -0.15) {
+            dir = 'left';
+        } else if (offsetRatio > 0.15) {
+            dir = 'right';
+        } else {
+            dir = (i % 2 === 0) ? 'up' : 'down';
+        }
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 5) * 0.07 + 's';
+    });
+
+    // ---- Catch-all safety net for any leftover old-library elements ----
+    document.querySelectorAll('.scrollanimation').forEach(function (el, i) {
+        if (el.classList.contains('page-fade-img') ||
+            el.classList.contains('page-fade-card') ||
+            el.classList.contains('page-fade-wrap')) return;
+
+        el.classList.add('page-fade-card');
+        var rect = el.getBoundingClientRect();
+        var elCenterX = rect.left + rect.width / 2;
+        var viewportCenter = window.innerWidth / 2;
+        var offsetRatio = (elCenterX - viewportCenter) / viewportCenter;
+        var dir;
+
+        if (offsetRatio < -0.15) dir = 'left';
+        else if (offsetRatio > 0.15) dir = 'right';
+        else dir = (i % 2 === 0) ? 'up' : 'down';
+
+        el.classList.add('fade-dir-' + dir);
+        el.style.transitionDelay = (i % 5) * 0.07 + 's';
+    });
+
+    var allFadeElsFinal = document.querySelectorAll(
+        '.page-fade-img, .page-fade-card, .page-fade-wrap'
+    );
+
+    // ---- Observer: fades in/out every time an element crosses the
+    //      trigger zone, in both scroll directions ----
+    var pageFadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0,
+        rootMargin: '-10% 0px -15% 0px'
+    });
+
+    allFadeElsFinal.forEach(function (el) { pageFadeObserver.observe(el); });
+
+    // ===== Staggered text reveal for the description block — REPEATS
+    // every time you scroll past it, in either direction (not just once) =====
+    var textRevealEls = document.querySelectorAll(
+        '.pkg-description-block h3, .pkg-magnetic-text h5, .pkg-magnetic-text h4, .pkg-magnetic-text li, .pkg-magnetic-text p'
+    );
+
+    textRevealEls.forEach(function (el, i) {
+        el.style.transitionDelay = (i % 8) * 0.08 + 's';
+    });
+
+    var textRevealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('text-reveal-in', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.1,
+        root: document.querySelector('.pkg-content-scroll') || null,
+        rootMargin: '0px 0px -10% 0px'
+    });
+
+    textRevealEls.forEach(function (el) { textRevealObserver.observe(el); });
+});
+</script>
 {% endblock %}

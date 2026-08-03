@@ -380,24 +380,39 @@
 
 /* Read More */
 
-.blog-read-more{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    color:#fff;
-    font-size:.95rem;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    opacity:0;
-    transform:translateY(8px);
-    transition:.35s;
-}
+.blog-read-more {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: #fff;
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.8px;
+                text-transform: uppercase;
+                text-decoration: none;
+                padding: 9px 18px;
+                border: 1.5px solid rgba(255, 255, 255, 0.55);
+                border-radius: 100px;
+                background: transparent;
+                opacity: 1;              /* was 0 — always visible now */
+                transform: translateY(0); /* was translateY(6px) */
+                transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+            }
 
-.blog-card:hover .blog-read-more{
-    opacity:1;
-    transform:none;
-}
+            .blog-read-more:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: #fff;
+                gap: 12px;
+            }
+
+            .blog-read-more i {
+                transition: transform 0.3s ease;
+                font-size: 0.72rem;
+            }
+
+            .blog-read-more:hover i {
+                transform: translateX(4px);
+            }
 /* ==========================================
    PAGINATION
 ========================================== */
@@ -522,10 +537,39 @@
         max-height:120px;
     }
 
-    .blog-read-more{
-        opacity:1;
-        transform:none;
-    }
+   .blog-read-more {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: #fff;
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.8px;
+                text-transform: uppercase;
+                text-decoration: none;
+                padding: 9px 18px;
+                border: 1.5px solid rgba(255, 255, 255, 0.55);
+                border-radius: 100px;
+                background: transparent;
+                opacity: 1;              /* was 0 — always visible now */
+                transform: translateY(0); /* was translateY(6px) */
+                transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+            }
+
+            .blog-read-more:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: #fff;
+                gap: 12px;
+            }
+
+            .blog-read-more i {
+                transition: transform 0.3s ease;
+                font-size: 0.72rem;
+            }
+
+            .blog-read-more:hover i {
+                transform: translateX(4px);
+            }
 }
 /* ==========================================
    SMALL MOBILE
