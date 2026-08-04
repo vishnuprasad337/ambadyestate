@@ -7,18 +7,18 @@
 
 <!-- ===== HERO TITLE SECTION (same as Stays/About) ===== -->
 <section class="about-hero-section">
-    <div class="about-hero-bg" style="background-image: url('{{ activity.image.url }}');"></div>
+    <div class="about-hero-bg anim-parallax" data-parallax-speed="0.25" style="background-image: url('{{ activity.image.url }}');"></div>
     <div class="about-hero-overlay"></div>
     <div class="r-container about-hero-content">
-        <span class="about-hero-breadcrumb">
+        <span class="about-hero-breadcrumb anim-el anim-top">
             <a href="{% url 'ambadyestate_app:home' %}">Home</a>
             <i class="fa-solid fa-chevron-right"></i>
             <a href="{% url 'ambadyestate_app:activities_page' %}">Activities</a>
             <i class="fa-solid fa-chevron-right"></i>
             <span>{{ activity.name }}</span>
         </span>
-        <h1 class="about-hero-title">{{ activity.name }}</h1>
-        
+        <h1 class="about-hero-title anim-el anim-bottom">{{ activity.name }}</h1>
+
     </div>
 </section>
 
@@ -126,74 +126,71 @@
 
     /* Global safeguard: stop any element from causing horizontal
        scroll/bleed-through on mobile. */
-    html, body {
-        overflow-x: hidden;
-        max-width: 100%;
-    }
+   .page-scroll-guard {
+    overflow-x: hidden;
+    width: 100%;
+}
     * {
         box-sizing: border-box;
     }
 </style>
 
-<!-- ===== ACTIVITY DETAILS CONTENT + EXPLORE ACTIVITIES SIDEBAR ===== -->
+<!-- ===== SIDEBAR (LEFT, STICKY) + ACTIVITY CONTENT (RIGHT, NORMAL SCROLL) ===== -->
 <div id="activity-detail" class="section" style="background-image: url('{% static 'ambadyestate-main/image/act.png' %}');">
     <div class="r-container">
         <div class="activity-layout">
 
-            <!-- MAIN CONTENT: label above image, then image, then description -->
-            <div class="activity-main">
-                
-                <div class="row row-cols-1 g-5">
-                    <div class="col">
-                        <div class="activity-detail-img-wrap">
-                            <img src="{{ activity.image.url }}" alt="{{ activity.name }}" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="col d-flex flex-column gap-4 justify-content-center">
-                        <div class="d-flex flex-column gap-3">
-                            <h3 class="activity-title">{{ activity.name }}</h3>
-                          <div class="activity-description">{{ activity.description|safe }}</div>
-                        </div>
-
-                        <div class="activity-meta d-flex flex-column gap-3">
-                            {% if activity.duration %}
-                            <div class="activity-meta-item">
-                                <i class="fa-solid fa-clock"></i>
-                                <span><strong>Duration:</strong> {{ activity.duration }}</span>
-                            </div>
-                            {% endif %}
-                            {% if activity.location %}
-                            <div class="activity-meta-item">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span><strong>Location:</strong> {{ activity.location }}</span>
-                            </div>
-                            {% endif %}
-                            
-                        </div>
-
-                       <div>
-    <a href="javascript:void(0)" class="btn btn-accent px-5 py-3 js-open-booking-modal">
-        Enquiry Now
-    </a>
-</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- EXPLORE ACTIVITIES SIDEBAR (only addition kept from package details) -->
-            <div class="activity-sidebar">
+            <!-- EXPLORE ACTIVITIES SIDEBAR: left column, sticky -->
+            <div class="activity-sidebar anim-el anim-left">
                 <div class="activity-explore-card">
                     <div class="activity-explore-header">
                         <h5>Explore Activities</h5>
                     </div>
-                   <div class="activity-explore-list">
-    {% for other in other_activities %}
-    <a href="{% url 'ambadyestate_app:activity_details' other.slug %}" class="activity-explore-item">
-        <span>{{ other.name }}</span>
-        <i class="fa-solid fa-arrow-up-right"></i>
-    </a>
-    {% endfor %}
-</div>
+                    <div class="activity-explore-list">
+                        {% for other in other_activities %}
+                        <a href="{% url 'ambadyestate_app:activity_details' other.slug %}" class="activity-explore-item">
+                            <span>{{ other.name }}</span>
+                            <i class="fa-solid fa-arrow-up-right"></i>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN CONTENT: right column, title -> description -> image -> meta -->
+            <div class="activity-main">
+                <div class="activity-content-col">
+
+                    <div class="d-flex flex-column gap-3">
+                        <h3 class="activity-title anim-el anim-top">{{ activity.name }}</h3>
+                        <div class="activity-description anim-el anim-bottom">{{ activity.description|safe }}</div>
+                    </div>
+
+                    <div class="activity-detail-img-wrap anim-el anim-right anim-float">
+                        <img class="anim-parallax" data-parallax-speed="0.12" src="{{ activity.image.url }}" alt="{{ activity.name }}" loading="lazy">
+                    </div>
+
+                    <div class="activity-meta d-flex flex-column gap-3">
+                        {% if activity.duration %}
+                        <div class="activity-meta-item anim-el anim-left">
+                            <i class="fa-solid fa-clock"></i>
+                            <span><strong>Duration:</strong> {{ activity.duration }}</span>
+                        </div>
+                        {% endif %}
+                        {% if activity.location %}
+                        <div class="activity-meta-item anim-el anim-right">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> {{ activity.location }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="anim-el anim-bottom">
+                        <a href="javascript:void(0)" class="btn btn-accent px-5 py-3 js-open-booking-modal">
+                            Enquiry Now
+                        </a>
+                    </div>
+
                 </div>
             </div>
 
@@ -202,22 +199,32 @@
 </div>
 
 <style>
-    #activity-detail {
-        padding: 80px 0;
-        background-size: cover;
-        background-position: center;
-        overflow-x: hidden;
-    }
+   #activity-detail {
+    padding: 120px 0 80px;
+    background-size: cover;
+    background-position: center;
+}
 
+    /* Sidebar first (left), main content second (right).
+       align-items: start keeps each column's height independent,
+       so the sticky sidebar pins to the top of its own cell and
+       naturally releases once that cell (i.e. the taller of the
+       two columns) ends. */
     .activity-layout {
         display: grid;
-        grid-template-columns: 1fr 340px;
+        grid-template-columns: 340px 1fr;
         gap: 40px;
         align-items: start;
     }
 
     .activity-main {
         min-width: 0;
+    }
+
+    .activity-content-col {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
     }
 
     .activity-detail-img-wrap {
@@ -231,10 +238,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .activity-section-label {
-        margin: 0 0 20px;
+    .activity-detail-img-wrap:hover img {
+        transform: scale(1.05);
     }
 
     .activity-title {
@@ -246,61 +254,55 @@
         color: var(--accent-color, #14331f);
         margin: 0;
     }
+
     .activity-description {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--text-color, #1a1e16);
-}
-
-.activity-description p {
-    margin: 0 0 14px;
-}
-
-.activity-description p:last-child {
-    margin-bottom: 0;
-}
-
-.activity-description ul,
-.activity-description ol {
-    list-style: none;
-    margin: 18px 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.activity-description li {
-    position: relative;
-    padding-left: 38px;
-    line-height: 1.65;
-}
-
-.activity-description li::before {
-    content: "\f00c"; /* fa-check icon */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    position: absolute;
-    left: 0;
-    top: 2px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--accent-color-2, #c8a86a);
-    color: #fff;
-    font-size: 0.62rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-@media (max-width: 767px) {
-    .activity-description {
-        font-size: 0.94rem;
-        line-height: 1.7;
+        font-size: 1rem;
+        line-height: 1.75;
+        color: var(--text-color, #1a1e16);
     }
-}
+
+    .activity-description p {
+        margin: 0 0 14px;
+    }
+
+    .activity-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    .activity-description ul,
+    .activity-description ol {
+        list-style: none;
+        margin: 18px 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .activity-description li {
+        position: relative;
+        padding-left: 38px;
+        line-height: 1.65;
+    }
+
+    .activity-description li::before {
+        content: "\f00c"; /* fa-check icon */
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--accent-color-2, #c8a86a);
+        color: #fff;
+        font-size: 0.62rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
 
     .activity-meta-item {
         display: flex;
@@ -313,20 +315,43 @@
     .activity-meta-item i {
         width: 20px;
         color: var(--accent-color-2, #c8a86a);
+        display: inline-block;
+        animation: metaIconPulse 2.4s ease-in-out infinite;
     }
 
-    /* ===== EXPLORE ACTIVITIES SIDEBAR ===== */
+    .activity-meta-item:nth-child(2) i {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes metaIconPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.18); }
+    }
+
+    /* ===== EXPLORE ACTIVITIES SIDEBAR (locks in place while
+       the description/image column scrolls past it, then
+       releases once that column ends) ===== */
     .activity-sidebar {
-        position: sticky;
-        top: 100px;
-        min-width: 0;
-    }
-
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    height: fit-content;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
     .activity-explore-card {
         border-radius: 22px;
         overflow: hidden;
         background: #fff;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        transition: box-shadow 0.4s ease, transform 0.4s ease;
+    }
+
+    .activity-explore-card:hover {
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+        transform: translateY(-3px);
     }
 
     .activity-explore-header {
@@ -412,7 +437,7 @@
 
     @media (max-width: 767px) {
         #activity-detail {
-            padding: 50px 0;
+            padding: 70px 0 50px;
         }
         #activity-detail .r-container {
             padding-left: 20px;
@@ -428,7 +453,7 @@
         .activity-title {
             font-size: clamp(1.7rem, 7vw, 2.3rem);
         }
-        .activity-main p {
+        .activity-description {
             font-size: 0.94rem;
             line-height: 1.7;
         }
@@ -490,13 +515,75 @@
             padding-right: 16px;
         }
     }
+
+    /* ===== ENTRANCE ANIMATIONS (JS-triggered, reliable, INTENSE) =====
+       Elements start hidden, thrown far off to one side, tilted,
+       shrunk and blurred via .anim-el + direction class, then a
+       springy "overshoot" transition slams them back to rest once
+       JS adds .in-view — a big, obvious travel distance so opposite
+       sides visibly converge toward the middle instead of a subtle
+       fade/nudge. */
+    .anim-el {
+        opacity: 0;
+        filter: blur(9px);
+        transition: opacity 0.7s ease-out,
+                    filter 0.9s ease-out,
+                    transform 1.15s cubic-bezier(0.22, 1.4, 0.36, 1);
+        will-change: opacity, transform, filter;
+    }
+
+    .anim-el.anim-left   { transform: translateX(-160px) rotate(-6deg) scale(0.82); }
+    .anim-el.anim-right  { transform: translateX(160px) rotate(6deg) scale(0.82); }
+    .anim-el.anim-top    { transform: translateY(-100px) scale(0.85); }
+    .anim-el.anim-bottom { transform: translateY(90px) scale(0.85); }
+
+    .anim-el.in-view {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    /* Gentle continuous float once the image has settled in */
+    .anim-float.in-view {
+        animation: gentleFloat 5s ease-in-out infinite;
+        animation-delay: 1.15s;
+    }
+
+    @keyframes gentleFloat {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-10px) scale(1.01); }
+    }
+
+    /* Subtle continuous parallax drift tied to scroll position,
+       layered on top of the entrance animation for movement that
+       keeps happening the whole time you scroll, not just once. */
+    .anim-parallax {
+        transition: transform 0.05s linear;
+        will-change: transform;
+    }
+
+    /* Respect users who prefer less motion */
+    @media (prefers-reduced-motion: reduce) {
+        .anim-el,
+        .anim-float,
+        .anim-parallax {
+            opacity: 1 !important;
+            filter: none !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+        }
+        .activity-meta-item i {
+            animation: none !important;
+        }
+    }
 </style>
 
 <!-- ===== GALLERY (separate section, 3 per row, paginated 6 at a time) ===== -->
 {% if gallery_images %}
 <div id="activity-gallery" class="section" style="background-image: url('{% static 'ambadyestate-main/image/act.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
-        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
+        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center anim-el anim-top"
             style="max-width: 700px;">
             <h6 class="accent-color-2">Gallery</h6>
             <h3>Photos from {{ activity.name }}</h3>
@@ -505,7 +592,7 @@
 
         <div class="activity-gallery-grid" data-paginate data-per-page="6">
             {% for img in gallery_images %}
-            <div class="activity-gallery-item">
+            <div class="activity-gallery-item anim-el {% cycle 'anim-left' 'anim-bottom' 'anim-right' %}">
                 <img src="{{ img.image.url }}" alt="{{ img.caption|default:activity.name }}" loading="lazy">
                 {% if img.caption %}
                 <div class="activity-gallery-caption">{{ img.caption }}</div>
@@ -538,21 +625,6 @@
         overflow: hidden;
         aspect-ratio: 4 / 3;
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-        opacity: 0;
-        transform: translateY(20px);
-        animation: galleryCardRise 0.6s ease forwards;
-        animation-play-state: paused;
-    }
-
-    .activity-gallery-item:nth-child(1) { animation-delay: 0s; }
-    .activity-gallery-item:nth-child(2) { animation-delay: 0.08s; }
-    .activity-gallery-item:nth-child(3) { animation-delay: 0.16s; }
-    .activity-gallery-item:nth-child(4) { animation-delay: 0.24s; }
-    .activity-gallery-item:nth-child(5) { animation-delay: 0.32s; }
-    .activity-gallery-item:nth-child(6) { animation-delay: 0.4s; }
-
-    @keyframes galleryCardRise {
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .activity-gallery-item img {
@@ -697,7 +769,7 @@
 {% if packages %}
 <div id="related-activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/act.png' %}');">
     <div class="r-container d-flex flex-column gap-3">
-        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center"
+        <div class="d-flex flex-column gap-3 align-items-center justify-content-center mx-auto text-center anim-el anim-top"
             style="max-width: 700px;">
             <h6 class="accent-color-2">Plan Your Stay</h6>
             <h3>Packages You Might Like</h3>
@@ -705,7 +777,7 @@
 
         <div class="row row-cols-xl-3 row-cols-1 g-4">
             {% for package in packages %}
-            <div class="col">
+            <div class="col anim-el {% cycle 'anim-left' 'anim-bottom' 'anim-right' %}">
                 <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="activity-card">
                     <div class="activity-card-img-wrap">
                         {% if package.image %}
@@ -714,7 +786,7 @@
                         <div class="activity-overlay"></div>
                         <div class="activity-card-body">
                             <h4>{{ package.name }}</h4>
-                            
+
                             <span class="activity-read-more">
                                 View Package
                                 <i class="fa-solid fa-arrow-right"></i>
@@ -840,19 +912,114 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    /* Scroll-reveal for gallery items */
-    const revealItems = document.querySelectorAll('.activity-gallery-item');
-    if (revealItems.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+
+    /* ===== SCROLL-TRIGGERED ENTRANCE ANIMATIONS (INTENSE) =====
+       Every .anim-el on the page starts thrown off-screen, tilted,
+       shrunk and blurred toward its "anim-*" direction. As each one
+       crosses into the viewport an IntersectionObserver adds
+       .in-view, which springs it back to rest — a big, obvious slide
+       from the side/top/bottom that settles in the middle. Elements
+       are staggered per group so neighbouring cards/lines cascade in
+       one after another instead of all moving at once. Class is
+       toggled off again once fully scrolled past, so scrolling back
+       up replays the motion too — the whole page keeps feeling alive. */
+
+    // Break the CMS-authored rich text description into its own
+    // individually-animated lines (paragraphs / list items), each
+    // alternating left/right, so the whole block of text visibly
+    // flies in piece by piece instead of moving as one flat chunk.
+    var descriptionBlock = document.querySelector('.activity-description');
+    if (descriptionBlock) {
+        var descLines = Array.prototype.slice.call(descriptionBlock.querySelectorAll('p, li'));
+        descLines.forEach(function (line, i) {
+            line.classList.add('anim-el', i % 2 === 0 ? 'anim-left' : 'anim-right');
+        });
+    }
+
+    var animEls = Array.prototype.slice.call(document.querySelectorAll('.anim-el'));
+
+    // Group elements by their nearest common "row" container so that
+    // siblings inside the same grid/row/list get a cascading stagger,
+    // while unrelated sections don't inherit each other's delay.
+    var groupSelectors = [
+        '.activity-gallery-grid',
+        '.row.row-cols-xl-3',
+        '.activity-description',
+        '.activity-content-col',
+        '.activity-meta',
+        '.about-hero-content'
+    ];
+
+    function getStaggerIndex(el) {
+        for (var i = 0; i < groupSelectors.length; i++) {
+            var group = el.closest(groupSelectors[i]);
+            if (group) {
+                return Array.prototype.indexOf.call(group.children, el);
+            }
+        }
+        return 0;
+    }
+
+    animEls.forEach(function (el) {
+        var idx = Math.max(getStaggerIndex(el), 0);
+        el.style.transitionDelay = Math.min(idx * 130, 650) + 'ms';
+    });
+
+    if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('in-view');
+                } else if (entry.boundingClientRect.top > 0) {
+                    // Only reset elements we've scrolled UP away from
+                    // (still below the fold), so they replay on the
+                    // way back down instead of animating on first load.
+                    entry.target.classList.remove('in-view');
                 }
             });
-        }, { threshold: 0.15 });
+        }, {
+            threshold: 0.18,
+            rootMargin: '0px 0px -60px 0px'
+        });
 
-        revealItems.forEach(el => observer.observe(el));
+        animEls.forEach(function (el) {
+            revealObserver.observe(el);
+        });
+    } else {
+        // No IntersectionObserver support: just show everything.
+        animEls.forEach(function (el) {
+            el.classList.add('in-view');
+        });
+    }
+
+    /* ===== CONTINUOUS SCROLL PARALLAX =====
+       Layered on top of the entrance animations, this keeps things
+       gently moving the entire time you scroll — not just the moment
+       an element crosses the fold — so the page feels alive throughout,
+       not only at fixed trigger points. */
+    var parallaxEls = Array.prototype.slice.call(document.querySelectorAll('.anim-parallax'));
+    if (parallaxEls.length) {
+        var ticking = false;
+        function updateParallax() {
+            var vh = window.innerHeight;
+            parallaxEls.forEach(function (el) {
+                var rect = el.getBoundingClientRect();
+                var centerOffset = (rect.top + rect.height / 2) - vh / 2;
+                var speed = parseFloat(el.dataset.parallaxSpeed || '0.15');
+                var y = centerOffset * speed * -1;
+                el.style.transform = 'translateY(' + y.toFixed(1) + 'px) scale(1.08)';
+            });
+            ticking = false;
+        }
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        updateParallax();
     }
 
     /* Pagination for the gallery grid */
@@ -868,7 +1035,14 @@ document.addEventListener('DOMContentLoaded', function () {
         function renderPage() {
             items.forEach((item, i) => {
                 const page = Math.floor(i / perPage);
-                item.style.display = page === currentPage ? '' : 'none';
+                const shouldShow = page === currentPage;
+                item.style.display = shouldShow ? '' : 'none';
+
+                // Re-trigger the slide-in animation for the newly shown
+                // page so paging feels just as alive as the first scroll.
+                if (shouldShow && !item.classList.contains('in-view')) {
+                    item.classList.add('in-view');
+                }
             });
 
             prevBtn.disabled = currentPage === 0;

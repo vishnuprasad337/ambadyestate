@@ -39,14 +39,14 @@
             padding-right: 0;
         }
 
-        .site-navbar {
+       .site-navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             padding: 14px 32px;
+            position: relative;
         }
-
         .site-brand {
             flex-shrink: 0;
             margin-left: 0;
@@ -116,6 +116,7 @@
         .site-header.is-scrolled .site-navbar .navbar-nav .nav-link.active {
             color: #ffffff !important;
         }
+        
 
         @media (max-width: 1300px) {
             .site-navbar .navbar-nav .nav-link {
@@ -367,18 +368,89 @@
         /* Logo: shows its true colors (red/blue mark + script wordmark) at all
            times — no forced white filter — in both the transparent (top-of-page)
            header and the .is-scrolled (olive green bar) header. */
-        .site-brand img {
-            max-height: 120px;
-            width: auto;
-            transition: filter 0.3s ease;
-        }
+       .site-brand img {
+    max-height: 120px;
+    width: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transition: filter 0.3s ease;
+}
 
         /* Slightly larger scrolled-state footprint kept from before, but no
            color filter applied — logo stays true-color. */
         .site-header.is-scrolled .site-brand img {
             max-height: 108px;
         }
+        /* ===== NATURE PATTERN — ONLY ON SCROLLED (GREEN) NAVBAR ===== */
+.site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("{% static 'ambadyestate-main/leaf.png' %}");
+    background-repeat: repeat-x;
+    background-size: 420px auto;
+    background-position: left center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s ease;
+}
 
+.site-header.is-scrolled::before {
+    opacity: 0.18;
+}
+
+.site-header .r-container {
+    position: relative;
+    z-index: 1;
+}
+       @media (max-width: 1300px) {
+    #header .navbar-toggler {
+        display: block !important;
+    }
+
+    #header #navbarNav {
+       display: none !important;
+    }
+
+    #header #navbarNav.show,
+    #header #navbarNav.collapsing {
+        display: block !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: rgba(20, 20, 15, 0.97) !important;
+        padding: 12px 20px 20px !important;
+        z-index: 9999 !important;
+        margin: 0 !important;
+    }
+
+    #header #navbarNav .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        margin: 0 !important;
+    }
+
+    #header #navbarNav .navbar-nav .nav-item {
+        width: 100% !important;
+    }
+
+    #header #navbarNav .navbar-nav .nav-link {
+        display: block !important;
+        padding: 10px 0 !important;
+    }
+}
+
+@media (min-width: 1301px) {
+    #header #navbarNav {
+        display: flex !important;
+    }
+    #header .navbar-toggler {
+        display: none !important;
+    }
+}
 /* ─── PRELOADER ─── */
 #preloader {
   position: fixed; width: 100%; height: 100%;
@@ -414,8 +486,91 @@
 }
 [data-theme="dark"] .loader > div { background: #9CAE7D; }
 
+
 /* ===== END PRELOADER ===== */
     </style>
+    <style>
+/* ===== BUTTON SIZE — MOBILE & TABLET ONLY ===== */
+@media (max-width: 1300px) {
+    .btn,
+    .btn-accent,
+    .hero-btn-solid,
+    .activity-explore-btn,
+    .accordion-book-btn,
+    .about-quote-btn,
+    .js-open-booking-modal {
+        padding: 10px 20px !important;
+        font-size: 0.82rem !important;
+        width: fit-content !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .btn,
+    .btn-accent,
+    .hero-btn-solid,
+    .activity-explore-btn,
+    .accordion-book-btn,
+    .about-quote-btn,
+    .js-open-booking-modal {
+        padding: 9px 18px !important;
+        font-size: 0.78rem !important;
+        width: fit-content !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .btn,
+    .btn-accent,
+    .hero-btn-solid,
+    .activity-explore-btn,
+    .accordion-book-btn,
+    .about-quote-btn,
+    .js-open-booking-modal {
+        padding: 8px 16px !important;
+        font-size: 0.75rem !important;
+        width: fit-content !important;
+    }
+}
+
+/* ===== BUTTONS INSIDE CARDS — TRANSPARENT ===== */
+.about-feature-card .btn,
+.about-feature-card button,
+.amenity-card .btn,
+.amenity-card button,
+.blog-card .btn,
+.blog-card button,
+.activity-content .activity-explore-btn,
+.accordion-item .accordion-book-btn {
+    background: transparent !important;
+    color: var(--accent-color, #2c5f1a) !important;
+    border: 1.5px solid var(--accent-color, #2c5f1a) !important;
+}
+
+.about-feature-card .btn:hover,
+.about-feature-card button:hover,
+.amenity-card .btn:hover,
+.amenity-card button:hover,
+.blog-card .btn:hover,
+.blog-card button:hover,
+.activity-content .activity-explore-btn:hover,
+.accordion-item .accordion-book-btn:hover {
+    background: var(--accent-color, #2c5f1a) !important;
+    color: #fff !important;
+}
+
+/* accordion-item cards sit on dark photo backgrounds, so keep their button white */
+.accordion-item .accordion-book-btn {
+    color: #fff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+}
+
+.accordion-item .accordion-book-btn:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: #fff !important;
+    color: #fff !important;
+}
+</style>
         {% block extra_head %}{% endblock %}
 </head>
 
@@ -491,7 +646,7 @@
 
                     <!-- Brand: logo + description + socials -->
                     <div class="footer-col footer-brand">
-                        <img src="{% static 'ambadyestate-main/ambady-g.png' %}" alt="Ambady Estate" class="img-fluid ambady-footer-logo" width="320">
+                        <img src="{% static 'ambadyestate-main/logo-ambadi1.webp' %}" alt="Ambady Estate" class="img-fluid ambady-footer-logo" width="320">
                         <p class="footer-desc">
                             Ambady Estate is your gateway to authentic Munnar living — a boutique
                             plantation retreat offering peaceful stays, curated experiences and
@@ -566,43 +721,52 @@
                             <span class="footer-contact-text">Ambady Estate, Munnar, Kerala - 685612</span>
                         </div>
                         <div class="footer-socials">
-                            <a href="#" class="footer-social-icon" aria-label="Twitter / X">
+                            <a href="https://api.whatsapp.com/send?phone=+919656355500" target="_blank" rel="noopener" class="footer-social-icon" aria-label="WhatsApp">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.4L18.9 2Zm-1.2 18.2h1.9L7.4 3.7H5.4l12.3 16.5Z" fill="currentColor"/>
+                                    <path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5 0-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4Z" fill="currentColor"/>
+                                    <path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z" fill="currentColor"/>
                                 </svg>
                             </a>
-                            <a href="#" class="footer-social-icon" aria-label="Facebook">
+                            <a href="https://www.facebook.com/ambadyestate.mnr" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Facebook">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.5 21v-8.2h2.7l.4-3.2h-3.1V7.5c0-.9.3-1.6 1.7-1.6h1.5V3.1C15.9 3 14.9 3 13.7 3c-2.6 0-4.3 1.6-4.3 4.4v2.2H6.7v3.2h2.7V21h4.1Z" fill="currentColor"/>
                                 </svg>
                             </a>
-                            <a href="#" class="footer-social-icon" aria-label="Instagram">
+                            <a href="https://www.instagram.com/ambadyestatemnr" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/>
                                     <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/>
                                     <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/>
                                 </svg>
                             </a>
-                            <a href="#" class="footer-social-icon" aria-label="Pinterest">
+                            <a href="https://www.tripadvisor.in/Hotel_Review-g303881-d1341108-Reviews-Ambady_Estate-Munnar_Idukki_District_Kerala.html" target="_blank" rel="noopener" class="footer-social-icon" aria-label="TripAdvisor">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2a10 10 0 0 0-3.6 19.3c0-.8 0-1.9.2-2.6l1.4-6s-.3-.7-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.4.7 1.4 1.6 0 .9-.6 2.3-.9 3.6-.3 1.1.5 2 1.6 2 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.2-3.8-3 0-4.9 2.3-4.9 4.8 0 .9.3 1.5.7 2 .2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.3-1.6-.7-2.4-2.5-2.4-4.6 0-3.4 2.9-7.5 8.5-7.5 4.5 0 7.5 3.3 7.5 6.8 0 4.6-2.6 8.1-6.4 8.1-1.3 0-2.5-.7-2.9-1.4l-.8 3c-.2.9-.7 2-1.1 2.7A10 10 0 1 0 12 2Z" fill="currentColor"/>
+                                    <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="12" cy="12" r="1.1" fill="currentColor"/>
+                                    <circle cx="6.3" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="6.3" cy="10" r="1.4" fill="currentColor"/>
+                                    <circle cx="17.7" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="17.7" cy="10" r="1.4" fill="currentColor"/>
+                                    <path d="M9 5.5h6M12 5.5 9.6 8.2M12 5.5l2.4 2.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                                 </svg>
                             </a>
                         </div>
-                    </div>
+                    </div><!-- closes .footer-col.footer-contact -->
 
+                </div><!-- closes .footer-grid -->
+
+                <div class="footer-bottom-bar text-center accent-color">
+                    <p class="mb-0">
+                        &copy; <span id="currentYear"></span> <strong>Ambady Estate</strong>. All rights reserved.
+                    </p>
+                    <small>
+                        Designed by <a href="https://vynzora.com/" target="_blank"
+                            style="color: var(--accent-color); text-decoration: none;">Vynzora</a>
+                    </small>
                 </div>
-            </div>
-            <div class="text-center mt-4 footer-links py-3 accent-color">
-                <p class="mb-0">
-                    &copy; <span id="currentYear"></span> <strong>Ambady Estate</strong>. All rights reserved.
-                </p>
-                <small>
-                    Designed by <a href="https://vynzora.com/" target="_blank"
-                        style="color: var(--accent-color); text-decoration: none;">Vynzora</a>
-                </small>
-            </div>
-        </div>
+
+            </div><!-- closes .border-bottom -->
+        </div><!-- closes .r-container -->
     </div>
 </footer>
 
@@ -665,13 +829,14 @@
 
     /* Logo — UNCHANGED from original */
     .ambady-footer-logo {
-        margin-bottom: -16px !important;
-        margin-top: -20px !important;
-        width: 100% !important;
-        max-width: 260px !important;
-        height: auto !important;
-        display: block;
-    }
+    margin-bottom: 8px !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 260px !important;
+    height: auto !important;
+    display: block;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
 
     .footer-brand {
         padding-right: 30px;
@@ -828,7 +993,37 @@
         padding-top: 0.2rem !important;
         padding-bottom: 0.2rem !important;
     }
+    /* Bottom copyright bar — full width, centered under everything */
+/* Bottom copyright bar — full width, centered under everything */
+.footer-bottom-bar {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 16px auto 0 auto !important;
+    padding: 12px 0 !important;
+    text-align: center !important;
+    float: none !important;
+}
 
+.footer-bottom-bar p,
+.footer-bottom-bar small {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #3a3a30;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(245, 240, 228, 0.95), 0 0 10px rgba(245, 240, 228, 0.85);
+}
+
+.footer-bottom-bar small {
+    font-size: 0.85rem;
+    color: #5a5a4a;
+}
+
+.footer-bottom-bar small a {
+    color: var(--accent-color, #9c8a4f);
+    font-weight: 700;
+}
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1199.98px) {
         .footer-grid {

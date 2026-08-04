@@ -217,32 +217,38 @@
     }
 
     /* ---------- Entrance animations ---------- */
+   /* ---------- Entrance animations (more intense) ---------- */
     .dest-anim {
         width: 100%;
         min-width: 0;
         opacity: 0;
-        transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-        will-change: transform, opacity;
+        filter: blur(6px);
+        transition:
+            opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            filter 0.9s ease;
+        will-change: transform, opacity, filter;
     }
 
     .dest-anim-left {
-        transform: translateX(-70px);
+        transform: translateX(-140px) scale(0.92) rotate(-3deg);
     }
 
     .dest-anim-right {
-        transform: translateX(70px);
+        transform: translateX(140px) scale(0.92) rotate(3deg);
     }
 
     .dest-anim.dest-in-view {
         opacity: 1;
-        transform: translateX(0);
+        filter: blur(0);
+        transform: translateX(0) scale(1) rotate(0deg);
     }
 
     /* Stagger inner elements of the info column */
     .dest-info-col > * {
         opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.7s ease, transform 0.7s ease;
+        transform: translateY(45px) scale(0.95);
+        transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .dest-info-col.dest-in-view > *:nth-child(1) { transition-delay: 0.05s; }
@@ -253,7 +259,7 @@
 
     .dest-info-col.dest-in-view > * {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 
     /* ---------- Left: image viewer ---------- */
@@ -566,6 +572,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ---- Entrance animation on scroll: image + text slide in from opposite directions ---- */
+    /* ---- Entrance animation on scroll: image + text slide in from opposite
+       directions EVERY time the element scrolls into view (not just once) ---- */
     const animEls = document.querySelectorAll('.dest-anim');
 
     if ('IntersectionObserver' in window && animEls.length) {
@@ -573,7 +581,8 @@ document.addEventListener('DOMContentLoaded', function () {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('dest-in-view');
-                    observer.unobserve(entry.target);
+                } else {
+                    entry.target.classList.remove('dest-in-view');
                 }
             });
         }, { threshold: 0.2 });

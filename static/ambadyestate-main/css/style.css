@@ -69,13 +69,13 @@ body.ambady-home {
     background: var(--primary);
     color: var(--text-color);
     font-family: var(--font-3);
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 html,
 body {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 h1 {
@@ -1365,7 +1365,7 @@ a {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1300px) {
     h1 { font-size: 46px; }
     h2 { font-size: 40px; }
     h3 { font-size: 30px; }

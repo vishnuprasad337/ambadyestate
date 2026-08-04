@@ -33,11 +33,12 @@
 
 <!-- ===== ABOUT THIS ROOM — sticky image, masked scroll-reveal copy =====
      Mirrors the homepage "Our Story / About Us" behaviour: the heading
-     stays pinned above a fixed-height mask, the description + quickfacts
-     scroll INSIDE that mask (which is sized to match the sticky image's
-     height), so the section's rendered height never grows past the image
-     height. Once the copy finishes scrolling, the lock releases straight
-     into the Gallery section below — no vacant space in between. -->
+     and the masked copy now live inside ONE sticky wrapper
+     (.room-about-sticky-group), so they pin together as a single unit.
+     This removes the earlier two-independent-sticky-elements setup
+     that relied on a JS-computed CSS variable for the gap between them
+     — that approach could desync (wrong heading height measured before
+     fonts/layout settled) and cause the heading and copy to overlap. -->
 <div id="description" class="section room-about-section bg-attach-cover amenities-koodaram"
     style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
 
@@ -89,57 +90,65 @@
                 </div>
             </div>
 
-            <!-- Right: sticky heading + masked scroll-reveal copy -->
+            <!-- Right: sticky group (heading + masked scroll-reveal copy) -->
             <div class="room-about-copy-col">
 
-                <!-- Heading — sticky, stays pinned above the mask the whole
-                     time the description/quickfacts are scrolling inside it. -->
-                <div class="room-about-heading-block">
-                    <span class="room-eyebrow reveal-fade">
-                        {{ room.room_category|default:"Room" }}
-                    </span>
+                <!-- NEW: single sticky wrapper holding BOTH the heading and
+                     the mask, so they always move and pin together with no
+                     separate offset calculation required between them. -->
+                <div class="room-about-sticky-group">
 
-                    <h3 class="room-section-title reveal-fade" style="--d:1">
-                        About this <em>room</em>
-                    </h3>
-                </div>
+                    <!-- Heading — no longer independently sticky; it's a
+                         normal-flow child of the sticky group above it. -->
+                    <div class="room-about-heading-block">
+                        <span class="room-eyebrow reveal-fade">
+                            {{ room.room_category|default:"Room" }}
+                        </span>
 
-                <!-- Masked scroll-reveal wrapper: height-locked to match the
-                     sticky image, content translates upward inside it via JS.
-                     reveal-right makes this whole column mirror the image's
-                     reveal-left animation so they enter from opposite sides. -->
-                <div class="room-about-content-scroll-wrapper reveal-right" style="--d:1">
-                    <div class="room-about-content-mask">
-                        <div class="room-about-text-col">
+                        <h3 class="room-section-title reveal-fade" style="--d:1">
+                            About this <em>room</em>
+                        </h3>
+                    </div>
 
-                            <!-- NOTE: no reveal-fade/reveal-left classes here on purpose.
-                                 These elements physically translate inside the clipped
-                                 mask as the user scrolls. Per-element fade-in/fade-out is
-                                 now handled separately by JS below (room-desc-fade), scoped
-                                 to the mask itself so it doesn't fight with the translate. -->
-                            <div class="room-detail-desc">
-                                {{ room.description|safe }}
-                            </div>
+                    <!-- Masked scroll-reveal wrapper: height-locked to match the
+                         sticky image, content translates upward inside it via JS.
+                         reveal-right makes this whole column mirror the image's
+                         reveal-left animation so they enter from opposite sides. -->
+                    <div class="room-about-content-scroll-wrapper reveal-right" style="--d:1">
+                        <div class="room-about-content-mask">
+                            <div class="room-about-text-col">
 
-                            <div class="room-quickfacts">
-                                <div class="room-quickfact room-quickfact-cta">
-                                    <div class="room-quickfact-icon">
-                                        <i class="fa-solid fa-calendar-check"></i>
-                                    </div>
-                                    <div class="room-quickfact-body">
-                                        <a href="#" class="room-quickfact-btn js-open-room-enquiry-modal">
-                                            Enquiry Now
-                                            <i class="fa-solid fa-arrow-right"></i>
-                                        </a>
+                                <!-- NOTE: no reveal-fade/reveal-left classes here on purpose.
+                                     These elements physically translate inside the clipped
+                                     mask as the user scrolls. Per-element fade-in/fade-out is
+                                     now handled separately by JS below (room-desc-fade), scoped
+                                     to the mask itself so it doesn't fight with the translate. -->
+                                <div class="room-detail-desc">
+                                    {{ room.description|safe }}
+                                </div>
+
+                                <div class="room-quickfacts">
+                                    <div class="room-quickfact room-quickfact-cta">
+                                        <div class="room-quickfact-icon">
+                                            <i class="fa-solid fa-calendar-check"></i>
+                                        </div>
+                                        <div class="room-quickfact-body">
+                                            <a href="#" class="room-quickfact-btn js-open-room-enquiry-modal">
+                                                Enquiry Now
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="room-about-text-spacer" aria-hidden="true"></div>
+
                             </div>
-
-                            <div class="room-about-text-spacer" aria-hidden="true"></div>
-
                         </div>
                     </div>
+
                 </div>
+                <!-- /.room-about-sticky-group -->
 
             </div>
 
@@ -579,30 +588,35 @@
         align-self: start;
     }
 
-    /* ===== Heading — sticky, sits above the masked copy so it stays
-       pinned in place the whole time the description/quickfacts below
-       it are scrolling through the mask. Offset derives from the real
-       navbar height (--navbar-h), same pattern as the homepage About
-       Us section. ===== */
-    .room-about-heading-block {
+    /* ===== NEW: SINGLE STICKY GROUP for heading + mask =====
+       Both the heading and the masked copy live inside this ONE sticky
+       element, so they pin and move together as a single unit — no
+       separate offset math between two independently-sticky elements,
+       and therefore no possibility of the mask creeping up over the
+       heading if a height measurement is ever stale. ===== */
+    .room-about-sticky-group {
         position: sticky;
         top: calc(var(--navbar-h, 96px) + 20px);
         align-self: start;
+    }
+
+    /* Heading is now a normal-flow child of the sticky group above —
+       no longer independently sticky. */
+    .room-about-heading-block {
+        position: static;
         margin-bottom: 24px;
         z-index: 2;
     }
 
     /* ===== MASKED SCROLL-REVEAL COPY
        - .room-about-content-scroll-wrapper: plain container; its own
-         rendered height equals the mask's height (a sticky child still
-         occupies its own height in normal flow), so it never grows
-         taller than the sticky image — no leftover vacant space.
-       - .room-about-content-mask: sticky, height-locked to match the
-         image (.room-slider height), clips overflow so only "one
-         image-height" of copy is visible at a time. Sticky "top" sits
-         just below the heading block, using a JS-measured
-         --room-about-heading-h variable so it always matches exactly,
-         even if the heading wraps differently at some viewport width.
+         rendered height equals the mask's height, so the sticky group
+         never grows taller than the sticky image — no leftover vacant
+         space.
+       - .room-about-content-mask: height-locked to match the image
+         (.room-slider height), clips overflow so only "one image-height"
+         of copy is visible at a time. No longer independently sticky —
+         it's carried along by the parent .room-about-sticky-group.
        - .room-about-text-col: the actual description + quickfacts,
          translated upward by JS in sync with scroll position. ===== */
     .room-about-content-scroll-wrapper {
@@ -611,8 +625,7 @@
     }
 
     .room-about-content-mask {
-        position: sticky;
-        top: calc(var(--navbar-h, 96px) + 20px + var(--room-about-heading-h, 120px) + 24px);
+        position: static;
 
         width: 100%;
         height: 560px; /* must match .room-slider's height */
@@ -721,11 +734,14 @@
         .room-about-grid { grid-template-columns: 1fr; gap: 40px; }
         .room-about-sticky-col { position: static; }
 
-        /* Un-stick the heading + drop the mask entirely on mobile/tablet —
-           natural stacked flow, exactly like the homepage About section. */
-        .room-about-heading-block {
-            position: relative;
+        /* Un-stick everything on mobile/tablet — natural stacked flow,
+           exactly like the homepage About section. */
+        .room-about-sticky-group {
+            position: static;
             top: auto;
+        }
+
+        .room-about-heading-block {
             margin-bottom: 0;
         }
 
@@ -734,9 +750,6 @@
         }
 
         .room-about-content-mask {
-            position: relative;
-            top: auto;
-
             width: 100%;
             height: auto;
             max-height: none;
@@ -1793,40 +1806,6 @@ if (revealEls.length) {
 
 <script>
 /* =====================================================
-   SYNC --room-about-heading-h WITH THE REAL HEADING HEIGHT
-   Needed so .room-about-content-mask's sticky "top" always sits
-   exactly below the heading block, on any viewport width or if
-   the heading text ever wraps onto a different number of lines.
-   Mirrors the same pattern used for --about-heading-h on the
-   homepage About Us section.
-===================================================== */
-document.addEventListener('DOMContentLoaded', function () {
-    var heading = document.querySelector('.room-about-heading-block');
-    if (!heading) return;
-
-    function syncHeadingHeight() {
-        var h = heading.getBoundingClientRect().height;
-        if (h > 0) {
-            document.documentElement.style.setProperty('--room-about-heading-h', h + 'px');
-        }
-    }
-
-    syncHeadingHeight();
-    window.addEventListener('load', syncHeadingHeight);
-    window.addEventListener('resize', syncHeadingHeight);
-
-    if ('ResizeObserver' in window) {
-        new ResizeObserver(syncHeadingHeight).observe(heading);
-    }
-
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(syncHeadingHeight);
-    }
-});
-</script>
-
-<script>
-/* =====================================================
    ROOM ABOUT SECTION — MASKED SCROLL-REVEAL COPY ENGINE
    Same scroll-jack technique as the homepage About Us section:
    once the mask reaches its pin point, page scroll freezes and
@@ -1856,11 +1835,20 @@ document.addEventListener('DOMContentLoaded', function () {
    advances the text column less per frame, and the easing catches up
    more gradually, so the reveal feels calmer instead of snapping past
    list items before they're readable.
+
+   NOTE: getStickyTop() now reads the heading's live rendered height
+   directly via getBoundingClientRect() instead of relying on the old
+   --room-about-heading-h CSS variable (which required a separate
+   ResizeObserver/fonts.ready sync script that has been removed —
+   the heading and mask are now one sticky unit in the DOM/CSS, so
+   this JS only needs the heading height to know where, within that
+   unit, the mask's pin point sits).
 ===================================================== */
 document.addEventListener('DOMContentLoaded', function () {
     const wrapper = document.querySelector('.room-about-content-scroll-wrapper');
     const mask = document.querySelector('.room-about-content-mask');
     const textCol = document.querySelector('.room-about-text-col');
+    const headingEl = document.querySelector('.room-about-heading-block');
 
     if (!wrapper || !mask || !textCol) return;
 
@@ -1921,14 +1909,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let touchStartY = 0;
     let rafId = null;
 
-    // Must match .room-about-content-mask's CSS "top" exactly:
-    // navbar-h + 20 + heading-h + 24
+    // The wrapper's pinned position, once the sticky group is stuck, sits
+    // at: navbar-h + 20 (the sticky group's own "top") + the heading's
+    // live rendered height + its 24px margin-bottom. Reads the heading
+    // height directly at call time, so it's always accurate — no stale
+    // CSS variable to keep in sync.
     function getStickyTop() {
         var navVal = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
         var navH = parseFloat(navVal) || 96;
 
-        var headingVal = getComputedStyle(document.documentElement).getPropertyValue('--room-about-heading-h').trim();
-        var headingH = parseFloat(headingVal) || 120;
+        var headingH = headingEl ? headingEl.getBoundingClientRect().height : 120;
 
         return navH + 20 + headingH + 24;
     }
