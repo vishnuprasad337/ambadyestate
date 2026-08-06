@@ -991,4 +991,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 </script>
+<style>
+    /* ===== GLOBAL LEFT-ALIGN ON MOBILE (Nearby Destinations page) ===== */
+    @media (max-width: 767px) {
+
+        /* Destinations intro */
+        #destinations > .r-container > div.text-center,
+        #destinations > .r-container > div.text-center > h6,
+        #destinations > .r-container > div.text-center > h3,
+        #destinations > .r-container > div.text-center > p {
+            text-align: left !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+</style>
 {% endblock %}

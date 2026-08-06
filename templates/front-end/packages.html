@@ -1870,4 +1870,32 @@ document.addEventListener('DOMContentLoaded', function () {
     allFadeElsFinal.forEach(function (el) { pageFadeObserver.observe(el); });
 });
 </script>
+<style>
+    /* ===== GLOBAL LEFT-ALIGN ON MOBILE (Packages page) ===== */
+    @media (max-width: 767px) {
+
+        /* Packages intro */
+        #packages > .r-container > div.text-center,
+        #packages > .r-container > div.text-center > h6,
+        #packages > .r-container > div.text-center > h3,
+        #packages > .r-container > div.text-center > p {
+            text-align: left !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        /* Activities intro */
+        #activities .row.row-cols-xl-2.align-items-center,
+        #activities .col.col-xl-8,
+        #activities h6.accent-color-2,
+        #activities h3,
+        #activities .col.col-xl-8 p {
+            text-align: left !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+</style>
 {% endblock %}
