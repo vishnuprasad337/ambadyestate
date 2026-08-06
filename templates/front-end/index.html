@@ -1489,41 +1489,30 @@ document.addEventListener('DOMContentLoaded', function () {
    TABLET AND MOBILE — now triggers up to 1300px so laptop/tablet
    widths get the same stacked "mobile-like" arrangement.
 ===================================================== */
-
 @media (max-width: 1300px) {
-
     .about-creative {
         padding: 60px 0;
     }
-
     #about .r-container {
         padding-left: 20px;
         padding-right: 20px;
     }
-
     .about-top-row {
         display: grid;
-
         grid-template-columns: 1fr;
-
         grid-template-areas:
             "left"
             "image";
-
         row-gap: 8px;
-
         margin-bottom: 0;
     }
-
     .about-left-col {
         display: contents;
     }
-
     .about-heading-col {
         margin-bottom: 0;
         order: 1;
     }
-
     .about-image-col {
         order: 2;
         position: static;
@@ -1532,237 +1521,168 @@ document.addEventListener('DOMContentLoaded', function () {
         height: auto;
         max-height: none;
     }
-
     .about-content-scroll-wrapper {
         order: 3;
         height: auto !important;
     }
-
     .about-content-col {
         width: 100%;
-
         height: auto;
-
         max-height: none;
-
         overflow: visible;
-
         padding-right: 0;
-
         margin-top: 0;
         padding-top: 0;
     }
-
     .about-text-col {
         transform: none !important;
         max-width: 100%;
         text-align: left;
     }
-
     .about-hero-media {
-    position: relative;
-
-    margin-top: 0;
-    top: auto;
-
-    width: 100%;
-
-    height: 340px;
-
-    max-height: none;
-
-    border-radius: 18px;
-}
-
+        position: relative;
+        margin-top: 0;
+        top: auto;
+        width: 100%;
+        height: 340px;
+        max-height: none;
+        border-radius: 32px;
+    }
     .about-hero-img {
         width: 100%;
-
         height: 100%;
-
-        border-radius: 18px;
+        border-radius: 32px;
     }
-
     .about-text-col > *:first-child {
         margin-top: 0;
     }
-
     .about-heading {
         font-size: 2.3rem;
     }
-
     .about-desc {
         font-size: 1.05rem;
     }
-
     .unique-section-head {
         margin-bottom: 24px;
     }
-
     .unique-section-heading {
         font-size: 1.7rem;
     }
-
     .about-cards-wrapper {
         display: block;
-
         margin-bottom: 0;
     }
-
     .about-card-row {
         width: 100%;
-
         gap: 14px;
     }
-
     .about-cards-image-scroll-wrapper {
         display: none;
     }
-
     .about-cards-cta-row {
         display: none;
     }
-
     .about-feature-card {
         max-height: 84px;
-
         padding: 20px !important;
-
         transition:
             max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
             box-shadow 0.4s ease;
             
     }
-
     .about-feature-card.active {
         max-height: 420px;
-
         box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
     }
-
     .about-card-head {
         position: relative !important;
-
         left: 0 !important;
-
         top: 0 !important;
     }
-
     .about-card-body {
         opacity: 0;
-
         pointer-events: none;
-
         transition: opacity 0.35s ease 0.1s;
     }
-
     .about-feature-card.active .about-card-body {
         opacity: 1;
-
         pointer-events: auto;
-
         margin-top: 16px;
     }
-
     .about-card-mobile-img {
         display: block;
-
         margin-top: 16px;
-
         border-radius: 14px;
-
         overflow: hidden;
     }
-
     .about-card-mobile-img img {
         display: block;
-
         width: 100%;
-
         height: 200px;
-
         object-fit: cover;
     }
-
     .about-quote-content {
-    margin-left: 0;
-    padding: 50px 26px 34px;
-    max-width: 100%;
-}
-
-.about-quote-content p {
-    color: #ffffff;
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.85),
-        0 0 20px rgba(0, 0, 0, 0.6);
-}
-
+        margin-left: 0;
+        padding: 50px 26px 34px;
+        max-width: 100%;
+    }
+    .about-quote-content p {
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-shadow:
+            0 2px 6px rgba(0, 0, 0, 0.85),
+            0 0 20px rgba(0, 0, 0, 0.6);
+    }
     .about-quote-btn {
         margin-top: 20px;
-
         padding: 11px 22px;
-
         font-size: 0.85rem;
     }
 }
-
     /* =====================================================
        SMALL MOBILE
     ===================================================== */
-
     @media (max-width: 575px) {
-
         .about-creative {
             padding: 50px 0;
         }
-
         .about-heading {
             font-size: 2rem;
         }
-
         .about-eyebrow {
             font-size: 0.8rem;
-
             letter-spacing: 1.5px;
         }
-
         .about-hero-media {
             height: 230px;
+            border-radius: 28px;
         }
-
+        .about-hero-img {
+            border-radius: 28px;
+        }
         .about-desc {
             font-size: 1rem;
-
             line-height: 1.7;
         }
-
         .about-card-head h5 {
             font-size: 1.1rem;
-
             white-space: normal;
         }
-
         .about-card-icon {
             width: 42px;
-
             height: 42px;
-
             min-width: 42px;
         }
-
         .about-feature-card.active {
             max-height: 450px;
         }
-
         .about-card-mobile-img img {
             height: 180px;
         }
-
         .about-quote-content {
             padding: 30px 22px;
         }
-
         .about-quote-content p {
             font-size: 1.15rem;
         }
@@ -2940,42 +2860,64 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ===== Responsive: stack pairs into one column earlier — up to 1300px ===== */
     @media (max-width: 1300px) {
-        .accordion-page {
-            flex-direction: column;
-            height: auto;
-        }
-
-        .accordion-item,
-        .accordion-page:has(.accordion-item:hover) .accordion-item,
-        .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
-            flex: none !important;
-            min-height: 280px;
-        }
-
-        .accordion-item > div[style*="z-index: 2"] {
-            padding: 24px !important;
-        }
-
-        .accordion-item p.text-white {
-            opacity: 1;
-            max-height: none;
-            transform: none;
-        }
-
-        .accordion-item .icon-box.link {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .accordion-item .accordion-book-btn {
-            opacity: 1;
-            transform: translateY(0);
-            align-self: flex-end;
-            font-size: 0.72rem;
-            padding: 8px 16px;
-            margin-top: 8px;
-        }
+    .accordion-page {
+        flex-direction: column;
+        height: auto;
     }
+
+    .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
+        flex: none !important;
+        min-height: 280px;
+    }
+
+    .accordion-item > div[style*="z-index: 2"] {
+        padding: 24px !important;
+    }
+
+    .accordion-item h4 {
+        font-size: 1.15rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .accordion-item p.text-white {
+        opacity: 1;
+        max-height: none;
+        transform: none;
+        font-size: 0.82rem !important;
+        line-height: 1.45 !important;
+        -webkit-line-clamp: 2;
+    }
+
+    .accordion-item .icon-box.link {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .accordion-item .accordion-book-btn {
+        opacity: 1;
+        transform: translateY(0);
+        align-self: flex-end;
+        font-size: 0.68rem;
+        padding: 7px 14px;
+        margin-top: 8px;
+    }
+
+    .accordion-book-btn i {
+        font-size: 0.58rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .accordion-item h4 {
+        font-size: 1.05rem !important;
+    }
+
+    .accordion-item p.text-white {
+        font-size: 0.78rem !important;
+    }
+}
 </style>
 
 <script>
@@ -3275,9 +3217,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .why-content-wrapper > p.mb-5 {
-        order: 4;
-    }
-
+        text-align: justify !important;
+        text-align-last: center;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        max-width: 100% !important;
     .why-content-wrapper > .why-features-list {
         order: 5;
     }
@@ -4997,143 +4941,210 @@ testi-heading {
         </div>
 
   <style>
-            /* ===== BLOG CARDS ===== */
-            .blog-card {
-                border-radius: 16px;
-                overflow: hidden;
-                cursor: pointer;
-            }
+  /* ===== BLOG CARDS ===== */
+.blog-card {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+}
 
-            .blog-card-img-wrap {
-                position: relative;
-                overflow: hidden;
-                height: 320px;
-                border-radius: 16px;
-            }
+.blog-card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 320px;
+    border-radius: 16px;
+}
 
-            .blog-card-img-wrap img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            }
+.blog-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-            .blog-card:hover .blog-card-img-wrap img {
-                transform: scale(1.08);
-            }
+.blog-card:hover .blog-card-img-wrap img {
+    transform: scale(1.08);
+}
 
-            .blog-overlay {
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(to top,
-                        rgba(0, 0, 0, 0.88) 0%,
-                        rgba(0, 0, 0, 0.45) 50%,
-                        rgba(0, 0, 0, 0.05) 100%);
-                z-index: 1;
-                transition: background 0.4s ease;
-            }
+.blog-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.45) 50%,
+            rgba(0, 0, 0, 0.05) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
+}
 
-            .blog-card:hover .blog-overlay {
-                background: linear-gradient(to top,
-                        rgba(26, 30, 22, 0.95) 0%,
-                        rgba(44, 95, 26, 0.5) 60%,
-                        rgba(0, 0, 0, 0.1) 100%);
-            }
+.blog-card:hover .blog-overlay {
+    background: linear-gradient(to top,
+            rgba(26, 30, 22, 0.95) 0%,
+            rgba(44, 95, 26, 0.5) 60%,
+            rgba(0, 0, 0, 0.1) 100%);
+}
 
-            .blog-tag {
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-                background: var(--accent-color-2);
-                color: var(--text-color);
-                font-size: 0.72rem;
-                font-weight: 700;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-                padding: 5px 14px;
-                border-radius: 4px;
-                z-index: 2;
-                transition: background 0.3s ease, transform 0.3s ease;
-            }
+.blog-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-color-2);
+    color: var(--text-color);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    z-index: 2;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
 
-            .blog-card:hover .blog-tag {
-                background: var(--accent-color);
-                color: #fff;
-                transform: translateY(-2px);
-            }
+.blog-card:hover .blog-tag {
+    background: var(--accent-color);
+    color: #fff;
+    transform: translateY(-2px);
+}
 
-            .blog-card-body {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 28px;
-                z-index: 2;
-                transform: translateY(10px);
-                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            }
+.blog-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px;
+    z-index: 2;
+    transform: translateY(10px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-            .blog-card:hover .blog-card-body {
-                transform: translateY(0);
-            }
+.blog-card:hover .blog-card-body {
+    transform: translateY(0);
+}
 
-            .blog-card-body h4 {
-                color: #fff;
-                font-size: 1.1rem;
-                line-height: 1.4;
-                margin-bottom: 8px;
-                transition: color 0.3s;
-            }
+.blog-card-body h4 {
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.12;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px;
+    transition: color 0.3s;
 
-            .blog-card-body p {
-                color: rgba(255, 255, 255, 0.75);
-                font-size: 0.85rem;
-                line-height: 1.6;
-                margin-bottom: 14px;
-                max-height: 0;
-                overflow: hidden;
-                opacity: 0;
-                transition: max-height 0.5s ease, opacity 0.4s ease;
-            }
+    /* Tight, punchy heading rather than a wrapped paragraph block —
+       caps at 2 lines so short titles sit bold and single-line,
+       long ones don't turn into a wall of text */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
-            .blog-card:hover .blog-card-body p {
-                max-height: 80px;
-                opacity: 1;
-            }
+.blog-card-body p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.4s ease;
+}
 
-            .blog-read-more {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                color: #fff;
-                font-size: 0.78rem;
-                font-weight: 700;
-                letter-spacing: 0.8px;
-                text-transform: uppercase;
-                text-decoration: none;
-                padding: 9px 18px;
-                border: 1.5px solid rgba(255, 255, 255, 0.55);
-                border-radius: 100px;
-                background: transparent;
-                opacity: 1;
-                transform: translateY(0);
-                transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
-            }
+.blog-card:hover .blog-card-body p {
+    max-height: 80px;
+    opacity: 1;
+}
 
-            .blog-read-more:hover {
-                background: rgba(255, 255, 255, 0.15);
-                border-color: #fff;
-                gap: 12px;
-            }
+.blog-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 9px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 100px;
+    background: transparent;
+    opacity: 1;
+    transform: translateY(0);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+}
 
-            .blog-read-more i {
-                transition: transform 0.3s ease;
-                font-size: 0.72rem;
-            }
+.blog-read-more:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    gap: 12px;
+}
 
-            .blog-read-more:hover i {
-                transform: translateX(4px);
-            }
+.blog-read-more i {
+    transition: transform 0.3s ease;
+    font-size: 0.72rem;
+}
+
+.blog-read-more:hover i {
+    transform: translateX(4px);
+}
+
+@media (max-width: 991px) {
+    .blog-card-body h4 {
+        font-size: 1.6rem !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .blog-card-img-wrap {
+        height: 260px;
+    }
+
+    .blog-tag {
+        font-size: 0.62rem;
+        padding: 4px 10px;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .blog-card-body {
+        padding: 20px;
+    }
+
+    /* !important needed: the global "unified card typography" rule
+       elsewhere in the file sets this h4 to 1.65rem !important
+       (0.95rem !important on mobile) — without !important here,
+       that rule wins and this size never applies. */
+    .blog-card-body h4 {
+        font-size: 1.3rem !important;
+        line-height: 1.18 !important;
+        margin-bottom: 8px !important;
+        letter-spacing: -0.3px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    .blog-card-body p {
+        font-size: 0.74rem !important;
+        line-height: 1.5 !important;
+    }
+
+    .blog-read-more {
+        font-size: 0.64rem;
+        padding: 6px 12px;
+        gap: 5px;
+    }
+
+    .blog-read-more i {
+        font-size: 0.58rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .blog-card-body h4 {
+        font-size: 1.15rem !important;
+    }
+}
         </style>
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
@@ -5650,29 +5661,323 @@ document.addEventListener('DOMContentLoaded', function () {
     var animatedEls = document.querySelectorAll('.scrollanimation');
     if (!animatedEls.length) return;
 
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+
     var repeatObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             var el = entry.target;
 
             if (entry.isIntersecting) {
-                // Force a reflow so the CSS animation restarts even if the
-                // class never actually left (browsers won't replay a running
-                // animation just by re-adding the same class name)
                 el.classList.remove('animated');
                 void el.offsetWidth; // reflow trick
                 el.classList.add('animated');
             } else {
-                // Reset so it's ready to replay next time it scrolls into view
                 el.classList.remove('animated');
             }
         });
     }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -10% 0px'
+        // Mobile: fire almost as soon as the element enters view, and don't
+        // require it to travel far into the viewport first — tall sections
+        // never reached 0.15 visibility on short mobile screens.
+        threshold: isMobile ? 0.02 : 0.15,
+        rootMargin: isMobile ? '0px 0px 0px 0px' : '0px 0px -10% 0px'
     });
 
     animatedEls.forEach(function (el) {
         repeatObserver.observe(el);
+    });
+
+    // Re-check mobile state on resize/rotate so thresholds stay correct
+    window.addEventListener('resize', function () {
+        isMobile = window.matchMedia('(max-width: 767px)').matches;
+    });
+});
+</script>
+
+<!-- =====================================================
+     NEW: PER-LINE FADE-UP FOR EVERY SECTION, REPEATS EVERY SCROLL
+     (Every heading/paragraph/list line inside each major section
+     fades up with a slight stagger, and it re-plays each time you
+     scroll it back into view — not just once.)
+===================================================== -->
+<style>
+.rtm-line-fade {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--rtm-line-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.rtm-line-fade.rtm-line-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Sections to apply the per-line fade-up text animation to.
+    var rtmSections = document.querySelectorAll(
+        '#about, #founder, #process, .why-choose-section, #activities, #projects, .testi-hero-section, #restaurant, #contact, #blog'
+    );
+    if (!rtmSections.length) return;
+
+    // Elements we deliberately skip because they already have their own
+    // JS-driven show/hide, hover, or scroll-jacking opacity/transform logic
+    // (touching them here would fight with that existing behaviour).
+    var rtmExcludeSelector = [
+        '.hero-title', '.hero-copy', '.hero-actions',
+        '.about-text-col *',
+        '.testi-photo *', '.testi-content *', '.testi-thumb *',
+        '.accordion-item h4', '.accordion-item p.text-white',
+        '.activity-content h5', '.activity-content p',
+        '.why-content-wrapper h6', '.why-content-wrapper h3', '.why-content-wrapper p.mb-5',
+        '.founder-heading', '.founder-text p', '.founder-motto'
+    ].join(',');
+
+    var lineSelector = 'h1, h2, h3, h4, h5, h6, p, li';
+    var rtmGroups = [];
+
+    rtmSections.forEach(function (section) {
+        var candidates = section.querySelectorAll(lineSelector);
+        var lines = [];
+
+        candidates.forEach(function (el) {
+            if (el.closest(rtmExcludeSelector)) return;
+            if (!el.textContent.trim()) return;
+            el.classList.add('rtm-line-fade');
+            lines.push(el);
+        });
+
+        if (lines.length) {
+            rtmGroups.push({ section: section, lines: lines });
+        }
+    });
+
+    if (!rtmGroups.length) return;
+
+    var rtmObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            var group = null;
+            for (var i = 0; i < rtmGroups.length; i++) {
+                if (rtmGroups[i].section === entry.target) {
+                    group = rtmGroups[i];
+                    break;
+                }
+            }
+            if (!group) return;
+
+            if (entry.isIntersecting) {
+                group.lines.forEach(function (line, i) {
+                    line.style.setProperty('--rtm-line-delay', (i * 0.08) + 's');
+                    line.classList.add('rtm-line-in');
+                });
+            } else {
+                group.lines.forEach(function (line) {
+                    line.classList.remove('rtm-line-in');
+                });
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    rtmGroups.forEach(function (g) {
+        rtmObserver.observe(g.section);
+    });
+});
+</script>
+<style>
+.rtm-line-fade {
+    opacity: 0;
+    transform: translateY(55px) scale(0.92);
+    filter: blur(4px);
+    transition:
+        opacity 0.9s cubic-bezier(.22, 1, .36, 1),
+        transform 0.9s cubic-bezier(.22, 1, .36, 1),
+        filter 0.9s ease;
+    transition-delay: var(--rtm-line-delay, 0s);
+    will-change: opacity, transform, filter;
+}
+
+.rtm-line-fade.rtm-line-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var rtmSections = document.querySelectorAll(
+        '#about, #founder, #process, .why-choose-section, #activities, #projects, .testi-hero-section, #restaurant, #contact, #blog'
+    );
+    if (!rtmSections.length) return;
+
+    var rtmExcludeSelector = [
+        '.hero-title', '.hero-copy', '.hero-actions',
+        '.about-text-col *',
+        '.testi-photo *', '.testi-content *', '.testi-thumb *',
+        '.accordion-item h4', '.accordion-item p.text-white',
+        '.activity-content h5', '.activity-content p',
+        '.why-content-wrapper h6', '.why-content-wrapper h3', '.why-content-wrapper p.mb-5',
+        '.founder-heading', '.founder-text p', '.founder-motto'
+    ].join(',');
+
+    var lineSelector = 'h1, h2, h3, h4, h5, h6, p, li';
+    var rtmGroups = [];
+
+    rtmSections.forEach(function (section) {
+        var candidates = section.querySelectorAll(lineSelector);
+        var lines = [];
+
+        candidates.forEach(function (el) {
+            if (el.closest(rtmExcludeSelector)) return;
+            if (!el.textContent.trim()) return;
+            el.classList.add('rtm-line-fade');
+            lines.push(el);
+        });
+
+        if (lines.length) {
+            rtmGroups.push({ section: section, lines: lines });
+        }
+    });
+
+    if (!rtmGroups.length) return;
+
+    var rtmObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            var group = null;
+            for (var i = 0; i < rtmGroups.length; i++) {
+                if (rtmGroups[i].section === entry.target) {
+                    group = rtmGroups[i];
+                    break;
+                }
+            }
+            if (!group) return;
+
+            if (entry.isIntersecting) {
+                group.lines.forEach(function (line, i) {
+                    line.style.setProperty('--rtm-line-delay', (i * 0.13) + 's');
+                    line.classList.add('rtm-line-in');
+                });
+            } else {
+                group.lines.forEach(function (line) {
+                    line.classList.remove('rtm-line-in');
+                });
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    rtmGroups.forEach(function (g) {
+        rtmObserver.observe(g.section);
+    });
+});
+</script>
+<!-- =====================================================
+     CARD-LEVEL FADE — animates each card/tile individually,
+     staggered within its own row/grid, repeats every scroll
+===================================================== -->
+<style>
+.rtm-card-fade {
+    opacity: 0;
+    transform: translateY(45px) scale(0.94);
+    transition:
+        opacity 0.8s cubic-bezier(.22, 1, .36, 1),
+        transform 0.8s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--rtm-card-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.rtm-card-fade.rtm-card-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Slightly bigger, snappier movement on small screens where cards
+   are full-width and the motion needs to read at a glance */
+@media (max-width: 767px) {
+    .rtm-card-fade {
+        transform: translateY(60px) scale(0.92);
+        transition:
+            opacity 0.65s cubic-bezier(.22, 1, .36, 1),
+            transform 0.65s cubic-bezier(.22, 1, .36, 1);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var CARD_SELECTORS = [
+        '.about-feature-card',
+        '.blog-card',
+        '.founder-stat',
+        '.why-feature-item',
+        '.story-img-wrap',
+        '.activity-slide'
+    ].join(',');
+
+    var cards = document.querySelectorAll(CARD_SELECTORS);
+    if (!cards.length) return;
+
+    var groups = new Map();
+
+    cards.forEach(function (card) {
+        card.classList.add('rtm-card-fade');
+        var parent = card.parentElement;
+        if (!groups.has(parent)) groups.set(parent, []);
+        groups.get(parent).push(card);
+    });
+
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    // Mobile cards are tall relative to viewport height, so a high
+    // threshold + negative rootMargin means the card is already most
+    // of the way up the screen before it "counts" as visible — the
+    // animation fires late and feels sluggish on a fast scroll/flick.
+    // Firing almost as soon as the card enters view fixes that.
+    function buildObserver() {
+        return new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                var card = entry.target;
+                var siblings = groups.get(card.parentElement) || [card];
+                var index = siblings.indexOf(card);
+
+                if (entry.isIntersecting) {
+                    card.style.setProperty('--rtm-card-delay', (index * (isMobile ? 0.08 : 0.12)) + 's');
+                    card.classList.add('rtm-card-in');
+                } else {
+                    card.classList.remove('rtm-card-in');
+                }
+            });
+        }, {
+            threshold: isMobile ? 0.05 : 0.15,
+            rootMargin: isMobile ? '0px 0px 0px 0px' : '0px 0px -6% 0px'
+        });
+    }
+
+    var cardObserver = buildObserver();
+    cards.forEach(function (card) {
+        cardObserver.observe(card);
+    });
+
+    // Re-create the observer on resize/rotate so the mobile/desktop
+    // threshold values stay correct if the viewport crosses 767px
+    window.addEventListener('resize', function () {
+        var nowMobile = window.matchMedia('(max-width: 767px)').matches;
+        if (nowMobile === isMobile) return;
+
+        isMobile = nowMobile;
+        cardObserver.disconnect();
+        cardObserver = buildObserver();
+        cards.forEach(function (card) {
+            cardObserver.observe(card);
+        });
     });
 });
 </script>

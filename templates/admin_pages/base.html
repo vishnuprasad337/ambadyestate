@@ -96,7 +96,7 @@
             --dark-blue: #14332a;
             --light-blue: #dcebe3;
             --sidebar-width: 280px;
-            --header-height: 110px;
+            --header-height: 80px;
             --white: #ffffff;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
@@ -176,12 +176,12 @@
             height: 100%;
         }
 
-        .logo img {
-            max-height: 95px;
-            height: 100%;
-            width: auto;
-            object-fit: contain;
-        }
+.logo img {
+    max-height: 60px;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
 
         .header-right {
             margin-left: auto;
@@ -442,40 +442,51 @@
         }
 
         @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
+    .mobile-menu-toggle {
+        display: block;
+    }
 
-            .header-search {
-                display: none;
-            }
+    .dashboard-header {
+        padding: 0 16px;
+    }
 
-            .dashboard-sidebar {
-                transform: translateX(-100%);
-            }
+    .header-left {
+        gap: 12px;
+    }
 
-            .dashboard-sidebar.mobile-open {
-                transform: translateX(0);
-            }
+    .logo img {
+        max-height: 44px;
+    }
 
-            .dashboard-main {
-                margin-left: 0;
-            }
+    .header-search {
+        display: none;
+    }
 
-            .dashboard-content {
-                padding: 20px 16px;
-            }
+    .dashboard-sidebar {
+        transform: translateX(-100%);
+    }
 
-            .content-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
+    .dashboard-sidebar.mobile-open {
+        transform: translateX(0);
+    }
 
-            .user-profile span {
-                display: none;
-            }
-        }
+    .dashboard-main {
+        margin-left: 0;
+    }
 
+    .dashboard-content {
+        padding: 20px 16px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .user-profile span {
+        display: none;
+    }
+}
         @media (max-width: 480px) {
             .dashboard-content {
                 padding: 16px 12px;
