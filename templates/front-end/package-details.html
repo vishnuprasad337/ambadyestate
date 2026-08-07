@@ -69,11 +69,12 @@
                             <span>{{ package.duration }}</span>
                         </div>
                         {% endif %}
-                        <a href="javascript:void(0)" class="pkg-book-btn js-open-booking-modal" data-package-id="{{ package.id }}">
-                            <span>Book This Package</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
+                        <div class="w-max-content mt-4">
+    <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal" data-package-id="{{ package.id }}">
+        <span>Book This Package</span>
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+</div>
                 </div>
                 {% endif %}
             </div>
@@ -594,6 +595,26 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+.pkg-pricing-body .w-max-content.mt-4 {
+    width: 100%;
+}
+
+/* ===== BOOK BUTTON (sidebar pricing card) — force smaller size ===== */
+html body .pkg-pricing-card .pkg-pricing-body a.js-open-booking-modal.btn.btn-accent {
+    width: 100% !important;
+    padding: 10px 18px !important;
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    gap: 6px !important;
+    justify-content: center !important;
+    border-radius: 12px !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+}
+
+html body .pkg-pricing-card .pkg-pricing-body a.js-open-booking-modal.btn.btn-accent i {
+    font-size: 0.75rem !important;
 }
 
 .pkg-price-row {
@@ -1765,7 +1786,35 @@ html, body {
         font-size: 0.8rem;
     }
 }
+@media (max-width: 575px) {
+    .w-max-content.mt-4 {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
 
+    .w-max-content.mt-4 .js-open-booking-modal.btn-accent {
+        padding: 10px 18px;
+        font-size: 0.82rem;
+        gap: 6px;
+        border-radius: 100px;
+    }
+
+    .w-max-content.mt-4 .js-open-booking-modal.btn-accent i {
+        font-size: 0.75rem;
+    }
+
+    /* ===== BOOK BUTTON (sidebar pricing card) — mobile size override ===== */
+    html body .pkg-pricing-card .pkg-pricing-body a.js-open-booking-modal.btn.btn-accent {
+        padding: 8px 14px !important;
+        font-size: 0.78rem !important;
+        gap: 5px !important;
+    }
+
+    html body .pkg-pricing-card .pkg-pricing-body a.js-open-booking-modal.btn.btn-accent i {
+        font-size: 0.68rem !important;
+    }
+}
 @media (max-width: 400px) {
     .package-details-section .r-container {
         padding-left: 16px;
