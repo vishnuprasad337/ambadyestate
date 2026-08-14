@@ -727,13 +727,13 @@
     }
 
     .activity-slide {
-        display: grid;
-        grid-template-columns: 620px 1fr;
-        min-height: 460px;
-        background: #fff;
-        border-radius: 24px;
-        overflow: hidden;
-    }
+    display: grid;
+    grid-template-columns: 620px 1fr;
+    height: 320px;          /* was min-height: 460px — fixed, not min */
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+}
 
     .activity-media {
         position: relative;
@@ -760,15 +760,15 @@
     }
 
     .activity-content {
-        padding: 48px 52px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 18px;
-        position: relative;
-        min-height: 100%;
-        box-sizing: border-box;
-    }
+    padding: 40px 52px;     /* slightly less vertical padding to match the tighter card */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;   /* was space-between — stop it stretching content to fill height */
+    gap: 14px;
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
+}
 
     .activity-content h5 {
         font-family: 'Plus Jakarta Sans', sans-serif;
