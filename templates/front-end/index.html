@@ -3880,9 +3880,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     @media (max-width: 1300px) {
+    .activities-slider,
+    .swiper-wrapper,
+    .swiper-slide {
+        height: auto !important;
+    }
+
     .activity-slide {
         grid-template-columns: 1fr;
         min-height: unset;
+        height: auto;
     }
 
     .activity-media {
@@ -3957,11 +3964,20 @@ document.addEventListener('DOMContentLoaded', function () {
         padding-right: 20px;
     }
     .activity-content h5 {
-        font-size: 1.4rem;
+        font-size: 1.25rem;
+        line-height: 1.25;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .activity-content p {
         font-size: 0.92rem;
         line-height: 1.7;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .activity-explore-btn {
         font-size: 0.85rem;
@@ -3971,8 +3987,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 @media (max-width: 575px) {
     #activities { padding: 40px 0; }
-    .activity-media { height: 240px; }
-    .activity-content { padding: 24px 20px; }
+    .activity-media { height: 220px; }
+    .activity-content {
+        padding: 20px;
+        gap: 12px;
+    }
+    .activity-content h5 {
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 400px) {
