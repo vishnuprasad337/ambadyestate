@@ -198,7 +198,7 @@
 
                         <div class="package-card-info">
                             <h4>{{ package.name }}</h4>
-                            <p>{{ package.description|striptags|truncatewords:35 }}</p>
+                              <p>{% autoescape off %}{{ package.description|striptags|truncatewords:35 }}{% endautoescape %}</p>
 
                             <!-- Reserve Now button — opens the booking modal, same pattern as the activity card's Explore Now button -->
                             <button type="button" class="package-reserve-btn js-open-booking-modal">
@@ -729,7 +729,7 @@
     .activity-slide {
         display: grid;
         grid-template-columns: 620px 1fr;
-        height: 460px;
+        min-height: 460px;
         background: #fff;
         border-radius: 24px;
         overflow: hidden;
@@ -763,11 +763,11 @@
         padding: 48px 52px;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         gap: 18px;
         position: relative;
-        height: 100%;
+        min-height: 100%;
         box-sizing: border-box;
-        overflow: hidden;
     }
 
     .activity-content h5 {
@@ -782,7 +782,7 @@
         font-size: 1.05rem;
         line-height: 1.85;
         color: var(--text-color-2);
-        margin: 0;
+        margin: 0 0 auto;
         max-width: 480px;
         display: -webkit-box;
         -webkit-line-clamp: 6;
@@ -923,6 +923,7 @@
 
     .activity-content {
         padding: 32px 28px;
+        min-height: auto;
     }
 
     .activities-slider-controls {

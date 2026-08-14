@@ -154,7 +154,7 @@
                         <div class="d-flex flex-column gap-2 w-100">
                             <h4>{{ room.room_category|default:"Room" }}</h4>
                             <p class="text-white">
-                                {{ room.description|striptags|truncatewords:15 }}
+                                 {% autoescape off %}{{ room.description|striptags|truncatewords:15 }}{% endautoescape %}
                             </p>
                             <button type="button" class="accordion-book-btn js-open-booking-modal">
                                 <span>Book Now</span>
@@ -957,7 +957,7 @@ document.addEventListener('DOMContentLoaded', function () {
                        
                         <div class="nearby-card-body">
                             <h4>{{ destination.name }}</h4>
-                            <p>{{ destination.description|striptags|truncatewords:16 }}</p>
+                            <p>{% autoescape off %}{{ destination.description|striptags|truncatewords:16 }}{% endautoescape %}</p>
                             <span class="nearby-read-more">
                                 Read More
                                 <i class="fa-solid fa-arrow-right"></i>

@@ -2710,7 +2710,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <div class="d-flex flex-column gap-2 w-100">
                                     <h4>{{ room.room_category|default:"Room" }}</h4>
                                     <p class="text-white">
-    {{ room.description|striptags|truncatewords:18 }}
+     {% autoescape off %}{{ room.description|striptags|truncatewords:18 }}{% endautoescape %}
 </p>
 <button type="button" class="accordion-book-btn js-open-booking-modal">
                 <span>Book Now</span>
@@ -5508,7 +5508,7 @@ testi-heading {
                                 <div class="blog-tag">{{ blog.created_at|date:"M Y" }}</div>
                                 <div class="blog-card-body">
                                     <h4>{{ blog.title }}</h4>
-                                    <p>{{ blog.description|striptags|truncatewords:25 }}</p>
+                                    <p>{% autoescape off %}{{ blog.description|striptags|truncatewords:25 }}{% endautoescape %}</p>
                                     <span class="blog-read-more">
                                         Read More
                                         <i class="fa-solid fa-arrow-right"></i>
