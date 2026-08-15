@@ -479,6 +479,25 @@ section.hero-section .hero-content {
         line-height: 1.75 !important;
     }
 }
+@media (max-width: 991px) {
+    .hero-rating-pill,
+    .hero-copy-block {
+        align-items: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-rating-pill,
+    .hero-copy-block {
+        align-items: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+    }
+}
         </style>
 
 <script>
@@ -546,19 +565,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <!-- Section About Us -->
-</style>
-</style>
-<!-- Section About Us -->
 <div id="about" class="section bg-attach-cover about-creative" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
     <div class="r-container">
 
         <!-- Top: Heading + Images + Content -->
         <div class="about-top-row scrollanimation animated scroll-fadeInLeft">
 
-            <!-- Left column: heading + masked scroll-reveal content, both live in the
-                 same sticky context now so the heading stays visible the whole time
-                 the text is scrolling through the mask (previously the heading had
-                 its own short grid row and scrolled away once that row ended). -->
+            <!-- Left column: heading + scroll-reveal content. Sticky heading +
+                 sticky image via plain CSS; the text below flows normally
+                 (no scroll-jacking JS — that was causing a "stuck" feeling
+                 while scrolling past this section). -->
             <div class="about-left-col">
 
                 <!-- Heading (always first) -->
@@ -573,7 +589,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <h3 class="about-heading">Our Story</h3>
                 </div>
 
-                <!-- Paragraph content (masked scroll-reveal: only fills to image's bottom border, remaining text scrolls up inside the mask, then the whole row releases into the Discover section) -->
+                <!-- Paragraph content -->
                 <div class="about-content-scroll-wrapper">
                     <div class="about-content-col">
                         <div class="d-flex flex-column gap-3 about-text-col">
@@ -617,31 +633,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </div>
 
-            <!-- Image (always second, sticky while content scrolls).
-                 FIX: the "Explore Now" button used to live inside this sticky
-                 column, so it inherited the sticky positioning and either
-                 overlapped content below or floated in a gap once the sticky
-                 element released. It has been moved OUT to its own row below
-                 (.about-hero-cta-row), as a plain sibling of .about-top-row,
-                 so it always renders in normal document flow. -->
+            <!-- Image (always second, sticky while content scrolls). The CTA
+                 sits directly under the image inside this same column, so
+                 the column ends naturally instead of trailing into a big
+                 empty gap while the taller text column keeps scrolling. -->
             <div class="about-image-col">
                 <div class="about-hero-media">
-                    <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-hero-img about-hero-img-main" alt="Ambady Estate">
+                    <img src="{% static 'ambadyestate-main/webp/am9.webp' %}" class="about-hero-img about-hero-img-main" alt="Ambady Estate">
+                </div>
+                <div class="about-hero-cta">
+                    <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
+                        <span>Explore Now</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-        </div>
-
-        <!-- CTA row for the hero image — now a plain sibling of .about-top-row,
-             not nested inside the sticky .about-image-col. Aligned to the same
-             grid column as the image so it visually sits right under it. -->
-        <div class="about-hero-cta-row">
-            <div class="about-hero-cta">
-                <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
-                    <span>Explore Now</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
         </div>
 
         <!-- Section heading, matching the "About Us" eyebrow + heading style -->
@@ -656,195 +663,239 @@ document.addEventListener('DOMContentLoaded', function () {
             <h3 class="unique-section-heading">What Makes Us Unique</h3>
         </div>
 
-        <!-- What Makes Us Unique — vertical expanding accordion + two-image pop panel.
-             On desktop, scrolling into this block pins the page and steps through
-             each card/image in turn; once the last card is reached, scrolling
-             continues normally into the next section (see script at bottom). -->
-        <div class="about-cards-wrapper scrollanimation animated scroll-fadeInUp">
-            <div class="about-card-row">
+        <!-- What Makes Us Unique — auto-scrolling carousel on tablet/desktop,
+             stacked static list on mobile (see CSS + JS below). Track content
+             is duplicated once so the desktop/tablet loop is seamless; the
+             duplicate set is hidden on mobile. -->
+        <div class="unique-carousel-wrapper scrollanimation animated scroll-fadeInUp">
+            <div class="unique-carousel-viewport">
+                <div class="unique-carousel-track" id="uniqueCarouselTrack">
 
-            <div class="about-feature-card active" data-image="{% static 'ambadyestate-main/image/new/unique-private.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2v20M4 8c0 6 4 8 8 8s8-2 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/img.webp' %}" alt="Private Retreat" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2v20M4 8c0 6 4 8 8 8s8-2 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Private Retreat</h5>
+                            <p>Located inside a private space within the lap of nature.</p>
+                        </div>
                     </div>
-                    <h5>Private Retreat</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Located inside a private space within the lap of nature.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/img.jpg' %}" alt="Private Retreat">
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am14.webp' %}" alt="Eco Architecture" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21h18M5 21V9l7-5 7 5v12" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M9 21v-5h6v5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Eco Architecture</h5>
+                            <p>Eco-friendly architecture designed to blend into the natural surroundings.</p>
+                        </div>
                     </div>
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am15.webp' %}" alt="Locovore Cuisine" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 3c0 6 4 6 4 12s-4 6-4 6M18 3c0 6-4 6-4 12s4 6 4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Locovore Cuisine</h5>
+                            <p>Fresh, seasonal, locally-sourced dishes rooted in the flavours of the estate.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am6.webp' %}" alt="Valley-view Pool" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 16c3-6 15-6 18 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                    <path d="M6 16v3M18 16v3M9 16v5M15 16v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Valley-view Pool</h5>
+                            <p>Standout open pool overlooking the valley.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am16.webp' %}" alt="Organic Farm" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2c-3 3-5 6-5 9a5 5 0 0 0 10 0c0-3-2-6-5-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M12 15v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Organic Farm</h5>
+                            <p>Experience our organic products such as cardamom, arabica coffee, ginger, black pepper, shatavari and seasonal produce.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am17.webp' %}" alt="Goshala" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 21s-5-4-5-9a5 5 0 0 1 10 0c0 5-5 9-5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Goshala</h5>
+                            <p>A goshala housing rare breeds of indigenous cows.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" alt="Birding Paradise" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 14c4-8 8-10 16-10-1 4-3 6-6 7l2 6-6-3-4 3 1-6c-1 1-2 2-3 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Birding Paradise</h5>
+                            <p>A unique place for birding, home to a rich variety of local and migratory species.</p>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate set — needed for the desktop/tablet marquee loop.
+                         Hidden on mobile via CSS (mobile shows a static stacked list). -->
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/img.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2v20M4 8c0 6 4 8 8 8s8-2 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Private Retreat</h5>
+                            <p>Located inside a private space within the lap of nature.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am14.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21h18M5 21V9l7-5 7 5v12" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M9 21v-5h6v5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Eco Architecture</h5>
+                            <p>Eco-friendly architecture designed to blend into the natural surroundings.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am15.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 3c0 6 4 6 4 12s-4 6-4 6M18 3c0 6-4 6-4 12s4 6 4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Locovore Cuisine</h5>
+                            <p>Fresh, seasonal, locally-sourced dishes rooted in the flavours of the estate.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am6.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 16c3-6 15-6 18 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                    <path d="M6 16v3M18 16v3M9 16v5M15 16v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Valley-view Pool</h5>
+                            <p>Standout open pool overlooking the valley.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am16.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2c-3 3-5 6-5 9a5 5 0 0 0 10 0c0-3-2-6-5-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M12 15v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Organic Farm</h5>
+                            <p>Experience our organic products such as cardamom, arabica coffee, ginger, black pepper, shatavari and seasonal produce.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/webp/am17.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 21s-5-4-5-9a5 5 0 0 1 10 0c0 5-5 9-5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                    <path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h5>Goshala</h5>
+                            <p>A goshala housing rare breeds of indigenous cows.</p>
+                        </div>
+                    </div>
+
+                    <div class="unique-card unique-card-dup" aria-hidden="true">
+                        <div class="unique-card-img">
+                            <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" alt="" loading="lazy">
+                        </div>
+                        <div class="unique-card-info">
+                            <div class="unique-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 14c4-8 8-10 16-10-1 4-3 6-6 7l2 6-6-3-4 3 1-6c-1 1-2 2-3 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h5>Birding Paradise</h5>
+                            <p>A unique place for birding, home to a rich variety of local and migratory species.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-eco.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 21h18M5 21V9l7-5 7 5v12" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M9 21v-5h6v5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h5>Eco Architecture</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Eco-friendly architecture designed to blend into the natural surroundings.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/am14.png' %}" alt="Eco Architecture">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-cuisine.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 3c0 6 4 6 4 12s-4 6-4 6M18 3c0 6-4 6-4 12s4 6 4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h5>Locovore Cuisine</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Fresh, seasonal, locally-sourced dishes rooted in the flavours of the estate.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/am15.png' %}" alt="Locovore Cuisine">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-pool.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 16c3-6 15-6 18 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                            <path d="M6 16v3M18 16v3M9 16v5M15 16v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h5>Valley-view Pool</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Standout open pool overlooking the valley.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/am6.jpeg' %}" alt="Valley-view Pool">
-                    </div>
-                </div>
-            </div>
-
-           
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-farm.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2c-3 3-5 6-5 9a5 5 0 0 0 10 0c0-3-2-6-5-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M12 15v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h5>Organic Farm</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>Experience our organic products such as cardamom, arabica coffee, ginger, black pepper, shatavari and seasonal produce </p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/am16.png' %}" alt="Organic Farm">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-goshala.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 21s-5-4-5-9a5 5 0 0 1 10 0c0 5-5 9-5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h5>Goshala</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>A goshala housing rare breeds of indigenous cows.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/am17.png' %}" alt="Goshala">
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-feature-card" data-image="{% static 'ambadyestate-main/image/new/unique-birding.webp' %}">
-                <div class="about-card-head">
-                    <div class="about-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 14c4-8 8-10 16-10-1 4-3 6-6 7l2 6-6-3-4 3 1-6c-1 1-2 2-3 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h5>Birding Paradise</h5>
-                </div>
-                <div class="about-card-body">
-                    <span class="about-card-divider"></span>
-                    <p>A unique place for birding, home to a rich variety of local and migratory species.</p>
-                    <div class="about-card-mobile-img">
-                        <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" alt="Birding Paradise">
-                    </div>
-                </div>
-            </div>
-
-            </div>
-
-            <!-- Right: each card gets its own image, aligned to its row, outside the card (desktop only).
-                 class="no-fade" keeps the page-wide scroll-fade script from touching these —
-                 they're controlled entirely by the stack-front/stack-back JS below.
-                 Wrapped in .about-cards-image-scroll-wrapper so its height can be set by JS
-                 to exactly match .about-card-row's real height — otherwise the fixed-height
-                 sticky panel unsticks before the (taller) card stack finishes scrolling,
-                 leaving empty space below it once the panel's sticky range runs out.
-
-                 FIX: the "Explore Now" button used to live inside this scroll-wrapper,
-                 as a sibling of the sticky .about-cards-image-panel. That meant it only
-                 had ~100px of "release space" after the sticky panel — not enough for
-                 the panel to fully unstick before the button's position came into view,
-                 so the pinned image visually overlapped the button. The button has been
-                 moved OUT to its own row (.about-cards-cta-row) below the whole
-                 .about-cards-wrapper, so it's never competing with the sticky scroll math. -->
-          <div class="about-cards-image-scroll-wrapper">
-                <div class="about-cards-image-panel">
-                    <div class="about-cards-image-item active">
-                        <img src="{% static 'ambadyestate-main/image/img.jpg' %}" class="no-fade" alt="Private Retreat">
-                    </div>
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/am14.png' %}" class="no-fade" alt="Eco Architecture">
-                    </div>
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/am15.png' %}" class="no-fade" alt="Locovore Cuisine">
-                    </div>
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/am6.jpeg' %}" class="no-fade" alt="Valley-view Pool">
-                    </div>
-
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/am16.png' %}" class="no-fade" alt="Organic Farm">
-                    </div>
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/am17.png' %}" class="no-fade" alt="Goshala">
-                    </div>
-                    <div class="about-cards-image-item">
-                        <img src="{% static 'ambadyestate-main/image/new/bird-watching.webp' %}" class="no-fade" alt="Birding Paradise">
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <!-- CTA row for the Discover/image-panel section — plain sibling of
-             .about-cards-wrapper, aligned to the same grid column as the
-             image panel so it visually sits right under it. Hidden on
-             mobile/tablet since the desktop image panel itself is hidden
-             there too (see media query below). -->
+        <!-- CTA row for the Discover/carousel section -->
         <div class="about-cards-cta-row">
             <div class="about-cards-cta">
                 <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
@@ -854,9 +905,51 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         </div>
 
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var track = document.getElementById('uniqueCarouselTrack');
+            if (!track) return;
+            var wrapper = track.closest('.unique-carousel-wrapper');
+            if (!wrapper) return;
+
+            var isHovered = false;
+            var isVisible = false;
+
+            function isMobile() {
+                return window.matchMedia('(max-width: 767px)').matches;
+            }
+
+            function syncAnimation() {
+                // On mobile the track is a static stacked list (CSS sets
+                // animation: none there), so there's nothing to pause/run.
+                if (isMobile()) return;
+                track.style.animationPlayState = (isVisible && !isHovered) ? 'running' : 'paused';
+            }
+
+            wrapper.addEventListener('mouseenter', function () { isHovered = true; syncAnimation(); });
+            wrapper.addEventListener('mouseleave', function () { isHovered = false; syncAnimation(); });
+            wrapper.addEventListener('touchstart', function () { isHovered = true; syncAnimation(); }, { passive: true });
+            wrapper.addEventListener('touchend', function () { isHovered = false; syncAnimation(); }, { passive: true });
+
+            // Pause the marquee whenever the carousel is scrolled out of view
+            // so it isn't animating/repainting in the background — this was
+            // causing scroll jank when scrolling through this section.
+            var visObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    isVisible = entry.isIntersecting;
+                    syncAnimation();
+                });
+            }, { threshold: 0.01 });
+
+            visObserver.observe(wrapper);
+
+            window.addEventListener('resize', syncAnimation);
+        });
+        </script>
+
         <!-- Bottom: Full width quote banner -->
         <div class="about-quote-banner scrollanimation animated scroll-fadeInUp">
-            <img src="{% static 'ambadyestate-main/am9.jpeg' %}" class="about-quote-bg" alt="Ambady Estate view">
+            <img src="{% static 'ambadyestate-main/webp/am9.webp' %}" class="about-quote-bg" alt="Ambady Estate view">
             <div class="about-quote-content">
                 <svg class="about-quote-mark" width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 26V15.6C0 6.9 4.7 1.6 12.4 0l1.6 4.1C9.1 5.4 6.6 8.4 6.6 12.4h6.8V26H0Zm20.6 0V15.6C20.6 6.9 25.3 1.6 33 0l1.6 4.1c-4.9 1.3-7.4 4.3-7.4 8.3H34V26H20.6Z" fill="currentColor"/>
@@ -919,14 +1012,18 @@ document.addEventListener('DOMContentLoaded', function () {
         width: 100%;
     }
 
+    /* No longer a clipped/height-locked box — the old scroll-jacking JS
+       that scrolled this text inside a fixed-height mask has been removed
+       (it caused the page to feel "stuck" while scrolling), so the text
+       now simply flows underneath the sticky heading/image. */
     .about-content-col {
         position: relative;
 
         width: 100%;
-        height: 500px; /* must match .about-image-col's height */
-        max-height: 65vh;
+        height: auto;
+        max-height: none;
 
-        overflow: hidden;
+        overflow: visible;
 
         padding-right: 18px;
         box-sizing: border-box;
@@ -934,7 +1031,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .about-text-col {
         max-width: 100%;
-        will-change: transform;
     }
 
     .about-text-col .about-desc:last-child {
@@ -946,36 +1042,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         position: sticky;
         top: calc(var(--navbar-h, 96px) + 20px);
-        margin-top: 30px;   /* was -34px — increase this value to move image further down */
+        margin-top: 30px;
 
         align-self: start;
 
         width: 100%;
-        height: 500px;
-        max-height: 65vh;
-    }
-
-    .about-hero-cta-row {
-        display: grid;
-        grid-template-columns: minmax(320px, 0.9fr) minmax(500px, 1.3fr);
-        column-gap: 55px;
-        margin-top: 16px;
-        margin-bottom: 70px;
+        height: auto;
     }
 
     .about-hero-cta {
-        grid-column: 2; /* aligns under the image column */
+        margin-top: 20px;
         display: flex;
         justify-content: flex-start;
     }
 
 @media (max-width: 1300px) {
-    .about-hero-cta-row {
-        display: block;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
     .about-hero-cta {
         justify-content: center;
         margin-top: 14px;
@@ -1051,6 +1132,25 @@ document.addEventListener('DOMContentLoaded', function () {
         margin: 0;
     }
 
+    /* Fade-up on scroll — applies at every screen size (desktop, tablet,
+       and mobile), not just below 1300px. Re-plays every time a paragraph
+       enters view, whether scrolling up or down. */
+    .about-desc {
+        opacity: 0;
+        transform: translateY(50px) scale(0.96);
+        filter: blur(3px);
+        transition: opacity 0.85s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.85s cubic-bezier(.22, 1, .36, 1),
+                    filter 0.85s ease;
+        transition-delay: var(--about-desc-delay, 0s);
+        will-change: opacity, transform, filter;
+    }
+    .about-desc.about-desc-in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+
     .unique-section-head {
         text-align: center;
 
@@ -1079,275 +1179,129 @@ document.addEventListener('DOMContentLoaded', function () {
         margin: 0;
     }
 
-    .about-cards-wrapper {
-        display: grid;
+    /* =====================================================
+       UNIQUE CARDS — auto-scrolling left-to-right carousel
+       (desktop/tablet). Mobile override further down turns
+       this into a static stacked list.
+    ===================================================== */
 
-        grid-template-columns: 0.96fr 1fr;
-
-        gap: 20px;
-
-        margin-bottom: 0; /* CTA row below now owns the bottom margin */
-        align-items: start;
-
-        position: relative;
-    }
-
-    .about-card-row {
-        grid-column: 1;
-
-        display: flex;
-        flex-direction: column;
-
-        gap: 16px;
-    }
-
-    .about-cards-image-scroll-wrapper {
-        grid-column: 2;
+    .unique-carousel-wrapper {
         position: relative;
         width: 100%;
-        /* height set inline by JS */
+        margin-bottom: 0; /* CTA row below owns the bottom margin */
     }
 
-    .about-cards-image-panel {
-        position: sticky;
-
-        top: 100px;
-
-        height: 500px;
-        max-height: 80vh;
-    }
-
-    .about-cards-cta-row {
-        display: grid;
-        grid-template-columns: 0.96fr 1fr;
-        gap: 20px;
-        margin-top: 24px;
-        margin-bottom: 20px;
-    }
-
-    .about-cards-cta {
-        grid-column: 2; /* aligns under the image panel column */
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .about-cards-image-item {
-        position: absolute;
-
-        inset: 6px;
-
-        border-radius: 20px;
-
+    .unique-carousel-viewport {
         overflow: hidden;
-
-        opacity: 0;
-
-        transform: scale(0.8) translate(0, 0);
-
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-
-        border: 4px solid #fff;
-
-        transition:
-            transform 0.4s cubic-bezier(0.34, 1.25, 0.64, 1) 0.15s,
-            opacity 0.35s ease 0.15s,
-            box-shadow 0.4s ease,
-            filter 0.4s ease;
-
-        pointer-events: none;
-
-        z-index: 1;
-    }
-
-    .about-cards-image-item img {
-        display: block;
-
         width: 100%;
-        height: 100%;
-
-        object-fit: cover;
-        object-position: center;
     }
 
-    .about-cards-image-item.stack-back {
-        opacity: 1;
+    .unique-carousel-track {
+        display: flex;
+        align-items: stretch;
+        gap: 28px;
+        width: max-content;
 
-        transform: scale(0.8) translate(34px, 34px);
-
-        z-index: 3;
-
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
-
-        filter: brightness(0.85);
+        /* moves the whole (duplicated) track from -50% to 0, so cards travel left -> right */
+        animation: unique-carousel-ltr 34s linear infinite;
+        will-change: transform;
     }
 
-    .about-cards-image-item.stack-front {
-        opacity: 1;
-
-        transform: scale(1) translate(0, 0);
-
-        z-index: 6;
-
-        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.25);
-
-        pointer-events: auto;
-
-        filter: brightness(1);
+    @keyframes unique-carousel-ltr {
+        from { transform: translateX(-50%); }
+        to   { transform: translateX(0); }
     }
 
-    .about-cards-image-item.stack-leaving {
-        opacity: 0;
-
-        transform: scale(1.15) translate(-24px, -24px);
-
-        transition:
-            transform 0.3s ease-in,
-            opacity 0.22s ease-in,
-            filter 0.4s ease;
-
-        z-index: 7;
-    }
-
-    .about-feature-card {
+    .unique-card {
         position: relative;
 
-        width: 100%;
+        flex: 0 0 380px;
+        width: 380px;
 
         background: #fff;
-
-        border-radius: 20px;
-
-        padding: 20px 26px 20px 76px;
-
-        display: flex;
-        flex-direction: column;
-
+        border-radius: 22px;
         overflow: hidden;
 
-        cursor: pointer;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.04);
 
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
-
-        transition:
-            max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.4s ease,
-            padding 0.4s ease;
-
-        max-height: 84px;
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
-    .about-feature-card.active {
-        max-height: 200px;
-
-        padding: 24px 30px;
-
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+    .unique-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 42px rgba(0, 0, 0, 0.16);
     }
 
-    .about-card-head {
-        position: absolute;
-
-        left: 26px;
-        top: 20px;
-
-        display: flex;
-        flex-direction: row;
-
-        align-items: center;
-
-        gap: 16px;
-
-        transition: all 0.3s ease;
+    .unique-card-img {
+        width: 100%;
+        height: 260px;
+        overflow: hidden;
     }
 
-    .about-feature-card.active .about-card-head {
+    .unique-card-img img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.6s ease;
+    }
+
+    .unique-card:hover .unique-card-img img {
+        transform: scale(1.08);
+    }
+
+    .unique-card-info {
         position: relative;
-
-        left: 0;
-        top: 0;
+        padding: 22px 24px 26px;
     }
 
-    .about-card-icon {
-        width: 46px;
-        height: 46px;
-
-        min-width: 46px;
+    .unique-card-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
 
         border-radius: 50%;
-
         background: var(--accent-color-3, #eef2e6);
 
         display: flex;
-
         align-items: center;
         justify-content: center;
 
         color: var(--accent-color);
 
-        transition:
-            background 0.35s ease,
-            color 0.35s ease,
-            transform 0.35s ease;
+        margin-top: -44px;
+        margin-bottom: 14px;
+
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        border: 3px solid #fff;
     }
 
-    .about-feature-card.active .about-card-icon {
-        background: var(--accent-color);
-
-        color: #fff;
-
-        transform: rotate(-8deg) scale(1.06);
-    }
-
-    .about-card-head h5 {
-        font-size: 1.3rem;
-
+    .unique-card-info h5 {
+        font-size: 1.2rem;
         font-weight: 700;
-
         color: var(--text-color);
-
-        margin: 0;
-
-        white-space: nowrap;
+        margin: 0 0 8px;
     }
 
-    .about-card-body {
-        display: flex;
-
-        flex-direction: column;
-
-        min-height: 0;
-
-        opacity: 0;
-
-        pointer-events: none;
-
-        transition: opacity 0.35s ease 0.1s;
-    }
-
-    .about-feature-card.active .about-card-body {
-        opacity: 1;
-
-        pointer-events: auto;
-
-        margin-top: 14px;
-    }
-
-    .about-card-divider {
-        display: none;
-    }
-
-    .about-feature-card p {
-        font-size: 1.05rem;
-
-        line-height: 1.6;
-
+    .unique-card-info p {
+        font-size: 0.98rem;
+        line-height: 1.55;
         color: var(--text-color-2);
-
         margin: 0;
     }
 
-    .about-card-mobile-img {
-        display: none;
+    .about-cards-cta-row {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .about-cards-cta {
+        display: flex;
+        justify-content: center;
     }
 
     .about-quote-banner {
@@ -1486,8 +1440,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 /* =====================================================
-   TABLET AND MOBILE — now triggers up to 1300px so laptop/tablet
-   widths get the same stacked "mobile-like" arrangement.
+   TABLET — 768px to 1300px still gets the marquee carousel,
+   just at a slightly smaller card size.
 ===================================================== */
 @media (max-width: 1300px) {
     .about-creative {
@@ -1535,7 +1489,6 @@ document.addEventListener('DOMContentLoaded', function () {
         padding-top: 0;
     }
     .about-text-col {
-        transform: none !important;
         max-width: 100%;
         text-align: left;
     }
@@ -1566,25 +1519,11 @@ document.addEventListener('DOMContentLoaded', function () {
         font-size: 2.3rem;
     }
 
-    /* ===== Fade-up on scroll: more intense — bigger travel distance,
-       slight scale + blur, replays every time it enters view,
-       in either scroll direction (up or down) — mobile/tablet only ===== */
+    /* Font size override for mobile/tablet only — the fade-up
+       opacity/transform/filter animation itself now lives outside this
+       media query (above) so it applies at every screen size. */
     .about-desc {
         font-size: 1.05rem;
-
-        opacity: 0;
-        transform: translateY(60px) scale(0.94);
-        filter: blur(3px);
-        transition: opacity 0.85s cubic-bezier(.22, 1, .36, 1),
-                    transform 0.85s cubic-bezier(.22, 1, .36, 1),
-                    filter 0.85s ease;
-        transition-delay: var(--about-desc-delay, 0s);
-        will-change: opacity, transform, filter;
-    }
-    .about-desc.about-desc-in {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0px);
     }
 
     .unique-section-head {
@@ -1593,58 +1532,28 @@ document.addEventListener('DOMContentLoaded', function () {
     .unique-section-heading {
         font-size: 1.7rem;
     }
-    .about-cards-wrapper {
-        display: block;
-        margin-bottom: 0;
+    .unique-carousel-track {
+        gap: 20px;
+        animation-duration: 26s;
     }
-    .about-card-row {
-        width: 100%;
-        gap: 14px;
+    .unique-card {
+        flex-basis: 300px;
+        width: 300px;
     }
-    .about-cards-image-scroll-wrapper {
-        display: none;
+    .unique-card-img {
+        height: 200px;
+    }
+    .unique-card-info {
+        padding: 18px 18px 22px;
+    }
+    .unique-card-info h5 {
+        font-size: 1.05rem;
+    }
+    .unique-card-info p {
+        font-size: 0.92rem;
     }
     .about-cards-cta-row {
-        display: none;
-    }
-    .about-feature-card {
-        max-height: 84px;
-        padding: 20px !important;
-        transition:
-            max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.4s ease;
-            
-    }
-    .about-feature-card.active {
-        max-height: 420px;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
-    }
-    .about-card-head {
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-    }
-    .about-card-body {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.35s ease 0.1s;
-    }
-    .about-feature-card.active .about-card-body {
-        opacity: 1;
-        pointer-events: auto;
-        margin-top: 16px;
-    }
-    .about-card-mobile-img {
-        display: block;
-        margin-top: 16px;
-        border-radius: 14px;
-        overflow: hidden;
-    }
-    .about-card-mobile-img img {
-        display: block;
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
+        margin-top: 24px;
     }
     .about-quote-content {
         margin-left: 0;
@@ -1720,20 +1629,11 @@ document.addEventListener('DOMContentLoaded', function () {
             font-size: 1rem;
             line-height: 1.7;
         }
-        .about-card-head h5 {
-            font-size: 1.1rem;
-            white-space: normal;
-        }
-        .about-card-icon {
-            width: 42px;
-            height: 42px;
-            min-width: 42px;
-        }
-        .about-feature-card.active {
-            max-height: 450px;
-        }
-        .about-card-mobile-img img {
-            height: 180px;
+
+        .unique-card-icon {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
         }
         .about-quote-content {
             padding: 30px 22px;
@@ -1750,458 +1650,127 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-/* ===== Private Retreat mobile image: zoomed out slightly, curved corners ===== */
-@media (max-width: 1300px) {
-    .about-feature-card:first-child .about-card-mobile-img {
-        background: #f4f2ec;
-        overflow: hidden;
-        border-radius: 14px;
-    }
-
-    .about-feature-card:first-child .about-card-mobile-img img {
-        height: 260px !important;
-        object-fit: cover !important;
-        object-position: center 55% !important;
-        border-radius: 14px;
-        transform: scale(0.94);
-        transform-origin: center 55%;
-    }
-}
-
+/* =====================================================
+   MOBILE (<=767px): the auto-scrolling marquee becomes a
+   plain static stacked list — no animation, no motion,
+   one card per row, full width. The duplicate card set
+   (only needed to make the desktop/tablet loop seamless)
+   is hidden here since a static list doesn't need it.
+===================================================== */
 @media (max-width: 767px) {
-    .about-feature-card:first-child .about-card-mobile-img img {
-        height: 240px !important;
+    .unique-carousel-wrapper {
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .unique-carousel-viewport {
+        overflow: visible;
+    }
+
+    .unique-carousel-track {
+        flex-direction: column;
+        animation: none !important;
+        transform: none !important;
+        width: 100%;
+        gap: 18px;
+    }
+
+    .unique-card {
+        flex: none !important;
+        width: 100% !important;
+    }
+
+    .unique-card-dup {
+        display: none !important;
+    }
+
+    .unique-card-img {
+        height: 190px;
+    }
+
+    .unique-card-info {
+        padding: 18px 18px 22px;
+    }
+
+    .unique-card-info h5 {
+        font-size: 1.05rem;
+    }
+
+    .unique-card-info p {
+        font-size: 0.92rem;
     }
 }
 
 @media (max-width: 575px) {
-    .about-feature-card:first-child .about-card-mobile-img img {
-        height: 220px !important;
+    .unique-carousel-track {
+        gap: 14px;
+    }
+
+    .unique-card-img {
+        height: 160px;
+    }
+}
+
+/* ===== Carousel: pause the marquee animation for users who prefer reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    .unique-carousel-track {
+        animation: none;
+    }
+}
+@media (max-width: 767px) {
+    .about-cards-cta-row {
+        margin-top: 20px;
+    }
+
+    .about-cards-cta .btn {
+        padding: 9px 20px !important;
+        font-size: 0.78rem !important;
+        font-weight: 600 !important;
+        gap: 6px !important;
+    }
+
+    .about-cards-cta .btn i {
+        font-size: 0.7rem !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .about-cards-cta .btn {
+        padding: 8px 16px !important;
+        font-size: 0.72rem !important;
     }
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const wrapper = document.querySelector('.about-content-scroll-wrapper');
-    const mask = document.querySelector('.about-content-col');
-    const textCol = document.querySelector('.about-text-col');
-    const headingEl = document.querySelector('.about-heading-col');
-
-    if (!wrapper || !mask || !textCol) return;
-
-    const isDesktop = () => window.matchMedia('(min-width: 1301px)').matches;
-    const PIN_TOLERANCE = 4;
-
-    let maxTranslate = 0;
-    let progress = 0;
-    let locked = false;
-    let touchStartY = 0;
-
-    function getStickyTop() {
-        var navVal = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
-        var navH = parseFloat(navVal) || 96;
-
-        var headingH = headingEl ? headingEl.getBoundingClientRect().height : 140;
-
-        return navH + 20 + headingH + 24;
-    }
-
-    function measure() {
-        if (!isDesktop()) {
-            maxTranslate = 0;
-            textCol.style.transform = 'none';
-            return;
-        }
-        maxTranslate = Math.max(0, textCol.scrollHeight - mask.offsetHeight);
-    }
-
-    function applyProgress() {
-        textCol.style.transform = 'translateY(' + (-progress * maxTranslate) + 'px)';
-    }
-
-    function isAtPinPoint() {
-        const rect = wrapper.getBoundingClientRect();
-        const stickyTop = getStickyTop();
-        return rect.top <= stickyTop + PIN_TOLERANCE && rect.top >= stickyTop - mask.offsetHeight;
-    }
-
-    function engageLock() {
-        if (locked) return;
-        locked = true;
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function releaseLock() {
-        if (!locked) return;
-        locked = false;
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-    }
-
-    function handleDelta(delta) {
-        if (!isDesktop() || maxTranslate <= 0) return false;
-
-        if (delta === 0) {
-            return locked;
-        }
-
-        const goingDown = delta > 0;
-
-        if (locked) {
-            progress = goingDown
-                ? Math.min(1, progress + delta / maxTranslate)
-                : Math.max(0, progress + delta / maxTranslate);
-            applyProgress();
-            if (progress >= 1 || progress <= 0) {
-                releaseLock();
-            }
-            return true;
-        }
-
-        if (goingDown && progress < 1 && isAtPinPoint()) {
-            engageLock();
-            progress = Math.min(1, progress + delta / maxTranslate);
-            applyProgress();
-            if (progress >= 1) releaseLock();
-            return true;
-        }
-
-        if (!goingDown && progress > 0 && isAtPinPoint()) {
-            engageLock();
-            progress = Math.max(0, progress + delta / maxTranslate);
-            applyProgress();
-            if (progress <= 0) releaseLock();
-            return true;
-        }
-
-        return false;
-    }
-
-    function onWheel(e) {
-        if (handleDelta(e.deltaY)) {
-            e.preventDefault();
-        }
-    }
-
-    function onTouchStart(e) {
-        touchStartY = e.touches[0].clientY;
-    }
-
-    function onTouchMove(e) {
-        const currentY = e.touches[0].clientY;
-        const delta = touchStartY - currentY;
-        if (handleDelta(delta)) {
-            e.preventDefault();
-        }
-        touchStartY = currentY;
-    }
-
-    function onKeyDown(e) {
-        if (!locked) return;
-        const blocked = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space', 'End', 'Home'];
-        if (blocked.includes(e.code) || blocked.includes(e.key)) {
-            e.preventDefault();
-            const delta = (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Home') ? -60 : 60;
-            handleDelta(delta);
-        }
-    }
-
-    function refresh() {
-        measure();
-        applyProgress();
-    }
-
-    window.addEventListener('load', refresh);
-    window.addEventListener('resize', refresh);
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('keydown', onKeyDown);
-
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(refresh);
-    }
-    if ('ResizeObserver' in window) {
-        new ResizeObserver(function () { refresh(); }).observe(textCol);
-    }
-
-    const heroImg = document.querySelector('.about-hero-img-main');
-    if (heroImg && !heroImg.complete) {
-        heroImg.addEventListener('load', refresh);
-    }
-
-    refresh();
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var cardRow = document.querySelector('.about-card-row');
-    var scrollWrapper = document.querySelector('.about-cards-image-scroll-wrapper');
-
-    if (!cardRow || !scrollWrapper) return;
-
-    function syncImagePanelHeight() {
-        var h = cardRow.getBoundingClientRect().height;
-        if (h > 0) {
-            scrollWrapper.style.height = h + 'px';
-        }
-    }
-
-    syncImagePanelHeight();
-    window.addEventListener('load', syncImagePanelHeight);
-    window.addEventListener('resize', syncImagePanelHeight);
-
-    if ('ResizeObserver' in window) {
-        new ResizeObserver(syncImagePanelHeight).observe(cardRow);
-    }
-
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(syncImagePanelHeight);
-    }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var wrapper = document.querySelector('.about-cards-wrapper');
-    var cards = document.querySelectorAll('.about-feature-card');
-    var imageItems = document.querySelectorAll('.about-cards-image-item');
-    if (!wrapper || !cards.length || !imageItems.length) return;
-
-    var isDesktop = function () {
-        return window.matchMedia('(min-width: 1301px)').matches;
-    };
-
-    var totalCards = cards.length;
-    var currentIndex = 0;
-    var locked = false;
-    var isStepping = false;
-    var STEP_COOLDOWN = 700;
-    var DELTA_MIN = 4;
-    var PIN_TOLERANCE = 4;
-    var touchStartY = 0;
-
-    function getStickyTop() {
-        var val = getComputedStyle(document.documentElement).getPropertyValue('--navbar-h').trim();
-        var navH = parseFloat(val) || 96;
-        return navH + 20;
-    }
-
-    function setActiveCard(index) {
-        cards.forEach(function (c) { c.classList.remove('active'); });
-        cards[index].classList.add('active');
-    }
-
-    function swapImage(index) {
-        if (index === currentIndex) return;
-
-        imageItems.forEach(function (item, i) {
-            item.classList.remove('stack-leaving');
-            if (i === currentIndex) {
-                item.classList.remove('stack-front');
-                item.classList.add('stack-leaving');
-            }
-        });
-
-        setTimeout(function () {
-            imageItems.forEach(function (item, i) {
-                item.classList.remove('stack-front', 'stack-back', 'stack-leaving');
-                if (i === index) {
-                    item.classList.add('stack-front');
-                } else if (i === currentIndex) {
-                    item.classList.add('stack-back');
-                }
-            });
-            currentIndex = index;
-        }, 260);
-    }
-
-    function goTo(index) {
-        index = Math.max(0, Math.min(index, totalCards - 1));
-        if (index === currentIndex) return;
-        setActiveCard(index);
-        swapImage(index);
-    }
-
-    imageItems[0].classList.add('stack-front');
-
-    cards.forEach(function (card, index) {
-        card.addEventListener('click', function () {
-            goTo(index);
-        });
-    });
-
-    function isAtPinPoint() {
-        var rect = wrapper.getBoundingClientRect();
-        var stickyTop = getStickyTop();
-        return rect.top <= stickyTop + PIN_TOLERANCE && rect.bottom > stickyTop + PIN_TOLERANCE;
-    }
-
-    function engageLock() {
-        if (locked) return;
-        locked = true;
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function releaseLock() {
-        if (!locked) return;
-        locked = false;
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-    }
-
-    function stepAndCooldown(nextIndex) {
-        isStepping = true;
-        goTo(nextIndex);
-        setTimeout(function () {
-            isStepping = false;
-        }, STEP_COOLDOWN);
-    }
-
-    function handleDelta(delta) {
-        if (!isDesktop()) return false;
-        if (Math.abs(delta) < DELTA_MIN) return locked;
-
-        var goingDown = delta > 0;
-
-        if (!goingDown) {
-            if (locked) releaseLock();
-            return false;
-        }
-
-        if (locked) {
-            if (isStepping) return true;
-
-            if (currentIndex < totalCards - 1) {
-                stepAndCooldown(currentIndex + 1);
-                return true;
-            }
-
-            releaseLock();
-            return false;
-        }
-
-        if (currentIndex < totalCards - 1 && isAtPinPoint()) {
-            engageLock();
-            stepAndCooldown(currentIndex + 1);
-            return true;
-        }
-
-        return false;
-    }
-
-    function onWheel(e) {
-        if (handleDelta(e.deltaY)) {
-            e.preventDefault();
-        }
-    }
-
-    function onTouchStart(e) {
-        touchStartY = e.touches[0].clientY;
-    }
-
-    function onTouchMove(e) {
-        var currentY = e.touches[0].clientY;
-        var delta = touchStartY - currentY;
-        if (handleDelta(delta)) {
-            e.preventDefault();
-        }
-        touchStartY = currentY;
-    }
-
-    function onKeyDown(e) {
-        if (!locked) return;
-        var downKeys = ['ArrowDown', 'PageDown', 'Space', 'End'];
-        var upKeys = ['ArrowUp', 'PageUp', 'Home'];
-
-        if (downKeys.indexOf(e.code) !== -1 || downKeys.indexOf(e.key) !== -1) {
-            e.preventDefault();
-            handleDelta(60);
-            return;
-        }
-
-        if (upKeys.indexOf(e.code) !== -1 || upKeys.indexOf(e.key) !== -1) {
-            releaseLock();
-        }
-    }
-
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('keydown', onKeyDown);
-
-    window.addEventListener('resize', function () {
-        if (locked && !isDesktop()) {
-            releaseLock();
-            isStepping = false;
-        }
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
     var descs = document.querySelectorAll('.about-desc');
     if (!descs.length) return;
 
-    var isMobileAbout = window.matchMedia('(max-width: 1300px)').matches;
-    var aboutDescObserver = null;
+    var siblings = Array.from(descs);
 
-    function buildAboutDescObserver() {
-        return new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                var el = entry.target;
-                var siblings = Array.from(descs);
-                var index = siblings.indexOf(el);
+    // Runs at every screen size now (no width check) — each paragraph
+    // fades up into view and replays every time it re-enters the
+    // viewport, scrolling up or down.
+    var aboutDescObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            var el = entry.target;
+            var index = siblings.indexOf(el);
 
-                if (entry.isIntersecting) {
-                    el.style.setProperty('--about-desc-delay', (index % 3) * 0.08 + 's');
-                    el.classList.add('about-desc-in');
-                } else {
-                    // Repeats every time it re-enters view, whether scrolling
-                    // up or down — class is removed once it leaves view.
-                    el.classList.remove('about-desc-in');
-                }
-            });
-        }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -5% 0px'
+            if (entry.isIntersecting) {
+                el.style.setProperty('--about-desc-delay', (index % 3) * 0.08 + 's');
+                el.classList.add('about-desc-in');
+            } else {
+                el.classList.remove('about-desc-in');
+            }
         });
-    }
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -5% 0px'
+    });
 
-    function startAboutDescObserver() {
-        if (!isMobileAbout) return;
-        aboutDescObserver = buildAboutDescObserver();
-        descs.forEach(function (el) {
-            aboutDescObserver.observe(el);
-        });
-    }
-
-    function stopAboutDescObserver() {
-        if (aboutDescObserver) {
-            aboutDescObserver.disconnect();
-            aboutDescObserver = null;
-        }
-        descs.forEach(function (el) {
-            el.classList.remove('about-desc-in');
-            el.style.opacity = '';
-            el.style.transform = '';
-        });
-    }
-
-    startAboutDescObserver();
-
-    window.addEventListener('resize', function () {
-        var nowMobile = window.matchMedia('(max-width: 1300px)').matches;
-        if (nowMobile === isMobileAbout) return;
-        isMobileAbout = nowMobile;
-
-        if (isMobileAbout) {
-            startAboutDescObserver();
-        } else {
-            stopAboutDescObserver();
-        }
+    descs.forEach(function (el) {
+        aboutDescObserver.observe(el);
     });
 });
 </script>
@@ -2230,7 +1799,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Photo -->
             <div class="founder-photo-wrap scrollanimation animated scroll-fadeInLeft">
                 <div class="founder-photo-frame">
-                    <img src="{% static 'ambadyestate-main/amm (1).png' %}" alt="Rajesh, Founder of Ambady Estate">
+                    <img src="{% static 'ambadyestate-main/webp/amm (1).webp' %}" alt="Rajesh, Founder of Ambady Estate">
                 </div>
             </div>
 
