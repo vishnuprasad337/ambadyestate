@@ -1124,13 +1124,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .about-desc {
-        font-size: 1.15rem;
-        line-height: 1.75;
+    font-size: 1.15rem;
+    line-height: 1.75;
 
-        color: var(--text-color-2);
+    color: var(--text-color-2);
 
-        margin: 0;
-    }
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+
+    /* Justify: every full line stretches to hit the same right edge,
+       not just the same left edge. The last line of each paragraph
+       stays left-aligned (text-align-last) since a short final line
+       stretched to fill the width would look stretched/gappy. */
+    text-align: justify;
+    text-align-last: left;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.about-text-col,
+.about-content-col,
+.about-content-scroll-wrapper {
+    padding-left: 0;
+    margin-left: 0;
+    text-indent: 0;
+}
+
+.about-desc,
+.about-desc * {
+    text-indent: 0 !important;
+    margin-left: 0 !important;
+    text-align: inherit !important;
+}
 
     /* Fade-up on scroll — applies at every screen size (desktop, tablet,
        and mobile), not just below 1300px. Re-plays every time a paragraph
