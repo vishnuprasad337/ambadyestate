@@ -1122,8 +1122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         margin: 0;
     }
-
-    .about-desc {
+.about-desc {
     font-size: 1.15rem;
     line-height: 1.75;
 
@@ -1133,14 +1132,13 @@ document.addEventListener('DOMContentLoaded', function () {
     padding: 0;
     text-indent: 0;
 
-    /* Justify: every full line stretches to hit the same right edge,
-       not just the same left edge. The last line of each paragraph
-       stays left-aligned (text-align-last) since a short final line
-       stretched to fill the width would look stretched/gappy. */
     text-align: justify;
     text-align-last: left;
-    -webkit-hyphens: auto;
-    hyphens: auto;
+    -webkit-hyphens: none;
+    hyphens: none;
+    word-spacing: normal;
+    display: block;
+    width: 100%;
 }
 
 .about-text-col,
@@ -1155,7 +1153,7 @@ document.addEventListener('DOMContentLoaded', function () {
 .about-desc * {
     text-indent: 0 !important;
     margin-left: 0 !important;
-    text-align: inherit !important;
+    text-align: justify !important;
 }
 
     /* Fade-up on scroll — applies at every screen size (desktop, tablet,
@@ -1207,11 +1205,11 @@ document.addEventListener('DOMContentLoaded', function () {
        this into a static stacked list.
     ===================================================== */
 
-    .unique-carousel-wrapper {
-        position: relative;
-        width: 100%;
-        margin-bottom: 0; /* CTA row below owns the bottom margin */
-    }
+.unique-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 60px; /* was 0 */
+}
 
     .unique-carousel-viewport {
         overflow: hidden;
