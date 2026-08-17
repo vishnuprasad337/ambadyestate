@@ -185,7 +185,16 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        overflow: hidden;
+        /* overflow: hidden here previously broke position: sticky on
+           .dest-anim-left, because ANY ancestor with overflow set to
+           hidden/auto/scroll turns into the sticky element's containing
+           scroll box instead of the viewport. overflow-x: clip hides the
+           same horizontal spill from the translateX() entrance animation
+           without creating that scroll container, so sticky still works
+           relative to the page. Needs Chrome 90+ / Firefox 113+ / Safari 16+
+           (all current as of 2026); see fallback note below if you must
+           support older browsers. */
+        overflow-x: clip;
     }
 
     .destination-details-overlay {
