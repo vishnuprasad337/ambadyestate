@@ -231,6 +231,9 @@
 
     .dest-anim-left {
         transform: translateX(-140px) scale(0.92) rotate(-3deg);
+        position: sticky;
+        top: 100px; /* distance from top of viewport while pinned; adjust to clear your sticky header */
+        align-self: start;
     }
 
     .dest-anim-right {
@@ -507,6 +510,9 @@
         }
         .dest-anim.dest-in-view {
             transform: translateY(0);
+        }
+        .dest-anim-left {
+            position: static; /* sticky only makes sense in the 2-col desktop layout */
         }
     }
 
