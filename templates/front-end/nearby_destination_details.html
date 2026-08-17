@@ -217,7 +217,6 @@
     }
 
     /* ---------- Entrance animations ---------- */
-   /* ---------- Entrance animations (more intense) ---------- */
     .dest-anim {
         width: 100%;
         min-width: 0;
@@ -519,6 +518,19 @@
             transform: none !important;
         }
     }
+
+    /* Safety net: if JS never fires (blocked, error, or a timing miss where
+       the right column's smaller height never crosses the intersection
+       threshold), force content visible instead of staying hidden forever. */
+    .dest-anim.dest-fallback-visible {
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: none !important;
+    }
+    .dest-anim.dest-fallback-visible > * {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 </style>
 
 <script>
@@ -571,9 +583,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* ---- Entrance animation on scroll: image + text slide in from opposite directions ---- */
-    /* ---- Entrance animation on scroll: image + text slide in from opposite
-       directions EVERY time the element scrolls into view (not just once) ---- */
+    /* ---- Entrance animation on scroll ----
+       Fixed version:
+       - Triggers each element in ONCE, then stops observing it, instead of
+         toggling the class on and off every time it crosses the threshold.
+         The old on/off behavior could leave the taller/shorter of the two
+         columns (usually the text column) stuck in the "removed" state,
+         which is why the right-hand details column was invisible.
+       - Lower threshold (0.1) so a shorter details column still crosses
+         the intersection ratio even when the image column is taller.
+       - A fallback timer force-shows all .dest-anim elements after 1.5s in
+         case the observer never fires for some reason (JS error earlier,
+         layout edge case, etc.), so content is never permanently hidden. */
     const animEls = document.querySelectorAll('.dest-anim');
 
     if ('IntersectionObserver' in window && animEls.length) {
@@ -581,13 +602,16 @@ document.addEventListener('DOMContentLoaded', function () {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('dest-in-view');
-                } else {
-                    entry.target.classList.remove('dest-in-view');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.1 });
 
         animEls.forEach(el => observer.observe(el));
+
+        setTimeout(() => {
+            animEls.forEach(el => el.classList.add('dest-fallback-visible'));
+        }, 1500);
     } else {
         animEls.forEach(el => el.classList.add('dest-in-view'));
     }
