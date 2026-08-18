@@ -36,7 +36,7 @@ class OptimizedImageModel(models.Model):
 # --------- Blogs ---------
 class Blog(OptimizedImageModel):
     image = models.ImageField(upload_to="blogs/", help_text="Blog cover image")
-    slug = models.SlugField(max_length=170, unique=True, blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     title = models.CharField(max_length=200, help_text="Blog title")
     description = models.TextField(help_text="Blog description")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -448,7 +448,7 @@ class Reservation(OptimizedImageModel):
         return f"{self.guest_name} — {target} ({self.check_in} to {self.check_out})"
 
     def clean(self):
-        if self.check_out <= self.check_in:
+        if self.check_out < self.check_in:
             raise ValidationError("Check-out date must be after check-in date.")
 
 

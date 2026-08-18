@@ -730,21 +730,29 @@ def package_delete(request, slug):
     return render(request, "admin_pages/package_confirm_delete.html", {"package": package})
 
 # --------- Reservation ---------
+# --------- Reservation ---------
 
 from .models import Reservation
 from .forms import ReservationForm
 
 
-# --------- Public / Customer-facing ---------
-
 def reservation_create(request):
-    """Customers book a reservation from the public site."""
+    """Customers book a reservation from the public site (and from the booking modal)."""
+    is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
+
     if request.method == "POST":
         form = ReservationForm(request.POST)
         if form.is_valid():
             form.save()
+            if is_ajax:
+                return JsonResponse({"success": True, "message": "Reservation saved."})
             messages.success(request, "Your reservation request has been submitted!")
             return redirect("ambadyestate_app:reservation_list")
+        else:
+            if is_ajax:
+                errors = {field: [str(e) for e in errs] for field, errs in form.errors.items()}
+                return JsonResponse({"success": False, "errors": errors}, status=400)
+            messages.error(request, "Please correct the errors below and try again.")
     else:
         form = ReservationForm()
 
@@ -755,7 +763,6 @@ def reservation_create(request):
 
 
 # --------- Admin / Staff-facing (list + delete only) ---------
-from .forms import ReservationForm
 
 @login_required
 def reservation_list(request):
@@ -766,6 +773,7 @@ def reservation_list(request):
         "form": form,
     })
 
+
 @login_required
 def reservation_delete(request, pk):
     reservation = get_object_or_404(Reservation, pk=pk)
@@ -773,7 +781,6 @@ def reservation_delete(request, pk):
         reservation.delete()
         messages.success(request, "Reservation deleted.")
     return redirect("ambadyestate_app:reservation_list")
-
 
 # --------- Contacts---------
 
@@ -872,11 +879,12 @@ def enquiry_delete(request, pk):
 from django.urls import reverse
 
 def home(request):
-    packages = Package.objects.filter(status="active").order_by('-created_at')
+    packages = Package.objects.all().order_by('-created_at')[:6]
     rooms = Room.objects.filter(status="active").order_by('-created_at')[:6]
     activities = Activity.objects.all().order_by('-created_at')
     testimonials = Testimonial.objects.all().order_by('-created_at')[:3]
     blogs = Blog.objects.all().order_by('-created_at')[:4]
+    nearby_destinations = NearbyDestination.objects.all().order_by('-created_at')[:4]
 
     form = ReservationForm()
 
@@ -886,6 +894,7 @@ def home(request):
         'activities': activities,
         'testimonials': testimonials,
         'blogs': blogs,
+        'nearby_destinations': nearby_destinations,
         'form': form,
     })
 

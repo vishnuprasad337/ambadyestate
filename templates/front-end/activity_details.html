@@ -1155,6 +1155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
     <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+
         <button type="button" class="booking-modal-close" id="bookingModalClose" aria-label="Close">
             <i class="fa-solid fa-xmark"></i>
         </button>
@@ -1167,84 +1168,92 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
 
         <form class="booking-modal-form" id="bookingModalForm" novalidate>
+            {% csrf_token %}
+            <div class="booking-modal-body">
 
-            <!-- Guest details -->
-            <div class="booking-modal-section-label">Guest Details</div>
-            <div class="booking-modal-row">
-                <div class="booking-modal-field">
-                    <label for="bm_name"><i class="fa-solid fa-user"></i> Full Name</label>
-                    <input type="text" id="bm_name" name="guest_name" placeholder="Your name" required>
-                    <span class="booking-modal-error" data-field-error="guest_name"></span>
-                </div>
-                <div class="booking-modal-field">
-                    <label for="bm_phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
-                    <input type="tel" id="bm_phone" name="guest_phone" placeholder="+91 9876543210" required>
-                    <span class="booking-modal-error" data-field-error="guest_phone"></span>
-                </div>
-            </div>
+                <div id="bookingModalGeneralError" class="booking-modal-error" style="text-align:center;"></div>
 
-            <div class="booking-modal-field">
-                <label for="bm_email"><i class="fa-solid fa-envelope"></i> Email</label>
-                <input type="email" id="bm_email" name="guest_email" placeholder="you@example.com" required>
-                <span class="booking-modal-error" data-field-error="guest_email"></span>
-            </div>
+                <!-- Guest details -->
+                <div class="booking-modal-section-label">Guest Details</div>
+                <div class="booking-modal-row">
+                    <div class="booking-modal-field">
+                        <label for="bm_name"><i class="fa-solid fa-user"></i> Full Name</label>
+                        <input type="text" id="bm_name" name="guest_name" class="form-control" placeholder="Your name" required>
+                        <span class="booking-modal-error" data-field-error="guest_name"></span>
+                    </div>
+                    <div class="booking-modal-field">
+                        <label for="bm_phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="bm_phone" name="guest_phone" class="form-control" placeholder="+91 9876543210" required>
+                        <span class="booking-modal-error" data-field-error="guest_phone"></span>
+                    </div>
+                </div>
 
-            <!-- Stay details -->
-            <div class="booking-modal-section-label">Stay Details</div>
-            <div class="booking-modal-row">
                 <div class="booking-modal-field">
-                    <label for="bm_checkin"><i class="fa-solid fa-calendar-check"></i> Check-in</label>
-                    <input type="date" id="bm_checkin" name="check_in" required>
-                    <span class="booking-modal-error" data-field-error="check_in"></span>
+                    <label for="bm_email"><i class="fa-solid fa-envelope"></i> Email</label>
+                    <input type="email" id="bm_email" name="guest_email" class="form-control" placeholder="you@example.com" required>
+                    <span class="booking-modal-error" data-field-error="guest_email"></span>
                 </div>
-                <div class="booking-modal-field">
-                    <label for="bm_checkout"><i class="fa-solid fa-calendar-xmark"></i> Check-out</label>
-                    <input type="date" id="bm_checkout" name="check_out" required>
-                    <span class="booking-modal-error" data-field-error="check_out"></span>
-                </div>
-            </div>
 
-            <div class="booking-modal-row">
-                <div class="booking-modal-field">
-                    <label for="bm_guests"><i class="fa-solid fa-users"></i> Guests</label>
-                    <input type="number" id="bm_guests" name="num_guests" min="1" placeholder="e.g. 2" required>
-                    <span class="booking-modal-error" data-field-error="num_guests"></span>
+                <!-- Stay details -->
+                <div class="booking-modal-section-label">Stay Details</div>
+                <div class="booking-modal-row">
+                    <div class="booking-modal-field">
+                        <label for="bm_checkin"><i class="fa-solid fa-calendar-check"></i> Check-in</label>
+                        <input type="date" id="bm_checkin" name="check_in" class="form-control" required>
+                        <span class="booking-modal-error" data-field-error="check_in"></span>
+                    </div>
+                    <div class="booking-modal-field">
+                        <label for="bm_checkout"><i class="fa-solid fa-calendar-xmark"></i> Check-out</label>
+                        <input type="date" id="bm_checkout" name="check_out" class="form-control" required>
+                        <span class="booking-modal-error" data-field-error="check_out"></span>
+                    </div>
                 </div>
+
+                <div class="booking-modal-row">
+                    <div class="booking-modal-field">
+                        <label for="bm_guests"><i class="fa-solid fa-users"></i> Guests</label>
+                        <input type="number" id="bm_guests" name="num_guests" class="form-control" min="1" placeholder="e.g. 2" required>
+                        <span class="booking-modal-error" data-field-error="num_guests"></span>
+                    </div>
+                    <div class="booking-modal-field">
+                        <label for="bm_package">
+                            <i class="fa-solid fa-gift"></i> Package
+                            <span class="booking-modal-optional-tag">optional</span>
+                        </label>
+                        <select id="bm_package" name="package" class="form-control">
+                            <option value="" selected>No package preference</option>
+                            {% for package in packages %}
+                            <option value="{{ package.id }}">{{ package.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="booking-modal-error" data-field-error="package"></span>
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div class="booking-modal-section-label">Your Message</div>
                 <div class="booking-modal-field">
-                    <label for="bm_package">
-                        <i class="fa-solid fa-gift"></i> Package
+                    <label for="bm_message">
+                        <i class="fa-solid fa-comment-dots"></i> Special Requests
                         <span class="booking-modal-optional-tag">optional</span>
                     </label>
-                    <select id="bm_package" name="package">
-                        <option value="" selected>No package preference</option>
-                        {% for package in packages %}
-                        <option value="{{ package.id }}">{{ package.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <span class="booking-modal-error" data-field-error="package"></span>
+                    <textarea id="bm_message" name="special_requests" class="form-control" rows="4" placeholder="Preferred cottage, occasion, dietary needs..."></textarea>
                 </div>
             </div>
 
-            <div class="booking-modal-field">
-                <label for="bm_message">
-                    <i class="fa-solid fa-comment-dots"></i> Special Requests
-                    <span class="booking-modal-optional-tag">optional</span>
-                </label>
-                <textarea id="bm_message" name="special_requests" placeholder="Preferred cottage, occasion, dietary needs..."></textarea>
+            <div class="booking-modal-footer">
+                <button type="submit" class="btn btn-accent booking-modal-submit">
+                    <span class="btn-label">Send via WhatsApp</span>
+                    <span class="booking-icon-box-static"><i class="fa-brands fa-whatsapp"></i></span>
+                </button>
+                <div id="bookingModalMsg" class="booking-modal-msg" role="status" aria-live="polite"></div>
             </div>
-
-            <button type="submit" class="booking-modal-submit">
-                <span class="btn-label">Send via WhatsApp</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </button>
-
-            <div id="bookingModalMsg" class="booking-modal-msg" role="status" aria-live="polite"></div>
         </form>
     </div>
 </div>
 
 <style>
-    /* ===== BOOKING MODAL — REDESIGN ===== */
+    /* ===== BOOKING MODAL — unified redesign ===== */
     .booking-modal-overlay {
         position: fixed;
         inset: 0;
@@ -1274,80 +1283,103 @@ document.addEventListener('DOMContentLoaded', function () {
         max-height: 90vh;
         overflow-y: auto;
         border-radius: 24px;
-        padding: 44px 40px 36px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
         transform: translateY(24px) scale(0.98);
         transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
     }
 
     .booking-modal-overlay.active .booking-modal-box {
         transform: translateY(0) scale(1);
     }
 
+    /* Close button */
     .booking-modal-close {
         position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 38px;
-        height: 38px;
+        top: 18px;
+        right: 18px;
+        z-index: 5;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: none;
-        background: var(--accent-color-3, #eaf4e2);
-        color: var(--text-color);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1rem;
+        font-size: 0.95rem;
         cursor: pointer;
-        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        z-index: 2;
+        transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
     }
 
     .booking-modal-close:hover {
-        background: var(--accent-color);
-        color: #fff;
+        background: var(--accent-color-2, #c8a86a);
         transform: rotate(90deg);
+        color: #1a1e16;
     }
 
-    /* Header */
+    /* Header (dark) */
     .booking-modal-header {
-        margin-bottom: 28px;
-        padding-right: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--text-color, #163017);
+        padding: 32px 36px 26px;
+        border-radius: 24px 24px 0 0;
     }
 
     .booking-modal-eyebrow {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         font-size: 0.72rem;
         font-weight: 700;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--accent-color-2, #c8a86a);
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    .booking-modal-eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--accent-color-2, #c8a86a);
+        margin-right: 8px;
+        vertical-align: middle;
     }
 
     .booking-modal-title {
-        margin: 0 0 8px;
-        font-size: clamp(1.5rem, 3vw, 1.9rem);
+        color: #fff;
+        font-weight: 700;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 800;
-        color: var(--text-color);
+        font-size: 1.4rem;
+        margin: 0 0 8px;
     }
 
     .booking-modal-sub {
-        color: var(--text-color-2);
-        font-size: 0.92rem;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.88rem;
         line-height: 1.6;
         margin: 0;
     }
 
-    /* Section labels */
+    /* Body */
+    .booking-modal-body {
+        padding: 28px 36px 8px;
+        background: var(--accent-color-3, #f2f7ee);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
     .booking-modal-section-label {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 1.2px;
         text-transform: uppercase;
         color: var(--accent-color);
-        margin: 4px 0 2px;
+        margin: 6px 0 -2px;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -1360,13 +1392,6 @@ document.addEventListener('DOMContentLoaded', function () {
         background: rgba(0, 0, 0, 0.08);
     }
 
-    /* Form layout */
-    .booking-modal-form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
     .booking-modal-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1377,21 +1402,21 @@ document.addEventListener('DOMContentLoaded', function () {
         display: flex;
         align-items: center;
         gap: 7px;
-        font-size: 0.83rem;
+        font-size: 0.82rem;
         font-weight: 700;
         color: var(--text-color);
-        margin-bottom: 7px;
+        margin-bottom: 6px;
     }
 
     .booking-modal-field label i {
         color: var(--accent-color);
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         width: 14px;
         text-align: center;
     }
 
     .booking-modal-optional-tag {
-        font-size: 0.68rem;
+        font-size: 0.65rem;
         font-weight: 600;
         color: var(--text-color-2);
         text-transform: none;
@@ -1402,25 +1427,23 @@ document.addEventListener('DOMContentLoaded', function () {
         margin-left: auto;
     }
 
-    .booking-modal-field input,
-    .booking-modal-field select,
-    .booking-modal-field textarea {
+    .booking-modal-field .form-control {
         width: 100%;
         box-sizing: border-box;
-        padding: 13px 16px;
         border: 1.5px solid rgba(44, 95, 26, 0.14);
         border-radius: 12px;
-        font-size: max(16px, 0.92rem);
+        padding: 12px 16px;
+        font-size: max(16px, 0.9rem);
         font-family: var(--font-3, 'DM Sans', sans-serif);
         color: var(--text-color);
-        background: var(--accent-color-3, #eaf4e2);
+        background: #fff;
         outline: none;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
         appearance: none;
         -webkit-appearance: none;
     }
 
-    .booking-modal-field select {
+    select.form-control {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232c5f1a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 16px center;
@@ -1428,18 +1451,15 @@ document.addEventListener('DOMContentLoaded', function () {
         cursor: pointer;
     }
 
-    .booking-modal-field textarea {
+    textarea.form-control {
         min-height: 90px;
         resize: vertical;
         line-height: 1.6;
     }
 
-    .booking-modal-field input:focus,
-    .booking-modal-field select:focus,
-    .booking-modal-field textarea:focus {
+    .booking-modal-field .form-control:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 0 4px rgba(44, 95, 26, 0.1);
-        background: #fff;
     }
 
     .booking-modal-error {
@@ -1450,29 +1470,32 @@ document.addEventListener('DOMContentLoaded', function () {
         min-height: 15px;
     }
 
+    /* Footer */
+    .booking-modal-footer {
+        padding: 12px 36px 32px;
+        background: var(--accent-color-3, #f2f7ee);
+        border-radius: 0 0 24px 24px;
+    }
+
     .booking-modal-submit {
-        margin-top: 8px;
-        padding: 16px 26px;
-        background: var(--accent-color);
-        color: #fff;
-        border: none;
-        border-radius: 100px;
-        font-size: 0.95rem;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        display: flex;
+        width: 100%;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
+        font-weight: 700;
         cursor: pointer;
-        transition: background 0.3s ease, gap 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 100px;
+        padding: 15px 26px;
         box-shadow: 0 10px 24px rgba(44, 95, 26, 0.18);
+        transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, gap 0.3s ease;
     }
 
     .booking-modal-submit:hover:not(:disabled) {
         background: #25D366;
-        gap: 16px;
         transform: translateY(-2px);
+        gap: 16px;
         box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
     }
 
@@ -1481,8 +1504,19 @@ document.addEventListener('DOMContentLoaded', function () {
         cursor: not-allowed;
     }
 
+    .booking-icon-box-static {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
     .booking-modal-msg {
-        margin-top: 4px;
+        margin-top: 12px;
         font-size: 0.88rem;
         font-weight: 600;
         min-height: 18px;
@@ -1497,19 +1531,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     @media (max-width: 575px) {
-        .booking-modal-box {
-            padding: 32px 22px 26px;
-            border-radius: 20px;
-        }
-
-        .booking-modal-row {
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        .booking-modal-header {
-            padding-right: 20px;
-        }
+        .booking-modal-header { padding: 26px 22px 20px; }
+        .booking-modal-body { padding: 22px 22px 6px; }
+        .booking-modal-footer { padding: 10px 22px 26px; }
+        .booking-modal-title { font-size: 1.15rem; }
+        .booking-modal-row { grid-template-columns: 1fr; gap: 16px; }
     }
 </style>
 
@@ -1518,10 +1544,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // ===== Update this to your real WhatsApp business number (country code, no + or spaces) =====
         var BOOKING_WHATSAPP_NUMBER = '919656355500';
 
+        // Django endpoint that actually saves the Reservation row
+        var RESERVATION_URL = "{% url 'ambadyestate_app:reservation_create' %}";
+
         var overlay = document.getElementById('bookingModalOverlay');
         var closeBtn = document.getElementById('bookingModalClose');
         var form = document.getElementById('bookingModalForm');
         var msgBox = document.getElementById('bookingModalMsg');
+        var generalErrEl = document.getElementById('bookingModalGeneralError');
         var submitBtn = form ? form.querySelector('.booking-modal-submit') : null;
         var btnLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
 
@@ -1556,34 +1586,28 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
         });
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+        function getCookie(name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
 
-            form.querySelectorAll('[data-field-error]').forEach(function (el) {
-                el.textContent = '';
-            });
-            msgBox.textContent = '';
-            msgBox.classList.remove('success', 'error');
+        function humanize(name) {
+            if (!name) return 'Field';
+            return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+        }
 
-            var hasError = false;
+        function buildWhatsAppMessage() {
             var lines = ['New Booking Request — Ambady Estate'];
 
-            function humanize(name) {
-                if (!name) return 'Field';
-                return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-            }
-
-            // Includes input, select, and textarea so the package dropdown is validated + included
             form.querySelectorAll('input, select, textarea').forEach(function (field) {
-                var label = form.querySelector('label[for="' + field.id + '"]');
-                var labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
+                if (field.name === 'csrfmiddlewaretoken') return;
 
-                if (field.hasAttribute('required') && !field.value.trim()) {
-                    hasError = true;
-                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
-                    if (errEl) errEl.textContent = 'This field is required.';
-                    return;
-                }
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                var labelText = (label && label.textContent.trim())
+                    ? label.textContent.replace(/optional/i, '').trim()
+                    : humanize(field.name);
 
                 var displayValue = '';
                 if (field.tagName === 'SELECT') {
@@ -1598,6 +1622,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            return encodeURIComponent(lines.join('\n'));
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            form.querySelectorAll('[data-field-error]').forEach(function (el) {
+                el.textContent = '';
+            });
+            if (generalErrEl) generalErrEl.textContent = '';
+            msgBox.textContent = '';
+            msgBox.classList.remove('success', 'error');
+
+            // Client-side required check first (server re-validates regardless)
+            var hasError = false;
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                if (field.name === 'csrfmiddlewaretoken') return;
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    hasError = true;
+                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
+                    if (errEl) errEl.textContent = 'This field is required.';
+                }
+            });
+
             if (hasError) {
                 msgBox.textContent = 'Please fill in the required fields.';
                 msgBox.classList.add('error');
@@ -1606,19 +1654,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
             submitBtn.disabled = true;
             var originalLabel = btnLabel.textContent;
-            btnLabel.textContent = 'Opening WhatsApp…';
+            btnLabel.textContent = 'Saving your request…';
+            msgBox.textContent = 'Saving your request…';
+            msgBox.classList.remove('success', 'error');
 
-            var message = encodeURIComponent(lines.join('\n'));
-            var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
+            var formData = new FormData(form);
+            var csrftoken = getCookie('csrftoken');
 
-            msgBox.textContent = 'Redirecting you to WhatsApp…';
-            msgBox.classList.add('success');
+            fetch(RESERVATION_URL, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            })
+            .then(function (res) {
+                return res.json().then(function (data) {
+                    return { status: res.status, data: data };
+                });
+            })
+            .then(function (result) {
+                if (result.status === 200 && result.data.success) {
+                    // Reservation is now saved in the DB — build WhatsApp message and redirect
+                    var message = buildWhatsAppMessage();
+                    var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
 
-            setTimeout(function () {
-                window.location.href = waUrl;
+                    msgBox.textContent = 'Saved! Redirecting you to WhatsApp…';
+                    msgBox.classList.add('success');
+                    btnLabel.textContent = 'Opening WhatsApp…';
+
+                    setTimeout(function () {
+                        window.location.href = waUrl;
+                        submitBtn.disabled = false;
+                        btnLabel.textContent = originalLabel;
+                    }, 400);
+                } else {
+                    // Server-side validation failed — surface field + non-field errors
+                    submitBtn.disabled = false;
+                    btnLabel.textContent = originalLabel;
+                    msgBox.textContent = 'Please fix the errors below.';
+                    msgBox.classList.add('error');
+
+                    if (result.data && result.data.errors) {
+                        Object.keys(result.data.errors).forEach(function (fieldName) {
+                            if (fieldName === '__all__') {
+                                if (generalErrEl) generalErrEl.textContent = result.data.errors[fieldName][0];
+                                return;
+                            }
+                            var errEl = form.querySelector('[data-field-error="' + fieldName + '"]');
+                            if (errEl) errEl.textContent = result.data.errors[fieldName][0];
+                        });
+                    }
+                }
+            })
+            .catch(function () {
                 submitBtn.disabled = false;
                 btnLabel.textContent = originalLabel;
-            }, 400);
+                msgBox.textContent = 'Something went wrong. Please try again.';
+                msgBox.classList.add('error');
+            });
         });
     });
 </script>

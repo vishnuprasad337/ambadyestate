@@ -504,6 +504,12 @@ a {
 .section {
     padding: 110px 2rem;
 }
+@media (max-width: 767px) {
+    #process {
+        padding-left: 5px !important;
+        padding-right: 15px !important;
+    }
+}
 
 .r-container {
     max-width: 1300px;

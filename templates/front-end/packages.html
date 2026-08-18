@@ -1114,7 +1114,10 @@
         </div>
 
         <form class="booking-modal-form" id="bookingModalForm" novalidate>
+            {% csrf_token %}
             <div class="booking-modal-body">
+
+                <div id="bookingModalGeneralError" class="booking-modal-error" style="text-align:center;"></div>
 
                 <!-- Guest details -->
                 <div class="booking-modal-section-label">Guest Details</div>
@@ -1487,10 +1490,14 @@
         // ===== Update this to your real WhatsApp business number (country code, no + or spaces) =====
         var BOOKING_WHATSAPP_NUMBER = '919656355500';
 
+        // Django endpoint that actually saves the Reservation row
+        var RESERVATION_URL = "{% url 'ambadyestate_app:reservation_create' %}";
+
         var overlay = document.getElementById('bookingModalOverlay');
         var closeBtn = document.getElementById('bookingModalClose');
         var form = document.getElementById('bookingModalForm');
         var msgBox = document.getElementById('bookingModalMsg');
+        var generalErrEl = document.getElementById('bookingModalGeneralError');
         var submitBtn = form ? form.querySelector('.booking-modal-submit') : null;
         var btnLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
 
@@ -1526,33 +1533,28 @@
             if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
         });
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+        function getCookie(name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
 
-            form.querySelectorAll('[data-field-error]').forEach(function (el) {
-                el.textContent = '';
-            });
-            msgBox.textContent = '';
-            msgBox.classList.remove('success', 'error');
+        function humanize(name) {
+            if (!name) return 'Field';
+            return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+        }
 
-            var hasError = false;
+        function buildWhatsAppMessage() {
             var lines = ['New Booking Request — Ambady Estate'];
 
-            function humanize(name) {
-                if (!name) return 'Field';
-                return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-            }
-
             form.querySelectorAll('input, select, textarea').forEach(function (field) {
-                var label = form.querySelector('label[for="' + field.id + '"]');
-                var labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
+                if (field.name === 'csrfmiddlewaretoken') return;
 
-                if (field.hasAttribute('required') && !field.value.trim()) {
-                    hasError = true;
-                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
-                    if (errEl) errEl.textContent = 'This field is required.';
-                    return;
-                }
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                var labelText = (label && label.textContent.trim())
+                    ? label.textContent.replace(/optional/i, '').trim()
+                    : humanize(field.name);
 
                 var displayValue = '';
                 if (field.tagName === 'SELECT') {
@@ -1567,6 +1569,30 @@
                 }
             });
 
+            return encodeURIComponent(lines.join('\n'));
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            form.querySelectorAll('[data-field-error]').forEach(function (el) {
+                el.textContent = '';
+            });
+            if (generalErrEl) generalErrEl.textContent = '';
+            msgBox.textContent = '';
+            msgBox.classList.remove('success', 'error');
+
+            // Client-side required check first (server re-validates regardless)
+            var hasError = false;
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                if (field.name === 'csrfmiddlewaretoken') return;
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    hasError = true;
+                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
+                    if (errEl) errEl.textContent = 'This field is required.';
+                }
+            });
+
             if (hasError) {
                 msgBox.textContent = 'Please fill in the required fields.';
                 msgBox.classList.add('error');
@@ -1575,19 +1601,66 @@
 
             submitBtn.disabled = true;
             var originalLabel = btnLabel.textContent;
-            btnLabel.textContent = 'Opening WhatsApp…';
+            btnLabel.textContent = 'Saving your request…';
+            msgBox.textContent = 'Saving your request…';
+            msgBox.classList.remove('success', 'error');
 
-            var message = encodeURIComponent(lines.join('\n'));
-            var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
+            var formData = new FormData(form);
+            var csrftoken = getCookie('csrftoken');
 
-            msgBox.textContent = 'Redirecting you to WhatsApp…';
-            msgBox.classList.add('success');
+            fetch(RESERVATION_URL, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            })
+            .then(function (res) {
+                return res.json().then(function (data) {
+                    return { status: res.status, data: data };
+                });
+            })
+            .then(function (result) {
+                if (result.status === 200 && result.data.success) {
+                    // Reservation is now saved in the DB — build WhatsApp message and redirect
+                    var message = buildWhatsAppMessage();
+                    var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
 
-            setTimeout(function () {
-                window.location.href = waUrl;
+                    msgBox.textContent = 'Saved! Redirecting you to WhatsApp…';
+                    msgBox.classList.add('success');
+                    btnLabel.textContent = 'Opening WhatsApp…';
+
+                    setTimeout(function () {
+                        window.location.href = waUrl;
+                        submitBtn.disabled = false;
+                        btnLabel.textContent = originalLabel;
+                    }, 400);
+                } else {
+                    // Server-side validation failed — surface field + non-field errors
+                    submitBtn.disabled = false;
+                    btnLabel.textContent = originalLabel;
+                    msgBox.textContent = 'Please fix the errors below.';
+                    msgBox.classList.add('error');
+
+                    if (result.data && result.data.errors) {
+                        Object.keys(result.data.errors).forEach(function (fieldName) {
+                            if (fieldName === '__all__') {
+                                if (generalErrEl) generalErrEl.textContent = result.data.errors[fieldName][0];
+                                return;
+                            }
+                            var errEl = form.querySelector('[data-field-error="' + fieldName + '"]');
+                            if (errEl) errEl.textContent = result.data.errors[fieldName][0];
+                        });
+                    }
+                }
+            })
+            .catch(function () {
                 submitBtn.disabled = false;
                 btnLabel.textContent = originalLabel;
-            }, 400);
+                msgBox.textContent = 'Something went wrong. Please try again.';
+                msgBox.classList.add('error');
+            });
         });
     });
 </script>

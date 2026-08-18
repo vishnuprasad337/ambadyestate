@@ -2369,6 +2369,7 @@ document.addEventListener('DOMContentLoaded', function () {
     content: '';
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background-image: inherit;
     background-size: cover;
     background-position: center;
@@ -2376,6 +2377,14 @@ document.addEventListener('DOMContentLoaded', function () {
     z-index: 0;
     transform: scale(1.06);
     transition: transform 1.2s ease;
+}
+
+/* Fix mobile-only rendering seam at rounded corners (WebKit clip bug
+   with overflow:hidden + border-radius + a transformed ::before) */
+@media (max-width: 767px) {
+    .accordion-item {
+        transform: translateZ(0);
+    }
 }
 
 .accordion-page:has(.accordion-item:hover) .accordion-item:not(:hover)::before {
@@ -2667,6 +2676,29 @@ transition: background 0.3s ease, color 0.3s ease, gap 0.3s ease, border-color 0
 
     .accordion-book-btn i {
         font-size: 0.58rem;
+    }
+}
+/* Force a fixed landscape height on mobile instead of letting
+   text content push the card taller than it is wide */
+@media (max-width: 767px) {
+    .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
+        min-height: 0 !important;
+        height: 320px !important;
+    }
+
+    .accordion-item p.text-white {
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 575px) {
+    .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item,
+    .accordion-page:has(.accordion-item:hover) .accordion-item:hover {
+        height: 280px !important;
     }
 }
 
@@ -3223,6 +3255,1275 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(video);
 });
 </script>
+<!-- =========================================================
+     PACKAGES SECTION
+========================================================= -->
+
+<section id="packages"
+    class="packages-section position-relative"
+    style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
+
+    <div class="packages-bg-overlay"></div>
+
+    <div class="r-container packages-container">
+
+        <!-- =========================
+             SECTION HEADING
+        ========================== -->
+
+        <div class="packages-heading text-center">
+
+            <h6 class="accent-color-2">
+                Curated Stays &amp; Experiences
+            </h6>
+
+            <h3>
+                Choose a Package Made for You
+            </h3>
+
+            <p>
+                From cozy weekend escapes to full plantation experiences —
+                pick the package that fits your Munnar getaway.
+            </p>
+
+        </div>
+
+
+        {% if packages %}
+
+        <!-- =========================
+             PACKAGE SLIDER
+        ========================== -->
+
+        <div class="swiper packages-slider">
+
+            <div class="swiper-wrapper">
+
+                {% for package in packages %}
+
+                <div class="swiper-slide">
+
+                    <div class="package-card">
+
+                        <!-- =========================
+                             PACKAGE IMAGE
+                        ========================== -->
+
+                        <div class="package-card-media">
+
+                            {% if package.image %}
+
+                            <img src="{{ package.image.url }}"
+                                 alt="{{ package.name }}"
+                                 loading="lazy">
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- =========================
+                             IMAGE OVERLAY
+                        ========================== -->
+
+                        <div class="package-card-overlay"></div>
+
+
+                        <!-- =========================
+                             PACKAGE CONTENT
+                        ========================== -->
+
+                        <div class="package-card-info">
+
+                            <!-- Package Name -->
+
+                            <h4>
+                                {{ package.name }}
+                            </h4>
+
+
+                            <!-- Package Description -->
+
+                            {% if package.description %}
+
+                            <p class="package-description">
+
+                                {% autoescape off %}
+                                    {{ package.description|striptags|truncatewords:25 }}
+                                {% endautoescape %}
+
+                            </p>
+
+                            {% endif %}
+
+
+                            <!-- Reserve Button -->
+
+                            <a href="{% url 'ambadyestate_app:package_details' package.slug %}"
+                               class="package-reserve-btn">
+
+                                <span>
+                                    Reserve Now
+                                </span>
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- =========================
+                 SLIDER CONTROLS
+            ========================== -->
+
+            <div class="packages-slider-controls">
+
+                <button type="button"
+                        class="packages-slider-prev"
+                        aria-label="Previous package">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                </button>
+
+
+                <div class="packages-slider-pagination"></div>
+
+
+                <button type="button"
+                        class="packages-slider-next"
+                        aria-label="Next package">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
+
+        <div class="packages-empty text-center">
+
+            <p>
+                No packages available right now.
+                Please check back soon.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SWIPER JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const packageSlider =
+        document.querySelector(".packages-slider");
+
+    if (
+        typeof Swiper !== "undefined" &&
+        packageSlider
+    ) {
+
+        new Swiper(".packages-slider", {
+
+            slidesPerView: 1,
+
+            spaceBetween: 22,
+
+            loop: false,
+
+            watchOverflow: true,
+
+            speed: 700,
+
+            autoplay: {
+
+                delay: 3500,
+
+                disableOnInteraction: false,
+
+                pauseOnMouseEnter: true,
+
+                stopOnLastSlide: true
+
+            },
+
+            pagination: {
+
+                el: ".packages-slider-pagination",
+
+                clickable: true
+
+            },
+
+            navigation: {
+
+                nextEl: ".packages-slider-next",
+
+                prevEl: ".packages-slider-prev"
+
+            },
+
+            breakpoints: {
+
+                768: {
+
+                    slidesPerView: 2,
+
+                    spaceBetween: 26
+
+                }
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+
+<!-- =========================================================
+     PACKAGES CSS
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+#packages.packages-section {
+
+    position: relative;
+
+    width: 100%;
+
+    padding: 100px 0;
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+}
+
+
+/* Background overlay */
+
+.packages-bg-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(255, 255, 255, 0.10);
+
+    pointer-events: none;
+
+}
+
+
+/* Container */
+
+.packages-container {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.packages-heading {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    max-width: 700px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
+
+}
+
+
+.packages-heading h6 {
+
+    margin: 0 0 10px;
+
+    color: var(--accent-color, #2c5f1a);
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.packages-heading h3 {
+
+    margin: 0 0 14px;
+
+    font-size: 2.4rem;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    color: #1a1e16;
+
+}
+
+
+.packages-heading p {
+
+    margin: 0 auto;
+
+    max-width: 650px;
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+
+    color: rgba(26, 30, 22, 0.75);
+
+}
+
+
+/* =========================================================
+   FORCE VISIBLE — NO FADE / NO ANIMATION / NO JS DEPENDENCY
+========================================================= */
+
+.packages-heading,
+.packages-heading * ,
+.package-card,
+.package-card * {
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+
+}
+
+
+/* =========================================================
+   SWIPER
+========================================================= */
+
+.packages-slider {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    padding: 5px 5px 10px;
+
+    overflow: hidden;
+
+}
+
+
+.packages-slider .swiper-wrapper {
+
+    align-items: stretch;
+
+}
+
+
+.packages-slider .swiper-slide {
+
+    height: auto;
+
+    display: flex;
+
+}
+
+
+/* =========================================================
+   PACKAGE CARD
+========================================================= */
+
+.package-card {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 420px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background: #222;
+
+    isolation: isolate;
+
+    box-shadow:
+        0 18px 50px rgba(26, 30, 22, 0.18);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+
+}
+
+
+/* Card hover — kept, this is a deliberate interaction, not a scroll animation */
+
+.package-card:hover {
+
+    transform: translateY(-6px) !important;
+
+    box-shadow:
+        0 25px 55px rgba(26, 30, 22, 0.25);
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.package-card-media {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+}
+
+
+.package-card-media img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    transition:
+        transform 0.8s ease;
+
+}
+
+
+.package-card:hover .package-card-media img {
+
+    transform: scale(1.06) !important;
+
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.package-card-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(5, 15, 7, 0.97) 0%,
+            rgba(5, 15, 7, 0.90) 25%,
+            rgba(5, 15, 7, 0.65) 46%,
+            rgba(5, 15, 7, 0.20) 72%,
+            rgba(5, 15, 7, 0) 100%
+        );
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.package-card-info {
+
+    position: absolute !important;
+
+    left: 0 !important;
+
+    right: 0 !important;
+
+    bottom: 0 !important;
+
+    z-index: 20 !important;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 32px 40px 30px;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
+    justify-content: flex-end !important;
+
+    gap: 10px;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    will-change: auto !important;
+
+}
+
+
+/* =========================================================
+   PACKAGE TITLE
+========================================================= */
+
+.package-card-info h4 {
+
+    display: block !important;
+
+    position: relative !important;
+
+    width: 100%;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    color: #ffffff !important;
+
+    font-size: 1.8rem !important;
+
+    font-weight: 800 !important;
+
+    line-height: 1.2 !important;
+
+    letter-spacing: -0.3px;
+
+    text-transform: none !important;
+
+    text-align: left !important;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    text-shadow: none !important;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+
+/* =========================================================
+   PACKAGE DESCRIPTION
+========================================================= */
+
+.package-card-info .package-description {
+
+    display: block !important;
+
+    position: relative !important;
+
+    width: 100%;
+
+    max-width: 560px;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    color: rgba(255, 255, 255, 0.92) !important;
+
+    font-size: 0.95rem !important;
+
+    font-weight: 400 !important;
+
+    line-height: 1.55 !important;
+
+    text-align: left !important;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    text-shadow: none !important;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+
+/* Prevent anything inside description from becoming blurred */
+
+.package-card-info .package-description * {
+
+    filter: none !important;
+
+    -webkit-filter: none !important;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    color: inherit !important;
+
+}
+
+
+/* =========================================================
+   RESERVE BUTTON
+========================================================= */
+
+.package-reserve-btn {
+
+    position: relative !important;
+
+    z-index: 30 !important;
+
+    display: inline-flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    width: fit-content;
+
+    min-width: 175px;
+
+    margin-top: 5px;
+
+    padding: 13px 23px;
+
+    border: 0;
+
+    border-radius: 100px;
+
+    background: #ffffff;
+
+    color: #1a1e16 !important;
+
+    text-decoration: none !important;
+
+    font-size: 0.90rem;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        gap 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.package-reserve-btn span {
+
+    color: inherit !important;
+
+}
+
+
+.package-reserve-btn i {
+
+    color: inherit !important;
+
+    font-size: 0.8rem;
+
+    transition: transform 0.3s ease;
+
+}
+
+
+.package-reserve-btn:hover {
+
+    background: var(--accent-color, #2c5f1a);
+
+    color: #ffffff !important;
+
+    gap: 14px;
+
+    transform: translateY(-2px) !important;
+
+}
+
+
+.package-reserve-btn:hover i {
+
+    transform: translateX(3px) !important;
+
+}
+
+
+/* =========================================================
+   SLIDER CONTROLS
+========================================================= */
+
+.packages-slider-controls {
+
+    position: relative;
+
+    z-index: 10;
+
+    margin-top: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 16px;
+
+}
+
+
+/* Pagination */
+
+.packages-slider-pagination {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+}
+
+
+.packages-slider-pagination
+.swiper-pagination-bullet {
+
+    width: 24px;
+
+    height: 3px;
+
+    margin: 0 !important;
+
+    border-radius: 3px;
+
+    background: rgba(26, 30, 22, 0.20);
+
+    opacity: 1;
+
+    transition:
+        width 0.3s ease,
+        background 0.3s ease;
+
+}
+
+
+.packages-slider-pagination
+.swiper-pagination-bullet-active {
+
+    width: 40px;
+
+    background: var(--accent-color, #2c5f1a);
+
+}
+
+
+/* Navigation */
+
+.packages-slider-prev,
+.packages-slider-next {
+
+    width: 44px;
+
+    height: 44px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    border: 1.5px solid rgba(26, 30, 22, 0.15);
+
+    background: #ffffff;
+
+    color: var(--accent-color, #2c5f1a);
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 0.85rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+.packages-slider-prev:hover,
+.packages-slider-next:hover {
+
+    background: var(--accent-color, #2c5f1a);
+
+    color: #ffffff;
+
+    border-color: var(--accent-color, #2c5f1a);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(44, 95, 26, 0.25);
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.packages-empty {
+
+    position: relative;
+
+    z-index: 5;
+
+    padding: 40px;
+
+}
+
+
+/* =========================================================
+   FORCE PACKAGE CONTENT SHARP
+========================================================= */
+
+.packages-slider,
+.packages-slider .swiper-wrapper,
+.packages-slider .swiper-slide,
+.package-card,
+.package-card-info,
+.package-card-info h4,
+.package-card-info p,
+.package-card-info a {
+
+    -webkit-backface-visibility: visible !important;
+
+    backface-visibility: visible !important;
+
+}
+
+
+/* Do NOT blur the content if global animation classes exist */
+
+.packages-slider .scrollanimation,
+.packages-slider .animated,
+.packages-slider .scroll-fadeInUp,
+.package-card .scrollanimation,
+.package-card .animated,
+.package-card .scroll-fadeInUp {
+
+    filter: none !important;
+
+    -webkit-filter: none !important;
+
+    transform: none !important;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    #packages.packages-section {
+
+        padding: 75px 0;
+
+    }
+
+
+    .packages-heading {
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .packages-heading h3 {
+
+        font-size: 2rem;
+
+    }
+
+
+    .package-card {
+
+        height: 410px;
+
+        border-radius: 24px;
+
+    }
+
+
+    .package-card-info {
+
+        padding: 30px;
+
+    }
+
+
+    .package-card-info h4 {
+
+        font-size: 1.65rem !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    #packages.packages-section {
+
+        padding: 55px 0;
+        background-image: none !important;
+        background-color: transparent !important;
+
+    }
+
+    .packages-bg-overlay {
+        display: none !important;
+    }
+
+
+    #packages .r-container {
+
+        padding-left: 6px !important;
+
+        padding-right: 6px !important;
+
+    }
+
+
+    .packages-slider {
+        padding: 0 !important;
+    }
+
+
+    .packages-heading {
+
+        margin-bottom: 30px;
+
+        padding: 0 10px;
+
+        text-align: left !important;
+
+    }
+
+
+    .packages-heading h6,
+    .packages-heading h3,
+    .packages-heading p {
+
+        text-align: left !important;
+
+    }
+
+    .packages-heading h3 {
+
+        font-size: 1.8rem;
+
+    }
+
+
+    .packages-heading p {
+
+        font-size: 0.9rem;
+
+    }
+
+
+    .package-card {
+
+        height: 380px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .package-card-info {
+
+        padding: 25px 22px;
+
+        gap: 9px;
+
+    }
+
+
+    .package-card-info h4 {
+
+        font-size: 1.45rem !important;
+
+    }
+
+
+    .package-card-info .package-description {
+
+        font-size: 0.87rem !important;
+
+        line-height: 1.45 !important;
+
+        max-width: 100%;
+
+    }
+
+
+    .package-reserve-btn {
+
+        min-width: 155px;
+
+        padding: 12px 19px;
+
+        font-size: 0.82rem;
+
+    }
+
+
+    .packages-slider-controls {
+
+        margin-top: 20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 575px) {
+
+    #packages.packages-section {
+
+        padding: 45px 0;
+        background-image: none !important;
+        background-color: transparent !important;
+
+    }
+
+
+    #packages .r-container {
+
+        padding-left: 6px !important;
+
+        padding-right: 6px !important;
+
+    }
+
+
+    .package-card {
+
+        height: 350px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .package-card-info {
+
+        padding: 22px 18px;
+
+        gap: 7px;
+
+    }
+
+
+    .package-card-info h4 {
+
+        font-size: 1.25rem !important;
+
+    }
+
+
+    .package-card-info .package-description {
+
+        font-size: 0.80rem !important;
+
+        line-height: 1.4 !important;
+
+        display: -webkit-box !important;
+
+        -webkit-line-clamp: 3;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+
+    }
+
+
+    .package-reserve-btn {
+
+        min-width: 145px;
+
+        padding: 11px 17px;
+
+        font-size: 0.78rem;
+
+    }
+
+
+    .packages-slider-prev,
+    .packages-slider-next {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .package-card {
+
+        height: 330px;
+
+    }
+
+
+    .package-card-info {
+
+        padding: 19px 15px;
+
+    }
+
+
+    .package-card-info h4 {
+
+        font-size: 1.15rem !important;
+
+    }
+
+
+    .package-card-info .package-description {
+
+        font-size: 0.76rem !important;
+
+    }
+
+
+    .package-reserve-btn {
+
+        min-width: 135px;
+
+        padding: 10px 15px;
+
+    }
+
+}
+
+</style>
         <!-- ===== ACTIVITIES SECTION (dynamic — same style as homepage) ===== -->
 <div id="activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
     <div class="r-container d-flex flex-column gap-4">
@@ -4327,6 +5628,462 @@ testi-heading {
         }
     });
 </script>
+<!-- ===== NEARBY DESTINATIONS SECTION (dynamic — same style as Packages) ===== -->
+<section id="nearby-destinations" class="nearby-section position-relative">
+
+    <div class="r-container nearby-container">
+
+        <div class="nearby-heading text-center">
+            <h6 class="accent-color-2">Explore Around Munnar</h6>
+            <h3>Nearby Destinations Worth Visiting</h3>
+            <p>Step beyond the estate and discover the best of Munnar's valleys, viewpoints, and hidden trails — all just a short drive away.</p>
+        </div>
+
+        {% if nearby_destinations %}
+        <div class="swiper nearby-slider">
+            <div class="swiper-wrapper">
+                {% for destination in nearby_destinations %}
+                <div class="swiper-slide">
+                    <a href="{% url 'ambadyestate_app:nearby_destination_details' destination.slug %}" class="nearby-card">
+                        <div class="nearby-card-media">
+                            {% if destination.image %}
+                            <img src="{{ destination.image.url }}" alt="{{ destination.name }}" loading="lazy">
+                            {% endif %}
+                        </div>
+                        <div class="nearby-card-overlay"></div>
+                        <div class="nearby-card-info">
+                            <h4>{{ destination.name }}</h4>
+                            {% if destination.description %}
+                            <p class="nearby-description">
+                                {% autoescape off %}{{ destination.description|striptags|truncatewords:20 }}{% endautoescape %}
+                            </p>
+                            {% endif %}
+                            <span class="nearby-explore-link">
+                                <span>Explore</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="nearby-slider-controls">
+                <button type="button" class="nearby-slider-prev" aria-label="Previous destination">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="nearby-slider-pagination"></div>
+                <button type="button" class="nearby-slider-next" aria-label="Next destination">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="nearby-empty text-center">
+            <p>No nearby destinations added yet. Please check back soon.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const nearbySlider = document.querySelector(".nearby-slider");
+
+    if (typeof Swiper !== "undefined" && nearbySlider) {
+        new Swiper(".nearby-slider", {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: false,
+            rewind: true,
+            watchOverflow: false,
+            speed: 700,
+            autoplay: {
+                delay: 3800,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: ".nearby-slider-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".nearby-slider-next",
+                prevEl: ".nearby-slider-prev"
+            },
+            breakpoints: {
+                576: {
+                    slidesPerView: 2,
+                    spaceBetween: 12
+                },
+                992: {
+                    slidesPerView: 2,
+                    spaceBetween: 28
+                }
+            }
+        });
+    }
+});
+</script>
+
+<style>
+
+/* ===== SECTION ===== */
+#nearby-destinations.nearby-section {
+    position: relative;
+    width: 100%;
+    padding: 100px 0;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.nearby-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* HEADING */
+.nearby-heading {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.nearby-heading h6 {
+    margin: 0 0 10px;
+    color: var(--accent-color, #2c5f1a);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nearby-heading h3 {
+    margin: 0 0 14px;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #1a1e16;
+}
+
+.nearby-heading p {
+    margin: 0 auto;
+    max-width: 650px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(26, 30, 22, 0.75);
+}
+
+/* =====================================================
+   FORCE VISIBLE — the heading and cards must always render
+   fully opaque and in place, regardless of any site-wide
+   scroll-triggered fade/animation script that might otherwise
+   apply to headings, paragraphs, or images in this section.
+===================================================== */
+.nearby-heading,
+.nearby-heading *,
+.nearby-card,
+.nearby-card * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* SWIPER */
+.nearby-slider {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    padding: 5px 5px 10px;
+    overflow: hidden;
+}
+
+.nearby-slider .swiper-wrapper {
+    align-items: stretch;
+}
+
+.nearby-slider .swiper-slide {
+    height: auto;
+    display: flex;
+}
+
+/* CARD */
+.nearby-card {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #222;
+    isolation: isolate;
+    display: block;
+    text-decoration: none;
+    box-shadow: 0 16px 40px rgba(26, 30, 22, 0.16);
+}
+
+.nearby-card-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.nearby-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.nearby-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to top,
+        rgba(5, 15, 7, 0.94) 0%,
+        rgba(5, 15, 7, 0.55) 45%,
+        rgba(5, 15, 7, 0.05) 100%
+    );
+}
+
+.nearby-card-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 28px 30px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.nearby-card-info h4 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+}
+
+.nearby-card-info .nearby-description {
+    margin: 0;
+    max-width: 100%;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+    font-weight: 400;
+    line-height: 1.55;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.nearby-explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.nearby-explore-link i {
+    font-size: 0.72rem;
+}
+
+/* SLIDER CONTROLS */
+.nearby-slider-controls {
+    position: relative;
+    z-index: 10;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.nearby-slider-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.nearby-slider-pagination .swiper-pagination-bullet {
+    width: 24px;
+    height: 3px;
+    margin: 0 !important;
+    border-radius: 3px;
+    background: rgba(26, 30, 22, 0.20);
+    opacity: 1;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.nearby-slider-pagination .swiper-pagination-bullet-active {
+    width: 40px;
+    background: var(--accent-color, #2c5f1a);
+}
+
+.nearby-slider-prev,
+.nearby-slider-next {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(26, 30, 22, 0.15);
+    background: #ffffff;
+    color: var(--accent-color, #2c5f1a);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nearby-slider-prev:hover,
+.nearby-slider-next:hover {
+    background: var(--accent-color, #2c5f1a);
+    color: #ffffff;
+    border-color: var(--accent-color, #2c5f1a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+}
+
+/* EMPTY STATE */
+.nearby-empty {
+    position: relative;
+    z-index: 5;
+    padding: 40px;
+}
+
+/* TABLET */
+@media (max-width: 991px) {
+    #nearby-destinations.nearby-section {
+        padding: 75px 0;
+    }
+
+    .nearby-heading {
+        margin-bottom: 35px;
+    }
+
+    .nearby-heading h3 {
+        font-size: 2rem;
+    }
+
+    .nearby-card {
+        height: 240px;
+        border-radius: 20px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 1.2rem;
+    }
+
+    .nearby-card-info .nearby-description {
+        -webkit-line-clamp: 1;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+    #nearby-destinations.nearby-section {
+        padding: 55px 0;
+    }
+
+    #nearby-destinations .r-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .nearby-heading {
+        margin-bottom: 30px;
+        text-align: left !important;
+        padding: 0 8px;
+    }
+
+    .nearby-heading h6,
+    .nearby-heading h3,
+    .nearby-heading p {
+        text-align: left !important;
+    }
+
+    .nearby-heading h3 {
+        font-size: 1.8rem;
+    }
+
+    .nearby-heading p {
+        font-size: 0.9rem;
+    }
+
+    .nearby-card {
+        height: 190px;
+        border-radius: 16px;
+    }
+
+    .nearby-card-info {
+        padding: 16px 18px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 1.05rem;
+        line-height: 1.25;
+    }
+
+    .nearby-card-info .nearby-description {
+        display: none;
+    }
+
+    .nearby-explore-link {
+        font-size: 0.72rem;
+    }
+
+    .nearby-slider-controls {
+        margin-top: 20px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 575px) {
+    .nearby-card {
+        height: 170px;
+        border-radius: 14px;
+    }
+
+    .nearby-card-info {
+        padding: 14px 16px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 0.95rem;
+    }
+
+    .nearby-slider-prev,
+    .nearby-slider-next {
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
 
         <!-- About Story Section -->
         <div class="story-section section" id="restaurant" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -5067,7 +6824,7 @@ testi-heading {
 </style>
 
 
-        <!-- Blog -->
+      <!-- Blog -->
         <div id="blog" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
             <div class="r-container d-flex flex-column gap-4">
                 <div class="row row-cols-xl-2 row-cols-1 align-items-center">
@@ -5206,9 +6963,6 @@ testi-heading {
     margin: 0 0 12px;
     transition: color 0.3s;
 
-    /* Tight, punchy heading rather than a wrapped paragraph block —
-       caps at 2 lines so short titles sit bold and single-line,
-       long ones don't turn into a wall of text */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -5316,10 +7070,6 @@ testi-heading {
         padding: 20px;
     }
 
-    /* !important needed: the global "unified card typography" rule
-       elsewhere in the file sets this h4 to 1.65rem !important
-       (0.95rem !important on mobile) — without !important here,
-       that rule wins and this size never applies. */
     .blog-card-body h4 {
         font-size: 1.3rem !important;
         line-height: 1.18 !important;
@@ -5349,6 +7099,24 @@ testi-heading {
         font-size: 1.15rem !important;
     }
 }
+
+/* ===== Remove background image + shadow/border on mobile only (desktop keeps it) ===== */
+@media (max-width: 767px) {
+    #blog {
+        background-image: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-bottom: none !important;
+    }
+
+    #blog::before,
+    #blog::after {
+        display: none !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
+}
         </style>
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
@@ -5365,6 +7133,7 @@ testi-heading {
         </div>
 
         <form class="booking-modal-form" id="bookingModalForm" novalidate>
+            {% csrf_token %}
 
             <!-- Guest details -->
             <div class="booking-modal-section-label">Guest Details</div>
@@ -5716,6 +7485,9 @@ testi-heading {
         // ===== Update this to your real WhatsApp business number (country code, no + or spaces) =====
         var BOOKING_WHATSAPP_NUMBER = '919656355500';
 
+        // Django endpoint that actually saves the Reservation row
+        var RESERVATION_URL = "{% url 'ambadyestate_app:reservation_create' %}";
+
         var overlay = document.getElementById('bookingModalOverlay');
         var closeBtn = document.getElementById('bookingModalClose');
         var form = document.getElementById('bookingModalForm');
@@ -5754,34 +7526,28 @@ testi-heading {
             if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
         });
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+        function getCookie(name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
 
-            form.querySelectorAll('[data-field-error]').forEach(function (el) {
-                el.textContent = '';
-            });
-            msgBox.textContent = '';
-            msgBox.classList.remove('success', 'error');
+        function humanize(name) {
+            if (!name) return 'Field';
+            return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+        }
 
-            var hasError = false;
+        function buildWhatsAppMessage() {
             var lines = ['New Booking Request — Ambady Estate'];
 
-            function humanize(name) {
-                if (!name) return 'Field';
-                return name.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-            }
-
-            // Includes input, select, and textarea so the package dropdown is validated + included
             form.querySelectorAll('input, select, textarea').forEach(function (field) {
-                var label = form.querySelector('label[for="' + field.id + '"]');
-                var labelText = (label && label.textContent.trim()) ? label.textContent.replace(/optional/i, '').trim() : humanize(field.name);
+                if (field.name === 'csrfmiddlewaretoken') return;
 
-                if (field.hasAttribute('required') && !field.value.trim()) {
-                    hasError = true;
-                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
-                    if (errEl) errEl.textContent = 'This field is required.';
-                    return;
-                }
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                var labelText = (label && label.textContent.trim())
+                    ? label.textContent.replace(/optional/i, '').trim()
+                    : humanize(field.name);
 
                 var displayValue = '';
                 if (field.tagName === 'SELECT') {
@@ -5796,6 +7562,29 @@ testi-heading {
                 }
             });
 
+            return encodeURIComponent(lines.join('\n'));
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            form.querySelectorAll('[data-field-error]').forEach(function (el) {
+                el.textContent = '';
+            });
+            msgBox.textContent = '';
+            msgBox.classList.remove('success', 'error');
+
+            // Client-side required check first (server re-validates regardless)
+            var hasError = false;
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                if (field.name === 'csrfmiddlewaretoken') return;
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    hasError = true;
+                    var errEl = form.querySelector('[data-field-error="' + field.name + '"]');
+                    if (errEl) errEl.textContent = 'This field is required.';
+                }
+            });
+
             if (hasError) {
                 msgBox.textContent = 'Please fill in the required fields.';
                 msgBox.classList.add('error');
@@ -5804,19 +7593,62 @@ testi-heading {
 
             submitBtn.disabled = true;
             var originalLabel = btnLabel.textContent;
-            btnLabel.textContent = 'Opening WhatsApp…';
+            btnLabel.textContent = 'Saving your request…';
+            msgBox.textContent = 'Saving your request…';
+            msgBox.classList.remove('success', 'error');
 
-            var message = encodeURIComponent(lines.join('\n'));
-            var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
+            var formData = new FormData(form);
+            var csrftoken = getCookie('csrftoken');
 
-            msgBox.textContent = 'Redirecting you to WhatsApp…';
-            msgBox.classList.add('success');
+            fetch(RESERVATION_URL, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            })
+            .then(function (res) {
+                return res.json().then(function (data) {
+                    return { status: res.status, data: data };
+                });
+            })
+            .then(function (result) {
+                if (result.status === 200 && result.data.success) {
+                    // Reservation is now saved in the DB — build WhatsApp message and redirect
+                    var message = buildWhatsAppMessage();
+                    var waUrl = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + message;
 
-            setTimeout(function () {
-                window.location.href = waUrl;
+                    msgBox.textContent = 'Saved! Redirecting you to WhatsApp…';
+                    msgBox.classList.add('success');
+                    btnLabel.textContent = 'Opening WhatsApp…';
+
+                    setTimeout(function () {
+                        window.location.href = waUrl;
+                        submitBtn.disabled = false;
+                        btnLabel.textContent = originalLabel;
+                    }, 400);
+                } else {
+                    // Server-side validation failed — surface field errors
+                    submitBtn.disabled = false;
+                    btnLabel.textContent = originalLabel;
+                    msgBox.textContent = 'Please fix the errors below.';
+                    msgBox.classList.add('error');
+
+                    if (result.data && result.data.errors) {
+                        Object.keys(result.data.errors).forEach(function (fieldName) {
+                            var errEl = form.querySelector('[data-field-error="' + fieldName + '"]');
+                            if (errEl) errEl.textContent = result.data.errors[fieldName][0];
+                        });
+                    }
+                }
+            })
+            .catch(function () {
                 submitBtn.disabled = false;
                 btnLabel.textContent = originalLabel;
-            }, 400);
+                msgBox.textContent = 'Something went wrong. Please try again.';
+                msgBox.classList.add('error');
+            });
         });
     });
 </script>
@@ -6185,4 +8017,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<style>
+/* =====================================================
+   GLOBAL: NO WHITE/LIGHT SECTION BACKGROUNDS ON MOBILE
+   Every section below sets its background via an inline
+   background-image (mostly pack.png / bg.png / bg1.png /
+   bg_service.png), which reads as a plain white block on
+   narrow phone screens. This strips the image + forces a
+   transparent background for all of them on mobile only.
+===================================================== */
+@media (max-width: 767px) {
+    #about,
+    .founder-section,
+    #process,
+    .why-choose-section,
+    #activities,
+    #projects,
+    .testi-hero-section,
+    #restaurant,
+    #blog {
+        background-image: none !important;
+        background-color: transparent !important;
+    }
+}
+</style>
 {% endblock %}
