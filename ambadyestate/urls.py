@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
+from django.http import HttpResponse
 
 from ambadyestate_app.sitemaps import (
     StaticViewSitemap,
@@ -38,8 +39,38 @@ sitemaps = {
     "blog": BlogSitemap,
 }
 
+
+def robots_txt(request):
+    content = """User-agent: *
+Disallow: /login/
+Disallow: /dashboard/
+Disallow: /admin-logout/
+Disallow: /blogs/
+Disallow: /testimonials/
+Disallow: /add-review
+Disallow: /categories/
+Disallow: /list-images/
+Disallow: /add_image/
+Disallow: /delete-image/
+Disallow: /rooms/
+Disallow: /activities/
+Disallow: /nearby-destinations/
+Disallow: /packages/
+Disallow: /reservations/
+Disallow: /enquiries/
+Disallow: /contact/
+Disallow: /media/private/
+Allow: /static/
+Allow: /
+
+Sitemap: https://ambadyestate.com/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")
+
+
 urlpatterns = [
     #path('admin/', admin.site.urls),
+    path("robots.txt", robots_txt, name="robots_txt"),
     path(
         "sitemap.xml",
         sitemap,
