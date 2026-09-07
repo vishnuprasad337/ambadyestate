@@ -147,13 +147,11 @@ def blog_delete(request, slug):
     return render(request, "admin_pages/create_blog.html", {"blog": blog})
 
 # --------- Testimonial ---------
-login_required
+@login_required
 def testimonial_list(request):
-    testimonials_list = Testimonial.objects.all().order_by(Lower("name"))
-    paginator = Paginator(testimonials_list, 6)
-    page_number = request.GET.get("page")
-    testimonials = paginator.get_page(page_number)
-
+    # Show ALL testimonials without pagination
+    testimonials = Testimonial.objects.all().order_by(Lower("name"))
+    
     return render(
         request, "admin_pages/review_list.html", {"testimonials": testimonials}
     )
