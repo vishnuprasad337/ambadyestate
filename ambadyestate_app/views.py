@@ -880,7 +880,7 @@ def home(request):
     packages = Package.objects.all().order_by('-created_at')[:6]
     rooms = Room.objects.filter(status="active").order_by('-created_at')[:6]
     activities = Activity.objects.all().order_by('-created_at')
-    testimonials = Testimonial.objects.all().order_by('-created_at')[:3]
+    testimonials = Testimonial.objects.all().order_by('-created_at')
     blogs = Blog.objects.all().order_by('-created_at')[:4]
     nearby_destinations = NearbyDestination.objects.all().order_by('-created_at')[:4]
 
@@ -898,12 +898,12 @@ def home(request):
 
 
 def about_page(request):
-    packages = Package.objects.filter(status="active").order_by('-created_at')[:6]   # 👈 added
-    testimonials = Testimonial.objects.all().order_by('-created_at')[:6] if hasattr(Testimonial, 'created_at') else Testimonial.objects.all()[:6]
+    packages = Package.objects.filter(status="active").order_by('-created_at')[:6]
+    testimonials = Testimonial.objects.all().order_by('-created_at') if hasattr(Testimonial, 'created_at') else Testimonial.objects.all()
     activities = Activity.objects.all().order_by('-created_at')[:6]
 
     return render(request, 'front-end/about.html', {
-        'packages': packages,   
+        'packages': packages,
         'testimonials': testimonials,
         'activities': activities,
     })
