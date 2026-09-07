@@ -124,30 +124,33 @@
             {% endfor %}
         </div>
 
-        <!-- Gallery viewport (pagination container) -->
+        <!--
+            Gallery viewport (pagination container).
+            IMPORTANT: items are rendered as a FLAT pool here (no fixed
+            9-per-page grouping from Django). JS below builds the actual
+            paginated "page-set" groups dynamically, based on whichever
+            filter is currently active. That's what fixes the bug where
+            filtered images only showed up after clicking the pagination
+            arrows — because previously the 9-per-page grouping was baked
+            in at "All" time and never recalculated when a filter changed.
+        -->
         <div class="gallery-viewport" id="galleryViewport">
-            {% for img in images %}
-                {% if forloop.counter0|divisibleby:9 %}
-                    {% if not forloop.first %}</div>{% endif %}
-                    <div class="gallery-page-set{% if forloop.first %} active{% endif %}">
-                {% endif %}
+            <div id="galleryItemsPool" style="display:none;">
+                {% for img in images %}
                 <div class="gallery-item" data-category="{{ img.category.name|lower }}">
                     <img src="{{ img.image.url }}" alt="{{ img.title|default:img.category.name }}" loading="lazy">
                     <div class="gallery-item-overlay">
                         <button type="button" class="gallery-view-btn" data-full="{{ img.image.url }}">View</button>
                     </div>
                 </div>
-                {% if forloop.last %}</div>{% endif %}
-            {% empty %}
-                <div class="gallery-page-set active">
-                    <p class="gallery-empty">No gallery images added yet. Please check back soon.</p>
-                </div>
-            {% endfor %}
+                {% empty %}
+                <p class="gallery-empty" id="galleryNoImages">No gallery images added yet. Please check back soon.</p>
+                {% endfor %}
+            </div>
         </div>
 
-        <!-- Pagination Controls -->
-        {% if images|length > 9 %}
-        <div class="gallery-controls">
+        <!-- Pagination Controls (JS shows/hides this depending on page count) -->
+        <div class="gallery-controls" id="galleryControls" style="display:none;">
             <button type="button" class="gallery-nav-btn gallery-prev" aria-label="Previous gallery page">
                 <i class="fa-solid fa-arrow-left"></i>
             </button>
@@ -156,7 +159,6 @@
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
-        {% endif %}
     </div>
 </div>
 
@@ -258,7 +260,7 @@
         position: relative;
     }
 
-    /* ---------- Gallery page set (9 images per page) ---------- */
+    /* ---------- Gallery page set (9 images per page, built dynamically) ---------- */
     .gallery-page-set {
         display: none;
         grid-template-columns: repeat(3, 1fr);
@@ -292,10 +294,6 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         border: 1px solid rgba(0, 0, 0, 0.06);
         cursor: pointer;
-    }
-
-    .gallery-item.hidden {
-        display: none;
     }
 
     .gallery-item img {
@@ -474,67 +472,139 @@
             font-size: 0.9rem;
         }
     }
+
+    /* ===== DIRECTIONAL SCROLL FADE ===== */
+    .page-fade-card {
+        opacity: 0;
+        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
+                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
+        will-change: opacity, transform;
+    }
+
+    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
+    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
+    .fade-dir-right { transform: translateX(70px) scale(0.96); }
+
+    .page-fade-card.page-fade-in {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const viewport = document.getElementById('galleryViewport');
-    if (!viewport) return;
+    const PAGE_SIZE = 9;
 
-    const pages = Array.from(viewport.querySelectorAll('.gallery-page-set'));
-    const tabs = Array.from(document.querySelectorAll('.gallery-filter-tab'));
+    const viewport = document.getElementById('galleryViewport');
+    const pool = document.getElementById('galleryItemsPool');
+    const controls = document.getElementById('galleryControls');
     const dotsWrap = document.querySelector('.gallery-dots');
     const prevBtn = document.querySelector('.gallery-prev');
     const nextBtn = document.querySelector('.gallery-next');
+    const tabs = Array.from(document.querySelectorAll('.gallery-filter-tab'));
+    const noImagesMsg = document.getElementById('galleryNoImages');
 
+    if (!viewport || !pool) return;
+
+    // Master list of every gallery item (detached from layout, held in the hidden pool)
+    const allItems = Array.from(pool.querySelectorAll('.gallery-item'));
+
+    let pages = [];
     let current = 0;
 
-    // ===== PAGINATION =====
-    if (pages.length > 1 && dotsWrap && prevBtn && nextBtn) {
-        // Build pagination dots
+    // Fade-in observer, rebuilt every time pages change so newly
+    // shown items (after a filter switch) animate in correctly.
+    let fadeObserver = null;
+
+    function setupFadeIn() {
+        if (fadeObserver) fadeObserver.disconnect();
+        const items = Array.from(viewport.querySelectorAll('.gallery-item'));
+        const pattern = ['left', 'up', 'right'];
+        items.forEach((item, i) => {
+            item.classList.remove('fade-dir-left', 'fade-dir-up', 'fade-dir-right', 'page-fade-in');
+            item.classList.add('page-fade-card', 'fade-dir-' + pattern[i % 3]);
+            item.style.transitionDelay = (i % 3) * 0.08 + 's';
+        });
+        fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
+            });
+        }, { threshold: 0, rootMargin: '-10% 0px -15% 0px' });
+        items.forEach((item) => fadeObserver.observe(item));
+    }
+
+    function buildDots() {
+        if (!dotsWrap) return;
+        dotsWrap.innerHTML = '';
         pages.forEach((_, i) => {
             const dot = document.createElement('span');
             dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
             dot.addEventListener('click', () => goToPage(i));
             dotsWrap.appendChild(dot);
         });
-        const dots = Array.from(dotsWrap.children);
+    }
 
-        function goToPage(index) {
-            pages[current].classList.remove('active');
-            dots[current].classList.remove('active');
-            current = (index + pages.length) % pages.length;
-            pages[current].classList.add('active');
-            dots[current].classList.add('active');
+    function goToPage(index) {
+        if (pages.length < 2) return;
+        pages[current].classList.remove('active');
+        if (dotsWrap && dotsWrap.children[current]) dotsWrap.children[current].classList.remove('active');
+        current = (index + pages.length) % pages.length;
+        pages[current].classList.add('active');
+        if (dotsWrap && dotsWrap.children[current]) dotsWrap.children[current].classList.add('active');
+    }
+
+    /**
+     * Rebuilds the paginated "page-set" groups from scratch, using only
+     * the items that match the given filter. This is the core fix: pages
+     * are recalculated on every filter change instead of being fixed at
+     * "All" time, so a matching image never gets stranded on a page you
+     * can't see.
+     */
+    function renderPages(filter) {
+        // Clear out any previously built page-sets (items get moved, not deleted)
+        viewport.querySelectorAll('.gallery-page-set').forEach((p) => p.remove());
+
+        const matched = filter === 'all'
+            ? allItems
+            : allItems.filter((item) => item.dataset.category === filter);
+
+        pages = [];
+        current = 0;
+
+        if (matched.length === 0) {
+            if (noImagesMsg) noImagesMsg.style.display = '';
+        } else {
+            if (noImagesMsg) noImagesMsg.style.display = 'none';
+            for (let i = 0; i < matched.length; i += PAGE_SIZE) {
+                const pageSet = document.createElement('div');
+                pageSet.className = 'gallery-page-set' + (i === 0 ? ' active' : '');
+                matched.slice(i, i + PAGE_SIZE).forEach((item) => pageSet.appendChild(item));
+                viewport.appendChild(pageSet);
+                pages.push(pageSet);
+            }
         }
 
-        prevBtn.addEventListener('click', () => goToPage(current - 1));
-        nextBtn.addEventListener('click', () => goToPage(current + 1));
+        buildDots();
+        if (controls) controls.style.display = pages.length > 1 ? 'flex' : 'none';
+        setupFadeIn();
     }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => goToPage(current - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => goToPage(current + 1));
 
     // ===== FILTERING =====
     if (tabs.length) {
-        tabs.forEach(tab => {
+        tabs.forEach((tab) => {
             tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
+                tabs.forEach((t) => t.classList.remove('active'));
                 tab.classList.add('active');
-
-                const filter = tab.dataset.filter;
-
-                // Filter items in ALL pages
-                pages.forEach(page => {
-                    const items = Array.from(page.querySelectorAll('.gallery-item'));
-                    items.forEach(item => {
-                        if (filter === 'all' || item.dataset.category === filter) {
-                            item.classList.remove('hidden');
-                        } else {
-                            item.classList.add('hidden');
-                        }
-                    });
-                });
+                renderPages(tab.dataset.filter);
             });
         });
     }
+
+    // Initial render: show everything, page 1
+    renderPages('all');
 
     // ===== LIGHTBOX =====
     const lightbox = document.getElementById('galleryLightbox');
@@ -551,7 +621,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxImg.src = '';
     }
 
-    // Lightbox from "View" button
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('gallery-view-btn')) {
             e.stopPropagation();
@@ -559,7 +628,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Lightbox from clicking image directly
     document.addEventListener('click', (e) => {
         const item = e.target.closest('.gallery-item');
         if (item && !e.target.classList.contains('gallery-view-btn')) {
@@ -577,66 +645,16 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeLightbox();
     });
-});
-</script>
 
-<style>
-    /* ===== DIRECTIONAL SCROLL FADE ===== */
-    .page-fade-card {
-        opacity: 0;
-        transition: opacity 0.55s cubic-bezier(.22, 1, .36, 1),
-                    transform 0.55s cubic-bezier(.22, 1, .36, 1);
-        will-change: opacity, transform;
+    // ===== Header (filter row) fade-in =====
+    const headerEl = document.querySelector('.gallery-filter-row');
+    if (headerEl) {
+        headerEl.classList.add('page-fade-card', 'fade-dir-up');
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => entry.target.classList.toggle('page-fade-in', entry.isIntersecting));
+        }, { threshold: 0, rootMargin: '-10% 0px -15% 0px' });
+        headerObserver.observe(headerEl);
     }
-
-    .fade-dir-up    { transform: translateY(55px) scale(0.96); }
-    .fade-dir-left  { transform: translateX(-70px) scale(0.96); }
-    .fade-dir-right { transform: translateX(70px) scale(0.96); }
-
-    .page-fade-card.page-fade-in {
-        opacity: 1;
-        transform: translateY(0) translateX(0) scale(1);
-    }
-
-    /* Items hidden by the filter tabs should skip the fade animation
-       entirely (no flash/transition when a filter is switched) */
-    .gallery-item.hidden.page-fade-card {
-        transition: none;
-    }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
-    var headerEls = document.querySelectorAll('.gallery-filter-row');
-
-    var pageFadeEls = [];
-
-    // Heading/filter row — comes up from below
-    headerEls.forEach(function (el) {
-        el.classList.add('page-fade-card', 'fade-dir-up');
-        pageFadeEls.push(el);
-    });
-
-    // Gallery items — direction cycles per column position (3-col grid)
-    galleryItems.forEach(function (item, i) {
-        var pattern = ['left', 'up', 'right'];
-        var dir = pattern[i % 3];
-        item.classList.add('page-fade-card', 'fade-dir-' + dir);
-        item.style.transitionDelay = (i % 3) * 0.08 + 's';
-        pageFadeEls.push(item);
-    });
-
-    var pageFadeObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-            entry.target.classList.toggle('page-fade-in', entry.isIntersecting);
-        });
-    }, {
-        threshold: 0,
-        rootMargin: '-10% 0px -15% 0px'
-    });
-
-    pageFadeEls.forEach(function (el) { pageFadeObserver.observe(el); });
 });
 </script>
 {% endblock %}
