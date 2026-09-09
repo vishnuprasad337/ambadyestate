@@ -5161,7 +5161,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         </style>
-               <!-- Testimonials -->
+              <!-- Testimonials -->
        <!-- ===== TESTIMONIALS SECTION (cream + leaf-corner, Ambady Estate theme) ===== -->
 <div class="section testi-hero-section" style="background-image: url('{% static 'ambadyestate-main/bg1.png' %}');">
 
@@ -5269,7 +5269,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 {% endif %}
 
-                            <p class="testi-text">{% autoescape off %}{{ testimonial.review|striptags }}{% endautoescape %}</p>
+                            <p class="testi-text is-clamped">{% autoescape off %}{{ testimonial.review|striptags }}{% endautoescape %}</p>
+                            <button type="button" class="testi-readmore-btn" data-state="more">
+                                <span class="testi-readmore-text">Read more</span>
+                                <span class="testi-readmore-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </button>
                         </div>
                         {% endfor %}
 
@@ -5643,7 +5647,61 @@ testi-heading {
 
     .testi-location i { color: #b0473f; }
 
-    .testi-text { font-size: 1.05rem; line-height: 1.85; color: #4b5548; margin: 0; }
+    .testi-text { font-size: 1.05rem; line-height: 1.85; color: #4b5548; margin: 0 0 .75rem 0; }
+
+    /* ===== Fixed-size clamp + Read more/Read less =====
+       Every review card shows the same amount of text by default (like
+       the shorter Bejoy A review), no matter how long the actual review
+       is. Overflowing text is cut off and only revealed via the button. */
+    .testi-text.is-clamped {
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Read more / Read less — a real pill button (matches the site's
+       button language) rather than a plain text link. Hidden by default
+       and only revealed via JS on cards whose review text overflows. */
+    .testi-readmore-btn {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        background: #2d4a34;
+        border: none;
+        border-radius: 999px;
+        padding: 8px 8px 8px 20px;
+        margin: 0 0 1.25rem 0;
+        font-family: inherit;
+        font-size: .9rem;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        line-height: 1;
+        transition: background-color .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .testi-readmore-btn:hover {
+        background: #23392a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px -6px rgba(45, 74, 52, 0.45);
+    }
+    .testi-readmore-btn:active { transform: translateY(0); }
+    .testi-readmore-btn.is-visible { display: inline-flex; }
+    .testi-readmore-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.22);
+        font-size: .7rem;
+        flex: none;
+        transition: transform .3s ease;
+    }
+    .testi-readmore-btn[data-state="less"] .testi-readmore-icon {
+        transform: rotate(-135deg);
+    }
 
     .testi-divider {
         display: flex;
@@ -5726,6 +5784,9 @@ testi-heading {
     .testi-content {
         padding-right: 12px;
     }
+
+    .testi-text.is-clamped { -webkit-line-clamp: 5; }
+    .testi-readmore-btn { font-size: .85rem; }
 }
 </style>
 
@@ -5741,6 +5802,60 @@ testi-heading {
         let current = 0;
         const total = thumbs.length;
 
+        /* ---------------------------------------------------------
+           Read more / Read less
+           Each review is clamped to a fixed number of lines by default.
+           A review's Read more button is only revealed if its text
+           actually overflows the clamp — measured the first time that
+           card becomes active (hidden/inactive cards report 0 height,
+           so there's nothing to measure until they're shown). Clicking
+           the button removes/re-applies the clamp and flips the label
+           and icon direction.
+        --------------------------------------------------------- */
+        function setupReadMoreFor(content) {
+            const review = content.querySelector('.testi-text');
+            const btn = content.querySelector('.testi-readmore-btn');
+            const label = btn ? btn.querySelector('.testi-readmore-text') : null;
+            if (!review || !btn || !label || btn.dataset.wired) return;
+
+            btn.dataset.wired = '1';
+            btn.addEventListener('click', function () {
+                const expanded = btn.getAttribute('data-state') === 'less';
+                if (expanded) {
+                    review.classList.add('is-clamped');
+                    btn.setAttribute('data-state', 'more');
+                    label.textContent = 'Read more';
+                    startAuto();
+                } else {
+                    review.classList.remove('is-clamped');
+                    btn.setAttribute('data-state', 'less');
+                    label.textContent = 'Read less';
+                    stopAuto(); // don't flip to the next testimonial while someone's reading
+                }
+            });
+        }
+
+        function measureReadMoreFor(content) {
+            const review = content.querySelector('.testi-text');
+            const btn = content.querySelector('.testi-readmore-btn');
+            if (!review || !btn) return;
+            setupReadMoreFor(content);
+            // Tiny tolerance avoids false positives from sub-pixel rounding.
+            const overflowing = review.scrollHeight > review.clientHeight + 2;
+            btn.classList.toggle('is-visible', overflowing);
+        }
+
+        contents.forEach(measureReadMoreFor);
+        // Re-measure on resize since line-wrapping (and therefore whether
+        // a review actually overflows the clamp) changes with width.
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                contents.forEach(measureReadMoreFor);
+            }, 150);
+        });
+
         function activate(index) {
             index = (index + total) % total;
             photos.forEach(el => el.classList.remove('active'));
@@ -5749,7 +5864,12 @@ testi-heading {
 
             if (photos[index]) photos[index].classList.add('active');
             thumbs[index].classList.add('active');
-            if (contents[index]) contents[index].classList.add('active');
+            if (contents[index]) {
+                contents[index].classList.add('active');
+                // Now that this card is visible again, re-measure it in
+                // case its expanded/collapsed state or width changed.
+                measureReadMoreFor(contents[index]);
+            }
 
             const scrollBox = thumbs[index].closest('.testi-thumb-scroll');
             if (scrollBox) {

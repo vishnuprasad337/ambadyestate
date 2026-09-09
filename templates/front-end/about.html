@@ -150,18 +150,44 @@
 <!-- ===== ABOUT CONTENT SECTION (reused, same as home) ===== -->
 <div id="about" class="section bg-attach-cover about-creative" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
     <div class="r-container">
-        <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+
+        <!-- Page-level H1 — this section is the top of the document
+             outline (H1 → H2 eyebrow → H3 heading → H3 feature titles),
+             so it needs a real H1, not just a styled div. Kept visually
+             restrained (not a giant hero headline) since the H3 below it
+             is the section's main visual heading. -->
+        <h1 class="about-page-h1 scrollanimation animated scroll-fadeInUp">Discover the Story Behind Ambady Estate</h1>
+
+        <div class="row row-cols-xl-2 row-cols-1 align-items-xl-start align-items-center">
 
             <!-- Left: Content -->
             <div class="col col-xl-5 mb-4 mb-xl-0 scrollanimation animated scroll-fadeInLeft about-text-col">
                 <div class="d-flex flex-column gap-3 text-xl-start text-center">
-                    <h6 class="accent-color-2">About Ambady Estate</h6>
-                    <h3>A scenic estate retreat in the heart of Munnar</h3>
-                    <p>
-                        Ambady Estate brings together the freshness of Munnar's hills, comfortable rooms, and a
-                        laid-back estate atmosphere. It is a place to slow down, enjoy the landscape, and stay
-                        close to the natural beauty that makes this region special.
-                    </p>
+                    <h2 class="accent-color-2 about-eyebrow">About Ambady Estate</h2>
+                    <h3>A Peaceful Estate Retreat in the Heart of Munnar</h3>
+
+                    <div class="about-story">
+                        <p>Ambady Estate is more than a place to stay.</p>
+                        <p>It is a place that has been cared for for many years.</p>
+                        <p>Our journey began in the 1980s, when this was simply a 70-acre cardamom plantation surrounded by endless greenery.</p>
+                        <p>When we first came here, what stayed with us wasn't a building or a view from a window. It was the feeling of the land itself — the misty mountains, cool mountain air, colourful butterflies and the gentle sound of birds moving through the trees.</p>
+                        <p>We knew quite early that this was something special.</p>
+                        <p>And we didn't want to change it.</p>
+                        <p>Instead, we chose to work with nature. We continued growing cardamom using natural and organic farming methods, taking care of the soil, trees and plantation that made Ambady special in the first place.</p>
+                        <p>That approach still guides us today.</p>
+                        <p>In 2006, we welcomed our first guests, Dr. Triche and his family, to our boutique plantation resort.</p>
+                        <p>From the beginning, we wanted our guests to feel the same peace that we felt when we first arrived.</p>
+                        <p>So we protected the trees, respected the landscape and allowed the natural character of the estate to remain at the heart of the experience.</p>
+                        <p>Today, Ambady Estate is known as one of the <strong>best resorts in Munnar</strong>, where comfort and nature come together in a simple, unhurried way.</p>
+                        <p>Whether you're looking for a <strong>luxury resort in Munnar</strong> or a peaceful nature resort, we invite you to spend some time here and experience Munnar differently.</p>
+                        <p>And then there are the mornings.</p>
+                        <p>You may wake to the call of a Hornbill, the familiar song of a Malabar Whistling Thrush, or the movement of Sunbirds and Woodpeckers among the trees.</p>
+                        <p>Colourful butterflies move through the cardamom plants, while seasonal visitors add to the life around the estate.</p>
+                        <p>Take a walk.</p>
+                        <p>Sit quietly.</p>
+                        <p>Or simply listen.</p>
+                        <p>At Ambady Estate, nature isn't something you come here just to see. It's something you become part of.</p>
+                    </div>
 
                     <div class="about-feature-list mt-2">
                         <div class="about-feature-item active" data-image="{% static 'ambadyestate-main/image/new/about2.webp' %}">
@@ -174,8 +200,8 @@
                                 </svg>
                             </div>
                             <div class="about-feature-text">
-                                <h5>Estate Hospitality</h5>
-                                <p>Friendly on-site support for a smooth and restful stay.</p>
+                                <h3 class="about-feature-title">Estate Hospitality</h3>
+                                <p>Warm, friendly support from our team to help you feel comfortable from the moment you arrive until it's time to leave.</p>
                             </div>
                         </div>
                         <div class="about-feature-item" data-image="{% static 'ambadyestate-main/image/img.jpg' %}">
@@ -188,8 +214,8 @@
                                 </svg>
                             </div>
                             <div class="about-feature-text">
-                                <h5>Fresh Local Food</h5>
-                                <p>Simple, comforting meals inspired by local flavours.</p>
+                                <h3 class="about-feature-title">Fresh Local Food</h3>
+                                <p>Freshly prepared meals with familiar local flavours, bringing a little taste of Kerala to your stay.</p>
                             </div>
                         </div>
                         <div class="about-feature-item" data-image="{% static 'ambadyestate-main/webp/img.webp' %}">
@@ -201,8 +227,8 @@
                                 </svg>
                             </div>
                             <div class="about-feature-text">
-                                <h5>Easy Access</h5>
-                                <p>Convenient facilities that make longer stays comfortable.</p>
+                                <h3 class="about-feature-title">Easy Access</h3>
+                                <p>Thoughtful facilities and everyday comforts that make your time at the estate easy and relaxed.</p>
                             </div>
                         </div>
                     </div>
@@ -218,7 +244,7 @@
                 </div>
             </div>
 
-            <!-- Right: Image -->
+            <!-- Right: Image (sticky — stays in view while the story scrolls past on the left) -->
             <div class="col col-xl-7 mb-xl-0 mb-4 scrollanimation animated scroll-fadeInRight about-media-col">
                 <div class="about-media-wrap">
                     <div class="about-pattern-layer" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');"></div>
@@ -235,6 +261,130 @@
     </div>
 </div>
 
+<style>
+/* ===== Semantic heading tags, original visual sizing =====
+   Tags were promoted to their correct place in the document outline
+   (H1 → H2 eyebrow → H3 heading → H3 feature titles) without changing
+   how anything looks. Browser default heading sizes are overridden back
+   to what the design already had. */
+
+/* H1: page-level heading, kept visually modest — the H3 below it
+   ("A Peaceful Estate Retreat...") remains the section's main visual
+   heading, so this doesn't compete with it for attention. */
+.about-page-h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: 1;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.2;
+    text-align: center;
+}
+@media (min-width: 1200px) {
+    .about-page-h1 {
+        font-size: 2.75rem;
+        text-align: left;
+    }
+}
+@media (max-width: 575.98px) {
+    .about-page-h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* H2: the small eyebrow label — was previously an h6, now correctly an
+   h2, restyled to match its original small-caps look exactly. */
+.about-eyebrow {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* H3 (feature titles): were previously h5s, now correctly h3s, restyled
+   back to the compact feature-list size. */
+.about-feature-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem 0;
+    line-height: 1.3;
+}
+</style>
+
+<style>
+/* ===== Long-form story paragraphs ===== */
+.about-story {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.about-story p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.75;
+    font-weight: 400;
+    color: inherit;
+    letter-spacing: normal;
+    /* Justified text: every full line ends flush at the same right
+       edge (like the reference). The last line of each paragraph stays
+       left-aligned instead of stretching out — text-align-last handles
+       that, with a fallback for browsers that don't support it. */
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+}
+/* Bold "best resorts in Munnar" / "luxury resort in Munnar" mentions keep
+   the same size/line-height as the rest of the paragraph — only weight
+   changes, so no line in any paragraph sits taller or shorter than any
+   other. */
+.about-story p strong {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 700;
+}
+
+/* ===== Sticky image column =====
+   The row needs to grow to the height of the (now much taller) text
+   column for the sticky image to have room to travel and "stick" — so
+   the row uses align-items-start instead of center (see the row class
+   change above), and the media column pins itself to the top of the
+   viewport as the page scrolls, only releasing once its own column
+   height runs out (i.e. once the text column finishes scrolling past
+   it). align-self here is a safety net in case an ancestor's flex rules
+   change; position: sticky is what actually does the work. */
+.about-media-col {
+    position: sticky;
+    /* IMPORTANT: the site header is position: fixed and sits on top of
+       the page. A small top offset (e.g. 110px) lets the sticky image
+       ride up underneath that fixed header as you scroll — which is
+       what was cutting off the corner-frame brackets and pinning the
+       image too high. Push the stick point below the header's full
+       height instead, so the image always settles at the same level,
+       clear of the header, like the reference. Adjust this value to
+       match the exact header height on this site if it differs. */
+    top: 180px;
+    align-self: flex-start;
+    /* No transform/will-change here — either one creates a new
+       containing block and silently breaks position: sticky. If the
+       scrollanimation library used elsewhere on this page leaves a
+       lingering transform on .scroll-fadeInRight after the entrance
+       animation finishes, override it: */
+    transform: none;
+}
+
+@media (max-width: 1199.98px) {
+    /* Below the xl breakpoint the layout stacks to a single column, so
+       sticky no longer makes sense — let the image sit inline normally. */
+    .about-media-col {
+        position: static;
+        top: auto;
+    }
+}
+</style>
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
     <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">

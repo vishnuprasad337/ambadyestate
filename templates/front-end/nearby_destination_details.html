@@ -110,64 +110,78 @@
     }
 </style>
 
-<!-- ===== DESTINATION DETAILS ===== -->
-<div id="destination-details" class="section" style="background-image: url('{% static 'ambadyestate-main/bag.png' %}');">
+<!-- ===== DESTINATION BODY: heading, then large image + gallery, then description
+     (same flow as the blog details page: title first, then a big inset image,
+     then the write-up below it) ===== -->
+<div id="destination-details" class="section dest-body-section bg-attach-cover" style="background-image: url('{% static 'ambadyestate-main/bag.png' %}');">
     <div class="destination-details-overlay"></div>
+
     <div class="r-container destination-details-content">
-        <div class="dest-viewer-wrap">
-            <div class="dest-viewer-grid">
-
-                <!-- LEFT: Image viewer -->
-                <div class="dest-anim dest-anim-left" data-anim="left">
-                    <div class="dest-main-image-frame">
-                        <img id="destMainImage" src="{{ destination.image.url }}" alt="{{ destination.name }}">
-                        {% if gallery_images %}
-                        <button type="button" class="dest-nav-arrow prev" id="destPrevBtn">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button type="button" class="dest-nav-arrow next" id="destNextBtn">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                        {% endif %}
-                        {% if destination.distance %}
-                        <div class="dest-tag">{{ destination.distance }} km</div>
-                        {% endif %}
-                    </div>
-
-                    {% if gallery_images %}
-                    <div class="dest-dots-row" id="destDotsRow"></div>
-
-                    <div class="dest-thumb-grid" id="destThumbGrid">
-                        <div class="dest-thumb-item active" data-index="0">
-                            <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
-                        </div>
-                        {% for img in gallery_images %}
-                        <div class="dest-thumb-item" data-index="{{ forloop.counter }}">
-                            <img src="{{ img.image.url }}" alt="{{ img.caption|default:destination.name }}">
-                        </div>
-                        {% endfor %}
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col col-xl-9 line-anim-group">
+                <span class="dest-eyebrow">Nearby Destination</span>
+                <h3 class="dest-section-title">{{ destination.name }}</h3>
+                {% if destination.distance or destination.location %}
+                <div class="dest-tag-row">
+                    {% if destination.distance %}
+                    <span class="dest-pill"><i class="fa-solid fa-route"></i> {{ destination.distance }} km</span>
+                    {% endif %}
+                    {% if destination.location %}
+                    <span class="dest-pill"><i class="fa-solid fa-location-dot"></i> {{ destination.location }}</span>
                     {% endif %}
                 </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-                <!-- RIGHT: Details -->
-                <div class="dest-info-col dest-anim dest-anim-right" data-anim="right">
-                    <h6 class="accent-color-2">Nearby Destination</h6>
-                    <h3 class="dest-title">{{ destination.name }}</h3>
-
-                    <div class="dest-tag-row">
-                        {% if destination.distance %}
-                        <span class="dest-pill"><i class="fa-solid fa-route"></i> {{ destination.distance }} km</span>
-                        {% endif %}
-                        {% if destination.location %}
-                        <span class="dest-pill"><i class="fa-solid fa-location-dot"></i> {{ destination.location }}</span>
-                        {% endif %}
-                    </div>
-
-                   <div class="dest-description">
-    {{ destination.description|safe }}
+    <!-- Large image with side spacing, matching the blog page's inset treatment -->
+   {% comment %}
+<div class="dest-content-img-wrap anim-el anim-right anim-float">
+    <img id="destMainImage" src="{{ destination.image.url }}" alt="{{ destination.name }}">
+    {% if gallery_images %}
+    <button type="button" class="dest-nav-arrow prev" id="destPrevBtn">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button type="button" class="dest-nav-arrow next" id="destNextBtn">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    {% endif %}
+    {% if destination.distance %}
+    <div class="dest-tag">{{ destination.distance }} km</div>
+    {% endif %}
 </div>
+{% endcomment %}
 
+    <!-- Gallery: dots + thumbnail grid, centered under the main image -->
+    {% if gallery_images %}
+    <div class="r-container">
+        <div class="row justify-content-center">
+            <div class="col col-xl-9 dest-gallery-col anim-el anim-bottom">
+                <div class="dest-dots-row" id="destDotsRow"></div>
+                <div class="dest-thumb-grid" id="destThumbGrid">
+                    <div class="dest-thumb-item active" data-index="0">
+                        <img src="{{ destination.image.url }}" alt="{{ destination.name }}">
+                    </div>
+                    {% for img in gallery_images %}
+                    <div class="dest-thumb-item" data-index="{{ forloop.counter }}">
+                        <img src="{{ img.image.url }}" alt="{{ img.caption|default:destination.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="r-container">
+        <div class="row justify-content-center">
+            <div class="col col-xl-9">
+                <div class="dest-description">
+                    {{ destination.description|safe }}
+                </div>
+
+                <div class="dest-cta-wrap anim-el anim-bottom">
                     <a href="{% url 'ambadyestate_app:contact_page' %}" class="btn-primary dest-cta">
                         Contact Us
                         <i class="fa-solid fa-arrow-right"></i>
@@ -181,19 +195,10 @@
 <style>
     #destination-details {
         position: relative;
-        padding: 60px 0 100px;
+        padding: 90px 0 90px;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        /* overflow: hidden here previously broke position: sticky on
-           .dest-anim-left, because ANY ancestor with overflow set to
-           hidden/auto/scroll turns into the sticky element's containing
-           scroll box instead of the viewport. overflow-x: clip hides the
-           same horizontal spill from the translateX() entrance animation
-           without creating that scroll container, so sticky still works
-           relative to the page. Needs Chrome 90+ / Firefox 113+ / Safari 16+
-           (all current as of 2026); see fallback note below if you must
-           support older browsers. */
         overflow-x: clip;
     }
 
@@ -202,112 +207,98 @@
         inset: 0;
         background: rgba(245, 245, 240, 0.55);
         z-index: 1;
+        pointer-events: none;
     }
 
-    .destination-details-content {
+    .destination-details-content,
+    #destination-details > .r-container {
         position: relative;
         z-index: 2;
     }
 
-    /* ---------- Viewer wrap (transparent, matches page bg) ---------- */
-    .dest-viewer-wrap {
-        background: transparent;
-        border-radius: 24px;
-        border: none;
-        box-shadow: none;
-        padding: 32px;
+    /* ---------- Title block ---------- */
+    .dest-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 2.2px;
+        text-transform: uppercase;
+        color: var(--accent-color, #2c5f1a);
+        margin-bottom: 6px;
     }
-
-    .dest-viewer-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-        align-items: start;
-        gap: 40px;
-    }
-
-    /* ---------- Entrance animations ---------- */
-    .dest-anim {
-        width: 100%;
-        min-width: 0;
-        opacity: 0;
-        filter: blur(6px);
-        transition:
-            opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-            filter 0.9s ease;
-        will-change: transform, opacity, filter;
-    }
-
-    .dest-anim-left {
-        transform: translateX(-140px) scale(0.92) rotate(-3deg);
-        position: sticky;
-        top: 0; /* sticks flush with the top of the viewport as soon as it reaches it */
-        align-self: start;
-    }
-
-    .dest-anim-right {
-        transform: translateX(140px) scale(0.92) rotate(3deg);
-    }
-
-    .dest-anim.dest-in-view {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateX(0) scale(1) rotate(0deg);
-    }
-
-    /* Stagger inner elements of the info column */
-    .dest-info-col > * {
-        opacity: 0;
-        transform: translateY(45px) scale(0.95);
-        transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .dest-info-col.dest-in-view > *:nth-child(1) { transition-delay: 0.05s; }
-    .dest-info-col.dest-in-view > *:nth-child(2) { transition-delay: 0.15s; }
-    .dest-info-col.dest-in-view > *:nth-child(3) { transition-delay: 0.25s; }
-    .dest-info-col.dest-in-view > *:nth-child(4) { transition-delay: 0.35s; }
-    .dest-info-col.dest-in-view > *:nth-child(5) { transition-delay: 0.45s; }
-
-    .dest-info-col.dest-in-view > * {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-    /* ---------- Left: image viewer ---------- */
-    .dest-main-image-frame {
-        position: relative;
+    .dest-eyebrow::before {
+        content: "";
         display: block;
-        width: 100%;
-        min-width: 100%;
-        aspect-ratio: 4 / 3;
-        min-height: 340px;
-        border-radius: 16px;
+        width: 26px;
+        height: 1.5px;
+        background: var(--accent-color-2, #c8a86a);
+    }
+
+    .dest-section-title {
+        font-weight: 300;
+        font-size: clamp(1.9rem, 3vw, 2.6rem);
+        color: var(--text-color, #1a1e16);
+        letter-spacing: -0.5px;
+        margin: 0 0 16px;
+    }
+
+    .dest-tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .dest-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 0.85rem;
+        color: var(--text-color, #1a1e16);
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .dest-pill i {
+        color: var(--accent-color-2, #c8a86a);
+    }
+
+    /* ---------- Large image, same inset treatment as the blog page ---------- */
+    .dest-content-img-wrap {
+        position: relative;
+        width: calc(100% - 40px);
+        margin: 34px auto 50px;
         overflow: hidden;
+        border-radius: 32px;
         background: #eceae0;
     }
-
-    .dest-main-image-frame img {
-        position: absolute;
-        inset: 0;
+    .dest-content-img-wrap img {
         width: 100%;
-        height: 100%;
+        height: 70vh;
+        max-height: 720px;
         object-fit: cover;
-        object-position: center;
         display: block;
-        transition: transform 0.6s ease, opacity 0.4s ease;
+        transition: opacity 0.4s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dest-content-img-wrap:hover img {
+        transform: scale(1.03);
     }
 
     .dest-tag {
         position: absolute;
-        top: 16px;
-        right: 16px;
+        top: 20px;
+        right: 20px;
         background: var(--accent-color-2, #c8a86a);
         color: var(--text-color, #1a1e16);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.5px;
         text-transform: uppercase;
-        padding: 6px 14px;
+        padding: 7px 16px;
         border-radius: 6px;
         z-index: 2;
     }
@@ -316,8 +307,8 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 42px;
-        height: 42px;
+        width: 46px;
+        height: 46px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.92);
         border: none;
@@ -325,26 +316,31 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 17px;
         color: var(--accent-color, #2c5f1a);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
         transition: background 0.3s ease, transform 0.3s ease;
         z-index: 2;
     }
 
-    .dest-nav-arrow.prev { left: 14px; }
-    .dest-nav-arrow.next { right: 14px; }
+    .dest-nav-arrow.prev { left: 18px; }
+    .dest-nav-arrow.next { right: 18px; }
     .dest-nav-arrow:hover {
         background: var(--accent-color-2, #c8a86a);
         color: #fff;
         transform: translateY(-50%) scale(1.08);
     }
 
+    /* ---------- Gallery: dots + thumbnails, centered under the image ---------- */
+    .dest-gallery-col {
+        margin-bottom: 46px;
+    }
+
     .dest-dots-row {
         display: flex;
         justify-content: center;
         gap: 8px;
-        margin: 16px 0;
+        margin-bottom: 18px;
     }
 
     .dest-dots-row .dest-dot {
@@ -363,16 +359,16 @@
 
     .dest-thumb-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
         width: 100%;
-        gap: 12px;
+        gap: 14px;
     }
 
     .dest-thumb-item {
         position: relative;
         width: 100%;
         aspect-ratio: 1 / 1;
-        border-radius: 10px;
+        border-radius: 12px;
         overflow: hidden;
         cursor: pointer;
         border: 2px solid transparent;
@@ -393,48 +389,16 @@
         object-fit: cover;
     }
 
-    /* ---------- Right: details panel ---------- */
-    .dest-info-col {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .dest-title {
-        margin: 6px 0 16px;
-    }
-
-    .dest-tag-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .dest-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        padding: 7px 14px;
-        font-size: 0.85rem;
-        color: var(--text-color, #1a1e16);
-    }
-
-    .dest-pill i {
-        color: var(--accent-color-2, #c8a86a);
-    }
-
+    /* ---------- Description ---------- */
     .dest-description {
-        font-size: 0.95rem;
-        line-height: 1.8;
-        color: rgba(26, 30, 22, 0.75);
-        margin-bottom: 24px;
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: var(--text-color, #1a1e16);
+        opacity: 0.8;
     }
     .dest-description p {
-        margin: 0 0 18px;
+        margin: 0 0 22px;
     }
-
     .dest-description p:last-child {
         margin-bottom: 0;
     }
@@ -442,7 +406,7 @@
     .dest-description ul,
     .dest-description ol {
         list-style: none;
-        margin: 20px 0;
+        margin: 26px 0;
         padding: 0;
         display: flex;
         flex-direction: column;
@@ -451,8 +415,8 @@
 
     .dest-description li {
         position: relative;
-        padding-left: 34px;
-        line-height: 1.65;
+        padding-left: 38px;
+        line-height: 1.75;
     }
 
     .dest-description li::before {
@@ -461,13 +425,13 @@
         font-weight: 900;
         position: absolute;
         left: 0;
-        top: 2px;
-        width: 20px;
-        height: 20px;
+        top: 3px;
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
         background: var(--accent-color-2, #c8a86a);
         color: #fff;
-        font-size: 0.58rem;
+        font-size: 0.62rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -476,14 +440,20 @@
 
     .dest-description img {
         max-width: 100%;
-        border-radius: 10px;
+        height: auto;
+        border-radius: 18px;
+        margin: 24px 0;
+        display: block;
+    }
+
+    .dest-cta-wrap {
+        margin-top: 40px;
     }
 
     .dest-cta {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        align-self: flex-start;
         background: var(--accent-color, #2c5f1a);
         color: #fff;
         padding: 14px 28px;
@@ -492,7 +462,6 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: background 0.3s ease, transform 0.3s ease;
-        margin-top: auto;
     }
 
     .dest-cta:hover {
@@ -501,50 +470,58 @@
         transform: translateY(-2px);
     }
 
+    /* ---------- Entrance animations (same language as the blog page) ---------- */
+    .anim-el {
+        opacity: 0;
+        filter: blur(9px);
+        transition: opacity 0.7s ease-out,
+                    filter 0.9s ease-out,
+                    transform 1.15s cubic-bezier(0.22, 1.4, 0.36, 1);
+        will-change: opacity, transform, filter;
+    }
+    .anim-el.anim-left   { transform: translateX(-160px) rotate(-6deg) scale(0.82); }
+    .anim-el.anim-right  { transform: translateX(160px) rotate(6deg) scale(0.82); }
+    .anim-el.anim-top    { transform: translateY(-100px) scale(0.85); }
+    .anim-el.anim-bottom { transform: translateY(90px) scale(0.85); }
+    .anim-el.in-view {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    .anim-float.in-view {
+        animation: destGentleFloat 5s ease-in-out infinite;
+        animation-delay: 1.15s;
+    }
+    @keyframes destGentleFloat {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-10px) scale(1.01); }
+    }
+
     /* ---------- Responsive ---------- */
     @media (max-width: 991px) {
-        #destination-details {
-            background-attachment: scroll;
+        #destination-details { padding: 60px 0 70px; }
+    }
+
+    @media (max-width: 767px) {
+        .dest-content-img-wrap {
+            width: calc(100% - 20px);
+            border-radius: 22px;
+            margin: 24px auto 34px;
         }
-        .dest-viewer-wrap {
-            padding: 20px;
-        }
-        .dest-viewer-grid {
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
-        .dest-anim-left,
-        .dest-anim-right {
-            transform: translateY(40px);
-        }
-        .dest-anim.dest-in-view {
-            transform: translateY(0);
-        }
-        .dest-anim-left {
-            position: static; /* sticky only makes sense in the 2-col desktop layout */
-        }
+        .dest-content-img-wrap img { height: 45vh; }
+        .dest-description { font-size: 1.1rem; line-height: 1.85; }
+        .dest-section-title { font-size: 1.6rem; }
+        .dest-thumb-grid { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .dest-anim,
-        .dest-info-col > * {
+        .anim-el, .anim-float {
             transition: none !important;
             opacity: 1 !important;
+            filter: none !important;
             transform: none !important;
+            animation: none !important;
         }
-    }
-
-    /* Safety net: if JS never fires (blocked, error, or a timing miss where
-       the right column's smaller height never crosses the intersection
-       threshold), force content visible instead of staying hidden forever. */
-    .dest-anim.dest-fallback-visible {
-        opacity: 1 !important;
-        filter: blur(0) !important;
-        transform: none !important;
-    }
-    .dest-anim.dest-fallback-visible > * {
-        opacity: 1 !important;
-        transform: none !important;
     }
 </style>
 
@@ -598,37 +575,48 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* ---- Entrance animation on scroll ----
-       Fixed version:
-       - Triggers each element in ONCE, then stops observing it, instead of
-         toggling the class on and off every time it crosses the threshold.
-         The old on/off behavior could leave the taller/shorter of the two
-         columns (usually the text column) stuck in the "removed" state,
-         which is why the right-hand details column was invisible.
-       - Lower threshold (0.1) so a shorter details column still crosses
-         the intersection ratio even when the image column is taller.
-       - A fallback timer force-shows all .dest-anim elements after 1.5s in
-         case the observer never fires for some reason (JS error earlier,
-         layout edge case, etc.), so content is never permanently hidden. */
-    const animEls = document.querySelectorAll('.dest-anim');
+    /* ---- Entrance animation on scroll (same pattern as the blog page) ---- */
+
+    // Break the title block into individually-animated lines, alternating
+    // left/right, same as the blog article heading.
+    var lineGroups = Array.prototype.slice.call(document.querySelectorAll('.line-anim-group'));
+    lineGroups.forEach(function (group) {
+        Array.prototype.slice.call(group.children).forEach(function (line, i) {
+            line.classList.add('anim-el', i % 2 === 0 ? 'anim-left' : 'anim-right');
+        });
+    });
+
+    // Break the CMS-authored description into its own individually
+    // animated lines, alternating left/right, same as the blog article body.
+    var descBody = document.querySelector('.dest-description');
+    if (descBody) {
+        var descLines = Array.prototype.slice.call(descBody.querySelectorAll('p, li, h2, h3, h4'));
+        descLines.forEach(function (line, i) {
+            line.classList.add('anim-el', i % 2 === 0 ? 'anim-left' : 'anim-right');
+        });
+    }
+
+    var animEls = Array.prototype.slice.call(document.querySelectorAll('.anim-el'));
 
     if ('IntersectionObserver' in window && animEls.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('dest-in-view');
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('in-view');
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-        animEls.forEach(el => observer.observe(el));
+        animEls.forEach(function (el) { revealObserver.observe(el); });
 
-        setTimeout(() => {
-            animEls.forEach(el => el.classList.add('dest-fallback-visible'));
+        // Safety net: force everything visible if the observer never
+        // fires for some reason, so content is never permanently hidden.
+        setTimeout(function () {
+            animEls.forEach(function (el) { el.classList.add('in-view'); });
         }, 1500);
     } else {
-        animEls.forEach(el => el.classList.add('dest-in-view'));
+        animEls.forEach(function (el) { el.classList.add('in-view'); });
     }
 });
 </script>
