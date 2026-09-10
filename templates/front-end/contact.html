@@ -142,7 +142,7 @@
                     </div>
                     <h5>Phone Number</h5>
                     <p><a href="tel:+919995497856">+91 96563 55500</a></p>
-                   
+
                     <span class="contact-info-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                     </div>
                     <h5>Email Address</h5>
                     <p><a href="mailto:info@ambadyestate.com">ambadyestatemnr@gmail.com</a></p>
-                    
+
                     <span class="contact-info-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
                 </div>
             </div>
@@ -399,6 +399,11 @@
                         {% endfor %}
                     </div>
 
+                    <div class="contact-fm-recaptcha">
+                        <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                        <span class="contact-fm-error" data-field-error="recaptcha"></span>
+                    </div>
+
                     <button type="submit" class="contact-fm-submit">
                         <span class="btn-label">Send Message</span>
                         <i class="fa-solid fa-arrow-right"></i>
@@ -518,6 +523,13 @@
         min-height: 16px;
     }
 
+    /* ===== reCAPTCHA wrapper ===== */
+    .contact-fm-recaptcha {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
     .contact-fm-submit {
         margin-top: 6px;
         padding: 16px 30px;
@@ -617,6 +629,10 @@
         .contact-fm-field textarea {
             min-height: 110px;
         }
+        .contact-fm-recaptcha .g-recaptcha {
+            transform: scale(0.9);
+            transform-origin: 0 0;
+        }
         .contact-fm-submit {
             width: 100%;
             padding: 15px 22px;
@@ -637,6 +653,10 @@
         }
         .contact-fm-left h6 {
             font-size: 0.9rem;
+        }
+        .contact-fm-recaptcha .g-recaptcha {
+            transform: scale(0.8);
+            transform-origin: 0 0;
         }
         .contact-fm-submit {
             font-size: 0.9rem;
@@ -827,6 +847,10 @@
         }
     }
 </style>
+
+<!-- reCAPTCHA v2 API script -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('contactForm');
@@ -904,6 +928,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (result.status === 200 && result.data.success) {
                 form.reset();
+                if (window.grecaptcha) grecaptcha.reset();
                 showSuccessModal(result.data.message);
             } else if (result.data.errors) {
                 Object.keys(result.data.errors).forEach(function (fieldName) {
@@ -912,9 +937,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 msgBox.textContent = 'Please correct the errors below.';
                 msgBox.classList.add('error');
+                if (window.grecaptcha) grecaptcha.reset();
             } else {
                 msgBox.textContent = 'Something went wrong. Please try again.';
                 msgBox.classList.add('error');
+                if (window.grecaptcha) grecaptcha.reset();
             }
         })
         .catch(function () {
@@ -922,6 +949,7 @@ document.addEventListener('DOMContentLoaded', function () {
             btnLabel.textContent = originalLabel;
             msgBox.textContent = 'Something went wrong. Please try again.';
             msgBox.classList.add('error');
+            if (window.grecaptcha) grecaptcha.reset();
         });
     });
 });

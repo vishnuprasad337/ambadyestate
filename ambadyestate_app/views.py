@@ -1035,16 +1035,57 @@ def blog_details(request, slug):
         'activities': activities,
         'packages': packages,  
     })
-
+import requests
+from django.conf import settings
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+
+
+def verify_recaptcha(token, remote_ip=None):
+    """Verify a g-recaptcha-response token with Google. Returns True/False."""
+    if not token:
+        return False
+    payload = {
+        "secret": settings.RECAPTCHA_SECRET_KEY,
+        "response": token,
+    }
+    if remote_ip:
+        payload["remoteip"] = remote_ip
+    try:
+        resp = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data=payload,
+            timeout=5,
+        )
+        return resp.json().get("success", False)
+    except requests.RequestException:
+        return False
+
+
 def contact_page(request):
     """Public-facing Contact Us page — info cards, enquiry form, and map."""
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
-    activities = Activity.objects.all().order_by('-created_at')[:6]
-    packages = Package.objects.filter(status="active").order_by('-created_at')[:6] 
 
     if request.method == "POST":
         form = ContactForm(request.POST)
+
+        recaptcha_token = request.POST.get("g-recaptcha-response")
+        recaptcha_ok = verify_recaptcha(recaptcha_token, request.META.get("REMOTE_ADDR"))
+
+        if not recaptcha_ok:
+            if is_ajax:
+                return JsonResponse({
+                    "success": False,
+                    "errors": {"recaptcha": ["Please verify that you are not a robot."]},
+                }, status=400)
+            messages.error(request, "Please verify that you are not a robot.")
+            return render(request, "front-end/contact.html", {
+                "form": form,
+                "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
+            })
+
         if form.is_valid():
             enquiry = form.save()
 
@@ -1086,8 +1127,7 @@ def contact_page(request):
 
     return render(request, "front-end/contact.html", {
         "form": form,
-        "activities": activities,
-        "packages": packages,   
+        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
     })
 
 
