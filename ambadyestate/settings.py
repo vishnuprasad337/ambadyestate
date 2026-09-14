@@ -134,3 +134,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'msvishnu673@gmail.com'
 EMAIL_HOST_PASSWORD = 'sjcf tyva aldr ashi' 
 DEFAULT_FROM_EMAIL = 'Ambady Estate<msvishnu673@gmail.com>'
+RECAPTCHA_SITE_KEY = '6Lcb-bMtAAAAAFbKLRkW4trtEqWqONWplESIntQA'
+RECAPTCHA_SECRET_KEY = '6Lcb-bMtAAAAAEBG38Alzxit8NV9bHFYKJ2bJIRX'
