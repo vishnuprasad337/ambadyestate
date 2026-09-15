@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-^)n!&h897-ru5%!c&qeu#m75)6jrwc5tm2be(a80hidw_**%dm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'www.ambadyestate.com',
+    'ambadyestate.com',
+    'ambadyestate-1-18h5.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -77,9 +83,12 @@ WSGI_APPLICATION = 'ambadyestate.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        default=os.getenv(
+            'DATABASE_URL',
+            'postgresql://postgres.bfjfxupkcufrsoegciul:M1l683FrLohaEAjy@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres'
+        ),
         conn_max_age=600,
-        ssl_require=True,
+        conn_health_checks=True,
     )
 }
 
