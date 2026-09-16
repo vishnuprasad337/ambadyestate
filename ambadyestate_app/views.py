@@ -703,7 +703,11 @@ def package_update(request, slug):
         package.description = request.POST.get("description")
 
         if request.POST.get("image-clear"):
-            package.image.delete(save=False)
+            if package.image:
+                try:
+                    package.image.delete(save=False)
+                except Exception as e:
+                    print("Image delete failed, continuing anyway:", e)
             package.image = None
         elif request.FILES.get("image"):
             package.image = request.FILES["image"]
