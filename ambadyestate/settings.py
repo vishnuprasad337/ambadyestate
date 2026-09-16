@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',      
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
-    'storages'
+    'storages',
     'ambadyestate_app'
 ]
 
