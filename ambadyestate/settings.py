@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',      
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
+    'storages'
     'ambadyestate_app'
 ]
 
@@ -142,12 +143,34 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # ============================================================
-# WHITENOISE
+# SUPABASE S3 (MEDIA) CREDENTIALS
+# ============================================================
+
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get(
+    "AWS_STORAGE_BUCKET_NAME",
+    "media"
+)
+
+AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
+
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = None
+
+AWS_QUERYSTRING_AUTH = False
+
+
+# ============================================================
+# WHITENOISE + SUPABASE STORAGES
 # ============================================================
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.s3.S3Storage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
@@ -156,12 +179,13 @@ STORAGES = {
 
 
 # ============================================================
-# MEDIA FILES
+# MEDIA FILES (Supabase S3)
 # ============================================================
 
-MEDIA_URL = "/media/"
-
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = (
+    f"{AWS_S3_ENDPOINT_URL.rsplit('/storage/v1/s3', 1)[0]}"
+    f"/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
