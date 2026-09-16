@@ -43,13 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
+    ' django.contrib.sites',      
     'django.contrib.sitemaps',
-    'ambadyestate_app',
+    'django.contrib.staticfiles',
+    'ambadyestate_app'
 ]
 
-SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
      'whitenoise.middleware.WhiteNoiseMiddleware',
