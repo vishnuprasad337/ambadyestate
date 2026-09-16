@@ -185,10 +185,7 @@ STORAGES = {
 # MEDIA FILES (Supabase S3)
 # ============================================================
 
-MEDIA_URL = (
-    f"{AWS_S3_ENDPOINT_URL.rsplit('/storage/v1/s3', 1)[0]}"
-    f"/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
-)
+MEDIA_URL = f"https://bjfxupkcufrsoegciul.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
