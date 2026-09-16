@@ -1,20 +1,7 @@
 """
 URL configuration for ambadyestate project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('blog/', views.blog, name='blog')
-
-Class-based views
-    1. Add an import:  from other_app.views import Home
-
-Including another URLconf
-    1. Add an import:  from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+The `urlpatterns` list routes URLs to views.
 """
 
 from django.contrib import admin
@@ -22,6 +9,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
+from django.contrib.sites.models import Site
 from django.http import HttpResponse
 
 from ambadyestate_app.sitemaps import (
@@ -34,6 +22,10 @@ from ambadyestate_app.sitemaps import (
 )
 
 
+# =========================================================
+# SITEMAPS
+# =========================================================
+
 sitemaps = {
     "static": StaticViewSitemap,
     "rooms": RoomSitemap,
@@ -43,6 +35,10 @@ sitemaps = {
     "blog": BlogSitemap,
 }
 
+
+# =========================================================
+# ROBOTS.TXT
+# =========================================================
 
 def robots_txt(request):
     content = """User-agent: *
@@ -69,21 +65,64 @@ Allow: /
 
 Sitemap: https://ambadyestate.com/sitemap.xml
 """
-    return HttpResponse(content, content_type="text/plain")
+    return HttpResponse(
+        content,
+        content_type="text/plain",
+    )
 
+
+# =========================================================
+# TEMPORARY SITE FIX
+# =========================================================
+
+def fix_site(request):
+    """
+    One-time URL to create/update the Django Site record
+    for the production domain.
+    """
+
+    site, created = Site.objects.get_or_create(
+        id=1,
+        defaults={
+            "domain": "ambadyestate.com",
+            "name": "Ambady Estate",
+        },
+    )
+
+    site.domain = "ambadyestate.com"
+    site.name = "Ambady Estate"
+    site.save()
+
+    if created:
+        message = "Django Site created successfully."
+    else:
+        message = "Django Site updated successfully."
+
+    return HttpResponse(
+        f"{message}<br>"
+        f"Domain: {site.domain}<br>"
+        f"Name: {site.name}"
+    )
+
+
+# =========================================================
+# URL PATTERNS
+# =========================================================
 
 urlpatterns = [
-    # Admin
-    # path("admin/", admin.site.urls),
 
+    # -----------------------------------------------------
     # Robots.txt
+    # -----------------------------------------------------
     path(
         "robots.txt",
         robots_txt,
         name="robots_txt",
     ),
 
+    # -----------------------------------------------------
     # Sitemap
+    # -----------------------------------------------------
     path(
         "sitemap.xml",
         sitemap,
@@ -91,7 +130,18 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
 
+    # -----------------------------------------------------
+    # TEMPORARY: Fix Django Site domain
+    # -----------------------------------------------------
+    path(
+        "fix-site-ambady/",
+        fix_site,
+        name="fix_site",
+    ),
+
+    # -----------------------------------------------------
     # Application URLs
+    # -----------------------------------------------------
     path(
         "",
         include("ambadyestate_app.urls"),
@@ -99,13 +149,20 @@ urlpatterns = [
 ]
 
 
-# Media files
-# WhiteNoise handles static files, so STATIC_URL is NOT added here.
+# =========================================================
+# MEDIA FILES
+# =========================================================
+
+# WhiteNoise handles STATIC files.
+# Media files are served through Django's helper.
 urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT,
 )
 
 
-# Custom 404 page
+# =========================================================
+# CUSTOM 404 PAGE
+# =========================================================
+
 handler404 = "ambadyestate_app.views.page_404"
