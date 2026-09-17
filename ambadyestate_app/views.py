@@ -686,6 +686,9 @@ def package_create(request):
         form = PackageForm()
     return render(request, "admin_pages/package_form.html", {"form": form, "action": "Create"})
 
+import logging
+import io
+
 @login_required
 def package_update(request, slug):
     package = get_object_or_404(Package, slug=slug)
@@ -712,6 +715,14 @@ def package_update(request, slug):
             print("=== UPLOADING FILE ===", repr(request.FILES["image"].name))
             package.image = request.FILES["image"]
 
+        # --- TEMP: capture raw botocore wire logs just for this save ---
+        log_buffer = io.StringIO()
+        handler = logging.StreamHandler(log_buffer)
+        handler.setLevel(logging.DEBUG)
+        botocore_logger = logging.getLogger("botocore")
+        botocore_logger.setLevel(logging.DEBUG)
+        botocore_logger.addHandler(handler)
+
         try:
             package.save()
         except Exception as e:
@@ -721,7 +732,19 @@ def package_update(request, slug):
             if hasattr(e, "response"):
                 print(e.response)
             traceback.print_exc()
+
+            # Pull out just the response-body lines from the captured log
+            raw_log = log_buffer.getvalue()
+            print("=== RAW BOTOCORE LOG (filtered) ===")
+            for line in raw_log.splitlines():
+                if "body" in line.lower() or "Response" in line or "storage.supabase.co" in line:
+                    print(line)
+            print("=== END RAW BOTOCORE LOG ===")
+
             raise
+        finally:
+            botocore_logger.removeHandler(handler)
+        # --- end temp logging block ---
 
         package.rooms.set(request.POST.getlist("rooms"))
         package.activities.set(request.POST.getlist("activities"))
