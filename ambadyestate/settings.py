@@ -149,9 +149,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
-AWS_S3_ADDRESSING_STYLE = "path"
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-
 AWS_STORAGE_BUCKET_NAME = os.environ.get(
     "AWS_STORAGE_BUCKET_NAME",
     "media"
@@ -178,6 +175,8 @@ STORAGES = {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "client_config": Config(
+                s3={"addressing_style": "path"},
+                signature_version="s3v4",
                 request_checksum_calculation="when_required",
                 response_checksum_validation="when_required",
             ),
