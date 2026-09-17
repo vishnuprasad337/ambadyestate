@@ -193,10 +193,7 @@ STORAGES = {
 }
 
 
-MEDIA_URL = (
-    "https://bjfxupkcufrsoegciul.supabase.co/"
-    "storage/v1/object/public/media/"
-)
+MEDIA_URL = f"https://bfjfxupkcufrsoegciul.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
