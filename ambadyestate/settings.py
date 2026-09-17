@@ -143,7 +143,69 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # ============================================================
+# SUPABASE S3 STORAGE# ============================================================
 # SUPABASE S3 STORAGE
+# ============================================================
+
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get(
+    "AWS_STORAGE_BUCKET_NAME",
+    "media"
+)
+
+AWS_S3_ENDPOINT_URL = os.environ.get(
+    "AWS_S3_ENDPOINT_URL",
+    "https://bfjfxupkcufrsoegciul.storage.supabase.co/storage/v1/s3"
+)
+
+AWS_S3_REGION_NAME = os.environ.get(
+    "AWS_S3_REGION_NAME",
+    "ap-northeast-1"
+)
+
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_ADDRESSING_STYLE = "path"
+
+# This is the public CDN host Supabase actually serves files from.
+# Without this, django-storages builds URLs against the S3-protocol
+# endpoint (AWS_S3_ENDPOINT_URL), which requires a signed request and
+# returns AccessDenied for plain <img src> requests — that's why
+# uploads succeed but images don't render on the site.
+AWS_S3_CUSTOM_DOMAIN = os.environ.get(
+    "AWS_S3_CUSTOM_DOMAIN",
+    f"bfjfxupkcufrsoegciul.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}"
+)
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "endpoint_url": AWS_S3_ENDPOINT_URL,
+            "region_name": AWS_S3_REGION_NAME,
+            "access_key": AWS_ACCESS_KEY_ID,
+            "secret_key": AWS_SECRET_ACCESS_KEY,
+            "custom_domain": AWS_S3_CUSTOM_DOMAIN,
+            "file_overwrite": True,
+            "default_acl": None,
+            "querystring_auth": False,
+            "signature_version": "s3v4",
+        },
+    },
+
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+
+MEDIA_URL = f"https://bfjfxupkcufrsoegciul.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
 # ============================================================
 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
