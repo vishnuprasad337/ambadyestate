@@ -686,7 +686,6 @@ def package_create(request):
         form = PackageForm()
     return render(request, "admin_pages/package_form.html", {"form": form, "action": "Create"})
 
-
 @login_required
 def package_update(request, slug):
     package = get_object_or_404(Package, slug=slug)
@@ -712,7 +711,16 @@ def package_update(request, slug):
         elif request.FILES.get("image"):
             package.image = request.FILES["image"]
 
-        package.save()
+        try:
+            package.save()
+        except Exception as e:
+            import traceback
+            print("=== S3 UPLOAD ERROR ===")
+            print(repr(e))
+            if hasattr(e, "response"):
+                print(e.response)
+            traceback.print_exc()
+            raise
 
         package.rooms.set(request.POST.getlist("rooms"))
         package.activities.set(request.POST.getlist("activities"))
