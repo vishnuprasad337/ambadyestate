@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     'ambadyestate-1-18h5.onrender.com',
     'localhost',
     '127.0.0.1',
+    '*'
 ]
 
 
