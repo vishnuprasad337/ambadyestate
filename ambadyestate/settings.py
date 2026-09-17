@@ -156,7 +156,7 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get(
 
 AWS_S3_ENDPOINT_URL = os.environ.get(
     "AWS_S3_ENDPOINT_URL",
-    "https://bjfxupkcufrsoegciul.storage.supabase.co/storage/v1/s3"
+    "https://bfjfxupkcufrsoegciul.storage.supabase.co/storage/v1/s3"
 )
 
 AWS_S3_REGION_NAME = os.environ.get(
