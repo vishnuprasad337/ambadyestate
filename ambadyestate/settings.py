@@ -171,15 +171,22 @@ AWS_QUERYSTRING_AUTH = False
 # WHITENOISE + SUPABASE STORAGES
 # ============================================================
 
+from botocore.config import Config
+
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "client_config": Config(
+                request_checksum_calculation="when_required",
+                response_checksum_validation="when_required",
+            ),
+        },
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
-
 
 # ============================================================
 # MEDIA FILES (Supabase S3)
@@ -191,8 +198,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'msvishnu673@gmail.com'
-EMAIL_HOST_PASSWORD = 'sjcf tyva aldr ashi' 
-DEFAULT_FROM_EMAIL = 'Ambady Estate<msvishnu673@gmail.com>'
+EMAIL_HOST_USER = 'ambadyestatemnr@gmail.com'
+EMAIL_HOST_PASSWORD = 'xbgy szcu owcg nnfu' 
+DEFAULT_FROM_EMAIL = 'Ambady Estate<ambadyestatemnr@gmail.com>'
 RECAPTCHA_SITE_KEY = '6Lcb-bMtAAAAAFbKLRkW4trtEqWqONWplESIntQA'
 RECAPTCHA_SECRET_KEY = '6Lcb-bMtAAAAAEBG38Alzxit8NV9bHFYKJ2bJIRX'
