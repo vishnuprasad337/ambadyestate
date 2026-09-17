@@ -143,7 +143,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # ============================================================
-# SUPABASE S3 (MEDIA) CREDENTIALS
+# SUPABASE S3 STORAGE
 # ============================================================
 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
@@ -154,42 +154,49 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get(
     "media"
 )
 
-AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
+AWS_S3_ENDPOINT_URL = os.environ.get(
+    "AWS_S3_ENDPOINT_URL",
+    "https://bjfxupkcufrsoegciul.storage.supabase.co/storage/v1/s3"
+)
 
-AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_S3_REGION_NAME = os.environ.get(
+    "AWS_S3_REGION_NAME",
+    "ap-northeast-1"
+)
 
 AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = None
-
 AWS_QUERYSTRING_AUTH = False
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_ADDRESSING_STYLE = "path"
 
-
-# ============================================================
-# WHITENOISE + SUPABASE STORAGES
-# ============================================================
-
-from botocore.config import Config
 
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "client_config": Config(
-                s3={"addressing_style": "path"},
-                signature_version="s3v4",
-            ),
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "endpoint_url": AWS_S3_ENDPOINT_URL,
+            "region_name": AWS_S3_REGION_NAME,
+            "access_key": AWS_ACCESS_KEY_ID,
+            "secret_key": AWS_SECRET_ACCESS_KEY,
+            "file_overwrite": True,
+            "default_acl": None,
+            "querystring_auth": False,
+            "signature_version": "s3v4",
         },
     },
+
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# ============================================================
-# MEDIA FILES (Supabase S3)
-# ============================================================
 
-MEDIA_URL = f"https://bjfxupkcufrsoegciul.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}/"
+MEDIA_URL = (
+    "https://bjfxupkcufrsoegciul.supabase.co/"
+    "storage/v1/object/public/media/"
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
