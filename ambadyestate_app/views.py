@@ -709,6 +709,7 @@ def package_update(request, slug):
                     print("Image delete failed, continuing anyway:", e)
             package.image = None
         elif request.FILES.get("image"):
+            print("=== UPLOADING FILE ===", repr(request.FILES["image"].name))
             package.image = request.FILES["image"]
 
         try:
