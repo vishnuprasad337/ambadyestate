@@ -153,12 +153,7 @@ urlpatterns = [
 # MEDIA FILES
 # =========================================================
 
-# WhiteNoise handles STATIC files.
-# Media files are served through Django's helper.
-urlpatterns += static(
-    settings.MEDIA_URL,
-    document_root=settings.MEDIA_ROOT,
-)
+
 
 
 # =========================================================
