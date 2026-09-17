@@ -353,8 +353,13 @@ def room_add(request):
         "admin_pages/room_form.html",
         {"form": form, "image_form": image_form, "action": "Add"},
     )
+import logging
+
+logger = logging.getLogger(__name__)
 
 from django.db.models import Max
+
+
 @login_required
 def room_edit(request, slug):
     room = get_object_or_404(Room, slug=slug)
@@ -371,12 +376,21 @@ def room_edit(request, slug):
                 # first newly-picked image replaces the cover; rest go to gallery
                 room.main_image = files[0]
 
-            room.save()
+            try:
+                room.save()
 
-            if len(files) > 1:
-                last_order = room.images.aggregate(Max("order"))["order__max"] or 0
-                for i, f in enumerate(files[1:], start=1):
-                    RoomImage.objects.create(room=room, image=f, order=last_order + i)
+                if len(files) > 1:
+                    last_order = room.images.aggregate(Max("order"))["order__max"] or 0
+                    for i, f in enumerate(files[1:], start=1):
+                        RoomImage.objects.create(room=room, image=f, order=last_order + i)
+            except Exception as e:
+                logger.exception("Room save failed (likely S3 upload error) for slug=%s", slug)
+                messages.error(request, f"Could not save room — upload failed: {e}")
+                return render(
+                    request,
+                    "admin_pages/room_form.html",
+                    {"form": form, "image_form": image_form, "action": "Edit", "room": room},
+                )
 
             delete_ids = request.POST.getlist("delete_images")
             if delete_ids:
