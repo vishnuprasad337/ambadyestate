@@ -29,10 +29,14 @@ class OptimizedImageModel(models.Model):
         # Optimize all declared image fields
         for field in self.image_fields:
             image_field = getattr(self, field, None)
-            if image_field and hasattr(image_field, "path"):
-                optimize_image(image_field.path)
-
-
+            if image_field:
+                try:
+                    path = image_field.path
+                except NotImplementedError:
+                    # Remote storage (e.g. S3) has no local filesystem path —
+                    # optimize_image() can't run against it, so skip silently.
+                    continue
+                optimize_image(path)
 # --------- Blogs ---------
 class Blog(OptimizedImageModel):
     image = models.ImageField(upload_to="blogs/", help_text="Blog cover image")
