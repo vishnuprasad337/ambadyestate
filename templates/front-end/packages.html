@@ -196,7 +196,11 @@
                 <div class="swiper-slide">
                     <a href="{% url 'ambadyestate_app:package_details' package.slug %}" class="package-card">
                         <div class="package-card-media">
-                            <img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
+                            {% if package.image %}
+<img src="{{ package.image.url }}" alt="{{ package.name }}" loading="lazy">
+{% else %}
+<img src="{% static 'ambadyestate-main/logo-ambadi1.webp' %}" alt="{{ package.name }}" loading="lazy">
+{% endif %}
                         </div>
                         <div class="package-card-overlay"></div>
 
