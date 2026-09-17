@@ -687,72 +687,56 @@ def package_create(request):
     return render(request, "admin_pages/package_form.html", {"form": form, "action": "Create"})
 
 import logging
-import io
-
+ 
+logger = logging.getLogger(__name__)
+ 
+ 
 @login_required
 def package_update(request, slug):
     package = get_object_or_404(Package, slug=slug)
-    if request.method == "POST":
-        print("=== DEBUG package_update POST ===")
-        print("rooms:", request.POST.getlist("rooms"))
-        print("activities:", request.POST.getlist("activities"))
-        print("all POST keys:", list(request.POST.keys()))
-        print("==================================")
-
-        package.name = request.POST.get("name")
-        package.duration = request.POST.get("duration")
-        package.price = request.POST.get("price") or None
-        package.description = request.POST.get("description")
-
-        if request.POST.get("image-clear"):
-            if package.image:
-                try:
-                    package.image.delete(save=False)
-                except Exception as e:
-                    print("Image delete failed, continuing anyway:", e)
-            package.image = None
-        elif request.FILES.get("image"):
-            print("=== UPLOADING FILE ===", repr(request.FILES["image"].name))
-            package.image = request.FILES["image"]
-
-        # --- TEMP: capture raw botocore wire logs just for this save ---
-        log_buffer = io.StringIO()
-        handler = logging.StreamHandler(log_buffer)
-        handler.setLevel(logging.DEBUG)
-        botocore_logger = logging.getLogger("botocore")
-        botocore_logger.setLevel(logging.DEBUG)
-        botocore_logger.addHandler(handler)
-
-        try:
-            package.save()
-        except Exception as e:
-            import traceback
-            print("=== S3 UPLOAD ERROR ===")
-            print(repr(e))
-            if hasattr(e, "response"):
-                print(e.response)
-            traceback.print_exc()
-
-            # Pull out just the response-body lines from the captured log
-            raw_log = log_buffer.getvalue()
-            print("=== RAW BOTOCORE LOG (filtered) ===")
-            for line in raw_log.splitlines():
-                if "body" in line.lower() or "Response" in line or "storage.supabase.co" in line:
-                    print(line)
-            print("=== END RAW BOTOCORE LOG ===")
-
-            raise
-        finally:
-            botocore_logger.removeHandler(handler)
-        # --- end temp logging block ---
-
-        package.rooms.set(request.POST.getlist("rooms"))
-        package.activities.set(request.POST.getlist("activities"))
-
-        messages.success(request, f'Package "{package.name}" updated successfully.')
+    if request.method != "POST":
         return redirect("ambadyestate_app:package_list")
-
+ 
+    package.name = request.POST.get("name")
+    package.duration = request.POST.get("duration")
+    package.price = request.POST.get("price") or None
+    package.description = request.POST.get("description")
+ 
+    if request.POST.get("image-clear"):
+        if package.image:
+            try:
+                package.image.delete(save=False)
+            except Exception as e:
+                logger.warning("Image delete failed, continuing anyway: %s", e)
+        package.image = None
+    elif request.FILES.get("image"):
+        package.image = request.FILES["image"]
+ 
+    try:
+        package.save()
+    except Exception as e:
+        logger.exception("Package save failed (likely S3 upload error) for slug=%s", slug)
+        messages.error(
+            request,
+            f"Could not save package — upload failed: {e}",
+        )
+        return redirect("ambadyestate_app:package_list")
+ 
+    package.rooms.set(request.POST.getlist("rooms"))
+    package.activities.set(request.POST.getlist("activities"))
+ 
+    messages.success(request, f'Package "{package.name}" updated successfully.')
     return redirect("ambadyestate_app:package_list")
+ 
+
+
+
+
+
+
+
+
+
 @login_required
 def package_delete(request, slug):
     package = get_object_or_404(Package, slug=slug)
