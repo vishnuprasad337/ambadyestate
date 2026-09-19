@@ -10,7 +10,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sites.models import Site
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from ambadyestate_app.sitemaps import (
     StaticViewSitemap,
@@ -106,6 +106,14 @@ def fix_site(request):
 
 
 # =========================================================
+# HEALTH CHECK
+# =========================================================
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
+
+
+# =========================================================
 # URL PATTERNS
 # =========================================================
 
@@ -137,6 +145,15 @@ urlpatterns = [
         "fix-site-ambady/",
         fix_site,
         name="fix_site",
+    ),
+
+    # -----------------------------------------------------
+    # Health check
+    # -----------------------------------------------------
+    path(
+        "h-e-alth/",
+        health_check,
+        name="health_check",
     ),
 
     # -----------------------------------------------------
