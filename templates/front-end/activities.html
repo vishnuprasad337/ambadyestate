@@ -20,7 +20,7 @@
             <i class="fa-solid fa-chevron-right"></i>
             <span>Activities</span>
         </span>
-        <h1 class="about-hero-title">Activities &amp; Experiences</h1>
+        <h1 class="about-hero-title">Activities &amp; Holistic Wellness </h1>
         <p class="about-hero-sub">Guided walks, plantation tours, and quiet outdoor moments set against Munnar's misty hills.</p>
     </div>
 </section>
@@ -321,57 +321,43 @@
         transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
     }
 
+    .activity-card:hover h4 { margin-bottom: 4px; }
+    .activity-card:hover p { max-height: 100px; opacity: 1; }
+
     .activity-read-more {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: var(--accent-color-2, #c8a86a);
-        font-size: 0.8rem;
+        color: #fff;
+        font-size: 0.78rem;
         font-weight: 700;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 9px 18px;
+        border: 1.5px solid rgba(255, 255, 255, 0.55);
+        border-radius: 100px;
+        background: transparent;
         margin-top: 12px;
-        opacity: 0;
-        transform: translateY(6px);
-        transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+        opacity: 1;              /* always visible, like the blog card */
+        transform: translateY(0);
+        transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
     }
 
-    .activity-card:hover h4 { margin-bottom: 4px; }
-    .activity-card:hover p { max-height: 100px; opacity: 1; }
-    .activity-card:hover .activity-read-more { opacity: 1; transform: translateY(0); }
-    .activity-read-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 9px 18px;
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-    border-radius: 100px;
-    background: transparent;
-    margin-top: 12px;
-    opacity: 1;              /* always visible now, like the blog card */
-    transform: translateY(0);
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
-}
+    .activity-card:hover .activity-read-more {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #fff;
+        gap: 12px;
+    }
 
-.activity-card:hover .activity-read-more {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: #fff;
-    gap: 12px;
-}
+    .activity-read-more i {
+        transition: transform 0.3s ease;
+        font-size: 0.72rem;
+    }
 
-.activity-read-more i {
-    transition: transform 0.3s ease;
-    font-size: 0.72rem;
-}
-
-.activity-card:hover .activity-read-more i {
-    transform: translateX(4px);
-}
+    .activity-card:hover .activity-read-more i {
+        transform: translateX(4px);
+    }
 
     /* ===== MOBILE FIXES: on touch devices there's no hover, so the
        description/read-more text is revealed by default instead. ===== */
@@ -422,11 +408,9 @@
         .activity-card-img-wrap {
             aspect-ratio: 5 / 4;
             max-height: 260px;
-        }
-        .activity-card {
             border-radius: 16px;
         }
-        .activity-card-img-wrap {
+        .activity-card {
             border-radius: 16px;
         }
         .activity-card-body {
@@ -443,40 +427,8 @@
             line-height: 1.5;
             margin-top: 6px;
         }
-        .activity-read-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 9px 18px;
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-    border-radius: 100px;
-    background: transparent;
-    margin-top: 12px;
-    opacity: 1;              /* always visible now, like the blog card */
-    transform: translateY(0);
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
-}
+    } /* end max-width: 575px  (this brace was missing in the original) */
 
-.activity-card:hover .activity-read-more {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: #fff;
-    gap: 12px;
-}
-
-.activity-read-more i {
-    transition: transform 0.3s ease;
-    font-size: 0.72rem;
-}
-
-.activity-card:hover .activity-read-more i {
-    transform: translateX(4px);
-}
     @media (max-width: 400px) {
         .activity-card-img-wrap { max-height: 230px; }
         .activity-card-body { padding: 14px; }
@@ -623,4 +575,1508 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 </style>
+
+
+<!-- ============================================================
+     A DAY AT THE ESTATE  (timeline design + content from the
+     complimentary / optional-paid table)
+     Background: act.png (same as #activities-list), shown across this
+     whole section. "Personalise Your Stay" below has its own section and image. To soften it, raise --day-wash below
+     (0 = image at full strength, 0.3 = light cream veil).
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+
+<section id="wellness-section" class="day-section day-section-timeline"
+    style="--day-bg: url('{% static 'ambadyestate-main/image/act.png' %}');">
+    <div class="r-container">
+
+        <!-- Heading -->
+        <header class="day-head">
+            <h6 class="accent-color-2">Nature &bull; Wellbeing &bull; Authentic Experiences</h6>
+            <h3 class="day-title">A Day at the Estate</h3>
+            <p class="day-sub">A gentle rhythm of nature, culture and wellbeing, from sunrise to sundown. Every session below is complimentary for guests.</p>
+        </header>
+
+        <!-- Complimentary timeline -->
+        <div class="day-timeline" id="dayTimeline">
+
+            <!-- 6:30 AM · Bird watching -->
+            <div class="day-item day-left" data-start="390" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-dove"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">6:30 &ndash; 7:00 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Bird Watching</h5>
+                    <p>Walk the plantation canopy at first light, when the estate's resident birds are most alive, with a naturalist beside you.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-solid fa-binoculars"></i> Escorted by a naturalist</span>
+                </article>
+            </div>
+
+            <!-- 7:00 AM · Yoga -->
+            <div class="day-item day-right" data-start="420" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-spa"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">7:00 &ndash; 8:00 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Morning Yoga</h5>
+                    <p>Greet the morning on the lawn. A grounding session to open your day, held outdoors weather permitting.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at dinner</span>
+                </article>
+            </div>
+
+            <!-- 9:30 AM · Spice walk -->
+            <div class="day-item day-left" data-start="570" data-days="daily">
+                <span class="day-node"><i class="fa-solid fa-leaf"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">9:30 &ndash; 10:30 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Spice Plantation Walk</h5>
+                    <p>Touch, smell and taste the estate's cardamom, pepper and coffee, led by someone who tends it every day.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- Anytime · Cycling -->
+            <div class="day-item day-right">
+                <span class="day-node"><i class="fa-solid fa-bicycle"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time day-time-soft">Anytime</span>
+                    </div>
+                    <h5>Plantation Cycling &amp; Nature Walk</h5>
+                    <p>Pedal or stroll the plantation lanes at your own pace, on your own or with an escort.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-sun"></i> During daylight</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-solid fa-bicycle"></i> Bicycles provided</span>
+                </article>
+            </div>
+
+            <!-- 4:00 PM · Cooking (Sundays) -->
+            <div class="day-item day-left" data-start="960" data-days="sun">
+                <span class="day-node"><i class="fa-solid fa-utensils"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">4:00 &ndash; 5:00 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Traditional Cooking Session</h5>
+                    <p>Cook alongside the estate kitchen and learn its own recipes, hands-on.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Sundays</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- 5:30 PM · Tea tasting -->
+            <div class="day-item day-right" data-start="1050" data-days="daily">
+                <span class="day-node"><i class="fa-solid fa-mug-hot"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">5:30 &ndash; 6:00 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Evening Tea Tasting</h5>
+                    <p>Sip estate-grown tea as the light turns gold, a short, slow tasting to end the afternoon.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- 6:00 PM · Meditation -->
+            <div class="day-item day-left day-item-last" data-start="1080" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-hands-praying"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">6:00 &ndash; 6:45 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Meditation &amp; Yoga Nidra</h5>
+                    <p>Let the day settle. A quiet close with guided meditation and Yoga Nidra.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+        </div>
+
+        <p class="day-tagline">Same land, a deeper you.</p>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     PERSONALISE YOUR STAY  (second section, its own background)
+     Change the filename below to use any other image from your
+     static folder. The cream veil strength is --day-wash in the
+     .day-section-paid CSS rule.
+     ============================================================ -->
+{% static 'ambadyestate-main/bg.png' as personalise_bg %}
+<section id="personalise-section" class="day-section day-section-paid"
+    style="--day-bg: url('{{ personalise_bg }}');">
+    <div class="r-container">
+
+        <!-- Optional paid -->
+        <div class="day-paid">
+            <header class="day-paid-head">
+                <h6 class="accent-color-2">By Request &bull; Charged Separately</h6>
+                <h3 class="day-title">Personalise Your Stay</h3>
+                <p class="day-sub">Arranged individually for guests who'd like something built around them.</p>
+            </header>
+
+            <div class="rot" id="paidRotator" role="region" aria-roledescription="carousel" aria-label="Optional services, charged separately">
+                <div class="rot-stage">
+
+                    <article class="rot-card" role="group" aria-roledescription="slide" aria-label="1 of 4">
+                        <span class="rot-icon"><i class="fa-solid fa-spa"></i></span>
+                        <h5>Personal Yoga &amp; Meditation</h5>
+                        <p class="rot-desc">A private session, paced and adapted entirely to you.</p>
+                        <div class="rot-foot">
+                            <span class="rot-when"><i class="fa-regular fa-clock"></i> Flexible, tailored to you</span>
+                            <span class="rot-price">Charged per private session</span>
+                        </div>
+                    </article>
+
+                    <article class="rot-card" role="group" aria-roledescription="slide" aria-label="2 of 4">
+                        <span class="rot-icon"><i class="fa-solid fa-car"></i></span>
+                        <h5>Munnar Sightseeing Tour</h5>
+                        <p class="rot-desc">A full-day Munnar circuit in a private cab, with a driver.</p>
+                        <div class="rot-foot">
+                            <span class="rot-when"><i class="fa-regular fa-clock"></i> Full day, 8 hours</span>
+                            <span class="rot-price">&#8377;2,500 &middot; Private non-AC cab</span>
+                        </div>
+                    </article>
+
+                    <article class="rot-card" role="group" aria-roledescription="slide" aria-label="3 of 4">
+                        <span class="rot-icon"><i class="fa-solid fa-fan"></i></span>
+                        <h5>In-Room Flower Decoration</h5>
+                        <p class="rot-desc">Flowers set up in your room, for anniversaries, birthdays and other occasions worth marking.</p>
+                        <div class="rot-foot">
+                            <span class="rot-when"><i class="fa-regular fa-clock"></i> On request, prior to arrival</span>
+                            <span class="rot-price">Charged per setup</span>
+                        </div>
+                    </article>
+
+                    <article class="rot-card" role="group" aria-roledescription="slide" aria-label="4 of 4">
+                        <span class="rot-icon"><i class="fa-solid fa-kitchen-set"></i></span>
+                        <h5>Customised Cooking Session</h5>
+                        <p class="rot-desc">Built around the dishes or ingredients you choose, cooked hands-on in the estate kitchen.</p>
+                        <div class="rot-foot">
+                            <span class="rot-when"><i class="fa-regular fa-clock"></i> On request, prior to arrival</span>
+                            <span class="rot-price">Charged per setup</span>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="rot-controls">
+                    <button type="button" class="rot-btn" data-dir="-1" aria-label="Previous service"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="rot-dots">
+                        <button type="button" class="rot-dot" aria-label="Show Personal Yoga &amp; Meditation"></button>
+                        <button type="button" class="rot-dot" aria-label="Show Munnar Sightseeing Tour"></button>
+                        <button type="button" class="rot-dot" aria-label="Show In-Room Flower Decoration"></button>
+                        <button type="button" class="rot-dot" aria-label="Show Customised Cooking Session"></button>
+                    </div>
+                    <button type="button" class="rot-btn" data-dir="1" aria-label="Next service"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ------------------------------------------------------------
+       Tokens (scoped to this section)
+       ------------------------------------------------------------ */
+    .day-section {
+        --day-ink: #1f3d24;                 /* deep estate green */
+        --day-ink-soft: rgba(31, 61, 36, 0.88);
+        --day-line: rgba(31, 61, 36, 0.28);
+        --day-card: rgba(255, 253, 247, 0.94);
+        --day-card-border: rgba(31, 61, 36, 0.12);
+        --day-chip: #efe7d2;
+        --day-gold: var(--accent-color-2, #c8a86a);
+        --day-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+
+        --day-wash: 0;                      /* 0 = full image, up to ~0.4 = softer */
+
+        position: relative;
+        padding: 110px 0 120px;
+        background-color: #f8f5ec;          /* fallback while the image loads */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+
+    /* optional veil over the image, controlled by --day-wash */
+    .day-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(248, 245, 236, var(--day-wash));
+        pointer-events: none;
+    }
+
+    .day-section > .r-container {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ------------------------------------------------------------
+       Heading
+       ------------------------------------------------------------ */
+    .day-head,
+    .day-paid-head {
+        max-width: 640px;
+        margin: 0 auto 56px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .day-title { margin: 0; }
+
+    .day-sub { max-width: 640px; margin: 0; color: var(--day-ink-soft); }
+
+    /* ------------------------------------------------------------
+       Timeline (desktop: centre spine, cards alternate left / right)
+       ------------------------------------------------------------ */
+    .day-timeline {
+        position: relative;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 8px 0 12px;
+    }
+
+    /* the spine */
+    .day-timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1.5px;
+        transform: translateX(-50%);
+        background: linear-gradient(to bottom,
+                transparent 0,
+                var(--day-line) 40px,
+                var(--day-line) calc(100% - 40px),
+                transparent 100%);
+    }
+
+    .day-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 48px 1fr;
+        column-gap: 26px;
+        align-items: start;
+    }
+
+    /* right-hand cards sit lower, so the two columns interleave like the design */
+    .day-item + .day-item { margin-top: -34px; }
+    .day-item.day-right { padding-top: 34px; }
+    .day-item.day-right + .day-item { margin-top: -6px; }
+
+    .day-left  .day-card { grid-column: 1; grid-row: 1; }
+    .day-left  .day-node { grid-column: 2; grid-row: 1; }
+    .day-right .day-node { grid-column: 2; grid-row: 1; }
+    .day-right .day-card { grid-column: 3; grid-row: 1; }
+
+    /* icon node on the spine */
+    .day-node {
+        position: relative;
+        z-index: 2;
+        width: 48px;
+        height: 48px;
+        margin-top: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fbf8ef;
+        border: 1.5px solid var(--day-ink);
+        color: var(--day-ink);
+        font-size: 1.05rem;
+        box-shadow: 0 0 0 6px rgba(248, 245, 236, 0.85);
+    }
+
+    .day-right .day-node { margin-top: 26px; }
+
+    /* ------------------------------------------------------------
+       Cards
+       ------------------------------------------------------------ */
+    .day-card {
+        background: var(--day-card);
+        border: 1px solid var(--day-card-border);
+        border-radius: 18px;
+        padding: 28px 30px 26px;
+        box-shadow: 0 12px 30px rgba(31, 61, 36, 0.09);
+        transition: transform 0.5s cubic-bezier(.22, 1, .36, 1),
+                    opacity 0.45s ease,
+                    box-shadow 0.45s ease,
+                    border-color 0.45s ease;
+    }
+
+    .day-card:hover {
+        box-shadow: 0 16px 38px rgba(31, 61, 36, 0.14);
+    }
+
+    .day-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .day-time {
+        display: inline-block;
+        font-family: var(--font-3, sans-serif);
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--day-ink);
+        background: var(--day-chip);
+        padding: 7px 16px;
+        border-radius: 100px;
+    }
+
+    .day-time-soft {
+        background: transparent;
+        border: 1px solid var(--day-line);
+    }
+
+    /* "Next" badge — only shown on the upcoming session (set by script) */
+    .day-badge {
+        display: none;
+        font-family: var(--font-3, sans-serif);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: #fff;
+        background: var(--day-ink);
+        padding: 6px 14px;
+        border-radius: 100px;
+    }
+
+    .day-item.is-next .day-badge { display: inline-block; }
+
+    .day-section .day-card h5 {
+        font-family: var(--day-serif) !important;
+        font-size: 2.1rem !important;
+        font-weight: 700 !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.3px !important;
+        text-transform: none !important;
+        color: var(--day-ink);
+        margin: 0 0 12px;
+    }
+
+    .day-section .day-card p {
+        font-family: var(--font-3, sans-serif) !important;
+        font-size: 1.12rem !important;
+        line-height: 1.65 !important;
+        color: var(--day-ink-soft);
+        margin: 0 0 18px;
+    }
+
+    .day-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .day-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-3, sans-serif);
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--day-ink);
+        background: var(--day-chip);
+        padding: 7px 15px;
+        border-radius: 100px;
+    }
+
+    .day-chip i { font-size: 0.8rem; }
+
+    .day-chip-free {
+        font-weight: 700;
+        color: #fff;
+        background: var(--accent-color, #2c5f1a);
+    }
+
+    .day-book {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-3, sans-serif);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--day-ink);
+        padding-bottom: 4px;
+        border-bottom: 1.5px solid var(--day-gold);
+    }
+
+    .day-book i { font-size: 0.85rem; color: #a8842f; }
+
+    .day-tagline {
+        position: relative;
+        text-align: center;
+        font-family: var(--day-serif);
+        font-style: italic;
+        font-size: 1.7rem;
+        color: var(--day-ink);
+        margin: 40px 0 0;
+    }
+
+    .day-tagline::before {
+        content: '';
+        display: block;
+        width: 9px;
+        height: 9px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: var(--day-ink);
+    }
+
+    /* ------------------------------------------------------------
+       Optional paid services
+       ------------------------------------------------------------ */
+    .day-paid {
+        margin-top: 0;
+    }
+
+    /* ---- Timeline section background ----
+       This section is very tall, so `background-size: cover` blew the image
+       up until only its empty middle showed. Instead the image sits on a
+       viewport-sized fixed layer (always shown at a sensible size) and the
+       section clips it, so it appears to stay put while the cards scroll. */
+    .day-section-timeline {
+        clip-path: inset(0);
+    }
+
+    .day-section-timeline::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: var(--day-bg) center / cover no-repeat;
+        pointer-events: none;
+    }
+
+    .day-section-timeline::before { z-index: 1; }
+
+    .day-section-timeline .day-tagline {
+        text-shadow: 0 0 16px rgba(248, 245, 236, 0.95), 0 0 5px rgba(248, 245, 236, 0.9);
+    }
+
+    /* second section: photo background under a cream veil so the
+       dark green active card and the headings stay readable */
+    .day-section-paid {
+        --day-wash: 0.06;                 /* almost no veil: the photo shows at full strength */
+        --day-zoom: 0.92;                 /* 1 = fills the section, lower = image zoomed out */
+    }
+
+    /* background photo layer (scaled by --day-zoom; its edges fade softly
+       into the cream so zooming out never leaves a hard border) */
+    .day-section-paid::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: var(--day-bg) center 40% / cover no-repeat;
+        transform: scale(var(--day-zoom));
+        -webkit-mask-image:
+            linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%),
+            linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+        -webkit-mask-composite: source-in;
+        mask-image:
+            linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%),
+            linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+        mask-composite: intersect;
+        pointer-events: none;
+    }
+
+    /* keep the optional veil above the photo, below the content */
+    .day-section-paid::before { z-index: 1; }
+
+    /* readability without hiding the photo: a soft cream glow only
+       behind the heading text instead of a veil over the whole image */
+    .day-section-paid .day-paid-head,
+    .day-section-timeline .day-head {
+        position: relative;
+        z-index: 0;
+    }
+
+    .day-section-paid .day-paid-head::before,
+    .day-section-timeline .day-head::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        width: min(920px, 130%);
+        height: 190%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(ellipse at center,
+                rgba(248, 245, 236, 0.92) 0%,
+                rgba(248, 245, 236, 0.78) 45%,
+                rgba(248, 245, 236, 0) 72%);
+        pointer-events: none;
+    }
+
+    .day-paid-head { margin-bottom: 40px; }
+
+    /* ---- Rotating showcase ---- */
+    .rot {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .rot-stage {
+        display: grid;                 /* every card shares one cell -> height = tallest card */
+        padding: 34px 0 44px;
+        touch-action: pan-y;
+    }
+
+    .rot-card {
+        grid-area: 1 / 1;
+        justify-self: center;
+        width: min(560px, 84%);
+        display: flex;
+        flex-direction: column;
+        padding: 40px 44px 36px;
+        border-radius: 26px;
+        background: var(--day-card);
+        border: 1px solid var(--day-card-border);
+        box-shadow: 0 14px 34px rgba(31, 61, 36, 0.10);
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transform: perspective(1400px) translateX(0) scale(0.6);
+        transition: transform 0.8s cubic-bezier(.22, 1, .36, 1),
+                    opacity 0.6s ease,
+                    background 0.6s ease,
+                    box-shadow 0.6s ease;
+    }
+
+    .rot-card.is-active {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 3;
+        cursor: default;
+        transform: perspective(1400px) translateX(0) scale(1);
+        background: linear-gradient(160deg, #27492d 0%, #1a3320 100%);
+        border-color: transparent;
+        box-shadow: 0 28px 60px rgba(20, 42, 24, 0.35);
+    }
+
+    .rot-card.is-prev,
+    .rot-card.is-next {
+        opacity: 0.6;
+        pointer-events: auto;
+        z-index: 2;
+    }
+
+    .rot-card.is-prev { transform: perspective(1400px) translateX(-70%) scale(0.82) rotateY(20deg); }
+    .rot-card.is-next { transform: perspective(1400px) translateX(70%)  scale(0.82) rotateY(-20deg); }
+
+    .rot-card.is-far {
+        opacity: 0;
+        z-index: 1;
+        transform: perspective(1400px) translateX(0) scale(0.6);
+    }
+
+    /* icon with a slowly turning dashed ring */
+    .rot-icon {
+        position: relative;
+        width: 76px;
+        height: 76px;
+        margin-bottom: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid var(--day-ink);
+        color: var(--day-ink);
+        font-size: 1.6rem;
+        transition: color 0.5s ease, border-color 0.5s ease;
+    }
+
+    .rot-icon::before {
+        content: '';
+        position: absolute;
+        inset: -9px;
+        border-radius: 50%;
+        border: 1.5px dashed var(--day-gold);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .rot-card.is-active .rot-icon {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .rot-card.is-active .rot-icon::before {
+        opacity: 1;
+        animation: rotSpin 14s linear infinite;
+    }
+
+    @keyframes rotSpin { to { transform: rotate(360deg); } }
+
+    .day-section .rot-card h5 {
+        font-family: var(--day-serif) !important;
+        font-size: 2.3rem !important;
+        font-weight: 700 !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.3px !important;
+        text-transform: none !important;
+        color: var(--day-ink);
+        margin: 0 0 12px;
+        transition: color 0.5s ease;
+    }
+
+    .day-section .rot-card p.rot-desc {
+        font-family: var(--font-3, sans-serif) !important;
+        font-size: 1.15rem !important;
+        line-height: 1.6 !important;
+        color: var(--day-ink-soft);
+        margin: 0 0 26px;
+        transition: color 0.5s ease;
+    }
+
+    .rot-foot {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 16px;
+        margin-top: auto;
+    }
+
+    .rot-when {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-3, sans-serif);
+        font-size: 1.02rem;
+        font-weight: 600;
+        color: var(--day-ink-soft);
+        transition: color 0.5s ease;
+    }
+
+    .rot-when i { font-size: 0.9rem; }
+
+    .rot-price {
+        display: inline-block;
+        font-family: var(--font-3, sans-serif);
+        font-size: 1rem;
+        font-weight: 700;
+        color: #6b4c14;
+        background: #f3e6c4;
+        padding: 8px 18px;
+        border-radius: 100px;
+    }
+
+    .rot-card.is-active h5 { color: #fff !important; }
+    .rot-card.is-active .rot-desc { color: rgba(255, 255, 255, 0.86) !important; }
+    .rot-card.is-active .rot-when { color: rgba(255, 255, 255, 0.85); }
+    .rot-card.is-active .rot-price { background: #f3e6c4; color: #4d3608; }
+
+    /* controls */
+    .rot-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    .rot-btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1.5px solid var(--day-ink);
+        background: rgba(255, 253, 247, 0.9);
+        color: var(--day-ink);
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .rot-btn:hover { background: var(--day-ink); color: #fff; transform: scale(1.06); }
+
+    .rot-dots {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 100px;
+        background: rgba(255, 253, 247, 0.82);
+    }
+
+    .rot-dot {
+        position: relative;
+        width: 12px;
+        height: 12px;
+        padding: 0;
+        border: 0;
+        border-radius: 12px;
+        background: rgba(31, 61, 36, 0.28);
+        cursor: pointer;
+        overflow: hidden;
+        transition: width 0.45s cubic-bezier(.22, 1, .36, 1), background 0.3s ease;
+    }
+
+    /* active dot stretches and fills while the timer runs */
+    .rot-dot.is-active { width: 46px; }
+
+    .rot-dot.is-active::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--day-ink);
+        transform-origin: left center;
+        animation: rotFill var(--rot-time, 5000ms) linear forwards;
+    }
+
+    .rot.is-paused .rot-dot.is-active::after { animation-play-state: paused; }
+    .rot.is-static .rot-dot.is-active::after { animation: none; }
+
+    @keyframes rotFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    .rot-btn:focus-visible,
+    .rot-dot:focus-visible,
+    .rot-card:focus-visible { outline: 2px solid var(--day-ink); outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .rot-card { transition: opacity 0.3s ease; }
+        .rot-card.is-active .rot-icon::before { animation: none; }
+        .rot-dot.is-active::after { animation: none; transform: none; }
+    }
+
+    @media (max-width: 767px) {
+        .rot-stage { padding: 22px 0 32px; }
+        .rot-card { width: 82%; padding: 30px 26px 28px; border-radius: 22px; }
+        .rot-card.is-prev { transform: translateX(-78%) scale(0.86); }
+        .rot-card.is-next { transform: translateX(78%)  scale(0.86); }
+        .rot-card.is-prev, .rot-card.is-next { opacity: 0.4; }
+        .rot-icon { width: 64px; height: 64px; font-size: 1.35rem; margin-bottom: 18px; }
+        .day-section .rot-card h5 { font-size: 1.85rem !important; }
+        .day-section .rot-card p.rot-desc { font-size: 1.05rem !important; margin-bottom: 20px; }
+        .rot-when { font-size: 0.95rem; }
+        .rot-price { font-size: 0.92rem; padding: 7px 15px; }
+        .rot-btn { width: 46px; height: 46px; }
+    }
+
+    /* ------------------------------------------------------------
+       Scroll-active state: the card nearest the middle of the screen
+       lifts, the spine fills up to it, earlier stops are marked passed.
+       ------------------------------------------------------------ */
+    .day-progress {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 3px;
+        height: 0;
+        transform: translateX(-50%);
+        border-radius: 3px;
+        background: linear-gradient(to bottom, var(--day-gold), var(--day-ink));
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .day-node {
+        transition: background 0.35s ease, color 0.35s ease,
+                    border-color 0.35s ease, transform 0.35s ease;
+    }
+
+    .day-item.is-passed .day-node {
+        background: var(--day-chip);
+    }
+
+    .day-item.is-active .day-node {
+        background: var(--day-ink);
+        color: #fff;
+        transform: scale(1.15);
+    }
+
+    .day-item.is-active .day-node::after {
+        content: '';
+        position: absolute;
+        inset: -7px;
+        border-radius: 50%;
+        border: 1.5px solid var(--day-gold);
+        opacity: 0;
+        animation: dayPulse 2.2s ease-out infinite;
+    }
+
+    @keyframes dayPulse {
+        0%   { transform: scale(0.85); opacity: 0.9; }
+        100% { transform: scale(1.4);  opacity: 0; }
+    }
+
+    /* while the timeline is in view, everything but the active card recedes */
+    .day-timeline.has-active .day-item:not(.is-active) .day-card {
+        opacity: 0.6;
+        transform: scale(0.965);
+    }
+
+    .day-item.is-active .day-card {
+        opacity: 1;
+        transform: scale(1.025);
+        background: #fffdf7;
+        border-color: var(--day-ink);
+        box-shadow: 0 22px 48px rgba(31, 61, 36, 0.22);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .day-item.is-active .day-node::after { animation: none; }
+        .day-timeline.has-active .day-item:not(.is-active) .day-card,
+        .day-item.is-active .day-card { transform: none; }
+        .day-card, .day-node { transition: none; }
+    }
+
+    @media (max-width: 767px) {
+        .day-progress { left: 22px; }
+        .day-item.is-active .day-card { transform: scale(1.015); }
+    }
+
+    /* ------------------------------------------------------------
+       Entrance: cards ease in once as they scroll into view
+       (only active when JS adds .day-js)
+       ------------------------------------------------------------ */
+    .day-js .day-item {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .day-js .day-item.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .day-js .day-item {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+
+    /* ------------------------------------------------------------
+       Responsive
+       ------------------------------------------------------------ */
+    @media (max-width: 991px) {
+        .day-section { padding: 70px 0 80px; }
+        .day-item { column-gap: 18px; }
+    }
+
+    /* Mobile / small tablet: spine moves to the left, all cards on the right */
+     /* Mobile / small tablet: spine moves to the left, all cards on the right */
+    @media (max-width: 767px) {
+        .day-section { padding: 50px 0 60px; }
+
+        .day-section > .r-container {
+            padding-left: 20px;
+            padding-right: 20px;
+            max-width: 100%;
+        }
+
+        .day-head,
+        .day-paid-head {
+            text-align: left;
+            align-items: flex-start;
+            margin: 0 0 40px;
+        }
+
+        .day-timeline::before {
+            left: 22px;
+        }
+
+        .day-item,
+        .day-item.day-right {
+            grid-template-columns: 44px 1fr;
+            column-gap: 16px;
+            padding-top: 0;
+        }
+
+        .day-item + .day-item,
+        .day-item.day-right + .day-item { margin-top: 18px; }
+
+        .day-left .day-node,
+        .day-right .day-node { grid-column: 1; grid-row: 1; width: 44px; height: 44px; margin-top: 18px; font-size: 0.95rem; }
+        .day-left .day-card,
+        .day-right .day-card { grid-column: 2; grid-row: 1; }
+
+        .day-tagline { text-align: left; padding-left: 60px; }
+        .day-tagline::before { margin: 0 0 14px -42px; }
+
+    }
+
+      @media (max-width: 575px) {
+        .day-section { padding: 36px 0 48px; }
+
+        .day-section > .r-container {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .day-card { padding: 20px 18px 18px; border-radius: 16px; }
+        .day-section .day-card h5 { font-size: 1.7rem !important; }
+        .day-section .day-card p { font-size: 1.02rem !important; }
+    }
+
+    /* ------------------------------------------------------------
+       MOBILE: the timeline becomes a horizontal swipe carousel.
+       Icons sit on a horizontal line above each card; the line fills
+       as you swipe; dots show where you are.
+       ------------------------------------------------------------ */
+    .day-dots { display: none; }
+
+    @media (max-width: 767px) {
+        .day-section .day-timeline {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            gap: 14px;
+            overflow-x: auto !important;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* let the track run edge to edge of the screen */
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding: 14px 7vw 38px;
+            max-width: none;
+        }
+
+        .day-section .day-timeline::-webkit-scrollbar { display: none; }
+
+        /* vertical spine + vertical progress are not used here */
+        .day-section .day-timeline::before,
+        .day-section .day-progress { display: none; }
+
+        .day-section .day-timeline > .day-item {
+            display: flex !important;
+            flex-direction: column;
+            flex: 0 0 80vw;
+            max-width: 380px;
+            position: relative;
+            padding: 36px 0 0 !important;
+            margin: 0 !important;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+        }
+
+        /* horizontal line through the icons */
+        .day-section .day-timeline > .day-item::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: -7px;
+            right: -7px;
+            height: 1.5px;
+            background: var(--day-line);
+            transition: background 0.4s ease;
+        }
+        .day-section .day-timeline > .day-item:first-of-type::before { left: 50%; }
+        .day-section .day-timeline > .day-item:last-child::before  { right: 50%; }
+        .day-section .day-timeline > .day-item.is-passed::before,
+        .day-section .day-timeline > .day-item.is-active::before { background: var(--day-ink); }
+
+        .day-section .day-timeline .day-node {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin: 0;
+            width: 44px;
+            height: 44px;
+            grid-column: auto;
+            grid-row: auto;
+            transform: translateX(-50%);
+        }
+        .day-section .day-timeline .day-item.is-active .day-node {
+            transform: translateX(-50%) scale(1.15);
+        }
+
+        .day-section .day-timeline .day-card {
+            flex: 1;
+            grid-column: auto;
+            grid-row: auto;
+            padding-top: 30px;
+        }
+
+        /* items are always visible in a carousel (no scroll-in fade) */
+        .day-js .day-item,
+        .day-js .day-item.is-visible {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+
+        /* tagline is centred again (it was tied to the old left spine) */
+        .day-tagline { text-align: center; padding-left: 0; margin-top: 8px; }
+        .day-tagline::before { margin: 0 auto 16px; }
+
+        /* dots */
+        .day-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            margin: -14px 0 26px;
+        }
+        .day-dots button {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: 0;
+            border-radius: 9px;
+            background: rgba(31, 61, 36, 0.3);
+            transition: width 0.35s ease, background 0.3s ease;
+        }
+        .day-dots button.is-active { width: 26px; background: var(--day-ink); }
+    }
+</style>
+
+<script>
+/* Marks the next upcoming complimentary session with a "Next" badge,
+   using estate time (India Standard Time) regardless of the visitor's
+   own timezone. Sessions with no fixed time (cycling) are skipped. */
+document.addEventListener('DOMContentLoaded', function () {
+    var timeline = document.getElementById('dayTimeline');
+    if (!timeline) return;
+
+    var section = document.getElementById('wellness-section');
+    var items = Array.prototype.slice.call(timeline.querySelectorAll('.day-item'));
+
+    /* ---- gentle reveal as each stop scrolls into view ---- */
+    if ('IntersectionObserver' in window) {
+        section.classList.add('day-js');
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        items.forEach(function (el) { revealObserver.observe(el); });
+    }
+
+    /* ---- "Next" badge ---- */
+    var timed = items.filter(function (el) { return el.hasAttribute('data-start'); });
+
+    var parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+        hourCycle: 'h23'
+    }).formatToParts(new Date());
+
+    var weekday = '', hour = 0, minute = 0;
+    parts.forEach(function (p) {
+        if (p.type === 'weekday') weekday = p.value;
+        if (p.type === 'hour') hour = parseInt(p.value, 10) % 24;
+        if (p.type === 'minute') minute = parseInt(p.value, 10);
+    });
+
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var today = days.indexOf(weekday);
+    var nowMin = hour * 60 + minute;
+
+    function runsOn(el, dayIdx) {
+        var rule = el.getAttribute('data-days');
+        if (rule === 'daily') return true;
+        if (rule === 'sun')   return dayIdx === 0;
+        if (rule === 'exsun') return dayIdx !== 0;
+        return false;
+    }
+
+    var next = null;
+
+    // 1) later today
+    for (var i = 0; i < timed.length; i++) {
+        if (runsOn(timed[i], today) && parseInt(timed[i].getAttribute('data-start'), 10) > nowMin) {
+            next = timed[i];
+            break;
+        }
+    }
+
+    // 2) otherwise the first session tomorrow
+    if (!next) {
+        var tomorrow = (today + 1) % 7;
+        for (var j = 0; j < timed.length; j++) {
+            if (runsOn(timed[j], tomorrow)) { next = timed[j]; break; }
+        }
+    }
+
+    if (next) next.classList.add('is-next');
+});
+</script>
+
+<script>
+/* Scroll-driven active card: the stop closest to the middle of the screen
+   becomes active, the spine fills down to it, earlier stops are "passed". */
+document.addEventListener('DOMContentLoaded', function () {
+    var timeline = document.getElementById('dayTimeline');
+    if (!timeline) return;
+
+    var items = Array.prototype.slice.call(timeline.querySelectorAll('.day-item'));
+
+    var bar = document.createElement('span');
+    bar.className = 'day-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    timeline.insertBefore(bar, timeline.firstChild);
+
+    var ticking = false;
+
+    /* ---- mobile: horizontal carousel ---- */
+    var isMobile = window.matchMedia('(max-width: 767px)');
+
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'day-dots';
+    dotsWrap.setAttribute('aria-hidden', 'true');
+    var dotBtns = items.map(function (el, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.tabIndex = -1;
+        b.addEventListener('click', function () {
+            timeline.scrollTo({
+                left: el.offsetLeft - (timeline.clientWidth - el.offsetWidth) / 2,
+                behavior: 'smooth'
+            });
+        });
+        dotsWrap.appendChild(b);
+        return b;
+    });
+    timeline.parentNode.insertBefore(dotsWrap, timeline.nextSibling);
+    timeline.addEventListener('scroll', function () { onScroll(); }, { passive: true });
+
+    function updateMobile(vh, tr) {
+        var cx = tr.left + tr.width / 2;
+        var best = 0, bestDist = Infinity;
+
+        items.forEach(function (el, i) {
+            var r = el.getBoundingClientRect();
+            var d = Math.abs(r.left + r.width / 2 - cx);
+            if (d < bestDist) { bestDist = d; best = i; }
+        });
+
+        var inView = tr.top < vh * 0.9 && tr.bottom > vh * 0.1;
+        timeline.classList.toggle('has-active', inView);
+
+        items.forEach(function (el, i) {
+            el.classList.toggle('is-active', inView && i === best);
+            el.classList.toggle('is-passed', i < best);
+        });
+        dotBtns.forEach(function (b, i) { b.classList.toggle('is-active', i === best); });
+    }
+
+    function update() {
+        ticking = false;
+
+        var vh = window.innerHeight;
+        var focus = vh * 0.5;
+        var tr = timeline.getBoundingClientRect();
+
+        if (isMobile.matches) {
+            updateMobile(vh, tr);
+            return;
+        }
+
+        // spine fill
+        var fill = Math.max(0, Math.min(tr.height, focus - tr.top));
+        bar.style.height = fill + 'px';
+
+        var best = null;
+        var bestDist = Infinity;
+
+        items.forEach(function (el) {
+            var card = el.querySelector('.day-card');
+            var r = card.getBoundingClientRect();
+            var center = r.top + r.height / 2;
+
+            el.classList.toggle('is-passed', center < focus);
+
+            var d = Math.abs(center - focus);
+            if (d < bestDist) { bestDist = d; best = el; }
+        });
+
+        // only highlight while the timeline is actually on screen
+        var inView = tr.top < vh * 0.75 && tr.bottom > vh * 0.25;
+        timeline.classList.toggle('has-active', inView);
+
+        items.forEach(function (el) {
+            el.classList.toggle('is-active', inView && el === best);
+        });
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(update);
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', update);
+    update();
+});
+</script>
+
+<script>
+/* Rotating "Personalise Your Stay" showcase: advances by itself every few
+   seconds (pausing only while dragging, off-screen or in a background tab);
+   arrows, dots, swipe and keys also work and restart the timer. */
+document.addEventListener('DOMContentLoaded', function () {
+    var root = document.getElementById('paidRotator');
+    if (!root) return;
+
+    var cards = Array.prototype.slice.call(root.querySelectorAll('.rot-card'));
+    var dots  = Array.prototype.slice.call(root.querySelectorAll('.rot-dot'));
+    var btns  = Array.prototype.slice.call(root.querySelectorAll('.rot-btn'));
+    var stage = root.querySelector('.rot-stage');
+    var n = cards.length;
+    var DELAY = 4000;   /* ms between automatic changes */
+    var current = 0;
+    var timer = null;
+    var visible = true, dragging = false;   /* runs from page load; only pauses while dragging, off-screen or in a hidden tab */
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    root.style.setProperty('--rot-time', DELAY + 'ms');
+    if (reduce) root.classList.add('is-static');   /* auto-advance stays on; motion is reduced via CSS */
+
+    function render() {
+        cards.forEach(function (card, i) {
+            var off = (i - current + n) % n;
+            card.classList.remove('is-active', 'is-next', 'is-prev', 'is-far');
+            if (off === 0) card.classList.add('is-active');
+            else if (off === 1) card.classList.add('is-next');
+            else if (off === n - 1) card.classList.add('is-prev');
+            else card.classList.add('is-far');
+        });
+
+        // restart the dot fill animation
+        dots.forEach(function (d) { d.classList.remove('is-active'); });
+        void root.offsetWidth;
+        dots[current].classList.add('is-active');
+    }
+
+    function stop() {
+        if (timer) { clearTimeout(timer); timer = null; }
+    }
+
+    function shouldRun() {
+        return visible && !dragging && !document.hidden;
+    }
+
+    function schedule() {
+        stop();
+        root.classList.toggle('is-paused', !shouldRun());
+        if (!shouldRun()) return;
+        timer = setTimeout(function () { go(current + 1); }, DELAY);
+    }
+
+    function go(i) {
+        current = (i % n + n) % n;
+        render();
+        schedule();
+    }
+
+    btns.forEach(function (b) {
+        b.addEventListener('click', function () { go(current + parseInt(b.getAttribute('data-dir'), 10)); });
+    });
+    dots.forEach(function (d, i) {
+        d.addEventListener('click', function () { go(i); });
+    });
+    cards.forEach(function (c, i) {
+        c.addEventListener('click', function () { if (i !== current) go(i); });
+    });
+
+    root.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { go(current + 1); e.preventDefault(); }
+        if (e.key === 'ArrowLeft')  { go(current - 1); e.preventDefault(); }
+    });
+
+    document.addEventListener('visibilitychange', schedule);
+
+    // swipe
+    var startX = null;
+    stage.addEventListener('pointerdown', function (e) { startX = e.clientX; dragging = true; stop(); });
+    function endDrag(e) {
+        if (startX === null) return;
+        var dx = e.clientX - startX;
+        startX = null;
+        dragging = false;
+        if (Math.abs(dx) > 45) go(current + (dx < 0 ? 1 : -1));
+        else schedule();
+    }
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+
+    // only rotate while on screen
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            visible = entries[0].isIntersecting;
+            schedule();
+        }, { threshold: 0.35 }).observe(root);
+    } else {
+        visible = true;
+    }
+
+    render();
+    schedule();
+
+    /* watchdog: if the timer is ever missing while the slider should be
+       running (tab switch, observer hiccup...), start it again */
+    setInterval(function () {
+        if (!timer && shouldRun()) schedule();
+    }, 1000);
+    window.addEventListener('load', function () { if (!timer && shouldRun()) schedule(); });
+});
+</script>
+<script>
+/* Mobile: "A Day at the Estate" carousel advances by itself.
+   Pauses while the visitor touches it, when it's off-screen or the tab
+   is hidden, and resumes a few seconds after they let go. */
+document.addEventListener('DOMContentLoaded', function () {
+    var timeline = document.getElementById('dayTimeline');
+    if (!timeline) return;
+
+    var items    = Array.prototype.slice.call(timeline.querySelectorAll('.day-item'));
+    var isMobile = window.matchMedia('(max-width: 767px)');
+    var DELAY    = 4000;   /* ms between automatic slides */
+    var RESUME   = 6000;   /* ms to wait after the visitor stops touching */
+    var timer    = null;
+    var visible  = false;
+    var touching = false;
+
+    function shouldRun() {
+        return isMobile.matches && visible && !touching && !document.hidden;
+    }
+
+    /* which card is closest to the centre of the track */
+    function currentIndex() {
+        var center = timeline.scrollLeft + timeline.clientWidth / 2;
+        var best = 0, bestDist = Infinity;
+        items.forEach(function (el, i) {
+            var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - center);
+            if (d < bestDist) { bestDist = d; best = i; }
+        });
+        return best;
+    }
+
+    function goTo(i) {
+        var el = items[i];
+        timeline.scrollTo({
+            left: el.offsetLeft - (timeline.clientWidth - el.offsetWidth) / 2,
+            behavior: 'smooth'
+        });
+    }
+
+    function stop() {
+        if (timer) { clearTimeout(timer); timer = null; }
+    }
+
+    function schedule(delay) {
+        stop();
+        if (!shouldRun()) return;
+        timer = setTimeout(advance, delay || DELAY);
+    }
+
+    function advance() {
+        timer = null;
+        if (!shouldRun()) return;
+        var i = currentIndex();
+        goTo(i + 1 >= items.length ? 0 : i + 1);
+        schedule(DELAY);
+    }
+
+    /* pause while the visitor is touching / dragging */
+    timeline.addEventListener('pointerdown', function () {
+        touching = true;
+        stop();
+    });
+    function release() {
+        if (!touching) return;
+        touching = false;
+        schedule(RESUME);
+    }
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
+
+    /* trackpad / wheel scrolling also counts as interaction */
+    timeline.addEventListener('wheel', function () {
+        stop();
+        schedule(RESUME);
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', function () { schedule(DELAY); });
+    window.addEventListener('resize', function () { schedule(DELAY); });
+
+    /* only run while the carousel is on screen */
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            visible = entries[0].isIntersecting;
+            schedule(DELAY);
+        }, { threshold: 0.4 }).observe(timeline);
+    } else {
+        visible = true;
+        schedule(DELAY);
+    }
+
+    /* watchdog: restart the timer if it ever goes missing */
+    setInterval(function () {
+        if (!timer && shouldRun()) schedule(DELAY);
+    }, 1000);
+});
+</script>
 {% endblock %}
