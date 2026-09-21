@@ -3309,163 +3309,6 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(video);
 });
 </script>
-<!-- ============================================================
-     A DAY AT THE ESTATE  (timeline design + content from the
-     complimentary / optional-paid table)
-     Background: act.png (same as #activities-list), shown across this
-     whole section. "Personalise Your Stay" below has its own section and image. To soften it, raise --day-wash below
-     (0 = image at full strength, 0.3 = light cream veil).
-     ============================================================ -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-
-<section id="wellness-section" class="day-section day-section-timeline"
-    style="--day-bg: url('{% static 'ambadyestate-main/image/act.png' %}');">
-    <div class="r-container">
-
-        <!-- Heading -->
-        <header class="day-head day-fixed-head" aria-labelledby="estateDayTitle">
-            <span class="day-fixed-kicker">Nature &bull; Wellbeing &bull; Authentic Experiences</span>
-            <div id="estateDayTitle" class="day-fixed-title" role="heading" aria-level="2">A Day at the Estate</div>
-            <span class="day-fixed-sub">A gentle rhythm of nature, culture and wellbeing, from sunrise to sundown. Every session below is complimentary for guests.</span>
-        </header>
-
-        <!-- Complimentary timeline -->
-        <div class="day-timeline" id="dayTimeline">
-
-            <!-- 6:30 AM · Bird watching -->
-            <div class="day-item day-left" data-start="390" data-days="exsun">
-                <span class="day-node"><i class="fa-solid fa-dove"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">6:30 &ndash; 7:00 AM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Guided Bird Watching</h5>
-                    <p>Walk the plantation canopy at first light, when the estate's resident birds are most alive, with a naturalist beside you.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-solid fa-binoculars"></i> Escorted by a naturalist</span>
-                </article>
-            </div>
-
-            <!-- 7:00 AM · Yoga -->
-            <div class="day-item day-right" data-start="420" data-days="exsun">
-                <span class="day-node"><i class="fa-solid fa-spa"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">7:00 &ndash; 8:00 AM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Guided Morning Yoga</h5>
-                    <p>Greet the morning on the lawn. A grounding session to open your day, held outdoors weather permitting.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at dinner</span>
-                </article>
-            </div>
-
-            <!-- 9:30 AM · Spice walk -->
-            <div class="day-item day-left" data-start="570" data-days="daily">
-                <span class="day-node"><i class="fa-solid fa-leaf"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">9:30 &ndash; 10:30 AM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Guided Spice Plantation Walk</h5>
-                    <p>Touch, smell and taste the estate's cardamom, pepper and coffee, led by someone who tends it every day.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
-                </article>
-            </div>
-
-            <!-- Anytime · Cycling -->
-            <div class="day-item day-right">
-                <span class="day-node"><i class="fa-solid fa-bicycle"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time day-time-soft">Anytime</span>
-                    </div>
-                    <h5>Plantation Cycling &amp; Nature Walk</h5>
-                    <p>Pedal or stroll the plantation lanes at your own pace, on your own or with an escort.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-sun"></i> During daylight</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-solid fa-bicycle"></i> Bicycles provided</span>
-                </article>
-            </div>
-
-            <!-- 4:00 PM · Cooking (Sundays) -->
-            <div class="day-item day-left" data-start="960" data-days="sun">
-                <span class="day-node"><i class="fa-solid fa-utensils"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">4:00 &ndash; 5:00 PM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Traditional Cooking Session</h5>
-                    <p>Cook alongside the estate kitchen and learn its own recipes, hands-on.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Sundays</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
-                </article>
-            </div>
-
-            <!-- 5:30 PM · Tea tasting -->
-            <div class="day-item day-right" data-start="1050" data-days="daily">
-                <span class="day-node"><i class="fa-solid fa-mug-hot"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">5:30 &ndash; 6:00 PM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Evening Tea Tasting</h5>
-                    <p>Sip estate-grown tea as the light turns gold, a short, slow tasting to end the afternoon.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
-                </article>
-            </div>
-
-            <!-- 6:00 PM · Meditation -->
-            <div class="day-item day-left day-item-last" data-start="1080" data-days="exsun">
-                <span class="day-node"><i class="fa-solid fa-hands-praying"></i></span>
-                <article class="day-card">
-                    <div class="day-card-top">
-                        <span class="day-time">6:00 &ndash; 6:45 PM</span>
-                        <span class="day-badge">Next</span>
-                    </div>
-                    <h5>Guided Meditation &amp; Yoga Nidra</h5>
-                    <p>Let the day settle. A quiet close with guided meditation and Yoga Nidra.</p>
-                    <div class="day-meta">
-                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
-                        <span class="day-chip day-chip-free">Complimentary</span>
-                    </div>
-                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
-                </article>
-            </div>
-
-        </div>
-
-        <p class="day-tagline">Same land, a deeper you.</p>
-
-    </div>
-</section>
-
 <!-- =========================================================
      PACKAGES SECTION
 ========================================================= -->
@@ -4735,6 +4578,163 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 </style>
+<!-- ============================================================
+     A DAY AT THE ESTATE  (timeline design + content from the
+     complimentary / optional-paid table)
+     Background: act.png (same as #activities-list), shown across this
+     whole section. "Personalise Your Stay" below has its own section and image. To soften it, raise --day-wash below
+     (0 = image at full strength, 0.3 = light cream veil).
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+
+<section id="wellness-section" class="day-section day-section-timeline"
+    style="--day-bg: url('{% static 'ambadyestate-main/image/act.png' %}');">
+    <div class="r-container">
+
+        <!-- Heading -->
+        <header class="day-head day-fixed-head" aria-labelledby="estateDayTitle">
+            <span class="day-fixed-kicker">Nature &bull; Wellbeing &bull; Authentic Experiences</span>
+            <div id="estateDayTitle" class="day-fixed-title" role="heading" aria-level="2">A Day at the Estate</div>
+            <span class="day-fixed-sub">A gentle rhythm of nature, culture and wellbeing, from sunrise to sundown. Every session below is complimentary for guests.</span>
+        </header>
+
+        <!-- Complimentary timeline -->
+        <div class="day-timeline" id="dayTimeline">
+
+            <!-- 6:30 AM · Bird watching -->
+            <div class="day-item day-left" data-start="390" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-dove"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">6:30 &ndash; 7:00 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Bird Watching</h5>
+                    <p>Walk the plantation canopy at first light, when the estate's resident birds are most alive, with a naturalist beside you.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-solid fa-binoculars"></i> Escorted by a naturalist</span>
+                </article>
+            </div>
+
+            <!-- 7:00 AM · Yoga -->
+            <div class="day-item day-right" data-start="420" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-spa"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">7:00 &ndash; 8:00 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Morning Yoga</h5>
+                    <p>Greet the morning on the lawn. A grounding session to open your day, held outdoors weather permitting.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at dinner</span>
+                </article>
+            </div>
+
+            <!-- 9:30 AM · Spice walk -->
+            <div class="day-item day-left" data-start="570" data-days="daily">
+                <span class="day-node"><i class="fa-solid fa-leaf"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">9:30 &ndash; 10:30 AM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Spice Plantation Walk</h5>
+                    <p>Touch, smell and taste the estate's cardamom, pepper and coffee, led by someone who tends it every day.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- Anytime · Cycling -->
+            <div class="day-item day-right">
+                <span class="day-node"><i class="fa-solid fa-bicycle"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time day-time-soft">Anytime</span>
+                    </div>
+                    <h5>Plantation Cycling &amp; Nature Walk</h5>
+                    <p>Pedal or stroll the plantation lanes at your own pace, on your own or with an escort.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-sun"></i> During daylight</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-solid fa-bicycle"></i> Bicycles provided</span>
+                </article>
+            </div>
+
+            <!-- 4:00 PM · Cooking (Sundays) -->
+            <div class="day-item day-left" data-start="960" data-days="sun">
+                <span class="day-node"><i class="fa-solid fa-utensils"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">4:00 &ndash; 5:00 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Traditional Cooking Session</h5>
+                    <p>Cook alongside the estate kitchen and learn its own recipes, hands-on.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Sundays</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- 5:30 PM · Tea tasting -->
+            <div class="day-item day-right" data-start="1050" data-days="daily">
+                <span class="day-node"><i class="fa-solid fa-mug-hot"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">5:30 &ndash; 6:00 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Evening Tea Tasting</h5>
+                    <p>Sip estate-grown tea as the light turns gold, a short, slow tasting to end the afternoon.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+            <!-- 6:00 PM · Meditation -->
+            <div class="day-item day-left day-item-last" data-start="1080" data-days="exsun">
+                <span class="day-node"><i class="fa-solid fa-hands-praying"></i></span>
+                <article class="day-card">
+                    <div class="day-card-top">
+                        <span class="day-time">6:00 &ndash; 6:45 PM</span>
+                        <span class="day-badge">Next</span>
+                    </div>
+                    <h5>Guided Meditation &amp; Yoga Nidra</h5>
+                    <p>Let the day settle. A quiet close with guided meditation and Yoga Nidra.</p>
+                    <div class="day-meta">
+                        <span class="day-chip"><i class="fa-regular fa-calendar"></i> Daily, except Sunday</span>
+                        <span class="day-chip day-chip-free">Complimentary</span>
+                    </div>
+                    <span class="day-book"><i class="fa-regular fa-bell"></i> Pre-book at breakfast</span>
+                </article>
+            </div>
+
+        </div>
+
+        <p class="day-tagline">Same land, a deeper you.</p>
+
+    </div>
+</section>
+
         <!-- ===== ACTIVITIES SECTION (dynamic — same style as homepage) ===== -->
 <div id="activities" class="section" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}');">
     <div class="r-container d-flex flex-column gap-4">
@@ -5107,226 +5107,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </style>
 
 
-        <!-- Section Services -->
-        <div id="projects" class="section" style="background-image: url('{% static 'ambadyestate-main/image/bg_service.png' %}');">
-            <div class="r-container d-flex flex-column gap-5 align-items-center">
-
-                <!-- Heading -->
-                <div class="d-flex flex-column gap-3 justify-content-center align-items-center mx-auto text-center"
-                    style="max-width: 667px;">
-                    <h3>Everything you need for a Stay</h3>
-                    <p>From warm Kerala hospitality to modern comforts — Ambady Estate takes care of everything so you
-                        can simply enjoy the mountains.</p>
-                </div>
-
-                <!-- Cards -->
-                <div class="row row-cols-xl-3 row-cols-1 w-100 g-4">
-
-                    <div class="col">
-                        <div class="amenity-card amenity-dark">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-headset"></i>
-                            </div>
-                            <h5>24/7 Estate Assistance</h5>
-                            <p>Our team is always available — from check-in queries to local guidance throughout your
-                                stay.</p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="amenity-card amenity-light">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-mug-hot"></i>
-                            </div>
-                            <h5>Kerala Breakfast</h5>
-                            <p>Start each morning with a freshly prepared traditional Kerala breakfast — warm and local.
-                            </p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="amenity-card amenity-dark">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-leaf"></i>
-                            </div>
-                            <h5>Organic Plantation</h5>
-                            <p>Stay inside Kerala's only certified organic cardamom estate — a living plantation all
-                                around you.</p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="amenity-card amenity-light">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-shield-halved"></i>
-                            </div>
-                            <h5>Safe &amp; Secure</h5>
-                            <p>A calm, well-managed property with thoughtful safety arrangements so guests relax with
-                                confidence.</p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="amenity-card amenity-dark">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-car"></i>
-                            </div>
-                            <h5>Easy Parking</h5>
-                            <p>Ample and secure parking available for families, groups, and road travellers at the
-                                estate.</p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="amenity-card amenity-light">
-                            <div class="amenity-icon-wrap">
-                                <i class="fa-solid fa-person-swimming"></i>
-                            </div>
-                            <h5>Swimming Pool</h5>
-                            <p>Relax in the pool set against a breathtaking backdrop of plantation greens and misty
-                                mountains.</p>
-                            <div class="amenity-deco"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <style>
-            /* ===== SECTION ===== */
-            #projects {
-                padding: 100px 0;
-                background-size: cover;
-                background-position: center;
-            }
-
-            .amenity-card {
-                position: relative;
-                overflow: hidden;
-
-                padding: 40px 32px;
-                min-height: 240px;
-
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-
-                border-radius: 22px;
-
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-
-                transition: all 0.4s ease;
-            }
-
-            .amenity-dark {
-                background: var(--accent-color);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-            }
-
-            .amenity-dark h5 {
-                color: #fff;
-            }
-
-            .amenity-dark p {
-                color: rgba(255, 255, 255, 0.85);
-            }
-
-            .amenity-light {
-                background: var(--accent-color);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-            }
-
-            .amenity-light h5 {
-                color: #fff;
-            }
-
-            .amenity-light p {
-                color: rgba(255, 255, 255, 0.85);
-            }
-
-            .amenity-icon-wrap {
-                width: 60px;
-                height: 60px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                border-radius: 14px;
-
-                background: rgba(255, 255, 255, 0.2);
-                color: #fff;
-            }
-
-            .amenity-light .amenity-icon-wrap {
-                background: rgba(255, 255, 255, 0.2);
-            }
-
-            .amenity-icon-wrap i {
-                font-size: 26px;
-                transition: transform 0.4s ease;
-            }
-
-            .amenity-card h5 {
-                font-size: 1.25rem;
-                font-weight: 600;
-                margin: 0;
-            }
-
-            .amenity-card p {
-                font-size: 0.9rem;
-                line-height: 1.6;
-                margin: 0;
-            }
-
-            .amenity-deco {
-                position: absolute;
-                bottom: -60px;
-                right: -60px;
-
-                width: 180px;
-                height: 180px;
-
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.18);
-
-                transition: transform 0.4s ease, opacity 0.4s ease;
-                opacity: 0.6;
-            }
-
-            .amenity-card:hover {
-                transform: translateY(-6px);
-                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
-            }
-
-            .amenity-card:hover .amenity-icon-wrap i {
-                transform: scale(1.1);
-            }
-
-            .amenity-card:hover .amenity-deco {
-                transform: scale(1.2);
-                opacity: 0.8;
-            }
-
-            .row-cols-xl-3>.col {
-                display: flex;
-            }
-
-            @media (max-width: 768px) {
-                .amenity-card {
-                    padding: 28px 22px;
-                    min-height: auto;
-                }
-            }
-        </style>
-        </div>
 <!-- ============================================================
      PERSONALISE YOUR STAY  (second section, its own background)
      Change the filename below to use any other image from your
@@ -6723,6 +6503,788 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- ↑ this is the existing closing </div> of the ROOM GALLERY section -->
 
+<!-- ================================================================
+     Dining & Culinary Section — redesign
+     Layout: full-height image (left) + heading/lede, two differentiated
+     info cards, and a full-width dining-schedule strip (right).
+     Fonts: 'Fraunces' for display/headline, 'Plus Jakarta Sans' for body
+     (load Fraunces site-wide, e.g. in <head>:
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">)
+     ================================================================ -->
+<div class="ade-section" id="restaurant">
+
+    <svg class="ade-leaf ade-leaf-tr" viewBox="0 0 200 200" aria-hidden="true">
+        <path d="M10 190 C 40 120, 60 60, 140 10 C 120 70, 130 110, 190 100 C 130 140, 90 150, 60 190 Z" fill="currentColor"/>
+    </svg>
+
+    <div class="r-container">
+        <div class="ade-grid scrollanimation animated scroll-fadeInUp">
+
+            <!-- Image column -->
+            <div class="ade-media">
+                <img src="{% static 'ambadyestate-main/image/new/restaurent1.webp' %}" alt="Guests dining at Ambady Estate, Munnar">
+                <span class="ade-media-tag"><i class="fa-solid fa-leaf"></i>Dining &amp; Culinary</span>
+            </div>
+
+            <!-- Content column -->
+            <div class="ade-content">
+
+                <div class="ade-heading">
+                    <h2>Sattvic &amp; organic<br>pure vegetarian dining</h2>
+                    <p class="ade-lede">Healthy, fresh, locally-sourced vegetarian food across South and North Indian kitchens &mdash; cooked with care, and the goodness of what grows on the estate.</p>
+                </div>
+
+                <div class="ade-cards">
+                    <div class="ade-card ade-card-soft" tabindex="0">
+                        <i class="fa-solid fa-seedling ade-icon"></i>
+                        <h3>Dietary philosophy</h3>
+                        <p>Sattvic and organic, pure vegetarian dining that leans on healthy, fresh, locally-sourced produce and South/North Indian cuisine.</p>
+                    </div>
+                    <div class="ade-card ade-card-notice" tabindex="0">
+                        <i class="fa-solid fa-ban ade-icon"></i>
+                        <h3>House rule</h3>
+                        <p>Strictly pure vegetarian grounds. Meat, poultry, seafood and outside food are not permitted on the estate.</p>
+                    </div>
+                </div>
+
+                <div class="ade-schedule">
+                    <div class="ade-schedule-item" tabindex="0">
+                        <i class="fa-solid fa-sun"></i>
+                        <span class="ade-meal">Breakfast</span>
+                        <span class="ade-time">8:30 &ndash; 10:30 AM</span>
+                        <span class="ade-note">Included in package</span>
+                    </div>
+                    <div class="ade-schedule-item" tabindex="0">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span class="ade-meal">Lunch</span>
+                        <span class="ade-time">12:30 &ndash; 2:30 PM</span>
+                        <span class="ade-note">À la carte, pre-order 30 min prior</span>
+                    </div>
+                    <div class="ade-schedule-item" tabindex="0">
+                        <i class="fa-solid fa-mug-hot"></i>
+                        <span class="ade-meal">Afternoon tea</span>
+                        <span class="ade-time">4:00 &ndash; 6:00 PM</span>
+                        <span class="ade-note">Complimentary high tea</span>
+                    </div>
+                    <div class="ade-schedule-item" tabindex="0">
+                        <i class="fa-solid fa-moon"></i>
+                        <span class="ade-meal">Dinner</span>
+                        <span class="ade-time">7:30 &ndash; 9:30 PM</span>
+                        <span class="ade-note">À la carte, pre-order by 6:00 PM</span>
+                    </div>
+                </div>
+
+                <a href="#process" class="ade-explore">Explore stays<i class="fa-solid fa-arrow-right"></i></a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+(function () {
+    var section = document.getElementById('restaurant');
+    if (!section) return;
+
+    var tiles = Array.prototype.slice.call(
+        section.querySelectorAll('.ade-card-soft, .ade-card-notice, .ade-schedule-item')
+    );
+    if (!tiles.length) return;
+
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    var index = -1;
+    var timer = null;
+    var paused = false;
+
+    function clearActive() {
+        tiles.forEach(function (t) { t.classList.remove('is-active'); });
+    }
+
+    function step() {
+        if (paused) return;
+        clearActive();
+        index = (index + 1) % tiles.length;
+        tiles[index].classList.add('is-active');
+    }
+
+    function start() {
+        if (timer) return;
+        step();
+        timer = setInterval(step, 1800);
+    }
+
+    function pause() {
+        paused = true;
+        clearActive();
+    }
+
+    function resume() {
+        if (!paused) return;
+        paused = false;
+        step();
+    }
+
+    tiles.forEach(function (tile) {
+        tile.addEventListener('mouseenter', pause);
+        tile.addEventListener('focus', pause);
+        tile.addEventListener('mouseleave', resume);
+        tile.addEventListener('blur', resume);
+    });
+
+    // pause the loop while the section is off-screen
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    start();
+                } else {
+                    if (timer) { clearInterval(timer); timer = null; }
+                    clearActive();
+                }
+            });
+        }, { threshold: 0.3 });
+        observer.observe(section);
+    } else {
+        start();
+    }
+})();
+</script>
+<style>
+    /* ===== tokens ===== */
+    .ade-section {
+        --ade-forest: #253321;
+        --ade-forest-deep: #182013;
+        --ade-ivory: #faf7ef;
+        --ade-card: #fffdf8;
+        --ade-brass: #a9803f;
+        --ade-charcoal: #26261f;
+        --ade-charcoal-2: #6d6a5c;
+        background: var(--background-color, var(--ade-ivory));
+        padding: 72px 0 88px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ade-leaf {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        top: -30px;
+        right: -20px;
+        transform: rotate(8deg);
+        color: var(--ade-brass);
+        opacity: 0.1;
+        pointer-events: none;
+    }
+
+    .ade-section .r-container { position: relative; z-index: 1; }
+
+    /* ===== grid ===== */
+    .ade-grid {
+        display: grid;
+        grid-template-columns: 0.82fr 1.18fr;
+        gap: 40px;
+        max-width: 1280px;
+        margin: 0 auto;
+        opacity: 0;
+    }
+
+    .ade-grid.animated { animation: adeRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    @keyframes adeRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { .ade-grid { opacity: 1; animation: none !important; } }
+
+    /* ===== image column ===== */
+    .ade-media {
+        position: relative;
+        border-radius: 28px;
+        overflow: hidden;
+        min-height: 560px;
+    }
+
+    .ade-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .ade-media-tag {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(24, 32, 19, 0.72);
+        backdrop-filter: blur(6px);
+        color: #f3efe2;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 9px 16px;
+        border-radius: 999px;
+    }
+
+    .ade-media-tag i { color: var(--ade-brass); font-size: 0.78rem; }
+
+    /* ===== content column ===== */
+    .ade-content { display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+
+    .ade-heading h2 {
+        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
+        font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--ade-charcoal);
+        margin: 0 0 14px 0;
+    }
+
+    .ade-lede {
+        font-size: 0.98rem;
+        line-height: 1.75;
+        color: var(--ade-charcoal-2);
+        margin: 0;
+        max-width: 480px;
+    }
+
+    /* ===== cards: two different treatments for two different jobs ===== */
+    .ade-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .ade-card {
+        border-radius: 18px;
+        padding: 22px;
+        cursor: default;
+        outline: none;
+        transform: translateY(0) scale(1);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ade-card h3 {
+        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
+        font-size: 1.02rem;
+        font-weight: 500;
+        margin: 10px 0 8px 0;
+        color: var(--ade-charcoal);
+        transition: color 0.4s ease, font-size 0.4s ease;
+    }
+
+    .ade-card p {
+        font-size: 0.86rem;
+        line-height: 1.6;
+        color: var(--ade-charcoal-2);
+        margin: 0;
+        transition: color 0.4s ease, font-size 0.4s ease;
+    }
+
+    .ade-icon {
+        display: inline-flex;
+        font-size: 1.05rem;
+        color: var(--ade-forest);
+        transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), color 0.4s ease;
+    }
+
+    /* soft card — invites, informs: lifts, inverts to forest, text grows */
+    .ade-card-soft {
+        background: var(--ade-card);
+        box-shadow: 0 20px 40px -26px rgba(24, 32, 19, 0.28);
+    }
+
+    .ade-card-soft:hover,
+    .ade-card-soft:focus-within,
+    .ade-card-soft.is-active {
+        transform: translateY(-6px);
+        background: var(--ade-forest);
+        box-shadow: 0 28px 52px -20px rgba(24, 32, 19, 0.45);
+    }
+
+    .ade-card-soft:hover h3,
+    .ade-card-soft:focus-within h3,
+    .ade-card-soft.is-active h3 { color: #fbf8ef; font-size: 1.1rem; }
+
+    .ade-card-soft:hover p,
+    .ade-card-soft:focus-within p,
+    .ade-card-soft.is-active p { color: rgba(243, 239, 226, 0.82); font-size: 0.9rem; }
+
+    .ade-card-soft:hover .ade-icon,
+    .ade-card-soft:focus-within .ade-icon,
+    .ade-card-soft.is-active .ade-icon {
+        color: var(--ade-brass);
+        transform: scale(1.15) rotate(-6deg);
+    }
+
+    /* notice card — a rule, not an invitation: same forest hover, no lift */
+    .ade-card-notice {
+        background: transparent;
+        border: 1.5px solid rgba(169, 128, 63, 0.45);
+    }
+
+    .ade-card-notice .ade-icon { color: var(--ade-brass); }
+
+    .ade-card-notice:hover,
+    .ade-card-notice:focus-within,
+    .ade-card-notice.is-active {
+        border-color: var(--ade-forest);
+        background: var(--ade-forest);
+    }
+
+    .ade-card-notice:hover h3,
+    .ade-card-notice:focus-within h3,
+    .ade-card-notice.is-active h3 { color: #fbf8ef; font-size: 1.1rem; }
+
+    .ade-card-notice:hover p,
+    .ade-card-notice:focus-within p,
+    .ade-card-notice.is-active p { color: rgba(243, 239, 226, 0.82); font-size: 0.9rem; }
+
+    .ade-card-notice:hover .ade-icon,
+    .ade-card-notice:focus-within .ade-icon,
+    .ade-card-notice.is-active .ade-icon { color: var(--ade-brass); transform: scale(1.15); }
+
+    .ade-card:focus-visible { box-shadow: 0 0 0 2px var(--ade-brass); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ade-card, .ade-icon, .ade-card h3, .ade-card p { transition: none; }
+        .ade-card-soft:hover, .ade-card-soft:focus-within { transform: none; }
+    }
+
+    /* ===== schedule strip ===== */
+    .ade-schedule {
+        background: var(--ade-card);
+        border-radius: 24px;
+        padding: 36px 16px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        box-shadow: 0 26px 54px -24px rgba(24, 32, 19, 0.32);
+    }
+
+    .ade-schedule-item {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        padding: 14px 24px;
+        margin: -14px 0;
+        border-left: 1px solid rgba(38, 38, 31, 0.1);
+        border-radius: 16px;
+        cursor: default;
+        outline: none;
+        transition: background 0.4s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ade-schedule-item:first-child { border-left: none; }
+
+    .ade-schedule-item:hover,
+    .ade-schedule-item:focus-visible,
+    .ade-schedule-item.is-active {
+        background: var(--ade-forest);
+        border-left-color: transparent;
+    }
+
+    .ade-schedule-item i {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(37, 51, 33, 0.08);
+        color: var(--ade-forest);
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+        transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), color 0.4s ease, background 0.4s ease;
+    }
+
+    .ade-schedule-item:hover i,
+    .ade-schedule-item:focus-visible i,
+    .ade-schedule-item.is-active i {
+        transform: scale(1.15) rotate(-6deg);
+        color: var(--ade-brass);
+        background: rgba(243, 239, 226, 0.16);
+    }
+
+    .ade-meal {
+        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
+        font-size: 1.22rem;
+        font-weight: 600;
+        color: var(--ade-charcoal);
+        transition: font-size 0.4s ease, color 0.4s ease;
+    }
+
+    .ade-schedule-item:hover .ade-meal,
+    .ade-schedule-item:focus-visible .ade-meal,
+    .ade-schedule-item.is-active .ade-meal { font-size: 1.32rem; color: #fbf8ef; }
+
+    .ade-time {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ade-brass);
+        transition: font-size 0.4s ease, color 0.4s ease;
+    }
+
+    .ade-schedule-item:hover .ade-time,
+    .ade-schedule-item:focus-visible .ade-time,
+    .ade-schedule-item.is-active .ade-time { font-size: 1.08rem; color: #d7c9a3; }
+
+    .ade-note {
+        font-size: 0.86rem;
+        color: var(--ade-charcoal-2);
+        line-height: 1.45;
+        transition: font-size 0.4s ease, color 0.4s ease;
+    }
+
+    .ade-schedule-item:hover .ade-note,
+    .ade-schedule-item:focus-visible .ade-note,
+    .ade-schedule-item.is-active .ade-note { font-size: 0.9rem; color: rgba(243, 239, 226, 0.8); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ade-schedule-item, .ade-schedule-item i, .ade-meal, .ade-time, .ade-note { transition: none; }
+    }
+
+    /* ===== explore link ===== */
+    .ade-explore {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--ade-forest);
+        text-decoration: none;
+        border-bottom: 1.5px solid var(--ade-brass);
+        padding-bottom: 2px;
+        transition: gap 0.3s ease, color 0.3s ease;
+    }
+
+    .ade-explore:hover { gap: 13px; color: var(--ade-brass); }
+    .ade-explore i { font-size: 0.75rem; }
+
+    /* ===== responsive ===== */
+    @media (max-width: 1100px) {
+        .ade-grid { grid-template-columns: 1fr; }
+        .ade-media { min-height: 340px; }
+    }
+
+    @media (max-width: 640px) {
+        .ade-section { padding: 52px 0 64px; }
+        .ade-cards { grid-template-columns: 1fr; }
+        .ade-schedule { grid-template-columns: 1fr 1fr; row-gap: 20px; }
+        .ade-schedule-item { border-left: none; padding: 0 12px; }
+        .ade-schedule-item:nth-child(2n) { border-left: 1px solid rgba(38, 38, 31, 0.1); }
+    }
+
+
+/* ============================================================
+   UNIFIED CARD TYPOGRAPHY — matches "GARDEN DESIGN" style card
+   Bold tight header + larger, more readable description
+   ============================================================ */
+
+.feature-card h3,
+.process-card h3,
+.service-body h3,
+.project-card h3,
+.about-feature-text h5,
+.accordion-item h4,
+.why-feature-text h5,
+.activity-content h5,
+.amenity-card h5,
+.blog-card-body h4,
+.testimonial-quote strong {
+    font-family: var(--font-1) !important;
+    font-size: 1.65rem !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.5px !important;
+    text-transform: uppercase !important;
+    
+}
+
+.feature-card p,
+.process-card p,
+.service-body p,
+.project-card p,
+.about-feature-text p,
+.accordion-item p.text-white,
+.why-feature-text p,
+.activity-content p,
+
+.amenity-card p,
+.blog-card-body p {
+    font-family: var(--font-3) !important;
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+@media (max-width: 767px) {
+    .feature-card p,
+    .process-card p,
+    .service-body p,
+    .project-card p,
+    .about-feature-text p,
+    .accordion-item p.text-white,
+    .why-feature-text p,
+    .activity-content p,
+    .amenity-card p,
+    .blog-card-body p {
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+    }
+}
+
+
+@media (max-width: 575px) {
+    .accordion-item h4 {
+        font-size: 1.05rem !important;
+    }
+}
+/* =====================================================
+   GLOBAL: SECTION TITLES + DESCRIPTIONS LEFT-ALIGNED ON MOBILE
+   Applies site-wide, across every section on every page.
+   Uses !important because the page-specific <style> blocks set
+   text-align:center on these same elements without !important —
+   this rule needs to win regardless of source order.
+   ===================================================== */
+@media (max-width: 768px) {
+
+    /* Generic section intro wrapper used across the theme */
+    .section-intro,
+    .section-intro h2,
+    .section-intro p {
+        text-align: left !important;
+    }
+
+    /* About Us */
+    #about .about-heading-col,
+    #about .about-heading-col .about-eyebrow,
+    #about .about-heading,
+    #about .unique-section-head,
+    #about .unique-section-head .about-eyebrow,
+    #about .unique-section-heading {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Accommodations / Process */
+    #process > .r-container > div.text-center,
+    #process h6,
+    #process h3,
+    #process p {
+        text-align: left !important;
+        align-items: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Why Choose Us */
+   /* Why Choose Us */
+.why-content-wrapper,
+.why-content-wrapper > h6,
+.why-content-wrapper > h3,
+.why-content-wrapper > p.mb-5 {
+    text-align: left !important;
+    text-align-last: left !important;
+}
+
+.why-feature-item {
+    align-items: flex-start !important;
+    text-align: left !important;
+}
+
+.why-feature-item .why-feature-text,
+.why-feature-item .why-feature-text h5,
+.why-feature-item .why-feature-text p {
+    text-align: left !important;
+}
+
+.why-icon-box {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+    /* Activities */
+    #activities .row.row-cols-xl-2.align-items-center,
+    #activities .col.col-xl-8,
+    #activities h6.accent-color-2,
+    #activities h3,
+    #activities .col.col-xl-8 p {
+        text-align: left !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Everything You Need (amenities intro) */
+    #projects > .r-container > div.text-center,
+    html body #projects > .r-container > div.text-center {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #projects > .r-container > div.text-center > h3,
+    #projects > .r-container > div.text-center > p,
+    html body #projects h3,
+    html body #projects > .r-container > div.text-center > p {
+        text-align: left !important;
+    }
+
+    /* Testimonials */
+    .testi-top-header,
+    .testi-kicker,
+    .testi-heading,
+    .testi-sub {
+        text-align: left !important;
+    }
+
+    .testi-kicker {
+        justify-content: flex-start !important;
+    }
+
+    /* Restaurant / Story */
+    .story-heading,
+    .story-heading h2 {
+        text-align: left !important;
+    }
+
+    /* Blog */
+    #blog .col.col-xl-8,
+    #blog h6.accent-color-2,
+    #blog h3,
+    #blog .col.col-xl-8 p {
+        text-align: left !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Founder */
+    .founder-heading-block,
+    .founder-eyebrow,
+    .founder-heading {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin: 0 !important;
+    }
+}
+
+/* =====================================================
+   Repeated at 575px so narrow phones stay left-aligned even if
+   another rule at this same breakpoint (elsewhere in the codebase)
+   re-centers something after this file loads. Being the last
+   matching rule at this width wins the tie against equal specificity.
+   ===================================================== */
+@media (max-width: 575px) {
+
+    .section-intro,
+    .section-intro h2,
+    .section-intro p {
+        text-align: left !important;
+    }
+
+    #about .about-heading-col,
+    #about .about-heading-col .about-eyebrow,
+    #about .about-heading,
+    #about .unique-section-head,
+    #about .unique-section-head .about-eyebrow,
+    #about .unique-section-heading {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #process > .r-container > div.text-center,
+    #process h6,
+    #process h3,
+    #process p {
+        text-align: left !important;
+        align-items: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .why-content-wrapper,
+    .why-content-wrapper > h6,
+    .why-content-wrapper > h3,
+    .why-content-wrapper > p.mb-5 {
+        text-align: left !important;
+        text-align-last: left !important;
+    }
+
+    #activities .row.row-cols-xl-2.align-items-center,
+    #activities .col.col-xl-8,
+    #activities h6.accent-color-2,
+    #activities h3,
+    #activities .col.col-xl-8 p {
+        text-align: left !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #projects > .r-container > div.text-center,
+    html body #projects > .r-container > div.text-center {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #projects > .r-container > div.text-center > h3,
+    #projects > .r-container > div.text-center > p,
+    html body #projects h3,
+    html body #projects > .r-container > div.text-center > p {
+        text-align: left !important;
+    }
+
+    .testi-top-header,
+    .testi-kicker,
+    .testi-heading,
+    .testi-sub {
+        text-align: left !important;
+    }
+
+    .testi-kicker {
+        justify-content: flex-start !important;
+    }
+
+    .story-heading,
+    .story-heading h2 {
+        text-align: left !important;
+    }
+
+    #blog .col.col-xl-8,
+    #blog h6.accent-color-2,
+    #blog h3,
+    #blog .col.col-xl-8 p {
+        text-align: left !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .founder-heading-block,
+    .founder-eyebrow,
+    .founder-heading {
+        text-align: left !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        margin: 0 !important;
+    }
+}
+  </style>
+
+      
 <!-- ===== SANCTUARY GUIDELINES & GUEST CODE OF CONDUCT ===== -->
 <div id="guidelines" class="section contact-form-map-section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}');">
 
@@ -7065,6 +7627,52 @@ document.addEventListener('DOMContentLoaded', function () {
         color: rgba(26, 30, 22, 0.75);
     }
 
+    /* Keep all guideline copy visible even when page-wide scroll animation
+       classes are added by other scripts or styles. */
+    #guidelines .guidelines-head,
+    #guidelines .guidelines-head h6,
+    #guidelines .guidelines-head h3,
+    #guidelines .guideline-card h4,
+    #guidelines .guideline-card p {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        translate: none !important;
+        filter: none !important;
+    }
+
+    #guidelines .guidelines-head h6 {
+        display: block !important;
+        color: var(--accent-color-2, #c8a86a) !important;
+    }
+
+    #guidelines .guidelines-head h3 {
+        display: block !important;
+        color: var(--text-color, #1a1e16) !important;
+    }
+
+    #guidelines .guideline-card h4 {
+        display: block !important;
+        width: 100%;
+        text-align: center;
+        color: var(--text-color, #1a1e16) !important;
+    }
+
+    #guidelines .guideline-card p {
+        display: block !important;
+        color: rgba(26, 30, 22, 0.78) !important;
+    }
+
+    #guidelines .guideline-card:hover h4,
+    #guidelines .guideline-card.active h4 {
+        color: #fff !important;
+    }
+
+    #guidelines .guideline-card:hover p,
+    #guidelines .guideline-card.active p {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .guideline-icon::before,
         .gl-smoke, .gl-leaf, .gl-wave, .gl-car, .gl-sun, .gl-road-dash { animation: none; }
@@ -7139,14 +7747,20 @@ document.addEventListener('DOMContentLoaded', function () {
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                entry.target.classList.toggle('gl-in', entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('gl-in');
+                    io.unobserve(entry.target);
+                }
             });
         }, { threshold: 0, rootMargin: '-6% 0px -14% 0px' });
         targets.forEach(function (el) { io.observe(el); });
 
         var sectionIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                section.classList.toggle('gl-section-in', entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    section.classList.add('gl-section-in');
+                    sectionIO.unobserve(section);
+                }
             });
         }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
         sectionIO.observe(section);
@@ -7180,6 +7794,660 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Simple lightbox overlay -->
               <!-- Testimonials -->
+<!-- ===== NEARBY DESTINATIONS SECTION (dynamic — same style as Packages) ===== -->
+<section id="nearby-destinations" class="nearby-section position-relative">
+
+    <div class="r-container nearby-container">
+
+        <div class="nearby-heading text-center">
+            <h6 class="accent-color-2">Explore Around Munnar</h6>
+            <h3>Nearby Destinations Worth Visiting</h3>
+            <p>Step beyond the estate and discover the best of Munnar's valleys, viewpoints, and hidden trails — all just a short drive away.</p>
+        </div>
+
+        {% if nearby_destinations %}
+        <div class="swiper nearby-slider">
+            <div class="swiper-wrapper">
+                {% for destination in nearby_destinations %}
+                <div class="swiper-slide">
+                    <a href="{% url 'ambadyestate_app:nearby_destination_details' destination.slug %}" class="nearby-card">
+                        <div class="nearby-card-media">
+                            {% if destination.image %}
+                            <img src="{{ destination.image.url }}" alt="{{ destination.name }}" loading="lazy">
+                            {% endif %}
+                        </div>
+                        <div class="nearby-card-overlay"></div>
+                        <div class="nearby-card-info">
+                            <h4>{{ destination.name }}</h4>
+                            {% if destination.description %}
+                            <p class="nearby-description">
+                                {% autoescape off %}{{ destination.description|striptags|truncatewords:20 }}{% endautoescape %}
+                            </p>
+                            {% endif %}
+                            <span class="nearby-explore-link">
+                                <span>Explore</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="nearby-slider-controls">
+                <button type="button" class="nearby-slider-prev" aria-label="Previous destination">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="nearby-slider-pagination"></div>
+                <button type="button" class="nearby-slider-next" aria-label="Next destination">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="nearby-empty text-center">
+            <p>No nearby destinations added yet. Please check back soon.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const nearbySlider = document.querySelector(".nearby-slider");
+
+    if (typeof Swiper !== "undefined" && nearbySlider) {
+        new Swiper(".nearby-slider", {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: false,
+            rewind: true,
+            watchOverflow: false,
+            speed: 700,
+            autoplay: {
+                delay: 3800,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: ".nearby-slider-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".nearby-slider-next",
+                prevEl: ".nearby-slider-prev"
+            },
+            breakpoints: {
+                576: {
+                    slidesPerView: 2,
+                    spaceBetween: 12
+                },
+                992: {
+                    slidesPerView: 2,
+                    spaceBetween: 28
+                }
+            }
+        });
+    }
+});
+</script>
+
+<style>
+
+/* ===== SECTION ===== */
+#nearby-destinations.nearby-section {
+    position: relative;
+    width: 100%;
+    padding: 100px 0;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.nearby-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* HEADING */
+.nearby-heading {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.nearby-heading h6 {
+    margin: 0 0 10px;
+    color: var(--accent-color, #2c5f1a);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nearby-heading h3 {
+    margin: 0 0 14px;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #1a1e16;
+}
+
+.nearby-heading p {
+    margin: 0 auto;
+    max-width: 650px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(26, 30, 22, 0.75);
+}
+
+/* =====================================================
+   FORCE VISIBLE — the heading and cards must always render
+   fully opaque and in place, regardless of any site-wide
+   scroll-triggered fade/animation script that might otherwise
+   apply to headings, paragraphs, or images in this section.
+===================================================== */
+.nearby-heading,
+.nearby-heading *,
+.nearby-card,
+.nearby-card * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* SWIPER */
+.nearby-slider {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    padding: 5px 5px 10px;
+    overflow: hidden;
+}
+
+.nearby-slider .swiper-wrapper {
+    align-items: stretch;
+}
+
+.nearby-slider .swiper-slide {
+    height: auto;
+    display: flex;
+}
+
+/* CARD */
+.nearby-card {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #222;
+    isolation: isolate;
+    display: block;
+    text-decoration: none;
+    box-shadow: 0 16px 40px rgba(26, 30, 22, 0.16);
+}
+
+.nearby-card-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.nearby-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.nearby-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to top,
+        rgba(5, 15, 7, 0.94) 0%,
+        rgba(5, 15, 7, 0.55) 45%,
+        rgba(5, 15, 7, 0.05) 100%
+    );
+}
+
+.nearby-card-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 28px 30px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.nearby-card-info h4 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+}
+
+.nearby-card-info .nearby-description {
+    margin: 0;
+    max-width: 100%;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+    font-weight: 400;
+    line-height: 1.55;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.nearby-explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.nearby-explore-link i {
+    font-size: 0.72rem;
+}
+
+/* SLIDER CONTROLS */
+.nearby-slider-controls {
+    position: relative;
+    z-index: 10;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.nearby-slider-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.nearby-slider-pagination .swiper-pagination-bullet {
+    width: 24px;
+    height: 3px;
+    margin: 0 !important;
+    border-radius: 3px;
+    background: rgba(26, 30, 22, 0.20);
+    opacity: 1;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.nearby-slider-pagination .swiper-pagination-bullet-active {
+    width: 40px;
+    background: var(--accent-color, #2c5f1a);
+}
+
+.nearby-slider-prev,
+.nearby-slider-next {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(26, 30, 22, 0.15);
+    background: #ffffff;
+    color: var(--accent-color, #2c5f1a);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nearby-slider-prev:hover,
+.nearby-slider-next:hover {
+    background: var(--accent-color, #2c5f1a);
+    color: #ffffff;
+    border-color: var(--accent-color, #2c5f1a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
+}
+
+/* EMPTY STATE */
+.nearby-empty {
+    position: relative;
+    z-index: 5;
+    padding: 40px;
+}
+
+/* TABLET */
+@media (max-width: 991px) {
+    #nearby-destinations.nearby-section {
+        padding: 75px 0;
+    }
+
+    .nearby-heading {
+        margin-bottom: 35px;
+    }
+
+    .nearby-heading h3 {
+        font-size: 2rem;
+    }
+
+    .nearby-card {
+        height: 240px;
+        border-radius: 20px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 1.2rem;
+    }
+
+    .nearby-card-info .nearby-description {
+        -webkit-line-clamp: 1;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+    #nearby-destinations.nearby-section {
+        padding: 55px 0;
+    }
+
+    #nearby-destinations .r-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .nearby-heading {
+        margin-bottom: 30px;
+        text-align: left !important;
+        padding: 0 8px;
+    }
+
+    .nearby-heading h6,
+    .nearby-heading h3,
+    .nearby-heading p {
+        text-align: left !important;
+    }
+
+    .nearby-heading h3 {
+        font-size: 1.8rem;
+    }
+
+    .nearby-heading p {
+        font-size: 0.9rem;
+    }
+
+    .nearby-card {
+        height: 190px;
+        border-radius: 16px;
+    }
+
+    .nearby-card-info {
+        padding: 16px 18px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 1.05rem;
+        line-height: 1.25;
+    }
+
+    .nearby-card-info .nearby-description {
+        display: none;
+    }
+
+    .nearby-explore-link {
+        font-size: 0.72rem;
+    }
+
+    .nearby-slider-controls {
+        margin-top: 20px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 575px) {
+    .nearby-card {
+        height: 170px;
+        border-radius: 14px;
+    }
+
+    .nearby-card-info {
+        padding: 14px 16px;
+    }
+
+    .nearby-card-info h4 {
+        font-size: 0.95rem;
+    }
+
+    .nearby-slider-prev,
+    .nearby-slider-next {
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
+
+<!-- Section CTA -->
+        <div id="contact" class="section cta-section position-relative overflow-hidden">
+
+            <!-- Video background -->
+            <video class="cta-video-bg" autoplay loop muted playsinline>
+                <source src="{% static 'ambadyestate-main/am8.mp4' %}" type="video/mp4">
+            </video>
+
+            <!-- Overlay -->
+          <div style="
+    position: absolute; inset: 0;
+    background: rgba(16, 56, 18, 0.42);
+    z-index: 1;
+"></div>
+
+            <!-- Decorative circles -->
+            <div style="
+        position:absolute; top:-80px; right:-80px;
+        width:400px; height:400px; border-radius:50%;
+        border: 1px solid rgba(200,168,106,0.15);
+        z-index: 1; pointer-events:none;
+    "></div>
+            <div style="
+        position:absolute; bottom:-100px; left:-60px;
+        width:300px; height:300px; border-radius:50%;
+        border: 1px solid rgba(200,168,106,0.1);
+        z-index: 1; pointer-events:none;
+    "></div>
+
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="d-flex flex-column gap-4 text-white text-center justify-content-center align-items-center mx-auto scrollanimation animated scroll-zoomIn"
+                    style="max-width: 700px;">
+
+
+                    <h3 class="text-white" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.2;">
+                        Wake up to mist, mountains,<br>and the scent of cardamom
+                    </h3>
+
+                    <p class="text-white" style="opacity: 0.78; font-size: 1.02rem; line-height: 1.8;">
+                        Whether you're planning a romantic honeymoon, a family retreat, or a peaceful solo escape into
+                        nature — Ambady Estate offers a rare stay inside Kerala's only certified organic plantation,
+                        nestled in the heart of Munnar.
+                    </p>
+
+                    <!-- Stats strip -->
+                    <div class="cta-stats-strip" style="
+                display: flex; flex-wrap: wrap; gap: 0;
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 12px;
+                width: 100%; margin: 8px 0;
+            ">
+                        <div class="cta-stat-item"
+                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-right: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
+                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">70</div>
+                            <div
+                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
+                                Acre Estate</div>
+                        </div>
+                        <div class="cta-stat-item"
+                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; box-sizing: border-box;">
+                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">8</div>
+                            <div
+                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
+                                Cottages</div>
+                        </div>
+                        <div class="cta-stat-item"
+                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-right: 1px solid rgba(255,255,255,0.12); border-top: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
+                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">1.5K+</div>
+                            <div
+                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
+                                Happy Guests</div>
+                        </div>
+                        <div class="cta-stat-item"
+                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-top: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
+                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">4.8&#9733;</div>
+                            <div
+                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
+                                Google Rating</div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex flex-xl-row flex-column align-items-center gap-3">
+                        <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
+                            <span>Book Your Stay</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+<style>
+    .cta-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* ===== CTA heading & text: mobile — smaller + left aligned ===== */
+    @media (max-width: 767px) {
+        #contact .r-container > .d-flex {
+            text-align: left !important;
+            align-items: flex-start !important;
+        }
+
+        #contact h3.text-white {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+            text-align: left !important;
+        }
+
+        #contact p.text-white {
+            font-size: 0.88rem !important;
+            line-height: 1.6 !important;
+            text-align: left !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #contact h3.text-white {
+            font-size: 1.2rem !important;
+        }
+
+        #contact p.text-white {
+            font-size: 0.82rem !important;
+        }
+    }
+
+    /* ===== Stats strip: tighten spacing + size on mobile ===== */
+    @media (max-width: 767px) {
+        .cta-stats-strip {
+            margin: 6px 0 !important;
+        }
+
+        .cta-stat-item {
+            padding: 12px 8px !important;
+        }
+
+        .cta-stat-item div:first-child {
+            font-size: 1.1rem !important;
+        }
+
+        .cta-stat-item div:last-child {
+            font-size: 0.55rem !important;
+            letter-spacing: 1px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cta-stat-item {
+            padding: 10px 6px !important;
+        }
+
+        .cta-stat-item div:first-child {
+            font-size: 1rem !important;
+        }
+
+        .cta-stat-item div:last-child {
+            font-size: 0.5rem !important;
+            letter-spacing: 0.8px !important;
+        }
+    }
+
+    /* ===== Book Your Stay button: smaller on mobile ===== */
+    @media (max-width: 767px) {
+        #contact .btn-accent.js-open-booking-modal {
+            padding: 12px 26px !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            border-radius: 50px !important;
+            gap: 8px !important;
+            width: auto !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #contact .btn-accent.js-open-booking-modal {
+            padding: 10px 20px !important;
+            font-size: 0.78rem !important;
+            gap: 6px !important;
+        }
+
+        #contact .btn-accent.js-open-booking-modal i {
+            font-size: 0.7rem !important;
+        }
+    }
+</style>
+
+
        <!-- ===== TESTIMONIALS SECTION (cream + leaf-corner, Ambady Estate theme) ===== -->
 <div class="section testi-hero-section" style="background-image: url('{% static 'ambadyestate-main/bg1.png' %}');">
 
@@ -7937,6 +9205,300 @@ testi-heading {
         }
     });
 </script>
+      <!-- Blog -->
+        <div id="blog" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="r-container d-flex flex-column gap-4">
+                <div class="row row-cols-xl-2 row-cols-1 align-items-center">
+                    <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
+                        <h6 class="accent-color-2">From the Estate</h6>
+                        <h3>Stories, guides & seasonal notes from Ambady Estate</h3>
+                        <p>
+                            Travel tips, nature notes, and behind-the-scenes glimpses from our cardamom plantation in
+                            the heart of Munnar.
+                        </p>
+                    </div>
+                    <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
+                        <div class="w-max-content">
+                            <a href="{% url 'ambadyestate_app:blog_page' %}" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3">
+                                <span>View All</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-xl-2 row-cols-1">
+                    {% for blog in blogs %}
+                    <div class="col mb-3 scrollanimation animated {% cycle 'scroll-fadeInLeft' 'scroll-fadeInRight' %}">
+                        <a href="{% url 'ambadyestate_app:blog_details' blog.slug %}" class="blog-card" style="display:block; text-decoration:none;">
+                            <div class="blog-card-img-wrap">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                                <div class="blog-overlay"></div>
+                                <div class="blog-tag">{{ blog.created_at|date:"M Y" }}</div>
+                                <div class="blog-card-body">
+                                    <h4>{{ blog.title }}</h4>
+                                    <p>{% autoescape off %}{{ blog.description|striptags|truncatewords:25 }}{% endautoescape %}</p>
+                                    <span class="blog-read-more">
+                                        Read More
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center">
+                        <p>No stories published yet.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+  <style>
+  /* ===== BLOG CARDS ===== */
+.blog-card {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.blog-card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 320px;
+    border-radius: 16px;
+}
+
+.blog-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog-card:hover .blog-card-img-wrap img {
+    transform: scale(1.08);
+}
+
+.blog-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.45) 50%,
+            rgba(0, 0, 0, 0.05) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
+}
+
+.blog-card:hover .blog-overlay {
+    background: linear-gradient(to top,
+            rgba(26, 30, 22, 0.95) 0%,
+            rgba(44, 95, 26, 0.5) 60%,
+            rgba(0, 0, 0, 0.1) 100%);
+}
+
+.blog-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-color-2);
+    color: var(--text-color);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    z-index: 2;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.blog-card:hover .blog-tag {
+    background: var(--accent-color);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.blog-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px;
+    z-index: 2;
+    transform: translateY(10px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog-card:hover .blog-card-body {
+    transform: translateY(0);
+}
+
+.blog-card-body h4 {
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.12;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px;
+    transition: color 0.3s;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-card-body p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.4s ease;
+}
+
+.blog-card:hover .blog-card-body p {
+    max-height: 80px;
+    opacity: 1;
+}
+
+.blog-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 9px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 100px;
+    background: transparent;
+    opacity: 1;
+    transform: translateY(0);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+}
+
+.blog-read-more:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    gap: 12px;
+}
+
+.blog-read-more i {
+    transition: transform 0.3s ease;
+    font-size: 0.72rem;
+}
+
+.blog-read-more:hover i {
+    transform: translateX(4px);
+}
+
+@media (max-width: 991px) {
+    .blog-card-body h4 {
+        font-size: 1.6rem !important;
+    }
+}
+/* ===== View All button — smaller + right-aligned on mobile ===== */
+@media (max-width: 767px) {
+    #blog .col.col-xl-4 {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    #blog .col.col-xl-4 .w-max-content {
+        margin-left: auto;
+    }
+
+    #blog .col.col-xl-4 .btn-accent {
+        padding: 8px 18px !important;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        border-radius: 50px !important;
+        gap: 6px !important;
+        width: auto !important;
+        margin-left: auto !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #blog .col.col-xl-4 .btn-accent {
+        padding: 7px 16px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 575px) {
+    .blog-card-img-wrap {
+        height: 260px;
+    }
+
+    .blog-tag {
+        font-size: 0.62rem;
+        padding: 4px 10px;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .blog-card-body {
+        padding: 20px;
+    }
+
+    .blog-card-body h4 {
+        font-size: 1.3rem !important;
+        line-height: 1.18 !important;
+        margin-bottom: 8px !important;
+        letter-spacing: -0.3px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    .blog-card-body p {
+        font-size: 0.74rem !important;
+        line-height: 1.5 !important;
+    }
+
+    .blog-read-more {
+        font-size: 0.64rem;
+        padding: 6px 12px;
+        gap: 5px;
+    }
+
+    .blog-read-more i {
+        font-size: 0.58rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .blog-card-body h4 {
+        font-size: 1.15rem !important;
+    }
+}
+
+/* ===== Remove background image + shadow/border on mobile only (desktop keeps it) ===== */
+@media (max-width: 767px) {
+    #blog {
+        background-image: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-bottom: none !important;
+    }
+
+    #blog::before,
+    #blog::after {
+        display: none !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
+}
+        </style>
 <!-- ===== FAQ SECTION ===== -->
 <div id="faq" class="section faq-section">
     <div class="r-container">
@@ -8359,1893 +9921,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-<!-- ===== NEARBY DESTINATIONS SECTION (dynamic — same style as Packages) ===== -->
-<section id="nearby-destinations" class="nearby-section position-relative">
-
-    <div class="r-container nearby-container">
-
-        <div class="nearby-heading text-center">
-            <h6 class="accent-color-2">Explore Around Munnar</h6>
-            <h3>Nearby Destinations Worth Visiting</h3>
-            <p>Step beyond the estate and discover the best of Munnar's valleys, viewpoints, and hidden trails — all just a short drive away.</p>
-        </div>
-
-        {% if nearby_destinations %}
-        <div class="swiper nearby-slider">
-            <div class="swiper-wrapper">
-                {% for destination in nearby_destinations %}
-                <div class="swiper-slide">
-                    <a href="{% url 'ambadyestate_app:nearby_destination_details' destination.slug %}" class="nearby-card">
-                        <div class="nearby-card-media">
-                            {% if destination.image %}
-                            <img src="{{ destination.image.url }}" alt="{{ destination.name }}" loading="lazy">
-                            {% endif %}
-                        </div>
-                        <div class="nearby-card-overlay"></div>
-                        <div class="nearby-card-info">
-                            <h4>{{ destination.name }}</h4>
-                            {% if destination.description %}
-                            <p class="nearby-description">
-                                {% autoescape off %}{{ destination.description|striptags|truncatewords:20 }}{% endautoescape %}
-                            </p>
-                            {% endif %}
-                            <span class="nearby-explore-link">
-                                <span>Explore</span>
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="nearby-slider-controls">
-                <button type="button" class="nearby-slider-prev" aria-label="Previous destination">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <div class="nearby-slider-pagination"></div>
-                <button type="button" class="nearby-slider-next" aria-label="Next destination">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </div>
-        {% else %}
-        <div class="nearby-empty text-center">
-            <p>No nearby destinations added yet. Please check back soon.</p>
-        </div>
-        {% endif %}
-
-    </div>
-</section>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const nearbySlider = document.querySelector(".nearby-slider");
-
-    if (typeof Swiper !== "undefined" && nearbySlider) {
-        new Swiper(".nearby-slider", {
-            slidesPerView: 1,
-            spaceBetween: 16,
-            loop: false,
-            rewind: true,
-            watchOverflow: false,
-            speed: 700,
-            autoplay: {
-                delay: 3800,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true
-            },
-            pagination: {
-                el: ".nearby-slider-pagination",
-                clickable: true
-            },
-            navigation: {
-                nextEl: ".nearby-slider-next",
-                prevEl: ".nearby-slider-prev"
-            },
-            breakpoints: {
-                576: {
-                    slidesPerView: 2,
-                    spaceBetween: 12
-                },
-                992: {
-                    slidesPerView: 2,
-                    spaceBetween: 28
-                }
-            }
-        });
-    }
-});
-</script>
-
-<style>
-
-/* ===== SECTION ===== */
-#nearby-destinations.nearby-section {
-    position: relative;
-    width: 100%;
-    padding: 100px 0;
-    background-color: transparent;
-    overflow: hidden;
-}
-
-.nearby-container {
-    position: relative;
-    z-index: 2;
-}
-
-/* HEADING */
-.nearby-heading {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 45px;
-    text-align: center;
-}
-
-.nearby-heading h6 {
-    margin: 0 0 10px;
-    color: var(--accent-color, #2c5f1a);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.nearby-heading h3 {
-    margin: 0 0 14px;
-    font-size: 2.4rem;
-    line-height: 1.2;
-    font-weight: 800;
-    color: #1a1e16;
-}
-
-.nearby-heading p {
-    margin: 0 auto;
-    max-width: 650px;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: rgba(26, 30, 22, 0.75);
-}
-
-/* =====================================================
-   FORCE VISIBLE — the heading and cards must always render
-   fully opaque and in place, regardless of any site-wide
-   scroll-triggered fade/animation script that might otherwise
-   apply to headings, paragraphs, or images in this section.
-===================================================== */
-.nearby-heading,
-.nearby-heading *,
-.nearby-card,
-.nearby-card * {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-}
-
-/* SWIPER */
-.nearby-slider {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    padding: 5px 5px 10px;
-    overflow: hidden;
-}
-
-.nearby-slider .swiper-wrapper {
-    align-items: stretch;
-}
-
-.nearby-slider .swiper-slide {
-    height: auto;
-    display: flex;
-}
-
-/* CARD */
-.nearby-card {
-    position: relative;
-    width: 100%;
-    height: 340px;
-    overflow: hidden;
-    border-radius: 24px;
-    background: #222;
-    isolation: isolate;
-    display: block;
-    text-decoration: none;
-    box-shadow: 0 16px 40px rgba(26, 30, 22, 0.16);
-}
-
-.nearby-card-media {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-}
-
-.nearby-card-media img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.nearby-card-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-        to top,
-        rgba(5, 15, 7, 0.94) 0%,
-        rgba(5, 15, 7, 0.55) 45%,
-        rgba(5, 15, 7, 0.05) 100%
-    );
-}
-
-.nearby-card-info {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 28px 30px 26px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.nearby-card-info h4 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 1.45rem;
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-}
-
-.nearby-card-info .nearby-description {
-    margin: 0;
-    max-width: 100%;
-    color: rgba(255, 255, 255, 0.88);
-    font-size: 0.92rem;
-    font-weight: 400;
-    line-height: 1.55;
-
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.nearby-explore-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 4px;
-    color: #ffffff;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-}
-
-.nearby-explore-link i {
-    font-size: 0.72rem;
-}
-
-/* SLIDER CONTROLS */
-.nearby-slider-controls {
-    position: relative;
-    z-index: 10;
-    margin-top: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-}
-
-.nearby-slider-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.nearby-slider-pagination .swiper-pagination-bullet {
-    width: 24px;
-    height: 3px;
-    margin: 0 !important;
-    border-radius: 3px;
-    background: rgba(26, 30, 22, 0.20);
-    opacity: 1;
-    transition: width 0.3s ease, background 0.3s ease;
-}
-
-.nearby-slider-pagination .swiper-pagination-bullet-active {
-    width: 40px;
-    background: var(--accent-color, #2c5f1a);
-}
-
-.nearby-slider-prev,
-.nearby-slider-next {
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border-radius: 50%;
-    border: 1.5px solid rgba(26, 30, 22, 0.15);
-    background: #ffffff;
-    color: var(--accent-color, #2c5f1a);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nearby-slider-prev:hover,
-.nearby-slider-next:hover {
-    background: var(--accent-color, #2c5f1a);
-    color: #ffffff;
-    border-color: var(--accent-color, #2c5f1a);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(44, 95, 26, 0.25);
-}
-
-/* EMPTY STATE */
-.nearby-empty {
-    position: relative;
-    z-index: 5;
-    padding: 40px;
-}
-
-/* TABLET */
-@media (max-width: 991px) {
-    #nearby-destinations.nearby-section {
-        padding: 75px 0;
-    }
-
-    .nearby-heading {
-        margin-bottom: 35px;
-    }
-
-    .nearby-heading h3 {
-        font-size: 2rem;
-    }
-
-    .nearby-card {
-        height: 240px;
-        border-radius: 20px;
-    }
-
-    .nearby-card-info h4 {
-        font-size: 1.2rem;
-    }
-
-    .nearby-card-info .nearby-description {
-        -webkit-line-clamp: 1;
-    }
-}
-
-/* MOBILE */
-@media (max-width: 767px) {
-    #nearby-destinations.nearby-section {
-        padding: 55px 0;
-    }
-
-    #nearby-destinations .r-container {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .nearby-heading {
-        margin-bottom: 30px;
-        text-align: left !important;
-        padding: 0 8px;
-    }
-
-    .nearby-heading h6,
-    .nearby-heading h3,
-    .nearby-heading p {
-        text-align: left !important;
-    }
-
-    .nearby-heading h3 {
-        font-size: 1.8rem;
-    }
-
-    .nearby-heading p {
-        font-size: 0.9rem;
-    }
-
-    .nearby-card {
-        height: 190px;
-        border-radius: 16px;
-    }
-
-    .nearby-card-info {
-        padding: 16px 18px;
-    }
-
-    .nearby-card-info h4 {
-        font-size: 1.05rem;
-        line-height: 1.25;
-    }
-
-    .nearby-card-info .nearby-description {
-        display: none;
-    }
-
-    .nearby-explore-link {
-        font-size: 0.72rem;
-    }
-
-    .nearby-slider-controls {
-        margin-top: 20px;
-    }
-}
-
-/* SMALL MOBILE */
-@media (max-width: 575px) {
-    .nearby-card {
-        height: 170px;
-        border-radius: 14px;
-    }
-
-    .nearby-card-info {
-        padding: 14px 16px;
-    }
-
-    .nearby-card-info h4 {
-        font-size: 0.95rem;
-    }
-
-    .nearby-slider-prev,
-    .nearby-slider-next {
-        width: 40px;
-        height: 40px;
-    }
-}
-</style>
-
-       <!-- Dining & Culinary Section -->
-<div class="dine-section section" id="restaurant" style="background-image: url('{% static 'ambadyestate-main/image/pack.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-    <!-- decorative corner leaves — fill the quiet space, purely visual -->
-    <svg class="dine-leaf dine-leaf-tr" viewBox="0 0 200 200" aria-hidden="true">
-        <path d="M10 190 C 40 120, 60 60, 140 10 C 120 70, 130 110, 190 100 C 130 140, 90 150, 60 190 Z" fill="currentColor"/>
-    </svg>
-    <svg class="dine-leaf dine-leaf-bl" viewBox="0 0 200 200" aria-hidden="true">
-        <path d="M190 10 C 150 40, 110 55, 60 130 C 100 120, 130 130, 150 190 C 100 150, 60 150, 10 190 Z" fill="currentColor"/>
-    </svg>
-
-    <div class="r-container">
-
-        <!-- Top row: heading | two stacked cards | schedule card -->
-        <div class="dine-intro scrollanimation animated scroll-fadeInUp">
-
-            <div class="dine-heading">
-                <div class="dine-heading-top">
-                    <span class="dine-eyebrow"><i class="fa-solid fa-utensils"></i>Dining &amp; Culinary</span>
-                    <h2>Sattvic &amp; Organic<br><span>Pure Vegetarian Dining</span></h2>
-                    <p class="dine-lede">Enjoy healthy, fresh, locally-sourced vegetarian and South/North Indian cuisine, made with care and the goodness of nature.</p>
-                </div>
-                <div class="dine-heading-bottom">
-                    <span class="dine-divider"></span>
-                    <p class="dine-tagline">Good food <span>·</span> Brighter days <span>·</span> A kinder tomorrow</p>
-                </div>
-            </div>
-
-            <div class="dine-cards">
-                <div class="dine-card">
-                    <div class="dine-card-top">
-                        <i class="fa-solid fa-leaf dine-icon"></i>
-                        <h3>Dietary Philosophy</h3>
-                    </div>
-                    <p>Sattvic &amp; organic pure vegetarian dining, emphasising healthy, fresh, locally-sourced vegetarian and South/North Indian cuisine.</p>
-                </div>
-                <div class="dine-card">
-                    <div class="dine-card-top">
-                        <i class="fa-solid fa-ban dine-icon"></i>
-                        <h3>Strict Restrictions Notice</h3>
-                    </div>
-                    <p>Strictly pure vegetarian. Meat, poultry, seafood and outside food are strictly prohibited on estate grounds.</p>
-                </div>
-            </div>
-
-            <div class="dine-schedule-card">
-                <div class="dine-schedule-head">
-                    <i class="fa-solid fa-calendar-days dine-icon dine-icon-solid"></i>
-                    <h3>Dining Schedule &amp; Timings</h3>
-                </div>
-                <ul class="dine-schedule">
-                    <li>
-                        <i class="fa-solid fa-sun dine-meal-icon"></i>
-                        <div class="dine-meal-text">
-                            <span class="dine-meal">Breakfast</span>
-                            <span class="dine-time">8:30 AM – 10:30 AM</span>
-                            <span class="dine-note">Included in package</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-utensils dine-meal-icon"></i>
-                        <div class="dine-meal-text">
-                            <span class="dine-meal">Lunch</span>
-                            <span class="dine-time">12:30 PM – 2:30 PM</span>
-                            <span class="dine-note">À la carte; pre-order 30 mins prior</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-mug-hot dine-meal-icon"></i>
-                        <div class="dine-meal-text">
-                            <span class="dine-meal">Afternoon Tea</span>
-                            <span class="dine-time">4:00 PM – 6:00 PM</span>
-                            <span class="dine-note">Complimentary high tea</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-moon dine-meal-icon"></i>
-                        <div class="dine-meal-text">
-                            <span class="dine-meal">Dinner</span>
-                            <span class="dine-time">7:30 PM – 9:30 PM</span>
-                            <span class="dine-note">À la carte; pre-order by 6:00 PM</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-        <!-- Bottom row: two images -->
-        <div class="dine-images scrollanimation animated scroll-fadeInUp">
-
-            <div class="dine-img-wrap dine-img-small">
-                <img src="{% static 'ambadyestate-main/image/new/restaurent.webp' %}" alt="Guests dining at Ambady Estate">
-            </div>
-
-            <div class="dine-img-wrap dine-img-large">
-                <img src="{% static 'ambadyestate-main/image/new/restaurent1.webp' %}" alt="Ambady Estate dining room, Munnar">
-                <div class="dine-img-footer">
-                    <a href="#process" class="dine-explore-link">
-                        Explore Stays
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<style>
-    /* ===== DINING & CULINARY SECTION ===== */
-    .dine-section {
-        background: var(--background-color);
-        padding: 60px 0 80px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* decorative corner leaves — quiet, low-opacity, never intercepts clicks */
-    .dine-leaf {
-        position: absolute;
-        width: 220px;
-        height: 220px;
-        color: var(--accent-color-2, #98A194);
-        opacity: 0.16;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    .dine-leaf-tr {
-        top: -30px;
-        right: -20px;
-        transform: rotate(8deg);
-    }
-
-    .dine-leaf-bl {
-        bottom: -40px;
-        left: -30px;
-        transform: rotate(-6deg) scaleX(-1);
-    }
-
-    .dine-section .r-container {
-        position: relative;
-        z-index: 1;
-    }
-
-    /* ---- Intro row: heading | two stacked cards | schedule card ---- */
-    .dine-intro {
-        display: grid;
-        grid-template-columns: 1fr 1fr auto;
-        align-items: start;
-        column-gap: 28px;
-        max-width: 1280px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 36px;
-        opacity: 0;
-    }
-
-    .dine-intro.animated {
-        animation: dineRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    @keyframes dineRise {
-        from {
-            opacity: 0;
-            transform: translateY(18px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .dine-intro {
-            opacity: 1;
-            animation: none !important;
-        }
-    }
-
-    /* ---- Heading column ---- */
-    .dine-heading {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-self: stretch;
-    }
-
-    .dine-heading-bottom {
-        margin-top: 30px;
-    }
-
-    .dine-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--accent-color-2, #98A194);
-        margin-bottom: 14px;
-        letter-spacing: 0.3px;
-    }
-
-    .dine-eyebrow i {
-        font-size: 0.9rem;
-    }
-
-    .dine-heading h2 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: clamp(1.7rem, 2.6vw, 2.35rem);
-        font-weight: 800;
-        line-height: 1.18;
-        color: var(--text-color);
-        margin: 0 0 16px 0;
-    }
-
-    .dine-heading h2 span {
-        color: var(--accent-color-2, #98A194);
-        font-weight: 700;
-    }
-
-    .dine-lede {
-        font-size: 0.96rem;
-        line-height: 1.75;
-        color: var(--text-color-2);
-        margin: 0;
-        max-width: 340px;
-    }
-
-    .dine-divider {
-        display: block;
-        width: 42px;
-        height: 2px;
-        background: var(--accent-color-2, #4c6b4c);
-        margin-bottom: 14px;
-    }
-
-    .dine-tagline {
-        margin: 0;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.6px;
-        text-transform: uppercase;
-        color: var(--text-color-2);
-        opacity: 0.7;
-    }
-
-    .dine-tagline span {
-        margin: 0 8px;
-        color: var(--accent-color-2, #98A194);
-    }
-
-    /* ---- Stacked info cards ---- */
-    .dine-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        align-self: stretch;
-    }
-
-    .dine-card {
-        background: #fdfcf8;
-        border-radius: 20px;
-        padding: 22px 22px;
-        box-shadow: 0 18px 40px -22px rgba(30, 44, 30, 0.2);
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        cursor: pointer;
-        transform: scale(1);
-        transition: transform 0.4s cubic-bezier(0.34, 1.2, 0.64, 1), background 0.4s ease, box-shadow 0.4s ease;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .dine-card:hover,
-    .dine-card:active {
-        transform: scale(1.045);
-        background: #3d4a34;
-        box-shadow: 0 26px 54px -18px rgba(30, 44, 30, 0.4);
-    }
-
-    .dine-card-top h3 {
-        transition: color 0.4s ease, font-size 0.4s ease;
-    }
-
-    .dine-card:hover .dine-card-top h3,
-    .dine-card:active .dine-card-top h3 {
-        color: #fff;
-        font-size: 1.08rem;
-    }
-
-    .dine-card p {
-        transition: color 0.4s ease, font-size 0.4s ease;
-    }
-
-    .dine-card:hover p,
-    .dine-card:active p {
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 0.92rem;
-    }
-
-    .dine-card:hover .dine-icon,
-    .dine-card:active .dine-icon {
-        background: #f3ecd9;
-        color: #3d4a34;
-    }
-
-    .dine-card-top {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 10px;
-    }
-
-    .dine-card-top h3 {
-        margin: 0;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--text-color);
-    }
-
-    .dine-card p {
-        font-size: 0.88rem;
-        line-height: 1.65;
-        color: var(--text-color-2);
-        margin: 0;
-    }
-
-    .dine-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: rgba(152, 161, 148, 0.16);
-        color: var(--accent-color-2, #4c6b4c);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        flex-shrink: 0;
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, color 0.3s ease;
-    }
-
-    .dine-card:hover .dine-icon {
-        transform: scale(1.12) rotate(-6deg);
-        background: rgba(152, 161, 148, 0.26);
-    }
-
-    /* ---- Dining Schedule card ---- */
-    .dine-schedule-card {
-        width: 300px;
-        flex-shrink: 0;
-        background: #fdfcf8;
-        border-radius: 22px;
-        padding: 24px 24px;
-        box-shadow: 0 24px 50px -20px rgba(30, 44, 30, 0.22);
-        transform: scale(1);
-        transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.35s ease;
-    }
-
-    .dine-schedule-card:hover,
-    .dine-schedule-card:active {
-        transform: scale(1.02);
-        box-shadow: 0 28px 56px -18px rgba(30, 44, 30, 0.3);
-    }
-
-    .dine-schedule-head {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .dine-icon-solid {
-        background: var(--accent-color-2, #4c6b4c);
-        color: #fff;
-        margin-bottom: 0;
-        flex-shrink: 0;
-    }
-
-    .dine-schedule-head h3 {
-        margin: 0;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 0.98rem;
-        font-weight: 700;
-        color: var(--text-color);
-        white-space: nowrap;
-    }
-
-    .dine-schedule {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .dine-schedule li {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 10px;
-        margin: 0 -10px;
-        border-radius: 14px;
-        cursor: pointer;
-        transition: background 0.35s ease, padding 0.35s ease;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .dine-schedule li:hover,
-    .dine-schedule li:active,
-    .dine-schedule li.is-active {
-        padding: 12px 14px;
-    }
-
-    .dine-schedule li:hover,
-    .dine-schedule li:active,
-    .dine-schedule li.is-active {
-        background: #3d4a34;
-    }
-
-    .dine-meal-icon {
-        width: 30px;
-        height: 30px;
-        flex-shrink: 0;
-        border-radius: 50%;
-        background: rgba(152, 161, 148, 0.16);
-        color: var(--accent-color-2, #4c6b4c);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.78rem;
-        margin-top: 2px;
-        transition: background 0.35s ease, color 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .dine-schedule li:hover .dine-meal-icon,
-    .dine-schedule li:active .dine-meal-icon,
-    .dine-schedule li.is-active .dine-meal-icon {
-        background: #f3ecd9;
-        color: #3d4a34;
-        transform: scale(1.1);
-    }
-
-    .dine-meal-text {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .dine-meal {
-        font-size: 0.88rem;
-        font-weight: 700;
-        color: var(--text-color);
-        transition: color 0.35s ease, font-size 0.35s ease;
-    }
-
-    .dine-schedule li:hover .dine-meal,
-    .dine-schedule li:active .dine-meal,
-    .dine-schedule li.is-active .dine-meal {
-        color: #fff;
-        font-size: 0.95rem;
-    }
-
-    .dine-time {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--accent-color-2, #4c6b4c);
-        margin-top: 3px;
-        transition: color 0.35s ease, font-size 0.35s ease;
-    }
-
-    .dine-schedule li:hover .dine-time,
-    .dine-schedule li:active .dine-time,
-    .dine-schedule li.is-active .dine-time {
-        color: #d9e3d3;
-        font-size: 0.86rem;
-    }
-
-    .dine-note {
-        font-size: 0.74rem;
-        color: var(--text-color-2);
-        opacity: 0.85;
-        margin-top: 2px;
-        transition: color 0.35s ease, opacity 0.35s ease;
-    }
-
-    .dine-schedule li:hover .dine-note,
-    .dine-schedule li:active .dine-note,
-    .dine-schedule li.is-active .dine-note {
-        color: rgba(255, 255, 255, 0.75);
-        opacity: 1;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .dine-schedule li,
-        .dine-meal-icon,
-        .dine-meal {
-            transition: none;
-        }
-    }
-
-    /* ---- Images row ---- */
-    .dine-images {
-        display: grid;
-        grid-template-columns: 0.75fr 1.25fr;
-        gap: 16px;
-        height: 400px;
-        max-width: 1280px;
-        margin-left: auto;
-        margin-right: auto;
-        opacity: 0;
-    }
-
-    .dine-images.animated {
-        animation: dineRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        animation-delay: 0.15s;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .dine-images {
-            opacity: 1;
-            animation: none !important;
-        }
-    }
-
-    .dine-img-wrap {
-        position: relative;
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-    .dine-img-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .dine-img-wrap:hover img {
-        transform: scale(1.04);
-    }
-
-    .dine-img-footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 24px 28px;
-        background: linear-gradient(to top, rgba(10, 18, 10, 0.7) 0%, transparent 100%);
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-    }
-
-    .dine-explore-link {
-        color: #fff;
-        font-size: 0.88rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: gap 0.3s ease, opacity 0.3s ease;
-        opacity: 0.9;
-    }
-
-    .dine-explore-link:hover {
-        gap: 14px;
-        opacity: 1;
-        color: var(--accent-color-2, #c8a86a);
-    }
-
-    .dine-explore-link i {
-        font-size: 0.75rem;
-        transition: transform 0.3s ease;
-    }
-
-    .dine-explore-link:hover i {
-        transform: translateX(3px);
-    }
-
-    /* ---- Responsive ---- */
-    @media (max-width: 1300px) {
-        .dine-intro {
-            grid-template-columns: 1fr 1fr;
-            row-gap: 28px;
-        }
-
-        .dine-heading {
-            grid-column: 1 / -1;
-        }
-
-        .dine-schedule-card {
-            width: auto;
-        }
-    }
-
-    @media (max-width: 900px) {
-        #restaurant .r-container {
-            display: flex;
-            flex-direction: column;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .dine-intro {
-            grid-template-columns: 1fr;
-            row-gap: 20px;
-            margin-bottom: 32px;
-        }
-
-        .dine-heading-bottom {
-            margin-top: 4px;
-        }
-
-        .dine-images {
-            grid-template-columns: 1fr;
-            height: auto;
-            margin-bottom: 24px;
-        }
-
-        .dine-img-wrap {
-            height: 260px;
-        }
-    }
-
-/* ============================================================
-   UNIFIED CARD TYPOGRAPHY — matches "GARDEN DESIGN" style card
-   Bold tight header + larger, more readable description
-   ============================================================ */
-
-.feature-card h3,
-.process-card h3,
-.service-body h3,
-.project-card h3,
-.about-feature-text h5,
-.accordion-item h4,
-.why-feature-text h5,
-.activity-content h5,
-.amenity-card h5,
-.blog-card-body h4,
-.testimonial-quote strong {
-    font-family: var(--font-1) !important;
-    font-size: 1.65rem !important;
-    font-weight: 800 !important;
-    line-height: 1.25 !important;
-    letter-spacing: -0.5px !important;
-    text-transform: uppercase !important;
-    
-}
-
-.feature-card p,
-.process-card p,
-.service-body p,
-.project-card p,
-.about-feature-text p,
-.accordion-item p.text-white,
-.why-feature-text p,
-.activity-content p,
-
-.amenity-card p,
-.blog-card-body p {
-    font-family: var(--font-3) !important;
-    font-size: 1.05rem !important;
-    font-weight: 400 !important;
-    line-height: 1.65 !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-}
-
-@media (max-width: 767px) {
-    .feature-card p,
-    .process-card p,
-    .service-body p,
-    .project-card p,
-    .about-feature-text p,
-    .accordion-item p.text-white,
-    .why-feature-text p,
-    .activity-content p,
-    .amenity-card p,
-    .blog-card-body p {
-        font-size: 0.95rem !important;
-        line-height: 1.55 !important;
-    }
-}
-
-
-@media (max-width: 575px) {
-    .accordion-item h4 {
-        font-size: 1.05rem !important;
-    }
-}
-/* =====================================================
-   GLOBAL: SECTION TITLES + DESCRIPTIONS LEFT-ALIGNED ON MOBILE
-   Applies site-wide, across every section on every page.
-   Uses !important because the page-specific <style> blocks set
-   text-align:center on these same elements without !important —
-   this rule needs to win regardless of source order.
-   ===================================================== */
-@media (max-width: 768px) {
-
-    /* Generic section intro wrapper used across the theme */
-    .section-intro,
-    .section-intro h2,
-    .section-intro p {
-        text-align: left !important;
-    }
-
-    /* About Us */
-    #about .about-heading-col,
-    #about .about-heading-col .about-eyebrow,
-    #about .about-heading,
-    #about .unique-section-head,
-    #about .unique-section-head .about-eyebrow,
-    #about .unique-section-heading {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* Accommodations / Process */
-    #process > .r-container > div.text-center,
-    #process h6,
-    #process h3,
-    #process p {
-        text-align: left !important;
-        align-items: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* Why Choose Us */
-   /* Why Choose Us */
-.why-content-wrapper,
-.why-content-wrapper > h6,
-.why-content-wrapper > h3,
-.why-content-wrapper > p.mb-5 {
-    text-align: left !important;
-    text-align-last: left !important;
-}
-
-.why-feature-item {
-    align-items: flex-start !important;
-    text-align: left !important;
-}
-
-.why-feature-item .why-feature-text,
-.why-feature-item .why-feature-text h5,
-.why-feature-item .why-feature-text p {
-    text-align: left !important;
-}
-
-.why-icon-box {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-    /* Activities */
-    #activities .row.row-cols-xl-2.align-items-center,
-    #activities .col.col-xl-8,
-    #activities h6.accent-color-2,
-    #activities h3,
-    #activities .col.col-xl-8 p {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* Everything You Need (amenities intro) */
-    #projects > .r-container > div.text-center,
-    html body #projects > .r-container > div.text-center {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    #projects > .r-container > div.text-center > h3,
-    #projects > .r-container > div.text-center > p,
-    html body #projects h3,
-    html body #projects > .r-container > div.text-center > p {
-        text-align: left !important;
-    }
-
-    /* Testimonials */
-    .testi-top-header,
-    .testi-kicker,
-    .testi-heading,
-    .testi-sub {
-        text-align: left !important;
-    }
-
-    .testi-kicker {
-        justify-content: flex-start !important;
-    }
-
-    /* Restaurant / Story */
-    .story-heading,
-    .story-heading h2 {
-        text-align: left !important;
-    }
-
-    /* Blog */
-    #blog .col.col-xl-8,
-    #blog h6.accent-color-2,
-    #blog h3,
-    #blog .col.col-xl-8 p {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* Founder */
-    .founder-heading-block,
-    .founder-eyebrow,
-    .founder-heading {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin: 0 !important;
-    }
-}
-
-/* =====================================================
-   Repeated at 575px so narrow phones stay left-aligned even if
-   another rule at this same breakpoint (elsewhere in the codebase)
-   re-centers something after this file loads. Being the last
-   matching rule at this width wins the tie against equal specificity.
-   ===================================================== */
-@media (max-width: 575px) {
-
-    .section-intro,
-    .section-intro h2,
-    .section-intro p {
-        text-align: left !important;
-    }
-
-    #about .about-heading-col,
-    #about .about-heading-col .about-eyebrow,
-    #about .about-heading,
-    #about .unique-section-head,
-    #about .unique-section-head .about-eyebrow,
-    #about .unique-section-heading {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    #process > .r-container > div.text-center,
-    #process h6,
-    #process h3,
-    #process p {
-        text-align: left !important;
-        align-items: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    .why-content-wrapper,
-    .why-content-wrapper > h6,
-    .why-content-wrapper > h3,
-    .why-content-wrapper > p.mb-5 {
-        text-align: left !important;
-        text-align-last: left !important;
-    }
-
-    #activities .row.row-cols-xl-2.align-items-center,
-    #activities .col.col-xl-8,
-    #activities h6.accent-color-2,
-    #activities h3,
-    #activities .col.col-xl-8 p {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    #projects > .r-container > div.text-center,
-    html body #projects > .r-container > div.text-center {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    #projects > .r-container > div.text-center > h3,
-    #projects > .r-container > div.text-center > p,
-    html body #projects h3,
-    html body #projects > .r-container > div.text-center > p {
-        text-align: left !important;
-    }
-
-    .testi-top-header,
-    .testi-kicker,
-    .testi-heading,
-    .testi-sub {
-        text-align: left !important;
-    }
-
-    .testi-kicker {
-        justify-content: flex-start !important;
-    }
-
-    .story-heading,
-    .story-heading h2 {
-        text-align: left !important;
-    }
-
-    #blog .col.col-xl-8,
-    #blog h6.accent-color-2,
-    #blog h3,
-    #blog .col.col-xl-8 p {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    .founder-heading-block,
-    .founder-eyebrow,
-    .founder-heading {
-        text-align: left !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        margin: 0 !important;
-    }
-}
-  </style>
-
-      
-<!-- Section CTA -->
-        <div id="contact" class="section cta-section position-relative overflow-hidden">
-
-            <!-- Video background -->
-            <video class="cta-video-bg" autoplay loop muted playsinline>
-                <source src="{% static 'ambadyestate-main/am8.mp4' %}" type="video/mp4">
-            </video>
-
-            <!-- Overlay -->
-          <div style="
-    position: absolute; inset: 0;
-    background: rgba(16, 56, 18, 0.42);
-    z-index: 1;
-"></div>
-
-            <!-- Decorative circles -->
-            <div style="
-        position:absolute; top:-80px; right:-80px;
-        width:400px; height:400px; border-radius:50%;
-        border: 1px solid rgba(200,168,106,0.15);
-        z-index: 1; pointer-events:none;
-    "></div>
-            <div style="
-        position:absolute; bottom:-100px; left:-60px;
-        width:300px; height:300px; border-radius:50%;
-        border: 1px solid rgba(200,168,106,0.1);
-        z-index: 1; pointer-events:none;
-    "></div>
-
-            <div class="r-container position-relative" style="z-index: 2;">
-                <div class="d-flex flex-column gap-4 text-white text-center justify-content-center align-items-center mx-auto scrollanimation animated scroll-zoomIn"
-                    style="max-width: 700px;">
-
-
-                    <h3 class="text-white" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.2;">
-                        Wake up to mist, mountains,<br>and the scent of cardamom
-                    </h3>
-
-                    <p class="text-white" style="opacity: 0.78; font-size: 1.02rem; line-height: 1.8;">
-                        Whether you're planning a romantic honeymoon, a family retreat, or a peaceful solo escape into
-                        nature — Ambady Estate offers a rare stay inside Kerala's only certified organic plantation,
-                        nestled in the heart of Munnar.
-                    </p>
-
-                    <!-- Stats strip -->
-                    <div class="cta-stats-strip" style="
-                display: flex; flex-wrap: wrap; gap: 0;
-                border: 1px solid rgba(255,255,255,0.12);
-                border-radius: 12px;
-                width: 100%; margin: 8px 0;
-            ">
-                        <div class="cta-stat-item"
-                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-right: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
-                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">70</div>
-                            <div
-                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
-                                Acre Estate</div>
-                        </div>
-                        <div class="cta-stat-item"
-                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; box-sizing: border-box;">
-                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">8</div>
-                            <div
-                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
-                                Cottages</div>
-                        </div>
-                        <div class="cta-stat-item"
-                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-right: 1px solid rgba(255,255,255,0.12); border-top: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
-                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">1.5K+</div>
-                            <div
-                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
-                                Happy Guests</div>
-                        </div>
-                        <div class="cta-stat-item"
-                            style="flex: 1 1 50%; min-width: 120px; padding: 18px 12px; text-align:center; border-top: 1px solid rgba(255,255,255,0.12); box-sizing: border-box;">
-                            <div style="font-size:1.6rem; font-weight:700; color:#fff; line-height:1;">4.8&#9733;</div>
-                            <div
-                                style="font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
-                                Google Rating</div>
-                        </div>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="d-flex flex-xl-row flex-column align-items-center gap-3">
-                        <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal">
-                            <span>Book Your Stay</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-<style>
-    .cta-video-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    /* ===== CTA heading & text: mobile — smaller + left aligned ===== */
-    @media (max-width: 767px) {
-        #contact .r-container > .d-flex {
-            text-align: left !important;
-            align-items: flex-start !important;
-        }
-
-        #contact h3.text-white {
-            font-size: 1.4rem !important;
-            line-height: 1.3 !important;
-            text-align: left !important;
-        }
-
-        #contact p.text-white {
-            font-size: 0.88rem !important;
-            line-height: 1.6 !important;
-            text-align: left !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        #contact h3.text-white {
-            font-size: 1.2rem !important;
-        }
-
-        #contact p.text-white {
-            font-size: 0.82rem !important;
-        }
-    }
-
-    /* ===== Stats strip: tighten spacing + size on mobile ===== */
-    @media (max-width: 767px) {
-        .cta-stats-strip {
-            margin: 6px 0 !important;
-        }
-
-        .cta-stat-item {
-            padding: 12px 8px !important;
-        }
-
-        .cta-stat-item div:first-child {
-            font-size: 1.1rem !important;
-        }
-
-        .cta-stat-item div:last-child {
-            font-size: 0.55rem !important;
-            letter-spacing: 1px !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .cta-stat-item {
-            padding: 10px 6px !important;
-        }
-
-        .cta-stat-item div:first-child {
-            font-size: 1rem !important;
-        }
-
-        .cta-stat-item div:last-child {
-            font-size: 0.5rem !important;
-            letter-spacing: 0.8px !important;
-        }
-    }
-
-    /* ===== Book Your Stay button: smaller on mobile ===== */
-    @media (max-width: 767px) {
-        #contact .btn-accent.js-open-booking-modal {
-            padding: 12px 26px !important;
-            font-size: 0.85rem !important;
-            font-weight: 700 !important;
-            border-radius: 50px !important;
-            gap: 8px !important;
-            width: auto !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        #contact .btn-accent.js-open-booking-modal {
-            padding: 10px 20px !important;
-            font-size: 0.78rem !important;
-            gap: 6px !important;
-        }
-
-        #contact .btn-accent.js-open-booking-modal i {
-            font-size: 0.7rem !important;
-        }
-    }
-</style>
-
-
-      <!-- Blog -->
-        <div id="blog" class="section" style="background-image: url('{% static 'ambadyestate-main/bg.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-            <div class="r-container d-flex flex-column gap-4">
-                <div class="row row-cols-xl-2 row-cols-1 align-items-center">
-                    <div class="col col-xl-8 scrollanimation animated scroll-zoomIn">
-                        <h6 class="accent-color-2">From the Estate</h6>
-                        <h3>Stories, guides & seasonal notes from Ambady Estate</h3>
-                        <p>
-                            Travel tips, nature notes, and behind-the-scenes glimpses from our cardamom plantation in
-                            the heart of Munnar.
-                        </p>
-                    </div>
-                    <div class="col col-xl-4 d-flex justify-content-end scrollanimation animated scroll-zoomIn">
-                        <div class="w-max-content">
-                            <a href="{% url 'ambadyestate_app:blog_page' %}" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3">
-                                <span>View All</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-cols-xl-2 row-cols-1">
-                    {% for blog in blogs %}
-                    <div class="col mb-3 scrollanimation animated {% cycle 'scroll-fadeInLeft' 'scroll-fadeInRight' %}">
-                        <a href="{% url 'ambadyestate_app:blog_details' blog.slug %}" class="blog-card" style="display:block; text-decoration:none;">
-                            <div class="blog-card-img-wrap">
-                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
-                                <div class="blog-overlay"></div>
-                                <div class="blog-tag">{{ blog.created_at|date:"M Y" }}</div>
-                                <div class="blog-card-body">
-                                    <h4>{{ blog.title }}</h4>
-                                    <p>{% autoescape off %}{{ blog.description|striptags|truncatewords:25 }}{% endautoescape %}</p>
-                                    <span class="blog-read-more">
-                                        Read More
-                                        <i class="fa-solid fa-arrow-right"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    {% empty %}
-                    <div class="col-12 text-center">
-                        <p>No stories published yet.</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-  <style>
-  /* ===== BLOG CARDS ===== */
-.blog-card {
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.blog-card-img-wrap {
-    position: relative;
-    overflow: hidden;
-    height: 320px;
-    border-radius: 16px;
-}
-
-.blog-card-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.blog-card:hover .blog-card-img-wrap img {
-    transform: scale(1.08);
-}
-
-.blog-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.88) 0%,
-            rgba(0, 0, 0, 0.45) 50%,
-            rgba(0, 0, 0, 0.05) 100%);
-    z-index: 1;
-    transition: background 0.4s ease;
-}
-
-.blog-card:hover .blog-overlay {
-    background: linear-gradient(to top,
-            rgba(26, 30, 22, 0.95) 0%,
-            rgba(44, 95, 26, 0.5) 60%,
-            rgba(0, 0, 0, 0.1) 100%);
-}
-
-.blog-tag {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--accent-color-2);
-    color: var(--text-color);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 4px;
-    z-index: 2;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.blog-card:hover .blog-tag {
-    background: var(--accent-color);
-    color: #fff;
-    transform: translateY(-2px);
-}
-
-.blog-card-body {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 28px;
-    z-index: 2;
-    transform: translateY(10px);
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.blog-card:hover .blog-card-body {
-    transform: translateY(0);
-}
-
-.blog-card-body h4 {
-    color: #fff;
-    font-size: 1.9rem;
-    font-weight: 800;
-    line-height: 1.12;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    margin: 0 0 12px;
-    transition: color 0.3s;
-
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.blog-card-body p {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 0.85rem;
-    line-height: 1.6;
-    margin-bottom: 14px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.5s ease, opacity 0.4s ease;
-}
-
-.blog-card:hover .blog-card-body p {
-    max-height: 80px;
-    opacity: 1;
-}
-
-.blog-read-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 9px 18px;
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-    border-radius: 100px;
-    background: transparent;
-    opacity: 1;
-    transform: translateY(0);
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
-}
-
-.blog-read-more:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: #fff;
-    gap: 12px;
-}
-
-.blog-read-more i {
-    transition: transform 0.3s ease;
-    font-size: 0.72rem;
-}
-
-.blog-read-more:hover i {
-    transform: translateX(4px);
-}
-
-@media (max-width: 991px) {
-    .blog-card-body h4 {
-        font-size: 1.6rem !important;
-    }
-}
-/* ===== View All button — smaller + right-aligned on mobile ===== */
-@media (max-width: 767px) {
-    #blog .col.col-xl-4 {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
-    }
-
-    #blog .col.col-xl-4 .w-max-content {
-        margin-left: auto;
-    }
-
-    #blog .col.col-xl-4 .btn-accent {
-        padding: 8px 18px !important;
-        font-size: 0.75rem !important;
-        font-weight: 700 !important;
-        border-radius: 50px !important;
-        gap: 6px !important;
-        width: auto !important;
-        margin-left: auto !important;
-    }
-}
-
-@media (max-width: 480px) {
-    #blog .col.col-xl-4 .btn-accent {
-        padding: 7px 16px !important;
-        font-size: 0.7rem !important;
-    }
-}
-@media (max-width: 575px) {
-    .blog-card-img-wrap {
-        height: 260px;
-    }
-
-    .blog-tag {
-        font-size: 0.62rem;
-        padding: 4px 10px;
-        top: 0.75rem;
-        right: 0.75rem;
-    }
-
-    .blog-card-body {
-        padding: 20px;
-    }
-
-    .blog-card-body h4 {
-        font-size: 1.3rem !important;
-        line-height: 1.18 !important;
-        margin-bottom: 8px !important;
-        letter-spacing: -0.3px !important;
-        -webkit-line-clamp: 2 !important;
-    }
-
-    .blog-card-body p {
-        font-size: 0.74rem !important;
-        line-height: 1.5 !important;
-    }
-
-    .blog-read-more {
-        font-size: 0.64rem;
-        padding: 6px 12px;
-        gap: 5px;
-    }
-
-    .blog-read-more i {
-        font-size: 0.58rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .blog-card-body h4 {
-        font-size: 1.15rem !important;
-    }
-}
-
-/* ===== Remove background image + shadow/border on mobile only (desktop keeps it) ===== */
-@media (max-width: 767px) {
-    #blog {
-        background-image: none !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
-        border: none !important;
-        border-bottom: none !important;
-    }
-
-    #blog::before,
-    #blog::after {
-        display: none !important;
-        box-shadow: none !important;
-        background: none !important;
-    }
-}
-        </style>
 <!-- ===== BOOKING MODAL (opened by any .js-open-booking-modal trigger) ===== -->
 <div id="bookingModalOverlay" class="booking-modal-overlay" aria-hidden="true">
     <div class="booking-modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
