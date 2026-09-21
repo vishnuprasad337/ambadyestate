@@ -6502,483 +6502,749 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <!-- ↑ this is the existing closing </div> of the ROOM GALLERY section -->
-
 <!-- ================================================================
-     Dining & Culinary Section — redesign
-     Layout: full-height image (left) + heading/lede, two differentiated
-     info cards, and a full-width dining-schedule strip (right).
-     Fonts: 'Fraunces' for display/headline, 'Plus Jakarta Sans' for body
-     (load Fraunces site-wide, e.g. in <head>:
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">)
+     DINING & CULINARY
+     Square image with curved corners, site-matched heading,
+     fit-to-card times and animated hover states.
      ================================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&display=swap" rel="stylesheet">
+
 <div class="ade-section" id="restaurant">
-
-    <svg class="ade-leaf ade-leaf-tr" viewBox="0 0 200 200" aria-hidden="true">
-        <path d="M10 190 C 40 120, 60 60, 140 10 C 120 70, 130 110, 190 100 C 130 140, 90 150, 60 190 Z" fill="currentColor"/>
-    </svg>
-
     <div class="r-container">
-        <div class="ade-grid scrollanimation animated scroll-fadeInUp">
+        <div class="ade-showcase scrollanimation animated scroll-fadeInUp">
+            <div class="ade-intro">
+                <div class="ade-copy">
+                    <div class="ade-kicker">
+                        <span>Dining &amp; Culinary</span>
+                        <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C6 4 10 2 14 6c3 3 6-1 11-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            <path d="M21 1c1 1 2 2 4 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2>Sattvic &amp; organic<br>pure vegetarian dining</h2>
+                    <p>Healthy, fresh, locally-sourced vegetarian food across South and North Indian kitchens &mdash; cooked with care, and the goodness of what grows on the estate.</p>
 
-            <!-- Image column -->
-            <div class="ade-media">
-                <img src="{% static 'ambadyestate-main/image/new/restaurent1.webp' %}" alt="Guests dining at Ambady Estate, Munnar">
-                <span class="ade-media-tag"><i class="fa-solid fa-leaf"></i>Dining &amp; Culinary</span>
+                    <div class="ade-info-row">
+                        <article class="ade-info-card ade-philosophy" tabindex="0">
+                            <span class="ade-fill" aria-hidden="true"></span>
+                            <span class="ade-info-icon"><i class="fa-solid fa-seedling"></i></span>
+                            <div>
+                                <h3>Dietary philosophy</h3>
+                                <p>Sattvic and organic, pure vegetarian dining that leans on healthy, fresh, locally-sourced produce and South/North Indian cuisine.</p>
+                            </div>
+                        </article>
+
+                        <article class="ade-info-card ade-rule" tabindex="0">
+                            <span class="ade-fill" aria-hidden="true"></span>
+                            <span class="ade-info-icon"><i class="fa-solid fa-ban"></i></span>
+                            <div>
+                                <h3>House rule</h3>
+                                <p>Strictly pure vegetarian grounds. Meat, poultry, seafood and outside food are not permitted on the estate.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- "no-fade" keeps the page-wide image fade script off this image,
+                     otherwise its transform fights the hover zoom -->
+                <figure class="ade-media">
+                    <img class="no-fade" src="{% static 'ambadyestate-main/image/new/restaurent1.webp' %}" alt="Dining room at Ambady Estate, Munnar">
+                </figure>
             </div>
 
-            <!-- Content column -->
-            <div class="ade-content">
+            <div class="ade-schedule" aria-label="Daily dining times">
+                <article class="ade-schedule-item ade-breakfast" tabindex="0">
+                    <span class="ade-fill" aria-hidden="true"></span>
+                    <span class="ade-shine" aria-hidden="true"></span>
+                    <span class="ade-number">01</span>
+                    <span class="ade-meal-icon"><i class="fa-solid fa-sun"></i></span>
+                    <div class="ade-meal">Breakfast</div>
+                    <div class="ade-time">8:30 &ndash; 10:30 AM</div>
+                    <div class="ade-note"><i class="fa-solid fa-bell-concierge"></i> Included in package</div>
+                    <span class="ade-card-leaf" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+                </article>
 
-                <div class="ade-heading">
-                    <h2>Sattvic &amp; organic<br>pure vegetarian dining</h2>
-                    <p class="ade-lede">Healthy, fresh, locally-sourced vegetarian food across South and North Indian kitchens &mdash; cooked with care, and the goodness of what grows on the estate.</p>
-                </div>
+                <article class="ade-schedule-item ade-lunch" tabindex="0">
+                    <span class="ade-fill" aria-hidden="true"></span>
+                    <span class="ade-shine" aria-hidden="true"></span>
+                    <span class="ade-number">02</span>
+                    <span class="ade-meal-icon"><i class="fa-solid fa-utensils"></i></span>
+                    <div class="ade-meal">Lunch</div>
+                    <div class="ade-time">12:30 &ndash; 2:30 PM</div>
+                    <div class="ade-note"><i class="fa-solid fa-bell-concierge"></i> À la carte, pre-order 30 min prior</div>
+                    <span class="ade-card-leaf" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+                </article>
 
-                <div class="ade-cards">
-                    <div class="ade-card ade-card-soft" tabindex="0">
-                        <i class="fa-solid fa-seedling ade-icon"></i>
-                        <h3>Dietary philosophy</h3>
-                        <p>Sattvic and organic, pure vegetarian dining that leans on healthy, fresh, locally-sourced produce and South/North Indian cuisine.</p>
-                    </div>
-                    <div class="ade-card ade-card-notice" tabindex="0">
-                        <i class="fa-solid fa-ban ade-icon"></i>
-                        <h3>House rule</h3>
-                        <p>Strictly pure vegetarian grounds. Meat, poultry, seafood and outside food are not permitted on the estate.</p>
-                    </div>
-                </div>
+                <article class="ade-schedule-item ade-tea" tabindex="0">
+                    <span class="ade-fill" aria-hidden="true"></span>
+                    <span class="ade-shine" aria-hidden="true"></span>
+                    <span class="ade-number">03</span>
+                    <span class="ade-meal-icon"><i class="fa-solid fa-mug-hot"></i></span>
+                    <div class="ade-meal">Afternoon tea</div>
+                    <div class="ade-time">4:00 &ndash; 6:00 PM</div>
+                    <div class="ade-note"><i class="fa-solid fa-mug-hot"></i> Complimentary high tea</div>
+                    <span class="ade-card-leaf" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+                </article>
 
-                <div class="ade-schedule">
-                    <div class="ade-schedule-item" tabindex="0">
-                        <i class="fa-solid fa-sun"></i>
-                        <span class="ade-meal">Breakfast</span>
-                        <span class="ade-time">8:30 &ndash; 10:30 AM</span>
-                        <span class="ade-note">Included in package</span>
-                    </div>
-                    <div class="ade-schedule-item" tabindex="0">
-                        <i class="fa-solid fa-utensils"></i>
-                        <span class="ade-meal">Lunch</span>
-                        <span class="ade-time">12:30 &ndash; 2:30 PM</span>
-                        <span class="ade-note">À la carte, pre-order 30 min prior</span>
-                    </div>
-                    <div class="ade-schedule-item" tabindex="0">
-                        <i class="fa-solid fa-mug-hot"></i>
-                        <span class="ade-meal">Afternoon tea</span>
-                        <span class="ade-time">4:00 &ndash; 6:00 PM</span>
-                        <span class="ade-note">Complimentary high tea</span>
-                    </div>
-                    <div class="ade-schedule-item" tabindex="0">
-                        <i class="fa-solid fa-moon"></i>
-                        <span class="ade-meal">Dinner</span>
-                        <span class="ade-time">7:30 &ndash; 9:30 PM</span>
-                        <span class="ade-note">À la carte, pre-order by 6:00 PM</span>
-                    </div>
-                </div>
-
-                <a href="#process" class="ade-explore">Explore stays<i class="fa-solid fa-arrow-right"></i></a>
-
+                <article class="ade-schedule-item ade-dinner" tabindex="0">
+                    <span class="ade-fill" aria-hidden="true"></span>
+                    <span class="ade-shine" aria-hidden="true"></span>
+                    <span class="ade-number">04</span>
+                    <span class="ade-meal-icon"><i class="fa-solid fa-moon"></i></span>
+                    <div class="ade-meal">Dinner</div>
+                    <div class="ade-time">7:30 &ndash; 9:30 PM</div>
+                    <div class="ade-note"><i class="fa-solid fa-bell-concierge"></i> À la carte, pre-order by 6:00 PM</div>
+                    <span class="ade-card-leaf" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+                </article>
             </div>
         </div>
     </div>
 </div>
 
-
-
-<script>
-(function () {
-    var section = document.getElementById('restaurant');
-    if (!section) return;
-
-    var tiles = Array.prototype.slice.call(
-        section.querySelectorAll('.ade-card-soft, .ade-card-notice, .ade-schedule-item')
-    );
-    if (!tiles.length) return;
-
-    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    var index = -1;
-    var timer = null;
-    var paused = false;
-
-    function clearActive() {
-        tiles.forEach(function (t) { t.classList.remove('is-active'); });
-    }
-
-    function step() {
-        if (paused) return;
-        clearActive();
-        index = (index + 1) % tiles.length;
-        tiles[index].classList.add('is-active');
-    }
-
-    function start() {
-        if (timer) return;
-        step();
-        timer = setInterval(step, 1800);
-    }
-
-    function pause() {
-        paused = true;
-        clearActive();
-    }
-
-    function resume() {
-        if (!paused) return;
-        paused = false;
-        step();
-    }
-
-    tiles.forEach(function (tile) {
-        tile.addEventListener('mouseenter', pause);
-        tile.addEventListener('focus', pause);
-        tile.addEventListener('mouseleave', resume);
-        tile.addEventListener('blur', resume);
-    });
-
-    // pause the loop while the section is off-screen
-    if ('IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    start();
-                } else {
-                    if (timer) { clearInterval(timer); timer = null; }
-                    clearActive();
-                }
-            });
-        }, { threshold: 0.3 });
-        observer.observe(section);
-    } else {
-        start();
-    }
-})();
-</script>
 <style>
-    /* ===== tokens ===== */
     .ade-section {
-        --ade-forest: #253321;
-        --ade-forest-deep: #182013;
-        --ade-ivory: #faf7ef;
-        --ade-card: #fffdf8;
-        --ade-brass: #a9803f;
-        --ade-charcoal: #26261f;
-        --ade-charcoal-2: #6d6a5c;
-        background: var(--background-color, var(--ade-ivory));
-        padding: 72px 0 88px;
+        --ade-ink: #1f3022;
+        --ade-deep: #243c29;
+        --ade-gold: #ad7d2f;
+        --ade-cream: #f7f5ed;
+        --ade-fill: #374836;   /* green that floods each card on hover */
+        --ade-ease: cubic-bezier(.22, 1, .36, 1);
+        --ade-spring: cubic-bezier(.34, 1.56, .64, 1);
+        background:
+            radial-gradient(circle at 48% 0%, rgba(174, 190, 151, .16), transparent 28%),
+            var(--ade-cream);
+        padding: clamp(64px, 7vw, 104px) 0;
         position: relative;
         overflow: hidden;
     }
 
-    .ade-leaf {
-        position: absolute;
-        width: 220px;
-        height: 220px;
-        top: -30px;
-        right: -20px;
-        transform: rotate(8deg);
-        color: var(--ade-brass);
-        opacity: 0.1;
-        pointer-events: none;
-    }
-
-    .ade-section .r-container { position: relative; z-index: 1; }
-
-    /* ===== grid ===== */
-    .ade-grid {
-        display: grid;
-        grid-template-columns: 0.82fr 1.18fr;
-        gap: 40px;
-        max-width: 1280px;
+    .ade-showcase {
+        max-width: 1380px;
         margin: 0 auto;
-        opacity: 0;
     }
 
-    .ade-grid.animated { animation: adeRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-    @keyframes adeRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (prefers-reduced-motion: reduce) { .ade-grid { opacity: 1; animation: none !important; } }
+    .ade-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(440px, .85fr);
+        gap: clamp(38px, 5vw, 78px);
+        align-items: center;
+        margin-bottom: 28px;
+    }
 
-    /* ===== image column ===== */
+    /* ---------- Kicker: same as the other section eyebrows ---------- */
+    .ade-kicker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent-color-2, #9c8a4f);
+    }
+
+    @media (max-width: 575px) {
+        .ade-kicker {
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+        }
+    }
+
+    /* ---------- Heading: same style as every other section heading ---------- */
+    .ade-copy > h2 {
+        max-width: 760px;
+        margin: 0 0 16px;
+        color: var(--text-color, #1a1e16);
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: 2.4rem !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        letter-spacing: normal !important;
+        text-transform: none !important;
+    }
+
+    .ade-copy > p {
+        max-width: 710px;
+        margin: 0;
+        color: #65685e;
+        font: 400 clamp(.96rem, 1.15vw, 1.08rem)/1.75 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ---------- Info cards ---------- */
+    .ade-info-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 28px;
+    }
+
+    .ade-info-card {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 16px;
+        min-height: 150px;
+        padding: 22px;
+        border-radius: 22px;
+        outline: none;
+        transition: transform .45s var(--ade-ease), box-shadow .45s ease, background .45s ease, border-color .45s ease;
+    }
+
+    .ade-info-card:hover,
+    .ade-info-card:focus-visible {
+        transform: translateY(-8px);
+    }
+
+    .ade-philosophy {
+        background: var(--ade-deep);
+        box-shadow: 0 18px 38px -26px rgba(25, 53, 32, .65);
+    }
+
+    .ade-philosophy:hover,
+    .ade-philosophy:focus-visible {
+        box-shadow: 0 28px 48px -24px rgba(25, 53, 32, .8);
+    }
+
+    .ade-rule {
+        background: rgba(255, 255, 255, .45);
+        border: 1px solid rgba(173, 125, 47, .38);
+    }
+
+    .ade-rule:hover,
+    .ade-rule:focus-visible {
+        border-color: var(--ade-gold);
+        box-shadow: 0 24px 44px -26px rgba(36, 60, 41, .6);
+    }
+
+    .ade-info-icon {
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        color: var(--ade-gold);
+        background: rgba(255, 255, 255, .1);
+        font-size: 1.2rem;
+        transition: transform .7s var(--ade-spring), background .4s ease, color .4s ease;
+    }
+
+    .ade-rule .ade-info-icon { background: #f1e6ca; }
+
+    .ade-info-card:hover .ade-info-icon,
+    .ade-info-card:focus-visible .ade-info-icon {
+        transform: rotate(360deg) scale(1.12);
+        background: var(--ade-gold);
+        color: #fff;
+    }
+
+    .ade-info-card h3 {
+        margin: 2px 0 8px;
+        font: 600 1.22rem/1.25 'Fraunces', Georgia, serif;
+        color: var(--ade-ink);
+    }
+
+    .ade-info-card p {
+        margin: 0;
+        font: 400 .82rem/1.55 'Plus Jakarta Sans', sans-serif;
+        color: #686b61;
+    }
+
+    .ade-philosophy h3 { color: #fffdf5; }
+    .ade-philosophy p { color: rgba(255, 253, 245, .78); }
+
+    /* Colour change is instant-in-step with the fill. The other properties
+       repeat the page's line-fade transition so that effect keeps working. */
+    .ade-info-card h3,
+    .ade-info-card p {
+        transition:
+            color .45s ease 0s,
+            opacity .9s cubic-bezier(.22, 1, .36, 1) var(--rtm-line-delay, 0s),
+            transform .9s cubic-bezier(.22, 1, .36, 1) var(--rtm-line-delay, 0s),
+            filter .9s ease var(--rtm-line-delay, 0s);
+    }
+
+    .ade-info-card:hover h3,
+    .ade-info-card:focus-visible h3 { color: #fff; }
+
+    .ade-info-card:hover p,
+    .ade-info-card:focus-visible p { color: rgba(255, 255, 255, .9); }
+
+    /* ---------- Image: perfect square, curved corners ---------- */
     .ade-media {
         position: relative;
-        border-radius: 28px;
+        justify-self: center;
+        width: 100%;
+        max-width: 560px;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
+        margin: 0;
         overflow: hidden;
-        min-height: 560px;
+        border-radius: 32px;
+        box-shadow: 0 30px 64px -36px rgba(31, 48, 34, .62);
+        transition: transform .6s var(--ade-ease), box-shadow .6s ease;
+    }
+
+    .ade-media:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 44px 80px -34px rgba(31, 48, 34, .75);
     }
 
     .ade-media img {
+        position: absolute;
+        inset: 0;
+        display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
+        object-position: center;
+        transition: transform 1.3s var(--ade-ease);
     }
 
-    .ade-media-tag {
+    .ade-media:hover img { transform: scale(1.08); }
+
+    /* light sweep across the photo on hover */
+    .ade-media::before {
+        content: '';
         position: absolute;
-        top: 20px;
-        left: 20px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(24, 32, 19, 0.72);
-        backdrop-filter: blur(6px);
-        color: #f3efe2;
-        font-size: 0.78rem;
-        font-weight: 600;
-        padding: 9px 16px;
-        border-radius: 999px;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .34) 50%, transparent 62%);
+        transform: translateX(-120%);
+        transition: transform 1.1s var(--ade-ease);
+        pointer-events: none;
     }
 
-    .ade-media-tag i { color: var(--ade-brass); font-size: 0.78rem; }
+    .ade-media:hover::before { transform: translateX(120%); }
 
-    /* ===== content column ===== */
-    .ade-content { display: flex; flex-direction: column; justify-content: center; gap: 26px; }
-
-    .ade-heading h2 {
-        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
-        font-size: clamp(1.8rem, 2.6vw, 2.5rem);
-        font-weight: 500;
-        line-height: 1.2;
-        color: var(--ade-charcoal);
-        margin: 0 0 14px 0;
+    /* thin frame that draws inward on hover */
+    .ade-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        border: 1px solid rgba(255, 255, 255, .42);
+        border-radius: 32px;
+        pointer-events: none;
+        transition: inset .6s var(--ade-ease), border-color .6s ease, border-radius .6s var(--ade-ease);
     }
 
-    .ade-lede {
-        font-size: 0.98rem;
-        line-height: 1.75;
-        color: var(--ade-charcoal-2);
-        margin: 0;
-        max-width: 480px;
+    .ade-media:hover::after {
+        inset: 14px;
+        border-color: rgba(255, 255, 255, .9);
+        border-radius: 20px;
     }
 
-    /* ===== cards: two different treatments for two different jobs ===== */
-    .ade-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    .ade-card {
-        border-radius: 18px;
-        padding: 22px;
-        cursor: default;
-        outline: none;
-        transform: translateY(0) scale(1);
-        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .ade-card h3 {
-        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
-        font-size: 1.02rem;
-        font-weight: 500;
-        margin: 10px 0 8px 0;
-        color: var(--ade-charcoal);
-        transition: color 0.4s ease, font-size 0.4s ease;
-    }
-
-    .ade-card p {
-        font-size: 0.86rem;
-        line-height: 1.6;
-        color: var(--ade-charcoal-2);
-        margin: 0;
-        transition: color 0.4s ease, font-size 0.4s ease;
-    }
-
-    .ade-icon {
-        display: inline-flex;
-        font-size: 1.05rem;
-        color: var(--ade-forest);
-        transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), color 0.4s ease;
-    }
-
-    /* soft card — invites, informs: lifts, inverts to forest, text grows */
-    .ade-card-soft {
-        background: var(--ade-card);
-        box-shadow: 0 20px 40px -26px rgba(24, 32, 19, 0.28);
-    }
-
-    .ade-card-soft:hover,
-    .ade-card-soft:focus-within,
-    .ade-card-soft.is-active {
-        transform: translateY(-6px);
-        background: var(--ade-forest);
-        box-shadow: 0 28px 52px -20px rgba(24, 32, 19, 0.45);
-    }
-
-    .ade-card-soft:hover h3,
-    .ade-card-soft:focus-within h3,
-    .ade-card-soft.is-active h3 { color: #fbf8ef; font-size: 1.1rem; }
-
-    .ade-card-soft:hover p,
-    .ade-card-soft:focus-within p,
-    .ade-card-soft.is-active p { color: rgba(243, 239, 226, 0.82); font-size: 0.9rem; }
-
-    .ade-card-soft:hover .ade-icon,
-    .ade-card-soft:focus-within .ade-icon,
-    .ade-card-soft.is-active .ade-icon {
-        color: var(--ade-brass);
-        transform: scale(1.15) rotate(-6deg);
-    }
-
-    /* notice card — a rule, not an invitation: same forest hover, no lift */
-    .ade-card-notice {
-        background: transparent;
-        border: 1.5px solid rgba(169, 128, 63, 0.45);
-    }
-
-    .ade-card-notice .ade-icon { color: var(--ade-brass); }
-
-    .ade-card-notice:hover,
-    .ade-card-notice:focus-within,
-    .ade-card-notice.is-active {
-        border-color: var(--ade-forest);
-        background: var(--ade-forest);
-    }
-
-    .ade-card-notice:hover h3,
-    .ade-card-notice:focus-within h3,
-    .ade-card-notice.is-active h3 { color: #fbf8ef; font-size: 1.1rem; }
-
-    .ade-card-notice:hover p,
-    .ade-card-notice:focus-within p,
-    .ade-card-notice.is-active p { color: rgba(243, 239, 226, 0.82); font-size: 0.9rem; }
-
-    .ade-card-notice:hover .ade-icon,
-    .ade-card-notice:focus-within .ade-icon,
-    .ade-card-notice.is-active .ade-icon { color: var(--ade-brass); transform: scale(1.15); }
-
-    .ade-card:focus-visible { box-shadow: 0 0 0 2px var(--ade-brass); }
-
-    @media (prefers-reduced-motion: reduce) {
-        .ade-card, .ade-icon, .ade-card h3, .ade-card p { transition: none; }
-        .ade-card-soft:hover, .ade-card-soft:focus-within { transform: none; }
-    }
-
-    /* ===== schedule strip ===== */
+    /* ---------- Schedule ---------- */
     .ade-schedule {
-        background: var(--ade-card);
-        border-radius: 24px;
-        padding: 36px 16px;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        box-shadow: 0 26px 54px -24px rgba(24, 32, 19, 0.32);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
     }
 
     .ade-schedule-item {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        padding: 14px 24px;
-        margin: -14px 0;
-        border-left: 1px solid rgba(38, 38, 31, 0.1);
-        border-radius: 16px;
-        cursor: default;
+        container-type: inline-size;   /* lets .ade-time size itself from the card width */
+        position: relative;
+        isolation: isolate;
+        min-height: 330px;
+        overflow: hidden;
+        padding: 28px 26px 34px;
+        border-radius: 28px;
+        color: var(--ade-ink);
         outline: none;
-        transition: background 0.4s ease;
-        -webkit-tap-highlight-color: transparent;
+        box-shadow: 0 22px 40px -34px rgba(31, 48, 34, .75);
+        transition: transform .5s var(--ade-ease), box-shadow .5s ease, color .45s ease;
     }
-
-    .ade-schedule-item:first-child { border-left: none; }
 
     .ade-schedule-item:hover,
     .ade-schedule-item:focus-visible,
-    .ade-schedule-item.is-active {
-        background: var(--ade-forest);
-        border-left-color: transparent;
+    .ade-schedule-item.is-auto {
+        transform: translateY(-12px);
+        color: #fff;
+        box-shadow: 0 34px 56px -28px rgba(31, 48, 34, .7);
     }
 
-    .ade-schedule-item i {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .ade-breakfast { background: #e5ead9; }
+    .ade-lunch { background: #c9d1b7; }
+    .ade-tea { background: #879773; }
+    .ade-dinner { background: #263c29; color: #fffdf5; }
+
+    /* Green fill: grows from wherever the pointer touches the card
+       (--mx / --my are set by the script at the bottom of this file). */
+    .ade-fill {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--ade-fill);
+        clip-path: circle(0% at var(--mx, 50%) var(--my, 100%));
+        transition: clip-path .55s var(--ade-ease);
+        pointer-events: none;
+    }
+
+    .ade-schedule-item:hover .ade-fill,
+    .ade-schedule-item:focus-visible .ade-fill,
+    .ade-schedule-item.is-auto .ade-fill,
+    .ade-info-card:hover .ade-fill,
+    .ade-info-card:focus-visible .ade-fill {
+        clip-path: circle(160% at var(--mx, 50%) var(--my, 100%));
+    }
+
+    /* rolling hills at the bottom of each card */
+    .ade-schedule-item::after,
+    .ade-schedule-item::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: -18%;
+        bottom: -20%;
+        width: 145%;
+        height: 40%;
+        border-radius: 50% 50% 0 0;
+        transform: rotate(-3deg);
+        background: rgba(44, 72, 49, .16);
+        transition: transform .6s var(--ade-ease);
+    }
+
+    .ade-schedule-item::after {
+        left: 26%;
+        bottom: -24%;
+        transform: rotate(5deg);
+        background: rgba(33, 62, 40, .22);
+    }
+
+    .ade-schedule-item:hover::before,
+    .ade-schedule-item:focus-visible::before,
+    .ade-schedule-item.is-auto::before { transform: translateY(-14%) rotate(-6deg); }
+
+    .ade-schedule-item:hover::after,
+    .ade-schedule-item:focus-visible::after,
+    .ade-schedule-item.is-auto::after { transform: translateY(-20%) rotate(9deg); }
+
+    /* light sweep */
+    .ade-shine {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, .3) 50%, transparent 64%);
+        transform: translateX(-120%);
+        transition: transform .7s var(--ade-ease);
+        pointer-events: none;
+    }
+
+    .ade-schedule-item:hover .ade-shine,
+    .ade-schedule-item:focus-visible .ade-shine,
+    .ade-schedule-item.is-auto .ade-shine { transform: translateX(120%); }
+
+    .ade-number {
+        display: block;
+        color: var(--ade-gold);
+        font: 500 1.7rem/1 'Fraunces', Georgia, serif;
+        transform-origin: left center;
+        transition: transform .5s var(--ade-spring);
+    }
+
+    .ade-schedule-item:hover .ade-number,
+    .ade-schedule-item:focus-visible .ade-number,
+    .ade-schedule-item.is-auto .ade-number { transform: translateX(6px) scale(1.18); }
+
+    /* icon bubble with a dashed ring that appears and spins on hover */
+    .ade-meal-icon {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        margin: -18px auto 9px;
         border-radius: 50%;
-        background: rgba(37, 51, 33, 0.08);
-        color: var(--ade-forest);
-        font-size: 1.15rem;
-        margin-bottom: 4px;
-        transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), color 0.4s ease, background 0.4s ease;
+        color: var(--ade-deep);
+        background: rgba(255, 255, 255, .65);
+        font-size: 1.2rem;
+        transition: transform .6s var(--ade-spring), background .4s ease, color .4s ease;
     }
 
-    .ade-schedule-item:hover i,
-    .ade-schedule-item:focus-visible i,
-    .ade-schedule-item.is-active i {
-        transform: scale(1.15) rotate(-6deg);
-        color: var(--ade-brass);
-        background: rgba(243, 239, 226, 0.16);
+    .ade-meal-icon::before {
+        content: '';
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 1.5px dashed var(--ade-gold);
+        opacity: 0;
+        transform: scale(.7);
+        transition: opacity .4s ease, transform .6s var(--ade-spring);
     }
+
+    .ade-tea .ade-meal-icon { color: var(--ade-gold); }
+    .ade-dinner .ade-meal-icon { background: rgba(255, 255, 255, .88); }
+
+    .ade-schedule-item:hover .ade-meal-icon,
+    .ade-schedule-item:focus-visible .ade-meal-icon,
+    .ade-schedule-item.is-auto .ade-meal-icon {
+        transform: translateY(-5px) scale(1.14) rotate(-8deg);
+        background: #fff;
+    }
+
+    .ade-schedule-item:hover .ade-meal-icon::before,
+    .ade-schedule-item:focus-visible .ade-meal-icon::before,
+    .ade-schedule-item.is-auto .ade-meal-icon::before {
+        opacity: 1;
+        transform: scale(1);
+        animation: adeSpin 12s linear infinite;
+    }
+
+    @keyframes adeSpin { to { transform: rotate(360deg); } }
 
     .ade-meal {
-        font-family: 'Fraunces', 'Plus Jakarta Sans', serif;
-        font-size: 1.22rem;
-        font-weight: 600;
-        color: var(--ade-charcoal);
-        transition: font-size 0.4s ease, color 0.4s ease;
+        padding-bottom: 13px;
+        border-bottom: 1px solid rgba(43, 61, 43, .26);
+        text-align: center;
+        font: 600 clamp(1.3rem, 1.7vw, 1.75rem)/1.15 'Fraunces', Georgia, serif;
+        transition: border-color .4s ease, letter-spacing .5s var(--ade-ease);
     }
+
+    .ade-dinner .ade-meal { border-color: rgba(255, 255, 255, .28); }
 
     .ade-schedule-item:hover .ade-meal,
     .ade-schedule-item:focus-visible .ade-meal,
-    .ade-schedule-item.is-active .ade-meal { font-size: 1.32rem; color: #fbf8ef; }
+    .ade-schedule-item.is-auto .ade-meal {
+        border-color: var(--ade-gold);
+        letter-spacing: .02em;
+    }
 
+    /* Time: sized from the card width, so it can never be cut off.
+       12.5cqw is 12.5% of the card's inner width; the widest time
+       ("8:30 – 10:30 AM") then fills roughly 90% of the line. */
     .ade-time {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--ade-brass);
-        transition: font-size 0.4s ease, color 0.4s ease;
+        margin: 17px -10px 15px;
+        white-space: nowrap;
+        text-align: center;
+        font: 600 1.9rem/1 'Fraunces', Georgia, serif;           /* fallback for browsers without cqw */
+        font-size: clamp(1.5rem, 12.5cqw, 2.6rem);
+        letter-spacing: -.03em;
+        transition: transform .5s var(--ade-ease);
     }
 
     .ade-schedule-item:hover .ade-time,
     .ade-schedule-item:focus-visible .ade-time,
-    .ade-schedule-item.is-active .ade-time { font-size: 1.08rem; color: #d7c9a3; }
+    .ade-schedule-item.is-auto .ade-time { transform: translateY(-3px); }
 
     .ade-note {
-        font-size: 0.86rem;
-        color: var(--ade-charcoal-2);
-        line-height: 1.45;
-        transition: font-size 0.4s ease, color 0.4s ease;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+        max-width: 260px;
+        margin: 0 auto;
+        text-align: left;
+        font: 600 1.08rem/1.4 'Plus Jakarta Sans', sans-serif;
+        color: rgba(31, 48, 34, .88);
+        transition: color .45s ease;
     }
+
+    .ade-note i {
+        margin-top: 4px;
+        font-size: 1.05rem;
+        color: var(--ade-gold);
+        transform-origin: 50% 0;
+    }
+
+    .ade-dinner .ade-note { color: rgba(255, 253, 245, .84); }
 
     .ade-schedule-item:hover .ade-note,
     .ade-schedule-item:focus-visible .ade-note,
-    .ade-schedule-item.is-active .ade-note { font-size: 0.9rem; color: rgba(243, 239, 226, 0.8); }
+    .ade-schedule-item.is-auto .ade-note { color: rgba(255, 255, 255, .92); }
+
+    .ade-schedule-item:hover .ade-note i,
+    .ade-schedule-item:focus-visible .ade-note i,
+    .ade-schedule-item.is-auto .ade-note i { animation: adeRing .9s ease .15s 1; }
+
+    @keyframes adeRing {
+        0%, 100% { transform: rotate(0); }
+        20%      { transform: rotate(-18deg); }
+        40%      { transform: rotate(14deg); }
+        60%      { transform: rotate(-9deg); }
+        80%      { transform: rotate(5deg); }
+    }
+
+    .ade-card-leaf {
+        position: absolute;
+        top: 24px;
+        right: 22px;
+        color: rgba(38, 60, 41, .12);
+        font-size: 3.8rem;
+        transform: rotate(-24deg);
+        z-index: -1;
+        transition: transform .8s var(--ade-spring), color .5s ease;
+    }
+
+    .ade-dinner .ade-card-leaf { color: rgba(255, 255, 255, .08); }
+
+    .ade-schedule-item:hover .ade-card-leaf,
+    .ade-schedule-item:focus-visible .ade-card-leaf,
+    .ade-schedule-item.is-auto .ade-card-leaf {
+        transform: rotate(-6deg) scale(1.22) translateY(-4px);
+        color: rgba(255, 255, 255, .14);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1180px) {
+        /* Single column: image sits right after the title.
+           display:contents lets the copy's children be re-ordered around the image. */
+        .ade-intro { grid-template-columns: 1fr; gap: 0; }
+        .ade-copy { display: contents; }
+        .ade-kicker { order: 1; }
+        .ade-copy > h2 { order: 2; }
+        .ade-media { order: 3; margin: 8px auto 28px; }
+        .ade-copy > p { order: 4; }
+        .ade-info-row { order: 5; max-width: 880px; }
+        .ade-schedule { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 767px) {
+        .ade-copy > h2 { font-size: 1.8rem !important; }
+    }
+
+    @media (max-width: 680px) {
+        .ade-section { padding: 54px 0 64px; }
+        .ade-info-row,
+        .ade-schedule { grid-template-columns: 1fr; }
+        .ade-schedule-item { min-height: 300px; }
+    }
+
+    @media (max-width: 480px) {
+        .ade-copy > h2 { font-size: 1.6rem !important; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
-        .ade-schedule-item, .ade-schedule-item i, .ade-meal, .ade-time, .ade-note { transition: none; }
+        .ade-meal-icon::before { animation: none !important; }
+
+        .ade-info-card,
+        .ade-info-icon,
+        .ade-media,
+        .ade-media img,
+        .ade-media::before,
+        .ade-media::after,
+        .ade-schedule-item,
+        .ade-schedule-item::before,
+        .ade-schedule-item::after,
+        .ade-shine,
+        .ade-fill,
+        .ade-number,
+        .ade-meal-icon,
+        .ade-meal,
+        .ade-time,
+        .ade-card-leaf { transition: none !important; }
+
+        .ade-schedule-item:hover .ade-note i,
+        .ade-schedule-item:focus-visible .ade-note i,
+        .ade-schedule-item.is-auto .ade-note i { animation: none; }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var cards = document.querySelectorAll('#restaurant .ade-schedule-item, #restaurant .ade-info-card');
+
+    /* ---- Green fill grows from the point of contact and shrinks back
+       toward the point where the pointer leaves ---- */
+    function setOrigin(card, e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     }
 
-    /* ===== explore link ===== */
-    .ade-explore {
-        align-self: flex-start;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: var(--ade-forest);
-        text-decoration: none;
-        border-bottom: 1.5px solid var(--ade-brass);
-        padding-bottom: 2px;
-        transition: gap 0.3s ease, color 0.3s ease;
+    cards.forEach(function (card) {
+        card.addEventListener('pointerenter', function (e) { setOrigin(card, e); });
+        card.addEventListener('pointerdown',  function (e) { setOrigin(card, e); });
+        card.addEventListener('pointerleave', function (e) { setOrigin(card, e); });
+    });
+
+    /* ---- Automatic cycle: the four meal cards light up one after another,
+       exactly like a hover. Pauses while someone hovers or focuses a card,
+       while the section is off-screen and while the tab is hidden. ---- */
+    var grid = document.querySelector('#restaurant .ade-schedule');
+    if (!grid) return;
+
+    var items = Array.prototype.slice.call(grid.querySelectorAll('.ade-schedule-item'));
+    var STEP = 2000;      /* ms each card stays lit */
+    var RESUME = 1500;    /* ms to wait after the visitor stops hovering */
+    var current = -1;
+    var timer = null;
+    var visible = false;
+    var hovering = false;
+
+    function clearAll() {
+        items.forEach(function (el) { el.classList.remove('is-auto'); });
     }
 
-    .ade-explore:hover { gap: 13px; color: var(--ade-brass); }
-    .ade-explore i { font-size: 0.75rem; }
-
-    /* ===== responsive ===== */
-    @media (max-width: 1100px) {
-        .ade-grid { grid-template-columns: 1fr; }
-        .ade-media { min-height: 340px; }
+    function show(i) {
+        clearAll();
+        current = i;
+        items[i].style.setProperty('--mx', '50%');   /* fill grows out from the icon */
+        items[i].style.setProperty('--my', '28%');
+        items[i].classList.add('is-auto');
     }
 
-    @media (max-width: 640px) {
-        .ade-section { padding: 52px 0 64px; }
-        .ade-cards { grid-template-columns: 1fr; }
-        .ade-schedule { grid-template-columns: 1fr 1fr; row-gap: 20px; }
-        .ade-schedule-item { border-left: none; padding: 0 12px; }
-        .ade-schedule-item:nth-child(2n) { border-left: 1px solid rgba(38, 38, 31, 0.1); }
+    function stop() {
+        if (timer) { clearTimeout(timer); timer = null; }
     }
 
+    function shouldRun() {
+        return visible && !hovering && !document.hidden;
+    }
 
-/* ============================================================
-   UNIFIED CARD TYPOGRAPHY — matches "GARDEN DESIGN" style card
+    function schedule(delay) {
+        stop();
+        if (!shouldRun()) return;
+        timer = setTimeout(function () {
+            timer = null;
+            if (!shouldRun()) return;
+            show((current + 1) % items.length);
+            schedule(STEP);
+        }, delay);
+    }
+
+    items.forEach(function (el, i) {
+        el.addEventListener('pointerenter', function (e) {
+            if (e.pointerType === 'touch') return;
+            hovering = true; current = i; clearAll(); stop();
+        });
+        el.addEventListener('pointerleave', function (e) {
+            if (e.pointerType === 'touch') return;
+            hovering = false; schedule(RESUME);
+        });
+        el.addEventListener('focusin', function () {
+            if (!el.matches(':focus-visible')) return;
+            hovering = true; current = i; clearAll(); stop();
+        });
+        el.addEventListener('focusout', function () {
+            if (!hovering) return;
+            hovering = false; schedule(RESUME);
+        });
+    });
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop(); else schedule(STEP);
+    });
+
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+            visible = entries[0].isIntersecting;
+            if (visible) schedule(current === -1 ? 500 : STEP); else stop();
+        }, { threshold: 0.2 }).observe(grid);
+    } else {
+        visible = true;
+        schedule(500);
+    }
+});
+</script>
+<style>
+
+ /*  UNIFIED CARD TYPOGRAPHY — matches "GARDEN DESIGN" style card
    Bold tight header + larger, more readable description
    ============================================================ */
 
