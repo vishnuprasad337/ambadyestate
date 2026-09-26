@@ -47,7 +47,7 @@
 </div>
 {% endif %}
 
-                {% if package.price %}
+                                {% if package.price %}
                 <div class="pkg-pricing-card">
                     <div class="pkg-pricing-header">
                         <div class="pkg-pricing-icon">
@@ -70,14 +70,17 @@
                         </div>
                         {% endif %}
                         <div class="w-max-content mt-4">
-    <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal" data-package-id="{{ package.id }}">
-        <span>Book This Package</span>
-        <i class="fa-solid fa-arrow-right"></i>
-    </a>
-</div>
+                            <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal" data-package-id="{{ package.id }}">
+                                <span>Book This Package</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
             </div>
+
+            <!-- ===== RIGHT: CONTENT ===== -->
 
             <!-- ===== RIGHT: CONTENT ===== -->
             <div class="pkg-content-scroll">
