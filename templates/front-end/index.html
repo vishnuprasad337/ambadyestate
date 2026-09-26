@@ -5215,35 +5215,43 @@ document.addEventListener("DOMContentLoaded", function () {
             <header class="day-paid-head day-fixed-head" aria-labelledby="personaliseStayTitle">
                 <span class="day-fixed-kicker">By Request &bull; Charged Separately</span>
                 <div id="personaliseStayTitle" class="day-fixed-title" role="heading" aria-level="2">Personalise Your Stay</div>
-                <span class="day-fixed-sub">Arranged individually for guests who'd like something built around them.</span>
+                <span class="day-fixed-sub">
+    Arranged individually for guests who'd like something built around them, 
+    with thoughtful details, personalized experiences, and flexible options 
+    designed to make every stay feel comfortable, memorable, and uniquely their own.
+</span>
             </header>
 
             <div class="rot" id="paidRotator" role="region" aria-roledescription="carousel" aria-label="Optional services, charged separately">
                 <div class="rot-stage">
 
-                    <article class="rot-card" role="group" aria-roledescription="slide" aria-label="1 of 4">
-                        <span class="rot-icon"><i class="fa-solid fa-spa"></i></span>
-                        <h5>Personal One-on-One Yoga &amp; Meditation Sessions</h5>
-                        <p class="rot-desc">Customized practice.</p>
-                    </article>
+                   <article class="rot-card" role="group" aria-roledescription="slide" aria-label="1 of 4">
+    <span class="rot-icon"><i class="fa-solid fa-spa"></i></span>
+    <h5>Personal One-on-One Yoga &amp; Meditation Sessions</h5>
+    <p class="rot-desc-2">Sessions can focus on relaxation, flexibility, or stress relief, whatever suits you best.</p>
+    <p class="rot-desc">Customized practice.</p>
+</article>
 
                     <article class="rot-card" role="group" aria-roledescription="slide" aria-label="2 of 4">
-                        <span class="rot-icon"><i class="fa-solid fa-car"></i></span>
-                        <h5>Sightseeing by Cab &amp; Private Driver</h5>
-                        <p class="rot-desc">Full day Munnar circuit.</p>
-                    </article>
+    <span class="rot-icon"><i class="fa-solid fa-car"></i></span>
+    <h5>Sightseeing by Cab &amp; Private Driver</h5>
+    <p class="rot-desc-2">A private cab and driver at your disposal, covering Munnar's viewpoints, tea gardens and trails at your own pace.</p>
+    <p class="rot-desc">Full day Munnar circuit.</p>
+</article>
 
                     <article class="rot-card" role="group" aria-roledescription="slide" aria-label="3 of 4">
-                        <span class="rot-icon"><i class="fa-solid fa-fan"></i></span>
-                        <h5>Special In-Room Flower Decoration &amp; Cake</h5>
-                        <p class="rot-desc">On request for special occasions.</p>
-                    </article>
+    <span class="rot-icon"><i class="fa-solid fa-fan"></i></span>
+    <h5>Special In-Room Flower Decoration &amp; Cake</h5>
+    <p class="rot-desc-2">Mark birthdays, anniversaries or a special evening with fresh flowers and a cake waiting in your room.</p>
+    <p class="rot-desc">On request for special occasions.</p>
+</article>
 
                     <article class="rot-card" role="group" aria-roledescription="slide" aria-label="4 of 4">
-                        <span class="rot-icon"><i class="fa-solid fa-kitchen-set"></i></span>
-                        <h5>Customised Cooking Session</h5>
-                    </article>
-
+    <span class="rot-icon"><i class="fa-solid fa-kitchen-set"></i></span>
+    <h5>Customised Cooking Session</h5>
+    <p class="rot-desc-2">A pure vegetarian menu, cooked your way, with fresh ingredients straight from the estate's own kitchen garden.</p>
+    <p class="rot-desc">Hands-on with a local chef.</p>
+</article>
                 </div>
 
                 <div class="rot-controls">
@@ -5261,7 +5269,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     </div>
 </section>
-
 <style>
     /* ------------------------------------------------------------
        Tokens (scoped to this section)
@@ -5611,7 +5618,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pointer-events: none;
     }
 
-    .day-paid-head { margin-bottom: 40px; }
+    .day-paid-head { margin-bottom: 6px; }
 
     /* ---- Rotating showcase ---- */
     .rot {
@@ -5621,7 +5628,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     .rot-stage {
         display: grid;                 /* every card shares one cell -> height = tallest card */
-        padding: 34px 0 44px;
+        padding: 0px 0 44px;
         touch-action: pan-y;
     }
 
@@ -5708,6 +5715,13 @@ document.addEventListener("DOMContentLoaded", function () {
         opacity: 1;
         animation: rotSpin 14s linear infinite;
     }
+    .rot-desc {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 6px;
+    margin-top: 6px;
+    font-style: italic;
+    opacity: 0.85;
+}
 
     @keyframes rotSpin { to { transform: rotate(360deg); } }
 
@@ -5723,7 +5737,8 @@ document.addEventListener("DOMContentLoaded", function () {
         transition: color 0.5s ease;
     }
 
-    .day-section .rot-card p.rot-desc {
+       .day-section .rot-card p.rot-desc,
+    .day-section .rot-card p.rot-desc-2 {
         font-family: var(--font-3, sans-serif) !important;
         font-size: 1.15rem !important;
         line-height: 1.6 !important;
@@ -5764,11 +5779,11 @@ document.addEventListener("DOMContentLoaded", function () {
         border-radius: 100px;
     }
 
-    .rot-card.is-active h5 { color: #fff !important; }
-    .rot-card.is-active .rot-desc { color: rgba(255, 255, 255, 0.86) !important; }
+       .rot-card.is-active h5 { color: #fff !important; }
+    .rot-card.is-active .rot-desc,
+    .rot-card.is-active .rot-desc-2 { color: rgba(255, 255, 255, 0.86) !important; }
     .rot-card.is-active .rot-when { color: rgba(255, 255, 255, 0.85); }
     .rot-card.is-active .rot-price { background: #f3e6c4; color: #4d3608; }
-
     /* controls */
     .rot-controls {
         display: flex;
@@ -5971,12 +5986,13 @@ document.addEventListener("DOMContentLoaded", function () {
         opacity: 1 !important;
     }
 
-    #wellness-section .day-card h5,
+     #wellness-section .day-card h5,
     #wellness-section .day-card p,
     #wellness-section .day-card .day-meta,
     #wellness-section .day-card .day-book,
     #personalise-section .rot-card h5,
     #personalise-section .rot-card .rot-desc,
+    #personalise-section .rot-card .rot-desc-2,
     #personalise-section .rot-card .rot-foot,
     #personalise-section .rot-card .rot-when,
     #personalise-section .rot-card .rot-price {
