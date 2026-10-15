@@ -64,11 +64,15 @@
                             </div>
                         </div>
                         {% if package.duration %}
-                        <div class="pkg-duration-row">
-                            <i class="fa-solid fa-clock"></i>
-                            <span>{{ package.duration }}</span>
-                        </div>
-                        {% endif %}
+<div class="pkg-duration-row">
+    <i class="fa-solid fa-clock"></i>
+    <span>{{ package.duration }}</span>
+</div>
+{% endif %}
+<div class="pkg-duration-row pkg-extra-bed-row">
+    <i class="fa-solid fa-bed"></i>
+    <span>Extra beds are provided</span>
+</div>
                         <div class="w-max-content mt-4">
                             <a href="javascript:void(0)" class="btn btn-accent d-flex flex-row gap-2 px-5 py-3 js-open-booking-modal" data-package-id="{{ package.id }}">
                                 <span>Book This Package</span>
@@ -2633,6 +2637,11 @@ if (magneticEl) {
         opacity: 1;
         transform: translateY(0);
     }
+    .pkg-duration-row + .pkg-duration-row {
+    margin-top: -6px;
+    border-top: none;
+    padding-top: 0;
+}
 </style>
 
 <script>
